@@ -50,9 +50,9 @@ const config = {
     },
     disjunctiveFacets: ['autores', 'Instituição', 'Ano'],
     facets: {
-      Ano: { type: 'value' },
+      Ano: { type: 'value', sort: { value: 'asc' } },
       autores: { type: 'value', sort: 'count' },
-      Instituição: { type: 'value' },
+      Instituição: { type: 'value', sort: 'count' },
     },
   },
   autocompleteQuery: {
@@ -146,6 +146,28 @@ export default function App() {
                           key={'2'}
                           field={'Instituição'}
                           label={'instituição'}
+                        />
+                        <Facet
+                          mapContextToProps={(context) => {
+                            if (!context.facets.Ano) return context
+                            return {
+                              ...context,
+                              facets: {
+                                ...(context.facets || {}),
+                                anos: context.facets.Ano.map((s) => ({
+                                  ...s,
+                                  data: s.data.sort((a, b) => {
+                                    if (a.value > b.value) return -1
+                                    if (a.value < b.value) return 1
+                                    return 0
+                                  }),
+                                })),
+                              },
+                            }
+                          }}
+                          field="anos"
+                          label="Anos"
+                          show={10}
                         />
                       </div>
                     }

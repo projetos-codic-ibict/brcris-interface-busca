@@ -6,7 +6,7 @@ const client = new Client({
   sniffOnStart: true,
   node: 'http://172.16.16.90:9200',
   auth: {
-    apiKey: ''+process.env.API_KEY,
+    apiKey: '' + process.env.API_KEY,
   },
 })
 
@@ -20,6 +20,7 @@ const query = {
     genres: {
       terms: {
         field: 'Ano',
+        size: 1000,
       },
     },
   },
