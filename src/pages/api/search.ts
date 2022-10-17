@@ -3,7 +3,7 @@ import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connecto
 const connector = new ElasticsearchAPIConnector({
   host: 'http://172.16.16.90:9200',
   index: 'observatorio_artigos_prod',
-  apiKey: 'NDNHbXNvTUJiMHM1anQ5THQ1ZEI6Vk4xWXRtcWNSNS03WmFsOVd0TXhEZw==',
+  apiKey: process.env.API_KEY,
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -6,11 +6,14 @@ const client = new Client({
   sniffOnStart: true,
   node: 'http://172.16.16.90:9200',
   auth: {
-    apiKey: 'NDNHbXNvTUJiMHM1anQ5THQ1ZEI6Vk4xWXRtcWNSNS03WmFsOVd0TXhEZw==',
+    apiKey: ''+process.env.API_KEY,
   },
 })
 
 const query = {
+  query: {
+    match_all: {},
+  },
   _source: ['Ano'],
   size: 0,
   aggs: {
@@ -20,34 +23,13 @@ const query = {
       },
     },
   },
-  query: {
-    match_all: {},
-  },
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const proxy = async (req: any, res: any) => {
-  console.log('chegou')
   const response = await client.search({
     index: 'observatorio_artigos_prod',
-    body: {
-      query: {
-        match_all: {},
-      },
-      _source: ['Ano'],
-      size: 0,
-      aggs: {
-        genres: {
-          terms: {
-            field: 'Ano',
-          },
-        },
-      },
-    },
+    body: query,
   })
-  // try the new code completion when traversing a response!
-  //   const results = response.body.aggregations.genres.buckets
-  // results type will be `Source[]`
-  console.log('######', response.body.aggregations.genres.buckets)
   res.json(response.body.aggregations.genres.buckets)
 }
 

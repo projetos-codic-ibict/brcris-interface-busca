@@ -15,6 +15,7 @@ import {
 } from '@elastic/react-search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
+import Navbar from '../components/Navbar'
 
 const connector = new Connector()
 
@@ -108,6 +109,7 @@ const SORT_OPTIONS = [
 export default function App() {
   return (
     <div>
+      <Navbar />
       <SearchProvider config={config}>
         <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
           {({ wasSearched }) => {
