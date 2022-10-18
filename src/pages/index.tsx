@@ -140,7 +140,7 @@ export default function App() {
                             sortOptions={SORT_OPTIONS}
                           />
                         )}
-                        <Facet key={'1'} field={'Ano'} label={'ano'} />
+                        {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
                         <Facet key={'3'} field={'autores'} label={'autores'} />
                         <Facet
                           key={'2'}
@@ -154,7 +154,7 @@ export default function App() {
                               ...context,
                               facets: {
                                 ...(context.facets || {}),
-                                anos: context.facets.Ano.map((s) => ({
+                                ano: context.facets.Ano.map((s) => ({
                                   ...s,
                                   data: s.data.sort((a, b) => {
                                     if (a.value > b.value) return -1
@@ -165,8 +165,8 @@ export default function App() {
                               },
                             }
                           }}
-                          field="anos"
-                          label="Anos"
+                          field="Ano"
+                          label="ano"
                           show={10}
                         />
                       </div>

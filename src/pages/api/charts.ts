@@ -21,6 +21,9 @@ const query = {
       terms: {
         field: 'Ano',
         size: 1000,
+        order: {
+          _key: 'desc',
+        },
       },
     },
   },
