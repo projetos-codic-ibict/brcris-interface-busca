@@ -6,7 +6,7 @@
     "prepare": "husky install",
     "dev": "next dev",
     "build": "next build",
-    "start": "PORT=5000 && next start -p $PORT",
+    "start": "PORT=3000 && next start -p $PORT",
     "lint": "next lint",
     "deploy": "pm2 start yarn --name 'nextjs' --interpreter bash -- start"
   },
