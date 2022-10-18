@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Client } from 'es7'
 
 const client = new Client({
@@ -6,7 +7,7 @@ const client = new Client({
   sniffOnStart: true,
   node: process.env.HOST,
   auth: {
-    apiKey: '' + process.env.API_KEY,
+    apiKey: process.env.API_KEY!,
   },
 })
 
