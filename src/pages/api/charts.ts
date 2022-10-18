@@ -4,7 +4,7 @@ const client = new Client({
   maxRetries: 5,
   requestTimeout: 60000,
   sniffOnStart: true,
-  node: 'http://172.16.16.90:9200',
+  node: process.env.HOST,
   auth: {
     apiKey: '' + process.env.API_KEY,
   },
