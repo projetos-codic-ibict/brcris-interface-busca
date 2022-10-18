@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import Connector from '../services/APIConnector'
 
@@ -50,9 +51,9 @@ const config = {
     },
     disjunctiveFacets: ['autores', 'Instituição', 'Ano'],
     facets: {
-      Ano: { type: 'value', sort: { value: 'asc' } },
-      autores: { type: 'value', sort: 'count' },
-      Instituição: { type: 'value', sort: 'count' },
+      Ano: { type: 'value' },
+      autores: { type: 'value' },
+      Instituição: { type: 'value' },
     },
   },
   autocompleteQuery: {
@@ -154,9 +155,9 @@ export default function App() {
                               ...context,
                               facets: {
                                 ...(context.facets || {}),
-                                ano: context.facets.Ano.map((s) => ({
+                                ano: context.facets.Ano.map((s: any) => ({
                                   ...s,
-                                  data: s.data.sort((a, b) => {
+                                  data: s.data.sort((a: any, b: any) => {
                                     if (a.value > b.value) return -1
                                     if (a.value < b.value) return 1
                                     return 0

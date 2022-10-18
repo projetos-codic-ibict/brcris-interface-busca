@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import useSWR from 'swr'
 
@@ -33,12 +34,12 @@ export const options = {
   },
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const fetcher = (...args: any[]) => fetch(...args).then((res) => res.json())
+const fetcher = (...args: any[]) =>
+  fetch(...(args as [any])).then((res) => res.json())
 
 export default function Chart() {
   const { data } = useSWR('/api/charts', fetcher)
-  const labels = data != null ? data.map((d) => d.key) : []
+  const labels = data != null ? data.map((d: any) => d.key) : []
   return (
     <div>
       <Navbar />
