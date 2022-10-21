@@ -1,0 +1,15 @@
+POST observatorio_artigos_prod/_update_by_query
+{
+  "query": {
+        "constant_score" : {
+            "filter" : {
+                "exists" : { "field" : "Revista" }
+            }
+        }
+
+  },
+  "script" : {
+      "source": "ctx._source.sugestao = ctx._source.Revista;",
+      "lang": "painless"
+  }
+}
