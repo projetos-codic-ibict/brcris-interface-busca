@@ -1,57 +1,59 @@
-import React, { useEffect } from "react";
-import { Options, Edge, Node } from "vis-network";
+/* eslint-disable react/display-name */
+/* eslint-disable import/no-anonymous-default-export */
+import React, { useEffect } from 'react'
+import { Options, Edge, Node } from 'vis-network'
 
-import useVisNetwork from "./useVisNetwork";
+import useVisNetwork from './useVisNetwork'
 
 const nodes: Node[] = [
   {
     id: 1,
-    label: "test",
-    title: "ПАО Т Плюс",
+    label: 'um',
+    title: '1',
     // level: 1,
-    group: "struct"
+    group: 'struct',
   },
   {
     id: 2,
-    label: "Филиал",
-    title: "Пермский филиал",
+    label: 'dois',
+    title: '2',
     // level: 2,
-    group: "struct"
+    group: 'struct',
   },
   {
     id: 3,
-    label: "Станция",
-    title: "Пермская ТЭЦ-6",
+    label: 'tres',
+    title: '3',
     // level: 3,
-    group: "object"
+    group: 'object',
   },
   {
     id: 4,
-    label: "РГЕ",
-    title: "Пермская ТЭЦ-6",
+    label: 'quatro',
+    title: '4',
     // level: 4,
-    group: "market"
+    group: 'market',
   },
   {
     id: 5,
-    label: "Турбина",
-    title: "ГТУ-7",
+    label: 'cinco',
+    title: '5',
     // level: 5,
-    group: "object"
+    group: 'object',
   },
   {
     id: 6,
-    label: "ГТПГ",
+    label: 'seis',
     // level: 4,
-    group: "market"
+    group: 'market',
   },
   {
     id: 7,
-    label: "test",
+    label: 'sete',
     // level: 3,
-    group: "object"
-  }
-];
+    group: 'object',
+  },
+]
 
 const edges: Edge[] = [
   { from: 1, to: 2, id: 1 },
@@ -63,69 +65,69 @@ const edges: Edge[] = [
   { from: 3, to: 6, id: 7 },
   { from: 1, to: 7, id: 8 },
   { from: 1, to: 7, id: 10 },
-  { from: 2, to: 7, id: 9 }
-];
+  { from: 2, to: 7, id: 9 },
+]
 
 const options: Options = {
   groups: {
-    market: {
-      shape: "triangleDown"
-    },
-    struct: {
-      shape: "hexagon"
-    }
+    // market: {
+    //   shape: "triangleDown"
+    // },
+    // struct: {
+    //   shape: "hexagon"
+    // }
   },
   interaction: {
     selectable: false,
-    selectConnectedEdges: false
+    selectConnectedEdges: false,
   },
   edges: {
     smooth: {
       enabled: true,
-      type: "diagonalCross",
-      roundness: 0.5
-    }
+      type: 'diagonalCross',
+      roundness: 0.5,
+    },
   },
   nodes: {
-    shape: "dot",
-    size: 16
+    shape: 'dot',
+    size: 16,
   },
   layout: {
     hierarchical: {
-      enabled: true
-    }
-  }
-};
+      enabled: true,
+    },
+  },
+}
 
 export default () => {
   const { ref, network } = useVisNetwork({
     options,
     edges,
-    nodes
-  });
+    nodes,
+  })
 
   const handleClick = () => {
-    if (!network) return;
+    if (!network) return
 
-    network.focus(5);
-  };
+    network.focus(5)
+  }
 
   useEffect(() => {
-    if (!network) return;
+    if (!network) return
 
-    network.once("beforeDrawing", () => {
-      network.focus(5);
-    });
+    network.once('beforeDrawing', () => {
+      network.focus(5)
+    })
     network.setSelection({
       edges: [1, 2, 3, 4, 5],
-      nodes: [1, 2, 3, 4, 5]
-    });
-  }, [network]);
+      nodes: [1, 2, 3, 4, 5],
+    })
+  }, [network])
 
   return (
     <>
       <button onClick={handleClick}>Focus</button>
-      <div style={{ height: 700, width: "100%" }} ref={ref} />
+      <div style={{ height: 700, width: '100%' }} ref={ref} />
     </>
-  );
-};
+  )
+}
