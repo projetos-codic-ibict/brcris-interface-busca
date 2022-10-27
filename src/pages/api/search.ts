@@ -12,3 +12,4 @@ export default async function handler(req: any, res: any) {
   const response = await connector.onSearch(requestState, queryConfig)
   res.json(response)
 }
+ 

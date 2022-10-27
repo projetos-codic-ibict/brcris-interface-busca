@@ -5,6 +5,8 @@ import { Options, Edge, Node } from 'vis-network'
 
 import useVisNetwork from './useVisNetwork'
 
+import useSWR from 'swr'
+
 const nodes: Node[] = [
   {
     id: 1,
@@ -100,6 +102,26 @@ const options: Options = {
 }
 
 export default () => {
+  const fetcher = (...args: Array<any>) =>
+    fetch(...(args as [any])).then((res) => res.json())
+
+  const { data } = useSWR('/api/visNetwork', fetcher)
+  const articles = data
+  let notas = []
+
+  if (articles !== undefined) {
+    for (let article of articles) {
+      for (let institution of article._source.institutions) {
+        if (institution.id !== nodes[article._source.institutions[institution]]?.id) {
+          notas.push({ id: institution.id, label: institution.name })
+        }
+      }
+    }
+    //console.log('123', data[1]._source.institutions)
+    console.log('123', notas)
+  }
+ 
+
   const { ref, network } = useVisNetwork({
     options,
     edges,
