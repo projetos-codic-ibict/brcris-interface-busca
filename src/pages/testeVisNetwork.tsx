@@ -7,145 +7,173 @@ import useVisNetwork from './useVisNetwork'
 
 import useSWR from 'swr'
 
-
 const nodesTest: any[] = [
   {
     id: '1',
-    institutions: {
-      id: '1',
-      name: 'Fiocruz',
-    }
+    institutions: [
+      {
+        id: '1',
+        name: 'Fiocruz',
+      },
+      {
+        id: '2',
+        name: 'São Paulo',
+      },
+    ],
   },
   {
     id: '2',
-    institutions: {
-      id: '2',
-      name: 'São Paulo',
-    }
+    institutions: [
+      {
+        id: '2',
+        name: 'São Paulo',
+      },
+      {
+        id: '1',
+        name: 'Fiocruz',
+      },
+    ],
   },
   {
     id: '3',
-    institutions: {
-      id: '3',
-      name: 'Pernambuco',
-    }
+    institutions: [
+      {
+        id: '3',
+        name: 'Pernambuco',
+      },
+      {
+        id: '1',
+        name: 'Fiocruz',
+      },
+    ],
   },
   {
     id: '4',
-    institutions: {
-      id: '4',
-      name: 'Fiocruz',
-    }
+    institutions: [
+      {
+        id: '1',
+        name: 'Fiocruz',
+      },
+      {
+        id: '3',
+        name: 'Pernambuco',
+      },
+      {
+        id: '2',
+        name: 'São Paulo',
+      },
+    ],
   },
   {
     id: '5',
-    institutions: {
-      id: '5',
-      name: 'São Paulo',
-    }
+    institutions: [
+      {
+        id: '2',
+        name: 'São Paulo',
+      },
+    ],
   },
   {
     id: '6',
-    institutions: {
-      id: '6',
-      name: 'Pernambuco',
-    }
+    institutions: [
+      {
+        id: '3',
+        name: 'Pernambuco',
+      },
+    ],
   },
   {
     id: '7',
-    institutions: {
-      id: '7',
-      name: 'Pernambuco',
+    institutions: [
+      {
+        id: '4',
+        name: 'Piaui',
+      },
+    ],
+  },
+]
+
+const nodes: Node[] = []
+const edges: Edge[] = []
+nodesTest.forEach((paper) => {
+  if (paper.institutions.length > 1) {
+    for (let i = 0; i < paper.institutions.length - 1; i++) {
+      for (let k = i + 1; k < paper.institutions.length; k++) {
+        const existedEdge = edges.find(
+          (edge) =>
+            (edge.from == paper.institutions[i].id &&
+              edge.to == paper.institutions[k].id) ||
+            (edge.to == paper.institutions[i].id &&
+              edge.from == paper.institutions[k].id)
+        )
+        if (existedEdge) {
+          existedEdge.width = existedEdge.width + 1
+          existedEdge.label = '' + existedEdge.width
+        } else {
+          const newEdge: Edge = {
+            id: paper.id,
+            from: paper.institutions[i].id,
+            to: paper.institutions[k].id,
+            width: 1,
+            label: '1',
+          }
+          edges.push(newEdge)
+        }
+      }
     }
   }
-]
+  paper.institutions.forEach((inst) => {
+    addNode(inst)
+  })
+})
 
-/* const nodes: Node[] = [
-  {
-    id: 1,
-    label: 'um',
-    title: '1',
-    // level: 1,
-    group: 'struct',
-  },
-  {
-    id: 2,
-    label: 'dois',
-    title: '2',
-    // level: 2,
-    group: 'struct',
-  },
-  {
-    id: 3,
-    label: 'tres',
-    title: '3',
-    // level: 3,
-    group: 'object',
-  },
-  {
-    id: 4,
-    label: 'quatro',
-    title: '4',
-    // level: 4,
-    group: 'market',
-  },
-  {
-    id: 5,
-    label: 'cinco',
-    title: '5',
-    // level: 5,
-    group: 'object',
-  },
-  {
-    id: 6,
-    label: 'seis',
-    // level: 4,
-    group: 'market',
-  },
-  {
-    id: 7,
-    label: 'sete',
-    // level: 3,
-    group: 'object',
-  },
-] */
-
-let nodesConverted: any[] = []
-
-for (let article of nodesTest) {
-  nodesConverted.push({ id: parseFloat(article.institutions?.id), label: article.institutions?.name })
+function addNode(inst: any) {
+  const existedNode = nodes.find((node) => node.id == inst.id)
+  if (existedNode) {
+    existedNode.size = existedNode.size ? existedNode.size + 1 : 1
+  } else {
+    const newNode: Node = {
+      id: inst.id,
+      label: inst.name,
+      size: 1,
+    }
+    nodes.push(newNode)
+  }
 }
 
-console.log('123', nodesConverted)
+console.log('nodes: ', nodes)
+console.log('edges: ', edges)
 
-const nodes: Node[] = nodesConverted
+// const nodes: Node[] = [
+//   {
+//     id: 1,
+//     label: 'um',
+//     title: 'um ',
+//     size: 5,
+//   },
+//   {
+//     id: 2,
+//     label: 'dois',
+//     title: '2',
+//     size: 20,
+//   },
+//   {
+//     id: 3,
+//     label: 'tres',
+//     title: '3',
+//     size: 10,
+//   },
+// ]
 
-
-const edges: Edge[] = [
-  { from: 1, to: 2, id: 1 },
-  { from: 1, to: 3, id: 6 },
-  { from: 2, to: 3, id: 2 },
-  { from: 3, to: 5, id: 3 },
-  { from: 3, to: 4, id: 4 },
-  { from: 4, to: 5, id: 5 },
-  { from: 3, to: 6, id: 7 },
-  { from: 1, to: 7, id: 8 },
-  { from: 1, to: 7, id: 10 },
-  { from: 2, to: 7, id: 9 },
-]
+// const edges: Edge[] = [
+//   { from: 1, to: 2, id: 1, width: 2, label: '2' },
+//   { from: 2, to: 3, id: 2, width: 5, label: '5' },
+// ]
 
 const options: Options = {
-  groups: {
-    // market: {
-    //   shape: "triangleDown"
-    // },
-    // struct: {
-    //   shape: "hexagon"
-    // }
-  },
   interaction: {
-    selectable: false,
-    selectConnectedEdges: false,
+    selectable: true,
+    selectConnectedEdges: true,
   },
   edges: {
     smooth: {
@@ -156,7 +184,6 @@ const options: Options = {
   },
   nodes: {
     shape: 'dot',
-    size: 16,
   },
   layout: {
     hierarchical: {
@@ -184,7 +211,6 @@ export default () => {
     //console.log('123', data[1]._source.institutions)
     console.log('teste: ', notas)
   } */
- 
 
   const { ref, network } = useVisNetwork({
     options,
@@ -200,14 +226,13 @@ export default () => {
 
   useEffect(() => {
     if (!network) return
-
     network.once('beforeDrawing', () => {
-      network.focus(5)
+      network.focus(1)
     })
-    network.setSelection({
-      edges: [1, 2, 3, 4, 5],
-      nodes: [1, 2, 3, 4, 5],
-    })
+    // network.setSelection({
+    //   edges: [1, 2],
+    //   nodes: [1, 2, 3],
+    // })
   }, [network])
 
   return (

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
-import useSWR from 'swr'
+import useSWR, { Key, Fetcher } from 'swr'
 
 import {
   Chart as ChartJS,
@@ -34,11 +34,12 @@ export const options = {
   },
 }
 
-const fetcher = (...args: any[]) =>
-  fetch(...(args as [any])).then((res) => res.json())
+const fetcher: Fetcher<[]> = (url: string) =>
+  fetch(url).then((res) => res.json())
+const apiUrl: Key = '/api/charts'
 
 export default function Chart() {
-  const { data } = useSWR('/api/charts', fetcher)
+  const { data } = useSWR(apiUrl, fetcher)
   const labels = data != null ? data.map((d: any) => d.key) : []
   return (
     <div>
