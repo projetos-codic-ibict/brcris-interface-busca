@@ -107,7 +107,7 @@ nodesTest.forEach((paper) => {
               edge.from == paper.institutions[k].id)
         )
         if (existedEdge) {
-          existedEdge.width = existedEdge.width + 1
+          existedEdge.width = Number(existedEdge.width) + 1
           existedEdge.label = '' + existedEdge.width
         } else {
           const newEdge: Edge = {
@@ -122,7 +122,7 @@ nodesTest.forEach((paper) => {
       }
     }
   }
-  paper.institutions.forEach((inst) => {
+  paper.institutions.forEach((inst: any) => {
     addNode(inst)
   })
 })
