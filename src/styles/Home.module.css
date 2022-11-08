@@ -107,6 +107,12 @@
   height: 1em;
   margin-left: 0.5rem;
 }
+.content {
+  display: flex;
+}
+.indicators {
+  max-width: 25%;
+}
 
 @media (max-width: 600px) {
   .grid {

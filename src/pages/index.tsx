@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import Connector from '../services/APIConnector'
-
+import styles from '../styles/Home.module.css'
 import {
   ErrorBoundary,
   Facet,
@@ -17,6 +17,7 @@ import {
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import Navbar from '../components/Navbar'
+import Indicators from '../components/Indicators'
 
 const connector = new Connector()
 
@@ -29,7 +30,7 @@ const config = {
     searchQuery: {
       filters: [],
       search_fields: {
-        Título: {},
+        Revista: {},
       },
     },
     result_fields: {
@@ -117,70 +118,83 @@ export default function App() {
             return (
               <div className="App">
                 <ErrorBoundary>
-                  <Layout
-                    header={
-                      <SearchBox
-                        autocompleteMinimumCharacters={3}
-                        autocompleteResults={{
-                          linkTarget: '_blank',
-                          sectionTitle: 'Results',
-                          titleField: 'Título',
-                          urlField: '',
-                          shouldTrackClickThrough: true,
-                          clickThroughTags: ['test'],
-                        }}
-                        autocompleteSuggestions={true}
-                        debounceLength={0}
-                      />
-                    }
-                    sideContent={
-                      <div>
-                        {wasSearched && (
-                          <Sorting
-                            label={'Sort by'}
-                            sortOptions={SORT_OPTIONS}
+                  <div className="container">
+                    <SearchBox
+                      autocompleteMinimumCharacters={3}
+                      autocompleteResults={{
+                        linkTarget: '_blank',
+                        sectionTitle: 'Results',
+                        titleField: 'Título',
+                        urlField: '',
+                        shouldTrackClickThrough: true,
+                        clickThroughTags: ['test'],
+                      }}
+                      autocompleteSuggestions={true}
+                      debounceLength={0}
+                    />
+                  </div>
+                  <div className={styles.content}>
+                    <Layout
+                      // header={}
+                      sideContent={
+                        <div>
+                          {wasSearched && (
+                            <Sorting
+                              label={'Sort by'}
+                              sortOptions={SORT_OPTIONS}
+                            />
+                          )}
+                          {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
+                          <Facet
+                            key={'3'}
+                            field={'autores'}
+                            label={'autores'}
                           />
-                        )}
-                        {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
-                        <Facet key={'3'} field={'autores'} label={'autores'} />
-                        <Facet
-                          key={'2'}
-                          field={'Instituição'}
-                          label={'instituição'}
-                        />
-                        <Facet
-                          mapContextToProps={(context) => {
-                            if (!context.facets.Ano) return context
-                            return {
-                              ...context,
-                              facets: {
-                                ...(context.facets || {}),
-                                ano: context.facets.Ano.map((s: any) => ({
-                                  ...s,
-                                  data: s.data.sort((a: any, b: any) => {
-                                    if (a.value > b.value) return -1
-                                    if (a.value < b.value) return 1
-                                    return 0
-                                  }),
-                                })),
-                              },
-                            }
-                          }}
-                          field="Ano"
-                          label="ano"
-                          show={10}
-                        />
+                          <Facet
+                            key={'2'}
+                            field={'Instituição'}
+                            label={'instituição'}
+                          />
+                          <Facet
+                            mapContextToProps={(context) => {
+                              if (!context.facets.Ano) return context
+                              return {
+                                ...context,
+                                facets: {
+                                  ...(context.facets || {}),
+                                  ano: context.facets.Ano.map((s: any) => ({
+                                    ...s,
+                                    data: s.data.sort((a: any, b: any) => {
+                                      if (a.value > b.value) return -1
+                                      if (a.value < b.value) return 1
+                                      return 0
+                                    }),
+                                  })),
+                                },
+                              }
+                            }}
+                            field="Ano"
+                            label="ano"
+                            show={10}
+                          />
+                        </div>
+                      }
+                      bodyContent={<Results />}
+                      bodyHeader={
+                        <React.Fragment>
+                          {wasSearched && <PagingInfo />}
+                          {wasSearched && <ResultsPerPage />}
+                        </React.Fragment>
+                      }
+                      bodyFooter={<Paging />}
+                    />
+                    <div className={styles.indicators}>
+                      <div className="sui-layout-header">
+                        <div className="sui-layout-header__inner"></div>
                       </div>
-                    }
-                    bodyContent={<Results />}
-                    bodyHeader={
-                      <React.Fragment>
-                        {wasSearched && <PagingInfo />}
-                        {wasSearched && <ResultsPerPage />}
-                      </React.Fragment>
-                    }
-                    bodyFooter={<Paging />}
-                  />
+                      <Indicators />
+                    </div>
+                  </div>
                 </ErrorBoundary>
               </div>
             )

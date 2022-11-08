@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import useSWR, { Key } from 'swr'
+import { withSearch } from '@elastic/react-search-ui'
 
 import {
   Chart as ChartJS,
@@ -12,7 +13,6 @@ import {
   Legend,
 } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
-import Navbar from '../components/Navbar'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -22,7 +22,7 @@ export const options = {
     yAxisKey: 'doc_count',
   },
   responsive: true,
-  // aspectRatio: 1,
+  aspectRatio: 1,
   plugins: {
     legend: {
       position: 'bottom' as const,
@@ -42,14 +42,15 @@ const fetcher = (args: any) =>
   }).then((res) => res.json())
 
 const apiUrl: Key = '/api/charts'
-
-export default function Chart() {
-  const { data } = useSWR({ url: apiUrl, params: {} }, fetcher)
+function ListenFilters({ filters, searchTerm }) {
+  const { data } = useSWR(
+    { url: apiUrl, params: { filters, searchTerm } },
+    fetcher
+  )
 
   const labels = data != null ? data.map((d: any) => d.key) : []
   return (
-    <div>
-      <Navbar />
+    <div className="container">
       <Bar
         options={options}
         width="500"
@@ -85,3 +86,8 @@ export default function Chart() {
     </div>
   )
 }
+
+export default withSearch(({ filters, searchTerm }) => ({
+  filters,
+  searchTerm,
+}))(ListenFilters)
