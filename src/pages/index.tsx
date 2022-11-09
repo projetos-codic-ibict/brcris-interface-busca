@@ -30,41 +30,53 @@ const config = {
     searchQuery: {
       filters: [],
       search_fields: {
-        Revista: {},
+        'title.keyword': {},
       },
     },
     result_fields: {
-      Título: {
+      title: {
         snippet: {},
       },
-      Ano: {
+      publicationDate: {
         snippet: {},
       },
-      autores: {
+      author: {
+        raw: [],
+      },
+      keyword: {
+        snippet: {},
+      },
+      journal: {
         raw: {},
       },
-      Instituição: {
-        snippet: {},
+      type: {
+        raw: {},
       },
-      Revista: {
+      orgunit: {
         snippet: {},
       },
     },
-    disjunctiveFacets: ['autores', 'Instituição', 'Ano'],
+    disjunctiveFacets: [
+      'author.name.keyword',
+      'keyword.keyword',
+      'publicationDate.keyword',
+    ],
     facets: {
-      Ano: { type: 'value' },
-      autores: { type: 'value' },
-      Instituição: { type: 'value' },
+      'publicationDate.keyword': { type: 'value', size: 100 },
+      'author.name.keyword': { type: 'value' },
+      'keyword.keyword': { type: 'value' },
+      'type.keyword': { type: 'value' },
+      'orgunit.name.keyword': { type: 'value' },
     },
   },
   autocompleteQuery: {
     results: {
       search_fields: {
-        Revista: {},
+        'titlesuggest.suggest': {},
       },
       resultsPerPage: 5,
       result_fields: {
-        Revista: {
+        title: {
           snippet: {
             size: 100,
             fallback: true,
@@ -75,7 +87,7 @@ const config = {
     suggestions: {
       types: {
         documents: {
-          fields: ['sugestao'],
+          fields: ['suggest'],
         },
       },
       size: 4,
@@ -92,7 +104,7 @@ const SORT_OPTIONS = [
     name: 'Ano ASC',
     value: [
       {
-        field: 'Ano',
+        field: 'publicationDate.keyword',
         direction: 'asc',
       },
     ],
@@ -101,7 +113,7 @@ const SORT_OPTIONS = [
     name: 'Ano DESC',
     value: [
       {
-        field: 'Ano',
+        field: 'publicationDate.keyword',
         direction: 'desc',
       },
     ],
@@ -124,10 +136,9 @@ export default function App() {
                       autocompleteResults={{
                         linkTarget: '_blank',
                         sectionTitle: 'Results',
-                        titleField: 'Título',
+                        titleField: 'title.keyword',
                         urlField: '',
                         shouldTrackClickThrough: true,
-                        clickThroughTags: ['test'],
                       }}
                       autocompleteSuggestions={true}
                       debounceLength={0}
@@ -147,22 +158,35 @@ export default function App() {
                           {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
                           <Facet
                             key={'3'}
-                            field={'autores'}
+                            field={'author.name.keyword'}
                             label={'autores'}
                           />
                           <Facet
                             key={'2'}
-                            field={'Instituição'}
-                            label={'instituição'}
+                            field={'keyword.keyword'}
+                            label={'Palavra-chave'}
+                          />
+                          <Facet
+                            key={'3'}
+                            field={'orgunit.name.keyword'}
+                            label={'Insituição'}
+                          />
+                          <Facet
+                            key={'4'}
+                            field={'type.keyword'}
+                            label={'Tipo'}
                           />
                           <Facet
                             mapContextToProps={(context) => {
-                              if (!context.facets.Ano) return context
+                              if (!context.facets['publicationDate.keyword'])
+                                return context
                               return {
                                 ...context,
                                 facets: {
                                   ...(context.facets || {}),
-                                  ano: context.facets.Ano.map((s: any) => ({
+                                  year: context.facets[
+                                    'publicationDate.keyword'
+                                  ].map((s: any) => ({
                                     ...s,
                                     data: s.data.sort((a: any, b: any) => {
                                       if (a.value > b.value) return -1
@@ -173,13 +197,13 @@ export default function App() {
                                 },
                               }
                             }}
-                            field="Ano"
+                            field="publicationDate.keyword"
                             label="ano"
                             show={10}
                           />
                         </div>
                       }
-                      bodyContent={<Results />}
+                      bodyContent={<Results titleField="title" />}
                       bodyHeader={
                         <React.Fragment>
                           {wasSearched && <PagingInfo />}

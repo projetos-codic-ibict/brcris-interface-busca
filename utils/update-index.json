@@ -1,15 +1,39 @@
-POST observatorio_artigos_prod/_update_by_query
+//criar o campo do tipo completetion
+
+PUT pqseniors-pubs/_mapping
+{
+  "properties": {
+    "suggest":  { "type": "completion"}
+  }
+}
+
+PUT pqseniors-pubs/_mapping
+{
+  "properties": {
+    "titlesuggest":  { 
+      "type": "text",
+      "fields": {
+        "suggest": {
+          "type": "search_as_you_type"
+        }
+      }
+    }
+  }
+}
+
+
+POST pqseniors-pubs/_update_by_query
 {
   "query": {
         "constant_score" : {
             "filter" : {
-                "exists" : { "field" : "Revista" }
+                "exists" : { "field" : "title" }
             }
         }
 
   },
   "script" : {
-      "source": "ctx._source.sugestao = ctx._source.Revista;",
+      "source": "ctx._source.suggest = ctx._source.title;",
       "lang": "painless"
   }
 }

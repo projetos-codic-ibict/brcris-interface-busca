@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Client } from 'es7'
-import IndicatorsSearchQuery from '../../components/IndicatorsSearchQuery'
 
 const client = new Client({
   maxRetries: 5,
@@ -13,13 +12,16 @@ const client = new Client({
 })
 
 const queryText = {
-  _source: ['Ano'],
+  _source: ['publicationDate.keyword'],
   size: 0,
   aggs: {
     genres: {
       terms: {
-        field: 'Ano',
+        field: 'publicationDate.keyword',
         size: 100,
+        order: {
+          _key: 'desc',
+        },
       },
     },
   },
@@ -56,7 +58,7 @@ const proxy = async (req: any, res: any) => {
   }
   console.log(JSON.stringify(queryText))
   const response = await client.search({
-    index: 'observatorio_artigos_prod',
+    index: 'pqseniors-pubs',
     body: queryText,
   })
   res.json(response.body.aggregations.genres.buckets)
