@@ -203,7 +203,9 @@ export default function App() {
                           />
                         </div>
                       }
-                      bodyContent={<Results titleField="title" />}
+                      bodyContent={
+                        <Results /** resultView={CustomResultView} **/ />
+                      }
                       bodyHeader={
                         <React.Fragment>
                           {wasSearched && <PagingInfo />}
@@ -228,3 +230,33 @@ export default function App() {
     </div>
   )
 }
+
+const CustomResultView = ({
+  result,
+  onClickLink,
+}: {
+  result
+  onClickLink: () => void
+}) => (
+  <li className="sui-result">
+    <div className="sui-result__header">
+      <h5>{result.title.raw}</h5>
+    </div>
+    <div className="sui-result__body">
+      <ul className="sui-result__details">
+        <li>
+          <span className="sui-result__key">Autor: </span>
+          <span className="sui-result__value">
+            <a
+              target="_blank"
+              href={result.author ? `/author/${result.author.raw[0].id}` : '/'}
+              rel="noreferrer"
+            >
+              {result.author ? result.author.raw[0].name : '--'}
+            </a>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </li>
+)
