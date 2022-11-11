@@ -37,3 +37,19 @@ POST pqseniors-pubs/_update_by_query
       "lang": "painless"
   }
 }
+
+POST pqseniors-pubs/_update_by_query
+{
+  "query": {
+        "constant_score" : {
+            "filter" : {
+                "exists" : { "field" : "id" }
+            }
+        }
+
+  },
+  "script" : {
+      "source": "ctx._source.vivo_link = 'https://brcris.ibict.br/vivo/display/publ_'+ctx._source.id;",
+      "lang": "painless"
+  }
+}

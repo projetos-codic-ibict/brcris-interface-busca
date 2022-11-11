@@ -18,20 +18,22 @@ import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import Navbar from '../components/Navbar'
 import Indicators from '../components/Indicators'
+import DocumentType from '../components/DocumentType'
 
 const connector = new Connector()
 
 const config = {
   debug: true,
   alwaysSearchOnInitialLoad: true,
-  hasA11yNotifications: true,
+  // hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
     searchQuery: {
-      filters: [],
-      search_fields: {
-        'title.keyword': {},
+      'title.keyword': {
+        weight: 3,
       },
+      author: {},
+      keyword: {},
     },
     result_fields: {
       title: {
@@ -54,6 +56,9 @@ const config = {
       },
       orgunit: {
         snippet: {},
+      },
+      vivo_link: {
+        raw: {},
       },
     },
     disjunctiveFacets: [
@@ -81,6 +86,9 @@ const config = {
             size: 100,
             fallback: true,
           },
+        },
+        vivo_link: {
+          raw: {},
         },
       },
     },
@@ -136,11 +144,12 @@ export default function App() {
                       autocompleteResults={{
                         linkTarget: '_blank',
                         sectionTitle: 'Results',
-                        titleField: 'title.keyword',
-                        urlField: '',
+                        titleField: 'title',
+                        urlField: 'vivo_link',
                         shouldTrackClickThrough: true,
+                        clickThroughTags: ['test'],
                       }}
-                      autocompleteSuggestions={true}
+                      autocompleteSuggestions={false}
                       debounceLength={0}
                     />
                   </div>
@@ -157,7 +166,7 @@ export default function App() {
                           )}
                           {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
                           <Facet
-                            key={'3'}
+                            key={'1'}
                             field={'author.name.keyword'}
                             label={'autores'}
                           />
@@ -219,6 +228,7 @@ export default function App() {
                         <div className="sui-layout-header__inner"></div>
                       </div>
                       <Indicators />
+                      {/* <DocumentType /> */}
                     </div>
                   </div>
                 </ErrorBoundary>

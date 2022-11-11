@@ -40,7 +40,14 @@ const queryText = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const proxy = async (req: any, res: any) => {
   const data = JSON.parse(req.body)
-  console.log('req.body', data.filters)
+
+  // if (data.indicator) {
+  //   queryText._source = [data.indicator]
+  //   queryText.aggs.genres.terms.field = data.indicator
+  // }
+
+  console.log(data.filters)
+
   if (data.searchTerm) {
     queryText.query.bool.must.query_string.query = data.searchTerm
   } else {
