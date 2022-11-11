@@ -17,8 +17,8 @@ import {
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import Navbar from '../components/Navbar'
-import Indicators from '../components/Indicators'
-import DocumentType from '../components/DocumentType'
+import Indicators from '../components/Indicators/Index'
+import ClearFilters from '../components/ClearFilters'
 
 const connector = new Connector()
 
@@ -155,7 +155,7 @@ export default function App() {
                   </div>
                   <div className={styles.content}>
                     <Layout
-                      // header={}
+                      header={<ClearFilters />}
                       sideContent={
                         <div>
                           {wasSearched && (
@@ -228,7 +228,6 @@ export default function App() {
                         <div className="sui-layout-header__inner"></div>
                       </div>
                       <Indicators />
-                      {/* <DocumentType /> */}
                     </div>
                   </div>
                 </ErrorBoundary>
@@ -241,32 +240,32 @@ export default function App() {
   )
 }
 
-const CustomResultView = ({
-  result,
-  onClickLink,
-}: {
-  result
-  onClickLink: () => void
-}) => (
-  <li className="sui-result">
-    <div className="sui-result__header">
-      <h5>{result.title.raw}</h5>
-    </div>
-    <div className="sui-result__body">
-      <ul className="sui-result__details">
-        <li>
-          <span className="sui-result__key">Autor: </span>
-          <span className="sui-result__value">
-            <a
-              target="_blank"
-              href={result.author ? `/author/${result.author.raw[0].id}` : '/'}
-              rel="noreferrer"
-            >
-              {result.author ? result.author.raw[0].name : '--'}
-            </a>
-          </span>
-        </li>
-      </ul>
-    </div>
-  </li>
-)
+// const CustomResultView = ({
+//   result,
+//   onClickLink,
+// }: {
+//   result
+//   onClickLink: () => void
+// }) => (
+//   <li className="sui-result">
+//     <div className="sui-result__header">
+//       <h5>{result.title.raw}</h5>
+//     </div>
+//     <div className="sui-result__body">
+//       <ul className="sui-result__details">
+//         <li>
+//           <span className="sui-result__key">Autor: </span>
+//           <span className="sui-result__value">
+//             <a
+//               target="_blank"
+//               href={result.author ? `/author/${result.author.raw[0].id}` : '/'}
+//               rel="noreferrer"
+//             >
+//               {result.author ? result.author.raw[0].name : '--'}
+//             </a>
+//           </span>
+//         </li>
+//       </ul>
+//     </div>
+//   </li>
+// )

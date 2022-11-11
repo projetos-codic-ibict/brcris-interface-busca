@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/display-name */
 /* eslint-disable import/no-anonymous-default-export */
 import React, { useEffect } from 'react'
 import { Options, Edge, Node } from 'vis-network'
 
-import useVisNetwork from './useVisNetwork'
+import useVisNetwork from '../services/useVisNetwork'
 
-import useSWR from 'swr'
+// import useSWR from 'swr'
 
 const nodesTest: any[] = [
   {
