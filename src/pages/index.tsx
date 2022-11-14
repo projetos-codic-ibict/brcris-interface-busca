@@ -25,7 +25,7 @@ const connector = new Connector()
 const config = {
   debug: true,
   alwaysSearchOnInitialLoad: true,
-  // hasA11yNotifications: true,
+  hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
     searchQuery: {
@@ -33,7 +33,6 @@ const config = {
         weight: 3,
       },
       author: {},
-      keyword: {},
     },
     result_fields: {
       title: {
@@ -149,8 +148,9 @@ export default function App() {
                         shouldTrackClickThrough: true,
                         clickThroughTags: ['test'],
                       }}
-                      autocompleteSuggestions={false}
-                      debounceLength={0}
+                      searchAsYouType={true}
+                      autocompleteSuggestions={true}
+                      debounceLength={500}
                     />
                   </div>
                   <div className={styles.content}>
