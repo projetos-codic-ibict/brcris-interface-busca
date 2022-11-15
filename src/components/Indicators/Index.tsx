@@ -122,7 +122,7 @@ function ListenFilters({ filters, searchTerm }: SearchContextState) {
       />
 
       <Pie
-        options={options}
+        options={optionsType}
         width="500"
         data={{
           labels: typeLabels,
