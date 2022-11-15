@@ -248,7 +248,12 @@ const CustomResultView = ({
   <li className="sui-result">
     <div className="sui-result__header">
       <h6>
-        <a target="_blank" href={result.vivo_link.raw} rel="noreferrer">
+        <a
+          onClick={onClickLink}
+          target="_blank"
+          href={result.vivo_link.raw}
+          rel="noreferrer"
+        >
           {result.title.raw}
         </a>
       </h6>
@@ -281,10 +286,8 @@ const CustomResultView = ({
 
           <span className="sui-result__key">OrgUnit:</span>
           <span className="sui-result__value">
-          {result.orgunit?.raw.map((org: any) => (
-              <>
-                {org.name}
-              </>
+            {result.orgunit?.raw.map((org: any) => (
+              <>{org.name}</>
             ))}
           </span>
           <br />
@@ -296,9 +299,7 @@ const CustomResultView = ({
           <span className="sui-result__key">Revista: </span>
           <span className="sui-result__value">
             {result.journal?.raw.map((journal: any) => (
-              <>
-                {journal.title ? journal.title : journal}
-              </>
+              <>{journal.title ? journal.title : journal}</>
             ))}
           </span>
         </li>
