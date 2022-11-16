@@ -149,7 +149,7 @@ export default function App() {
                         shouldTrackClickThrough: true,
                         clickThroughTags: ['test'],
                       }}
-                      searchAsYouType={true}
+                      searchAsYouType={false}
                       autocompleteSuggestions={true}
                       debounceLength={500}
                     />

@@ -61,25 +61,40 @@ export const options = {
 }
 
 const fetcher = (args: any) =>
-  fetch(args.url, {
-    body: JSON.stringify(args.params),
-    method: 'POST',
-  }).then((res) => res.json())
+  !args.url
+    ? null
+    : fetch(args.url, {
+        body: JSON.stringify(args.params),
+        method: 'POST',
+      }).then((res) => res.json())
 
-const apiUrl: Key = '/api/indicators'
+let cache: any[] = []
 
-function ListenFilters({ filters, searchTerm }: SearchContextState) {
-  const indicatorsBuckets = useYearIndicators(filters, searchTerm)
+function ListenFilters({ filters, searchTerm, isLoading }: SearchContextState) {
+  const apiUrl: Key = '/api/indicators'
 
+  let indicatorsBuckets: any[] = []
+
+  indicatorsBuckets = useYearIndicators(
+    !isLoading && cache?.length > 0 ? null : apiUrl,
+    filters,
+    searchTerm
+  )
   console.log('indicatorsBuckets', indicatorsBuckets)
+  if (indicatorsBuckets) {
+    // para evitar que fique fazendo consultas a toda mudança de estado
+    // agora só faz consulta de dados para o gráfico quando realizar busca de documentos, isLoading = true
+    cache = indicatorsBuckets
+  } else {
+    indicatorsBuckets = cache
+  }
+
   const yearIndicators = indicatorsBuckets ? indicatorsBuckets[0] : []
-  console.log('yearIndicators: ', yearIndicators)
 
   const yearLabels =
     yearIndicators != null ? yearIndicators.map((d: any) => d.key) : []
 
   const typeIndicators = indicatorsBuckets ? indicatorsBuckets[1] : []
-  console.log('typeIndicators: ', typeIndicators)
 
   const typeLabels =
     typeIndicators != null ? typeIndicators.map((d: any) => d.key) : []
@@ -155,15 +170,20 @@ function ListenFilters({ filters, searchTerm }: SearchContextState) {
   )
 }
 
-export default withSearch(({ filters, searchTerm }) => ({
+export default withSearch(({ filters, searchTerm, isLoading }) => ({
   filters,
   searchTerm,
+  isLoading,
 }))(ListenFilters)
 
-function useYearIndicators(filters: any, searchTerm: any): any {
+function useYearIndicators(
+  url: string | null,
+  filters: any,
+  searchTerm: any
+): any {
   const { data } = useSWR(
     {
-      url: apiUrl,
+      url,
       params: [
         {
           filters,
