@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react'
 import Connector from '../services/APIConnector'
@@ -65,11 +66,46 @@ const configDefault = {
       'publicationDate.keyword',
     ],
     facets: {
-      'publicationDate.keyword': { type: 'value', size: 100 },
+      // 'publicationDate.keyword': { type: 'value', size: 100 },
       'author.name.keyword': { type: 'value' },
       'keyword.keyword': { type: 'value' },
       'type.keyword': { type: 'value' },
       'orgunit.name.keyword': { type: 'value' },
+      'publicationDate.keyword': {
+        type: 'range',
+        ranges: [
+          {
+            from: '2020',
+            to: new Date().getUTCFullYear().toString(),
+            name: `2020 - ${new Date().getUTCFullYear()}`,
+          },
+          {
+            from: '2015',
+            to: '2020',
+            name: '2015 - 2020',
+          },
+          {
+            from: '2010',
+            to: '2015',
+            name: '2010 - 2015',
+          },
+          {
+            from: '2000',
+            to: '2010',
+            name: '2000 - 2010',
+          },
+          {
+            from: '1990',
+            to: '2000',
+            name: '1990 - 2000',
+          },
+          {
+            from: '1950',
+            to: '1990',
+            name: '1950 - 1990',
+          },
+        ],
+      },
     },
   },
   // autocompleteQuery: {
@@ -129,8 +165,7 @@ const SORT_OPTIONS = [
 export default function App() {
   const [config, setConfig] = useState(configDefault)
 
-  function setSearchFields(value) {
-    console.log('########:', value)
+  function setSearchFields(value: string) {
     config.searchQuery.search_fields = {
       [value]: {},
     }
@@ -251,6 +286,12 @@ export default function App() {
                             label={'Tipo'}
                           />
                           <Facet
+                            key={'5'}
+                            field={'publicationDate.keyword'}
+                            filterType={'none'}
+                            label={'Ano'}
+                          />
+                          {/* <Facet
                             mapContextToProps={(context) => {
                               if (!context.facets['publicationDate.keyword'])
                                 return context
@@ -274,7 +315,7 @@ export default function App() {
                             field="publicationDate.keyword"
                             label="ano"
                             show={10}
-                          />
+                          /> */}
                         </div>
                       }
                       bodyContent={<Results resultView={CustomResultView} />}
