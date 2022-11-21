@@ -28,3 +28,24 @@ a {
     background: black;
   }
 }
+
+.navbar {
+  margin-bottom: 2rem;
+}
+
+.search-card .nav-tabs {
+  margin-bottom: 1rem;
+}
+
+.search-card .nav-tabs .nav-link {
+  border: none;
+}
+
+.search-card .nav-tabs .nav-item.show .nav-link,
+.search-card .nav-tabs .nav-link.active {
+  border-bottom: 2px solid #0096b6;
+}
+
+.search-card .sui-search-box__submit {
+  background-color: #0096b6;
+}

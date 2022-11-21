@@ -14,10 +14,11 @@ const client = new Client({
 })
 
 const queryTextModel = {
+  track_total_hits: true,
   _source: [],
   size: 0,
   aggs: {
-    genres: {
+    aggregate: {
       terms: {
         field: '',
         size: 100,
@@ -50,7 +51,7 @@ function fillQuery(data: RequestData) {
 
   if (data.indicator) {
     queryText._source = [data.indicator]
-    queryText.aggs.genres.terms.field = data.indicator
+    queryText.aggs.aggregate.terms.field = data.indicator
   }
 
   if (data.searchTerm) {
@@ -88,7 +89,7 @@ const proxy = async (req: any, res: any) => {
   })
 
   const buckets = body.responses.map(
-    (resp: any) => resp.aggregations.genres.buckets
+    (resp: any) => resp.aggregations.aggregate.buckets
   )
 
   res.json(buckets)

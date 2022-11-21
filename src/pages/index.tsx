@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
+import React, { useState } from 'react'
 import Connector from '../services/APIConnector'
 import styles from '../styles/Home.module.css'
 import {
@@ -23,17 +23,15 @@ import CustomResultView from '../components/CustomResultView'
 
 const connector = new Connector()
 
-const config = {
+const configDefault = {
   debug: true,
   alwaysSearchOnInitialLoad: true,
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    searchQuery: {
-      'title.keyword': {
-        weight: 3,
-      },
-      author: {},
+    track_total_hits: true,
+    search_fields: {
+      title: {},
     },
     result_fields: {
       title: {
@@ -74,33 +72,33 @@ const config = {
       'orgunit.name.keyword': { type: 'value' },
     },
   },
-  autocompleteQuery: {
-    results: {
-      search_fields: {
-        'titlesuggest.suggest': {},
-      },
-      resultsPerPage: 5,
-      result_fields: {
-        title: {
-          snippet: {
-            size: 100,
-            fallback: true,
-          },
-        },
-        vivo_link: {
-          raw: {},
-        },
-      },
-    },
-    suggestions: {
-      types: {
-        documents: {
-          fields: ['suggest'],
-        },
-      },
-      size: 4,
-    },
-  },
+  // autocompleteQuery: {
+  //   results: {
+  //     search_fields: {
+  //       'titlesuggest.suggest': {},
+  //     },
+  //     resultsPerPage: 5,
+  //     result_fields: {
+  //       title: {
+  //         snippet: {
+  //           size: 100,
+  //           fallback: true,
+  //         },
+  //       },
+  //       vivo_link: {
+  //         raw: {},
+  //       },
+  //     },
+  //   },
+  //   suggestions: {
+  //     types: {
+  //       documents: {
+  //         fields: ['suggest'],
+  //       },
+  //     },
+  //     size: 4,
+  //   },
+  // },
 }
 
 const SORT_OPTIONS = [
@@ -129,6 +127,15 @@ const SORT_OPTIONS = [
 ]
 
 export default function App() {
+  const [config, setConfig] = useState(configDefault)
+
+  function setSearchFields(value) {
+    console.log('########:', value)
+    config.searchQuery.search_fields = {
+      [value]: {},
+    }
+  }
+
   return (
     <div>
       <Navbar />
@@ -139,20 +146,77 @@ export default function App() {
               <div className="App">
                 <ErrorBoundary>
                   <div className="container">
-                    <SearchBox
-                      autocompleteMinimumCharacters={3}
-                      autocompleteResults={{
-                        linkTarget: '_blank',
-                        sectionTitle: 'Results',
-                        titleField: 'title',
-                        urlField: 'vivo_link',
-                        shouldTrackClickThrough: true,
-                        clickThroughTags: ['test'],
-                      }}
-                      searchAsYouType={false}
-                      autocompleteSuggestions={true}
-                      debounceLength={500}
-                    />
+                    <div className="row">
+                      <div className="col-md-6"></div>
+                      <div className="col-md-6">
+                        <div className="card  search-card">
+                          <div className="card-body">
+                            <h5 className="card-title">Pesquisa</h5>
+                            <ul
+                              className="nav nav-tabs"
+                              id="myTab"
+                              role="tablist"
+                            >
+                              <li className="nav-item" role="presentation">
+                                <button
+                                  className="nav-link active"
+                                  id="home-tab"
+                                  data-bs-toggle="tab"
+                                  data-bs-target="#home"
+                                  type="button"
+                                  role="tab"
+                                  aria-controls="home"
+                                  aria-selected="true"
+                                  onClick={() => setSearchFields('title')}
+                                >
+                                  Título
+                                </button>
+                              </li>
+                              <li className="nav-item" role="presentation">
+                                <button
+                                  className="nav-link"
+                                  id="profile-tab"
+                                  data-bs-toggle="tab"
+                                  data-bs-target="#profile"
+                                  type="button"
+                                  role="tab"
+                                  aria-controls="profile"
+                                  aria-selected="false"
+                                  onClick={() => setSearchFields('author.name')}
+                                >
+                                  Autor
+                                </button>
+                              </li>
+                            </ul>
+                            <div className="tab-content" id="myTabContent">
+                              <div
+                                className="tab-pane fade show active"
+                                id="home"
+                                role="tabpanel"
+                                aria-labelledby="home-tab"
+                              >
+                                <SearchBox />
+                              </div>
+                              <div
+                                className="tab-pane fade"
+                                id="profile"
+                                role="tabpanel"
+                                aria-labelledby="profile-tab"
+                              >
+                                <SearchBox />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* <select name="fields" onChange={setSearchFields}>
+                      <option selected value="title">
+                        Título
+                      </option>
+                      <option value="author.name">Autor</option>
+                    </select> */}
+                      </div>
+                    </div>
                   </div>
                   <div className={styles.content}>
                     <Layout
