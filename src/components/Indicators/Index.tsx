@@ -80,7 +80,6 @@ function ListenFilters({ filters, searchTerm, isLoading }: SearchContextState) {
     filters,
     searchTerm
   )
-  console.log('indicatorsBuckets', indicatorsBuckets)
   if (indicatorsBuckets) {
     // para evitar que fique fazendo consultas a toda mudança de estado
     // agora só faz consulta de dados para o gráfico quando realizar busca de documentos, isLoading = true

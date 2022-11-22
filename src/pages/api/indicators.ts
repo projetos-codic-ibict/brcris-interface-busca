@@ -72,13 +72,11 @@ function fillQuery(data: RequestData) {
 
 function getFilterFormated(filter: Filter): any {
   if (filter.type === 'none') {
-    const matrix = filter.values.map((val) => val.split(' - '))
+    const matrix = filter.values.map((val: any) => val.split(' - '))
     const values = [].concat(...matrix)
     values.sort()
     const from = values[0]
     const to = values[values.length - 1]
-
-    console.log('Range: ', from, to)
 
     return {
       range: {
@@ -95,7 +93,6 @@ function getFilterFormated(filter: Filter): any {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const proxy = async (req: any, res: any) => {
   const datas: RequestData[] = JSON.parse(req.body)
-  console.log('datas: ', JSON.stringify(datas))
   const querys: any[] = []
 
   datas.forEach((data) => {

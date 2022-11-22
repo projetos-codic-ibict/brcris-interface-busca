@@ -15,6 +15,7 @@ import {
   Sorting,
   WithSearch,
 } from '@elastic/react-search-ui'
+import { SearchDriverOptions } from '@elastic/search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import Navbar from '../components/Navbar'
@@ -31,9 +32,7 @@ const configDefault = {
   apiConnector: connector,
   searchQuery: {
     track_total_hits: true,
-    search_fields: {
-      title: {},
-    },
+    search_fields: {},
     result_fields: {
       title: {
         snippet: {},
@@ -162,8 +161,18 @@ const SORT_OPTIONS = [
   },
 ]
 
+function setSearchFieldDefault(config: SearchDriverOptions) {
+  config.searchQuery
+    ? (config.searchQuery.search_fields = {
+        title: {},
+      })
+    : null
+}
+
 export default function App() {
   const [config, setConfig] = useState(configDefault)
+
+  setSearchFieldDefault(config)
 
   function setSearchFields(value: string) {
     config.searchQuery.search_fields = {
