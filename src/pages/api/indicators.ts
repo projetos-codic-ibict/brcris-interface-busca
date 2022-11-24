@@ -42,6 +42,7 @@ const queryTextModel = {
 
 type RequestData = {
   searchTerm: string
+  fieldSearch: string
   indicator: string
   filters: Filter[]
 }
@@ -55,6 +56,7 @@ function fillQuery(data: RequestData) {
   }
 
   if (data.searchTerm) {
+    queryText.query.bool.must.query_string.default_field = data.fieldSearch
     queryText.query.bool.must.query_string.query = data.searchTerm + '*'
   } else {
     queryText.query.bool.must.query_string.query = '*'

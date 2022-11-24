@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
-import useSWR, { Key } from 'swr'
+import React, { useState, useEffect } from 'react'
 import { withSearch } from '@elastic/react-search-ui'
-// import { Filter } from '@elastic/search-ui'
+import styles from '../../styles/Indicators.module.css'
 
 import {
   Chart as ChartJS,
@@ -16,6 +15,7 @@ import {
 } from 'chart.js'
 import { Bar, Pie } from 'react-chartjs-2'
 import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch'
+import ElasticSearchService from '../../services/ElasticSearchService'
 
 ChartJS.register(
   CategoryScale,
@@ -60,40 +60,27 @@ export const options = {
   },
 }
 
-const fetcher = (args: any) =>
-  !args.url
-    ? null
-    : fetch(args.url, {
-        body: JSON.stringify(args.params),
-        method: 'POST',
-      }).then((res) => res.json())
+function ListenFilters({ filters, searchTerm, isLoading, config }: any) {
+  const [indicators, setIndicators] = useState([])
 
-let cache: any[] = []
+  console.log(filters, searchTerm, indicators, config.searchQuery.search_fields)
 
-function ListenFilters({ filters, searchTerm, isLoading }: SearchContextState) {
-  const apiUrl: Key = '/api/indicators'
+  useEffect(() => {
+    ElasticSearchService(
+      filters,
+      searchTerm,
+      Object.keys(config.searchQuery.search_fields)[0]
+    ).then((data) => {
+      setIndicators(data)
+    })
+  }, [filters, searchTerm, config.searchQuery.search_fields])
 
-  let indicatorsBuckets: any[] = []
-
-  indicatorsBuckets = useYearIndicators(
-    !isLoading && cache?.length > 0 ? null : apiUrl,
-    filters,
-    searchTerm
-  )
-  if (indicatorsBuckets) {
-    // para evitar que fique fazendo consultas a toda mudança de estado
-    // agora só faz consulta de dados para o gráfico quando realizar busca de documentos, isLoading = true
-    cache = indicatorsBuckets
-  } else {
-    indicatorsBuckets = cache
-  }
-
-  const yearIndicators = indicatorsBuckets ? indicatorsBuckets[0] : []
+  const yearIndicators = indicators ? indicators[0] : []
 
   const yearLabels =
     yearIndicators != null ? yearIndicators.map((d: any) => d.key) : []
 
-  const typeIndicators = indicatorsBuckets ? indicatorsBuckets[1] : []
+  const typeIndicators = indicators ? indicators[1] : []
 
   const typeLabels =
     typeIndicators != null ? typeIndicators.map((d: any) => d.key) : []
@@ -101,8 +88,9 @@ function ListenFilters({ filters, searchTerm, isLoading }: SearchContextState) {
     typeIndicators != null ? typeIndicators.map((d: any) => d.doc_count) : []
 
   return (
-    <div className="container">
+    <div className={styles.charts}>
       <Bar
+        hidden={yearIndicators == null}
         options={options}
         width="500"
         data={{
@@ -169,30 +157,9 @@ function ListenFilters({ filters, searchTerm, isLoading }: SearchContextState) {
   )
 }
 
-export default withSearch(({ filters, searchTerm, isLoading }) => ({
+export default withSearch(({ filters, searchTerm, isLoading }, { config }) => ({
   filters,
   searchTerm,
   isLoading,
+  config,
 }))(ListenFilters)
-
-function useYearIndicators(
-  url: string | null,
-  filters: any,
-  searchTerm: any
-): any {
-  const { data } = useSWR(
-    {
-      url,
-      params: [
-        {
-          filters,
-          searchTerm,
-          indicator: 'publicationDate.keyword',
-        },
-        { filters, searchTerm, indicator: 'type.keyword' },
-      ],
-    },
-    fetcher
-  )
-  return data
-}

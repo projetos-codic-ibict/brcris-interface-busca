@@ -1,7 +1,7 @@
 import { withSearch } from '@elastic/react-search-ui'
 
-function ClearFilters({ setSearchTerm, clearFilters }) {
-  return (
+function ClearFilters({ filters, searchTerm, setSearchTerm, clearFilters }) {
+  return searchTerm || filters.length > 0 ? (
     <div>
       <button
         className="btn btn-warning"
@@ -13,10 +13,16 @@ function ClearFilters({ setSearchTerm, clearFilters }) {
         Limpar filtros
       </button>
     </div>
+  ) : (
+    <></>
   )
 }
 
-export default withSearch(({ setSearchTerm, clearFilters }) => ({
-  setSearchTerm,
-  clearFilters,
-}))(ClearFilters)
+export default withSearch(
+  ({ filters, searchTerm, setSearchTerm, clearFilters }) => ({
+    filters,
+    searchTerm,
+    setSearchTerm,
+    clearFilters,
+  })
+)(ClearFilters)

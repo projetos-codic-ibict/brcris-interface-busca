@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Connector from '../services/APIConnector'
 import styles from '../styles/Home.module.css'
 import {
@@ -22,16 +22,18 @@ import Navbar from '../components/Navbar'
 import Indicators from '../components/Indicators/Index'
 import ClearFilters from '../components/ClearFilters'
 import CustomResultView from '../components/CustomResultView'
+import Reset from '../components/Reset'
 
 const connector = new Connector()
 
 const configDefault = {
-  debug: true,
-  alwaysSearchOnInitialLoad: true,
+  debug: false,
+  urlPushDebounceLength: 500,
+  alwaysSearchOnInitialLoad: false,
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    track_total_hits: true,
+    trackTotalHits: true,
     search_fields: {},
     result_fields: {
       title: {
@@ -171,10 +173,13 @@ function setSearchFieldDefault(config: SearchDriverOptions) {
 
 export default function App() {
   const [config, setConfig] = useState(configDefault)
+  const [fieldSearch, setFieldSearch] = useState('title')
 
   setSearchFieldDefault(config)
 
   function setSearchFields(value: string) {
+    console.log('changeeeeeee', value)
+    setFieldSearch(value)
     config.searchQuery.search_fields = {
       [value]: {},
     }
@@ -202,34 +207,20 @@ export default function App() {
                               role="tablist"
                             >
                               <li className="nav-item" role="presentation">
-                                <button
-                                  className="nav-link active"
-                                  id="home-tab"
-                                  data-bs-toggle="tab"
-                                  data-bs-target="#home"
-                                  type="button"
-                                  role="tab"
-                                  aria-controls="home"
-                                  aria-selected="true"
-                                  onClick={() => setSearchFields('title')}
-                                >
-                                  Título
-                                </button>
+                                <Reset
+                                  title="Título"
+                                  active="true"
+                                  config={config}
+                                  searchField="title"
+                                />
                               </li>
                               <li className="nav-item" role="presentation">
-                                <button
-                                  className="nav-link"
-                                  id="profile-tab"
-                                  data-bs-toggle="tab"
-                                  data-bs-target="#profile"
-                                  type="button"
-                                  role="tab"
-                                  aria-controls="profile"
-                                  aria-selected="false"
-                                  onClick={() => setSearchFields('author.name')}
-                                >
-                                  Autor
-                                </button>
+                                <Reset
+                                  title="Autor"
+                                  active={false}
+                                  config={config}
+                                  searchField="author.name"
+                                />
                               </li>
                             </ul>
                             <div className="tab-content" id="myTabContent">
@@ -238,14 +229,6 @@ export default function App() {
                                 id="home"
                                 role="tabpanel"
                                 aria-labelledby="home-tab"
-                              >
-                                <SearchBox />
-                              </div>
-                              <div
-                                className="tab-pane fade"
-                                id="profile"
-                                role="tabpanel"
-                                aria-labelledby="profile-tab"
                               >
                                 <SearchBox />
                               </div>
@@ -340,7 +323,7 @@ export default function App() {
                       <div className="sui-layout-header">
                         <div className="sui-layout-header__inner"></div>
                       </div>
-                      <Indicators />
+                      <Indicators config={config} />
                     </div>
                   </div>
                 </ErrorBoundary>

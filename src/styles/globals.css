@@ -48,4 +48,20 @@ a {
 
 .search-card .sui-search-box__submit {
   background-color: #0096b6;
+  background: #0096b6;
+}
+.sui-result a {
+  text-decoration: none;
+}
+
+.sui-result__value a {
+  margin-right: 0.5rem;
+}
+
+.sui-result__value a:after {
+  content: ',';
+}
+
+.sui-result__value a:last-child:after {
+  content: '';
 }
