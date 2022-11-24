@@ -1,6 +1,4 @@
-import { withSearch } from '@elastic/react-search-ui'
-
-function Reset({ reset, title, active, config, searchField }) {
+export default function Reset({ title, active, config, searchField }) {
   return (
     <button
       className={active ? 'nav-link active' : 'nav-link'}
@@ -22,13 +20,3 @@ function Reset({ reset, title, active, config, searchField }) {
     </button>
   )
 }
-
-export default withSearch(
-  ({ reset }, { title, active, config, searchField }) => ({
-    reset,
-    title,
-    active,
-    config,
-    searchField,
-  })
-)(Reset)

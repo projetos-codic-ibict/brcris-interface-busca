@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react'
 import { withSearch } from '@elastic/react-search-ui'
-import styles from '../../styles/Indicators.module.css'
+import styles from '../styles/Indicators.module.css'
 
 import {
   Chart as ChartJS,
@@ -14,8 +14,7 @@ import {
   ArcElement,
 } from 'chart.js'
 import { Bar, Pie } from 'react-chartjs-2'
-import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch'
-import ElasticSearchService from '../../services/ElasticSearchService'
+import ElasticSearchService from '../services/ElasticSearchService'
 
 ChartJS.register(
   CategoryScale,
@@ -31,7 +30,7 @@ export const optionsType = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'bottom' as const,
+      position: 'bottom',
       display: true,
     },
     title: {
@@ -50,7 +49,7 @@ export const options = {
   aspectRatio: 1,
   plugins: {
     legend: {
-      position: 'bottom' as const,
+      position: 'bottom',
       display: false,
     },
     title: {
@@ -60,32 +59,34 @@ export const options = {
   },
 }
 
-function ListenFilters({ filters, searchTerm, isLoading, config }: any) {
+function Indicators({ filters, searchTerm, isLoading, config }) {
   const [indicators, setIndicators] = useState([])
 
   console.log(filters, searchTerm, indicators, config.searchQuery.search_fields)
 
   useEffect(() => {
-    ElasticSearchService(
-      filters,
-      searchTerm,
-      Object.keys(config.searchQuery.search_fields)[0]
-    ).then((data) => {
-      setIndicators(data)
-    })
-  }, [filters, searchTerm, config.searchQuery.search_fields])
+    isLoading
+      ? ElasticSearchService(
+          filters,
+          searchTerm,
+          Object.keys(config.searchQuery.search_fields)[0]
+        ).then((data) => {
+          setIndicators(data)
+        })
+      : null
+  }, [filters, searchTerm, isLoading, config.searchQuery.search_fields])
 
   const yearIndicators = indicators ? indicators[0] : []
 
   const yearLabels =
-    yearIndicators != null ? yearIndicators.map((d: any) => d.key) : []
+    yearIndicators != null ? yearIndicators.map((d) => d.key) : []
 
   const typeIndicators = indicators ? indicators[1] : []
 
   const typeLabels =
-    typeIndicators != null ? typeIndicators.map((d: any) => d.key) : []
+    typeIndicators != null ? typeIndicators.map((d) => d.key) : []
   const typeDoc_count =
-    typeIndicators != null ? typeIndicators.map((d: any) => d.doc_count) : []
+    typeIndicators != null ? typeIndicators.map((d) => d.doc_count) : []
 
   return (
     <div className={styles.charts}>
@@ -125,6 +126,7 @@ function ListenFilters({ filters, searchTerm, isLoading, config }: any) {
 
       <Pie
         options={optionsType}
+        hidden={typeIndicators == null}
         width="500"
         data={{
           labels: typeLabels,
@@ -157,9 +159,9 @@ function ListenFilters({ filters, searchTerm, isLoading, config }: any) {
   )
 }
 
-export default withSearch(({ filters, searchTerm, isLoading }, { config }) => ({
+export default withSearch(({ filters, searchTerm, isLoading, config }) => ({
   filters,
   searchTerm,
   isLoading,
   config,
-}))(ListenFilters)
+}))(Indicators)
