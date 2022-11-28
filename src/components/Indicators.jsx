@@ -62,8 +62,6 @@ export const options = {
 function Indicators({ filters, searchTerm, isLoading, config }) {
   const [indicators, setIndicators] = useState([])
 
-  console.log(filters, searchTerm, indicators, config.searchQuery.search_fields)
-
   useEffect(() => {
     isLoading
       ? ElasticSearchService(

@@ -4,7 +4,6 @@ const proxy = async (
   searchTerm: string | undefined,
   fieldSearch: string | undefined
 ) => {
-  console.log('consultando', fieldSearch)
   const body = JSON.stringify([
     {
       filters,

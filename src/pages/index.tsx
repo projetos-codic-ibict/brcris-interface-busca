@@ -22,7 +22,7 @@ import Navbar from '../components/Navbar'
 import Indicators from '../components/Indicators'
 import ClearFilters from '../components/ClearFilters'
 import CustomResultView from '../components/CustomResultView'
-import Reset from '../components/Reset'
+import ButtonFieldSelect from '../components/ButtonFieldSelect'
 
 const connector = new Connector()
 
@@ -33,7 +33,8 @@ const configDefault = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    trackTotalHits: true,
+    track_total_hits: true,
+    default_operator: 'AND',
     search_fields: {},
     result_fields: {
       title: {
@@ -178,7 +179,6 @@ export default function App() {
   setSearchFieldDefault(config)
 
   function setSearchFields(value: string) {
-    console.log('changeeeeeee', value)
     setFieldSearch(value)
     config.searchQuery.search_fields = {
       [value]: {},
@@ -207,7 +207,7 @@ export default function App() {
                               role="tablist"
                             >
                               <li className="nav-item" role="presentation">
-                                <Reset
+                                <ButtonFieldSelect
                                   title="Título"
                                   active="true"
                                   config={config}
@@ -215,7 +215,7 @@ export default function App() {
                                 />
                               </li>
                               <li className="nav-item" role="presentation">
-                                <Reset
+                                <ButtonFieldSelect
                                   title="Autor"
                                   active={false}
                                   config={config}

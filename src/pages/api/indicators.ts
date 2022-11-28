@@ -57,7 +57,8 @@ function fillQuery(data: RequestData) {
 
   if (data.searchTerm) {
     queryText.query.bool.must.query_string.default_field = data.fieldSearch
-    queryText.query.bool.must.query_string.query = data.searchTerm + '*'
+    queryText.query.bool.must.query_string.default_operator = 'AND'
+    queryText.query.bool.must.query_string.query = data.searchTerm
   } else {
     queryText.query.bool.must.query_string.query = '*'
   }

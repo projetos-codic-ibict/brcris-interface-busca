@@ -1,4 +1,4 @@
-export default function Reset({ title, active, config, searchField }) {
+export default function Button({ title, active, config, searchField }) {
   return (
     <button
       className={active ? 'nav-link active' : 'nav-link'}
