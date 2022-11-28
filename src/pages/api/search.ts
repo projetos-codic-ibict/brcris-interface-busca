@@ -30,7 +30,7 @@ const connector = new ElasticsearchAPIConnector(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function handler(req: any, res: any) {
-  _nst { requestState, queryConfig } = req.body
+  const { requestState, queryConfig } = req.body
   const response = await connector.onSearch(requestState, queryConfig)
   res.json(response)
 }
