@@ -65,3 +65,12 @@ a {
 .sui-result__value a:last-child:after {
   content: '';
 }
+
+#operator {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  outline: none;
+  font-family: inherit;
+  width: 65px;
+}
