@@ -174,6 +174,7 @@ function setSearchFieldDefault(config: SearchDriverOptions) {
 
 export default function App() {
   const [config, setConfig] = useState(configDefault)
+  const [operator, setOperator] = useState('And')
   const [fieldSearch, setFieldSearch] = useState('title')
 
   setSearchFieldDefault(config)
@@ -184,6 +185,13 @@ export default function App() {
       [value]: {},
     }
   }
+
+  useEffect(() => {
+    setConfig({
+      ...config,
+      searchQuery: { ...config?.searchQuery, default_operator: operator },
+    })
+  }, [operator])
 
   return (
     <div>
@@ -235,9 +243,15 @@ export default function App() {
 
                               <div className="d-flex mt-2 align-items-center">
                                 <label htmlFor="operator">
-                                  <h6 className="card-title text-h6 me-2">Operador de busca: </h6>
+                                  <h6 className="card-title text-h6 me-2">
+                                    Operador de busca:{' '}
+                                  </h6>
                                 </label>
-                                <select id="operator">
+                                <select
+                                  id="operator"
+                                  value={operator}
+                                  onChange={(e) => setOperator(e.target.value)}
+                                >
                                   <option value="And">And</option>
                                   <option value="Or">Or</option>
                                 </select>
