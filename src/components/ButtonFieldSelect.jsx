@@ -1,4 +1,9 @@
-export default function Button({ title, active, config, searchField }) {
+export default function ButtonFieldSelect({
+  title,
+  active,
+  config,
+  searchField,
+}) {
   return (
     <button
       className={active ? 'nav-link active' : 'nav-link'}
@@ -10,7 +15,6 @@ export default function Button({ title, active, config, searchField }) {
       data-field="title"
       aria-selected="true"
       onClick={() => {
-        // reset()
         config.searchQuery.search_fields = {
           [searchField]: {},
         }

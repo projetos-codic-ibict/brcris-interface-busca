@@ -45,6 +45,7 @@ type RequestData = {
   fieldSearch: string
   indicator: string
   filters: Filter[]
+  operator: string
 }
 
 function fillQuery(data: RequestData) {
@@ -57,7 +58,7 @@ function fillQuery(data: RequestData) {
 
   if (data.searchTerm) {
     queryText.query.bool.must.query_string.default_field = data.fieldSearch
-    queryText.query.bool.must.query_string.default_operator = 'AND'
+    queryText.query.bool.must.query_string.default_operator = data.operator
     queryText.query.bool.must.query_string.query = data.searchTerm
   } else {
     queryText.query.bool.must.query_string.query = '*'
@@ -95,11 +96,10 @@ function getFilterFormated(filter: Filter): any {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const proxy = async (req: any, res: any) => {
-  const datas: RequestData[] = JSON.parse(req.body)
+  const data: RequestData[] = JSON.parse(req.body)
   const querys: any[] = []
-
-  datas.forEach((data) => {
-    const queryText = fillQuery(data)
+  data.forEach((item) => {
+    const queryText = fillQuery(item)
     querys.push({ index: 'pqseniors-pubs' })
     querys.push(queryText)
   })

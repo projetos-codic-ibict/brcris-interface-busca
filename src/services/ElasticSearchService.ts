@@ -2,7 +2,8 @@
 const proxy = async (
   filters: any,
   searchTerm: string | undefined,
-  fieldSearch: string | undefined
+  fieldSearch: string | undefined,
+  operator: string
 ) => {
   const body = JSON.stringify([
     {
@@ -10,6 +11,7 @@ const proxy = async (
       searchTerm,
       fieldSearch,
       indicator: 'publicationDate.keyword',
+      operator,
     },
     { filters, searchTerm, fieldSearch, indicator: 'type.keyword' },
   ])
