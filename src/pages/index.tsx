@@ -34,7 +34,7 @@ const configDefault = {
   apiConnector: connector,
   searchQuery: {
     track_total_hits: true,
-    default_operator: 'AND',
+    operator: 'AND',
     search_fields: {},
     result_fields: {
       title: {
@@ -174,7 +174,7 @@ function setSearchFieldDefault(config: SearchDriverOptions) {
 
 export default function App() {
   const [config, setConfig] = useState(configDefault)
-  const [operator, setOperator] = useState('And')
+  const [currentOperator, setOperator] = useState('And')
   const [fieldSearch, setFieldSearch] = useState('title')
 
   setSearchFieldDefault(config)
@@ -189,9 +189,9 @@ export default function App() {
   useEffect(() => {
     setConfig({
       ...config,
-      searchQuery: { ...config?.searchQuery, default_operator: operator },
+      searchQuery: { ...config?.searchQuery, operator: currentOperator },
     })
-  }, [operator])
+  }, [currentOperator])
 
   return (
     <div>
@@ -249,7 +249,7 @@ export default function App() {
                                 </label>
                                 <select
                                   id="operator"
-                                  value={operator}
+                                  value={currentOperator}
                                   onChange={(e) => setOperator(e.target.value)}
                                 >
                                   <option value="And">And</option>
