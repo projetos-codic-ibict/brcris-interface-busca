@@ -67,12 +67,19 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
       ? ElasticSearchService(
           filters,
           searchTerm,
-          Object.keys(config.searchQuery.search_fields)[0]
+          Object.keys(config.searchQuery.search_fields)[0],
+          config.searchQuery.operator
         ).then((data) => {
           setIndicators(data)
         })
       : null
-  }, [filters, searchTerm, isLoading, config.searchQuery.search_fields])
+  }, [
+    filters,
+    searchTerm,
+    isLoading,
+    config.searchQuery.search_fields,
+    config.searchQuery.operator,
+  ])
 
   const yearIndicators = indicators ? indicators[0] : []
 

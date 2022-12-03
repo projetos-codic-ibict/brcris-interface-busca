@@ -23,11 +23,12 @@ import Indicators from '../components/Indicators'
 import ClearFilters from '../components/ClearFilters'
 import CustomResultView from '../components/CustomResultView'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
+import OperatorSelect from '../components/OperatorSelect'
 
 const connector = new Connector()
 
-const configDefault = {
-  debug: false,
+const config = {
+  debug: true,
   urlPushDebounceLength: 500,
   alwaysSearchOnInitialLoad: false,
   hasA11yNotifications: true,
@@ -35,7 +36,9 @@ const configDefault = {
   searchQuery: {
     track_total_hits: true,
     operator: 'AND',
-    search_fields: {},
+    search_fields: {
+      title: {},
+    },
     result_fields: {
       title: {
         snippet: {},
@@ -164,34 +167,8 @@ const SORT_OPTIONS = [
   },
 ]
 
-function setSearchFieldDefault(config: SearchDriverOptions) {
-  config.searchQuery
-    ? (config.searchQuery.search_fields = {
-        title: {},
-      })
-    : null
-}
-
 export default function App() {
-  const [config, setConfig] = useState(configDefault)
-  const [currentOperator, setOperator] = useState('And')
-  const [fieldSearch, setFieldSearch] = useState('title')
-
-  setSearchFieldDefault(config)
-
-  function setSearchFields(value: string) {
-    setFieldSearch(value)
-    config.searchQuery.search_fields = {
-      [value]: {},
-    }
-  }
-
-  useEffect(() => {
-    setConfig({
-      ...config,
-      searchQuery: { ...config?.searchQuery, operator: currentOperator },
-    })
-  }, [currentOperator])
+  // const [config, setConfig] = useState(configDefault)
 
   return (
     <div>
@@ -247,14 +224,7 @@ export default function App() {
                                     Operador de busca:{' '}
                                   </h6>
                                 </label>
-                                <select
-                                  id="operator"
-                                  value={currentOperator}
-                                  onChange={(e) => setOperator(e.target.value)}
-                                >
-                                  <option value="And">And</option>
-                                  <option value="Or">Or</option>
-                                </select>
+                                <OperatorSelect config={config} />
                               </div>
                             </div>
                           </div>
