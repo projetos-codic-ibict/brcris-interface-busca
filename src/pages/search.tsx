@@ -35,7 +35,7 @@ const config = {
   apiConnector: connector,
   searchQuery: {
     track_total_hits: true,
-    operator: 'AND',
+    operator: 'OR',
     search_fields: {
       title: {},
     },
@@ -183,7 +183,7 @@ export default function App() {
                     <div className="row">
                       <div className="col-md-6"></div>
                       <div className="col-md-6">
-                        <div className="card  search-card">
+                        <div className="card search-card">
                           <div className="card-body">
                             <h5 className="card-title">Pesquisa</h5>
                             <ul
@@ -218,14 +218,7 @@ export default function App() {
                                 <SearchBox />
                               </div>
 
-                              <div className="d-flex mt-2 align-items-center">
-                                <label htmlFor="operator">
-                                  <h6 className="card-title text-h6 me-2">
-                                    Operador de busca:{' '}
-                                  </h6>
-                                </label>
-                                <OperatorSelect config={config} />
-                              </div>
+                              {/* <OperatorSelect config={config} /> */}
                             </div>
                           </div>
                         </div>

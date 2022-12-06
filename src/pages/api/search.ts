@@ -16,7 +16,8 @@ const connector = new ElasticsearchAPIConnector(
     requestBody.query = {
       multi_match: {
         query: requestState.searchTerm,
-        operator: queryConfig.operator,
+        operator: 'OR',
+        // operator: queryConfig.operator,
         fields: Object.keys(searchFields).map((fieldName) => {
           const weight = searchFields[fieldName].weight || 1
           return `${fieldName}^${weight}`
