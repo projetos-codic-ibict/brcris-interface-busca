@@ -32,7 +32,7 @@ function Navbar() {
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link href="/charts">
-                <a className="nav-link">Charts</a>
+                <a className="nav-link"></a>
               </Link>
             </li>
           </ul>
