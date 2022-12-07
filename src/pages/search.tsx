@@ -221,13 +221,6 @@ export default function App() {
                             </div>
                           </div>
                         </div>
-
-                        {/* <select name="fields" onChange={setSearchFields}>
-                      <option selected value="title">
-                        Título
-                      </option>
-                      <option value="author.name">Autor</option>
-                    </select> */}
                       </div>
                     </div>
                   </div>

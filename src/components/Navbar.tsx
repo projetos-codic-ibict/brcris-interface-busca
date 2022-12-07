@@ -1,10 +1,12 @@
+
 import 'bootstrap/dist/css/bootstrap.min.css' // Import bootstrap CSS
+import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-violet">
+    <nav className="navbar navbar-expand-lg bg-violet px-5">
       <div className="container-fluid">
         <div className="d-flex align-items-center">
           <Link href="/">
@@ -12,8 +14,8 @@ function Navbar() {
               <Image
                 src="/logos/logo-brcris-pb.png"
                 alt="Logo do BrCris"
-                width={164}
-                height={100}
+                width={115}
+                height={70}
               />
             </a>
           </Link>
@@ -23,8 +25,8 @@ function Navbar() {
               <Image
                 src="/logos/logo-ibict-pb-st.png"
                 alt="Logo do IBICT"
-                width={164}
-                height={80}
+                width={132}
+                height={60}
               />
             </a>
           </Link>
@@ -45,26 +47,26 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="navbar-nav me-auto mb-2 mb-lg-0"></div>
 
-          <ul className="navbar-nav me-2">
-            <li className="nav-item me-5">
+          <ul className="navbar-nav nav nav-tabs me-2"role="tablist">
+            <li className="nav-item me-5" role="presentation">
               <Link href="/">
                 <a className="nav-link">Home</a>
               </Link>
             </li>
 
-            <li className="nav-item me-5">
+            <li className="nav-item me-5" role="presentation">
               <Link href="/">
                 <a className="nav-link">Painéis de Indicadores</a>
               </Link>
             </li>
 
-            <li className="nav-item me-5">
+            <li className="nav-item me-5" role="presentation">
               <Link href="/">
                 <a className="nav-link">Equipe</a>
               </Link>
             </li>
 
-            <li className="nav-item me-5">
+            <li className="nav-item me-5" role="presentation">
               <Link href="/">
                 <a className="nav-link">Sobre</a>
               </Link>

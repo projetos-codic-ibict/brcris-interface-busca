@@ -1,8 +1,21 @@
 import Navbar from '../components/Navbar'
 import styles from '../styles/Home.module.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+import Link from 'next/link'
+import Image from 'next/image'
 
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
+
+  const partners = [
+    { url: 'https://www.gov.br/ibict/pt-br', path: '/logos/logo-ibict-pb.png', description: 'Logo do IBICT' },
+    { url: 'http://www.finep.gov.br/', path: '/logos/finep-pb.png', description: 'Logo do Finep' },
+    { url: 'https://www.fap.df.gov.br/', path: '/logos/Extensa_Branca1_FAPDF.png', description: 'Logo do fapdf' },
+    { url: 'https://www.gov.br/cnpq/pt-br', path: '/logos/CNPq_v2017_rgb_neg.png', description: 'Logo do CNPq' },
+    { url: 'https://www.fundep.ufmg.br/', path: '/logos/FUNDEP-PB.png', description: ' Logo do FUNDEP' },
+    { url: 'https://www.lareferencia.info/pt/', path: '/logos/la_referencia_pb.png', description: ' Logo do LA Referencia' },
+  ]
 
   return (
     <div className={styles.home}>
@@ -36,17 +49,17 @@ export default function App() {
                       role="tabpanel"
                       aria-labelledby="pub-tab"
                     >
-                      <form className="row g-3" action="/search">
-                        <div className="col-auto">
+                      <form className="row g-3 mb-5" action="/search">
+                        <div className="col-9">
                           <input
-                            className="form-control"
+                            className="form-control seacrh-box"
                             name="q"
                             type="text"
                             placeholder="Busca..."
                           />
                         </div>
-                        <div className="col-auto">
-                          <button className="btn btn-light mb-3">
+                        <div className="col-3">
+                          <button className="btn btn-light search-btn">
                             Pesquisar
                           </button>
                         </div>
@@ -70,6 +83,25 @@ export default function App() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="container-fluid page px-4">
+          <div className="row g-0">
+            { partners.map((partner: any) => (
+              <div className="col-md-2 d-flex justify-content-center">
+                <Link href={partner.url} target="_blank">
+                  <a className="navbar-brand">
+                    <Image
+                      src={partner.path}
+                      alt={partner.description}
+                      width={132}
+                      height={60}
+                    />
+                  </a>
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </div>

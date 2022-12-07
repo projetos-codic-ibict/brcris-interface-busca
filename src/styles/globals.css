@@ -33,16 +33,20 @@ a {
   }
 }
 
+.nav {
+  margin-bottom: 0 !important;
+}
+
 .navbar {
-  margin-bottom: 2rem;
+  margin: 0;
 }
 
 .nav-link {
   color: #fff !important;
 }
 
-.nav-link:visited {
-  font-weight: bold;
+.navbar .nav-link.active {
+  font-weight: bold !important;
 }
 
 .navbar-btn {
@@ -51,6 +55,10 @@ a {
   width: 100px;
   border: none !important;
   color: #fff;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  background-color: transparent !important;
 }
 
 .btn-picti {
@@ -66,13 +74,16 @@ a {
   background-color: #350064 !important;
 }
 
-.search-card .nav-tabs {
-  margin-bottom: 1rem;
+.search-card {
+  background-color: #2A2163 !important;
+  border-radius: 0 !important;
 }
 
-.search-card .nav-tabs .nav-link {
+.search-card .nav-tabs, .search-card .nav-tabs .nav-link {
+  margin-bottom: 1rem;
   border: none;
 }
+
 
 .search-card .nav-tabs .nav-item.show .nav-link,
 .search-card .nav-tabs .nav-link.active {
@@ -108,6 +119,11 @@ a {
   width: 70px;
 }
 
+.page {
+  padding-top: 2rem;
+  min-height: 0vh;
+}
+
 .page .nav-tabs .nav-item.show .nav-link,
 .page .nav-tabs .nav-link.active {
   background-color: transparent;
@@ -115,4 +131,8 @@ a {
 
 .page .nav-tabs {
   border-bottom: none;
+}
+
+.search-btn {
+  width: 100%;
 }
