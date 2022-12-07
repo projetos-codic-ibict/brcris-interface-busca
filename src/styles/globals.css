@@ -1,12 +1,13 @@
-
-
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background: #210D41 !important;
+}
+
+.bg-violet {
+  background: #210d41;
 }
 
 a {
@@ -53,11 +54,16 @@ a {
 }
 
 .btn-picti {
-  background: #F9943B;
+  background: #f9943b;
 }
 
-.btn-api, .btn-lorem {
-  background: #E61F93;
+.btn-api,
+.btn-lorem {
+  background: #e61f93;
+}
+
+.card {
+  background-color: #350064 !important;
 }
 
 .search-card .nav-tabs {
@@ -70,7 +76,7 @@ a {
 
 .search-card .nav-tabs .nav-item.show .nav-link,
 .search-card .nav-tabs .nav-link.active {
-  border-bottom: 2px solid #0096b6;
+  border-bottom: 2px solid #960080;
 }
 
 .search-card .sui-search-box__submit {
@@ -100,4 +106,13 @@ a {
   outline: none;
   font-family: inherit;
   width: 70px;
+}
+
+.page .nav-tabs .nav-item.show .nav-link,
+.page .nav-tabs .nav-link.active {
+  background-color: transparent;
+}
+
+.page .nav-tabs {
+  border-bottom: none;
 }

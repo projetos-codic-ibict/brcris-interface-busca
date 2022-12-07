@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-transparent">
+    <nav className="navbar navbar-expand-lg bg-violet">
       <div className="container-fluid">
         <div className="d-flex align-items-center">
           <Link href="/">
@@ -22,7 +22,7 @@ function Navbar() {
             <a className="navbar-brand mt-3">
               <Image
                 src="/logos/logo-ibict-pb-st.png"
-                alt="Logo do BrCris"
+                alt="Logo do IBICT"
                 width={164}
                 height={80}
               />
@@ -47,7 +47,7 @@ function Navbar() {
 
           <ul className="navbar-nav me-2">
             <li className="nav-item me-5">
-              <Link href="#">
+              <Link href="/">
                 <a className="nav-link">Home</a>
               </Link>
             </li>
@@ -57,13 +57,13 @@ function Navbar() {
                 <a className="nav-link">Painéis de Indicadores</a>
               </Link>
             </li>
-            
+
             <li className="nav-item me-5">
               <Link href="/">
                 <a className="nav-link">Equipe</a>
               </Link>
             </li>
-            
+
             <li className="nav-item me-5">
               <Link href="/">
                 <a className="nav-link">Sobre</a>

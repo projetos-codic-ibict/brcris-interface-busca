@@ -179,13 +179,12 @@ export default function App() {
             return (
               <div className="App">
                 <ErrorBoundary>
-                  <div className="container">
+                  <div className="container page">
                     <div className="row">
                       <div className="col-md-6"></div>
                       <div className="col-md-6">
                         <div className="card search-card">
                           <div className="card-body">
-                            <h5 className="card-title">Pesquisa</h5>
                             <ul
                               className="nav nav-tabs"
                               id="myTab"

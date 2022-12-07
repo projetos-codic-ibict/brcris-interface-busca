@@ -2,6 +2,15 @@
   padding: 0 2rem;
 }
 
+.home {
+  min-height: 100vh;
+  background: #210d41;
+}
+
+.textWhite {
+  color: #fff;
+}
+
 .main {
   min-height: 100vh;
   padding: 4rem 0;
