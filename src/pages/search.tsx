@@ -214,7 +214,32 @@ export default function App() {
                                 role="tabpanel"
                                 aria-labelledby="home-tab"
                               >
-                                <SearchBox />
+                                <SearchBox
+                                  view={({ value, onChange, onSubmit }) => (
+                                    <form
+                                      onSubmit={onSubmit}
+                                      className="row g-3 mb-5"
+                                    >
+                                      <div className="col">
+                                        <input
+                                          className="form-control seacrh-box"
+                                          type="text"
+                                          value={value}
+                                          onChange={(e) =>
+                                            onChange(e.target.value)
+                                          }
+                                        />
+                                      </div>
+                                      <div className="col-auto">
+                                        <input
+                                          className="btn btn-light search-btn"
+                                          type="submit"
+                                          value="Pesquisar"
+                                        />
+                                      </div>
+                                    </form>
+                                  )}
+                                />
                               </div>
 
                               {/* <OperatorSelect config={config} /> */}
