@@ -120,7 +120,7 @@ a {
   background: #c6c7c8;
 }
 
-.sui-result a {
+.sui-result, .sui-result__header a {
   text-decoration: none;
 }
 
@@ -197,11 +197,15 @@ a {
 }
 
 .sui-result__header {
+  position: relative;
+  top: 8px;
   border: 1px solid var(--accent-color);
   margin-right: 1rem;
   margin-left: 1rem;
   border-radius: 5px;
   padding: 0.5rem 0.5rem 0 0.5rem !important;
+  background-color: #fff;
+  z-index: 1;
 }
 
 .page-search .css-qc6sy-singleValue {
