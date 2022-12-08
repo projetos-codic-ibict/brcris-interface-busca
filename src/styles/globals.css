@@ -18,7 +18,12 @@ img {
 }
 
 .bg-violet {
-  background: var(--dark-color); 
+  background: var(--dark-color);
+}
+
+.navbar .nav-tabs .nav-link:focus,
+.navbar .nav-tabs .nav-link:hover {
+  border-color: transparent;
 }
 
 a {
@@ -183,7 +188,7 @@ a {
 /* sobrescrevendo o css do componente do search-ui  */
 .page-search,
 .page-search .sui-multi-checkbox-facet {
-  color: #210d41 !important;
+  color: #210d41;
 }
 
 .page-search .sui-facet__title,
@@ -193,17 +198,17 @@ a {
 }
 
 .page-search .sui-select__control {
-  border-color: var(--accent-color) !important;
+  border-color: var(--dark-color);
 }
 
-.sui-result__header {
+.page-search .sui-result__header {
   position: relative;
   top: 8px;
-  border: 1px solid var(--accent-color);
+  /* border: 1px solid var(--accent-color); */
   margin-right: 1rem;
   margin-left: 1rem;
   border-radius: 5px;
-  padding: 0.5rem 0.5rem 0 0.5rem !important;
+  padding: 0.5rem 0.5rem 0 0.5rem;
   background-color: #fff;
   z-index: 1;
 }
@@ -230,4 +235,8 @@ a {
 
 .page-search .sui-layout-body__inner {
   align-items: flex-start;
+}
+
+.page-search .sui-select__control--is-focused {
+  border-color: var(--accent-color);
 }
