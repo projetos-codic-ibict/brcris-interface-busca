@@ -146,7 +146,7 @@ export default () => {
   return (
     <>
       {/* <button onClick={handleClick}>Focus</button> */}
-      <div style={{ height: 700, width: "100%" }} ref={ref} />
+      <div style={{ height: "50vh", width: "100%" }} ref={ref} />
     </>
   );
 };

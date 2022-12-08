@@ -240,7 +240,3 @@ a {
 .page-search .sui-select__control--is-focused {
   border-color: var(--accent-color);
 }
-
-canvas {
-  max-height: 1200px;
-}
