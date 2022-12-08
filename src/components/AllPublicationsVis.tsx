@@ -11,6 +11,9 @@ const nodes: Node[] = [
     level: 1,
     group: "struct",
     color: "#F7964D",
+    font: {
+      color: "#ffffff",
+    },
   },
   {
     id: 2,
@@ -18,7 +21,10 @@ const nodes: Node[] = [
     title: "Pessoas",
     level: 2,
     group: "struct",
-    color: "#4152B3",
+    color: "#CB6CE6",
+    font: {
+      color: "#ffffff"
+    },
   },
   {
     id: 3,
@@ -26,7 +32,7 @@ const nodes: Node[] = [
     title: "Instituições",
     level: 3,
     group: "struct",
-    color: "#008037",
+    color: "#00dafc",
   },
   {
     id: 4,
@@ -35,6 +41,9 @@ const nodes: Node[] = [
     level: 4,
     group: "struct",
     color: "#FF5757",
+    font: {
+      color: "#ffffff"
+    },
   },
   {
     id: 5,
@@ -50,50 +59,31 @@ const nodes: Node[] = [
     title: "Fundações",
     level: 6,
     group: "struct",
-    color: "#CB6CE6",
-  },
-  {
-    id: 7,
-    label: "UESPI",
-    title: "UESPI",
-    level: 7,
-    group: "struct",
     color: "#4152B3",
+    font: {
+      color: "#ffffff"
+    },
   },
-  {
-    id: 8,
-    label: "IFMA",
-    title: "IFMA",
-    level: 8,
-    group: "struct",
-    color: "#00dafc",
-  },
-  {
-    id: 9,
-    label: "UFPE",
-    title: "UFPE",
-    level: 9,
-    group: "struct",
-    color: "#fff",
-  },
+  
 ];
 
 const edges: Edge[] = [
   { from: 1, to: 2, id: 1 },
   { from: 1, to: 3, id: 3 },
   { from: 2, to: 3, id: 2 },
+  // { from: 2, to: 4, id: 14 },
   { from: 1, to: 4, id: 4 },
-  { from: 5, to: 6, id: 6 },
+  { from: 3, to: 5, id: 12 },
+
+  { from: 4, to: 5, id: 6 },
+  { from: 4, to: 6, id: 13 },
   { from: 1, to: 6, id: 5 },
   { from: 6, to: 2, id: 7 },
   { from: 1, to: 5, id: 8 },
 
   { from: 7, to: 8, id: 9 },
   { from: 1, to: 7, id: 10 },
-  { from: 1, to: 9, id: 11 },
-  { from: 1, to: 8, id: 12 },
-  { from: 4, to: 7, id: 13 },
-  { from: 6, to: 8, id: 14 },
+  { from: 6, to: 8, id: 11 },
 ];
 
 const options: Options = {
