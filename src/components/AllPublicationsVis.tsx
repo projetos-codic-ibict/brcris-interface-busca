@@ -6,66 +6,75 @@ import useVisNetwork from "../services/useVisNetwork";
 const nodes: Node[] = [
   {
     id: 1,
-    label: "Piauí",
-    title: "Piauí",
+    label: "Publicações",
+    title: "Publicações",
     level: 1,
-    group: "struct"
+    group: "struct",
+    color: "#F7964D",
   },
   {
     id: 2,
-    label: "Pernanbuco",
-    title: "Pernambuco",
+    label: "Pessoas",
+    title: "Pessoas",
     level: 2,
-    group: "struct"
+    group: "struct",
+    color: "#4152B3",
   },
   {
     id: 3,
-    label: "Fiocruz",
-    title: "Fiocruz",
+    label: "Instituições",
+    title: "Instituições",
     level: 3,
-    group: "struct"
+    group: "struct",
+    color: "#008037",
   },
   {
     id: 4,
-    label: "São Paulo",
-    title: "São Paulo",
+    label: "Revistas",
+    title: "Revistas",
     level: 4,
-    group: "struct"
+    group: "struct",
+    color: "#FF5757",
   },
   {
     id: 5,
-    label: "RJ",
-    title: "RJ",
+    label: "Autores",
+    title: "Autores",
     level: 5,
-    group: "struct"
+    group: "struct",
+    color: "#FFDE59",
   },
   {
     id: 6,
-    label: "IFPI",
-    title: "IFPI",
+    label: "Fundações",
+    title: "Fundações",
     level: 6,
-    group: "struct"
+    group: "struct",
+    color: "#CB6CE6",
   },
   {
     id: 7,
     label: "UESPI",
     title: "UESPI",
     level: 7,
-    group: "struct"
+    group: "struct",
+    color: "#4152B3",
   },
   {
     id: 8,
     label: "IFMA",
     title: "IFMA",
     level: 8,
-    group: "struct"
+    group: "struct",
+    color: "#00dafc",
   },
   {
     id: 9,
     label: "UFPE",
     title: "UFPE",
     level: 9,
-    group: "struct"
+    group: "struct",
+    color: "#fff",
   },
 ];
 
@@ -97,8 +106,8 @@ const options: Options = {
     }
   },
   interaction: {
-    selectable: false,
-    selectConnectedEdges: false
+    selectable: true,
+    selectConnectedEdges: true
   },
   edges: {
     smooth: {
@@ -146,7 +155,7 @@ export default () => {
   return (
     <>
       {/* <button onClick={handleClick}>Focus</button> */}
-      <div style={{ height: "50vh", width: "100%" }} ref={ref} />
+      <div style={{ height: "50vh", width: "50vh" }} ref={ref} />
     </>
   );
 };
