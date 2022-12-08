@@ -193,11 +193,15 @@ a {
 }
 
 .page-search .sui-select__control {
-  border-color: #4152b3;
+  border-color: var(--accent-color) !important;
 }
 
-.page-search .sui-select__control--is-focused {
-  border-color: var(--accent-color);
+.sui-result__header {
+  border: 1px solid var(--accent-color);
+  margin-right: 1rem;
+  margin-left: 1rem;
+  border-radius: 5px;
+  padding: 0.5rem 0.5rem 0 0.5rem !important;
 }
 
 .page-search .css-qc6sy-singleValue {
