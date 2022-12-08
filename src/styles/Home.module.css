@@ -4,7 +4,9 @@
 
 .home {
   min-height: 100vh;
-  background: #210d41;
+  /* background: #210d41; */
+  background-image: radial-gradient(circle at 118% 80%, #A159B3 17%, #210d41 25% );
+  /* background-image: radial-gradient(farthest-side at 130% 70%, #A159B3 20%, #210d41 40% ); */
 }
 
 .textWhite {

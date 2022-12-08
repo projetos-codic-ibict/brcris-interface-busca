@@ -18,7 +18,7 @@ img {
 }
 
 .bg-violet {
-  background: var(--dark-color);
+  background: var(--dark-color); 
 }
 
 a {
