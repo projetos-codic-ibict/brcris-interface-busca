@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Link from 'next/link'
 import Image from 'next/image'
 
+import AllPublicationsVis from '../components/AllPublicationsVis'
+
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
 
@@ -47,7 +49,10 @@ export default function App() {
       <div className={styles.textWhite}>
         <div className="container page">
           <div className="row">
-            <div className="col-md-6"></div>
+            <div className="col-md-6"> 
+              <AllPublicationsVis />
+            </div>
+
             <div className="col-md-6">
               <div className="card search-card">
                 <div className="card-body">

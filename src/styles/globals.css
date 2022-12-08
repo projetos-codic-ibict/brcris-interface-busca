@@ -204,7 +204,7 @@ a {
 .page-search .sui-result__header {
   position: relative;
   top: 8px;
-  /* border: 1px solid var(--accent-color); */
+  border: 1px solid var(--accent-color);
   margin-right: 1rem;
   margin-left: 1rem;
   border-radius: 5px;
@@ -239,4 +239,8 @@ a {
 
 .page-search .sui-select__control--is-focused {
   border-color: var(--accent-color);
+}
+
+canvas {
+  max-height: 1200px;
 }

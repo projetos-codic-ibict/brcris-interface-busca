@@ -185,6 +185,7 @@ export default function App() {
                     <div className="container page">
                       <div className="row">
                         <div className="col-md-6"></div>
+
                         <div className="col-md-6">
                           <div className="card search-card">
                             <div className="card-body">

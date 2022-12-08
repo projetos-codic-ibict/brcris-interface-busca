@@ -256,10 +256,6 @@ export default () => {
     network.once('beforeDrawing', () => {
       network.focus(1)
     })
-    // network.setSelection({
-    //   edges: [1, 2],
-    //   nodes: [1, 2, 3],
-    // })
   }, [network])
 
   return (
