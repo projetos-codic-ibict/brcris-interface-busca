@@ -173,121 +173,125 @@ export default function App() {
   return (
     <div>
       <Navbar />
-      <SearchProvider config={config}>
-        <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-          {({ wasSearched }) => {
-            return (
-              <div className="App">
-                <ErrorBoundary>
-                  <div className="container page">
-                    <div className="row">
-                      <div className="col-md-6"></div>
-                      <div className="col-md-6">
-                        <div className="card search-card">
-                          <div className="card-body">
-                            <ul
-                              className="nav nav-tabs"
-                              id="myTab"
-                              role="tablist"
-                            >
-                              <li className="nav-item" role="presentation">
-                                <ButtonFieldSelect
-                                  title="Título"
-                                  active="true"
-                                  config={config}
-                                  searchField="title"
-                                />
-                              </li>
-                              <li className="nav-item" role="presentation">
-                                <ButtonFieldSelect
-                                  title="Autor"
-                                  active={false}
-                                  config={config}
-                                  searchField="author.name"
-                                />
-                              </li>
-                            </ul>
-                            <div className="tab-content" id="myTabContent">
-                              <div
-                                className="tab-pane fade show active"
-                                id="home"
-                                role="tabpanel"
-                                aria-labelledby="home-tab"
+      <div className="page-search">
+        <SearchProvider config={config}>
+          <WithSearch
+            mapContextToProps={({ wasSearched }) => ({ wasSearched })}
+          >
+            {({ wasSearched }) => {
+              return (
+                <div className="App">
+                  <ErrorBoundary>
+                    <div className="container page">
+                      <div className="row">
+                        <div className="col-md-6"></div>
+                        <div className="col-md-6">
+                          <div className="card search-card">
+                            <div className="card-body">
+                              <ul
+                                className="nav nav-tabs"
+                                id="myTab"
+                                role="tablist"
                               >
-                                <SearchBox
-                                  view={({ value, onChange, onSubmit }) => (
-                                    <form
-                                      onSubmit={onSubmit}
-                                      className="row g-3 mb-5"
-                                    >
-                                      <div className="col">
-                                        <input
-                                          className="form-control seacrh-box"
-                                          type="text"
-                                          value={value}
-                                          onChange={(e) =>
-                                            onChange(e.target.value)
-                                          }
-                                        />
-                                      </div>
-                                      <div className="col-auto">
-                                        <input
-                                          className="btn btn-light search-btn"
-                                          type="submit"
-                                          value="Pesquisar"
-                                        />
-                                      </div>
-                                    </form>
-                                  )}
-                                />
-                              </div>
+                                <li className="nav-item" role="presentation">
+                                  <ButtonFieldSelect
+                                    title="Título"
+                                    active="true"
+                                    config={config}
+                                    searchField="title"
+                                  />
+                                </li>
+                                <li className="nav-item" role="presentation">
+                                  <ButtonFieldSelect
+                                    title="Autor"
+                                    active={false}
+                                    config={config}
+                                    searchField="author.name"
+                                  />
+                                </li>
+                              </ul>
+                              <div className="tab-content" id="myTabContent">
+                                <div
+                                  className="tab-pane fade show active"
+                                  id="home"
+                                  role="tabpanel"
+                                  aria-labelledby="home-tab"
+                                >
+                                  <SearchBox
+                                    view={({ value, onChange, onSubmit }) => (
+                                      <form
+                                        onSubmit={onSubmit}
+                                        className="row g-3 mb-5"
+                                      >
+                                        <div className="col">
+                                          <input
+                                            className="form-control seacrh-box"
+                                            type="text"
+                                            value={value}
+                                            onChange={(e) =>
+                                              onChange(e.target.value)
+                                            }
+                                          />
+                                        </div>
+                                        <div className="col-auto">
+                                          <input
+                                            className="btn btn-light search-btn"
+                                            type="submit"
+                                            value="Pesquisar"
+                                          />
+                                        </div>
+                                      </form>
+                                    )}
+                                  />
+                                  <ClearFilters />
+                                </div>
 
-                              {/* <OperatorSelect config={config} /> */}
+                                {/* <OperatorSelect config={config} /> */}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className={styles.content}>
-                    <Layout
-                      header={<ClearFilters />}
-                      sideContent={
-                        <div>
-                          {wasSearched && (
-                            <Sorting
-                              label={'Sort by'}
-                              sortOptions={SORT_OPTIONS}
+                    <div className={styles.content}>
+                      <Layout
+                        // header={}
+                        sideContent={
+                          <div>
+                            {wasSearched && (
+                              <Sorting
+                                label={'Sort by'}
+                                sortOptions={SORT_OPTIONS}
+                              />
+                            )}
+                            {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
+                            <Facet
+                              key={'1'}
+                              field={'author.name.keyword'}
+                              label={'autores'}
                             />
-                          )}
-                          {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
-                          <Facet
-                            key={'1'}
-                            field={'author.name.keyword'}
-                            label={'autores'}
-                          />
-                          <Facet
-                            key={'2'}
-                            field={'keyword.keyword'}
-                            label={'Palavra-chave'}
-                          />
-                          <Facet
-                            key={'3'}
-                            field={'orgunit.name.keyword'}
-                            label={'Insituição'}
-                          />
-                          <Facet
-                            key={'4'}
-                            field={'type.keyword'}
-                            label={'Tipo'}
-                          />
-                          <Facet
-                            key={'5'}
-                            field={'publicationDate.keyword'}
-                            filterType={'none'}
-                            label={'Ano'}
-                          />
-                          {/* <Facet
+                            <Facet
+                              key={'2'}
+                              field={'keyword.keyword'}
+                              label={'Palavra-chave'}
+                            />
+                            <Facet
+                              key={'3'}
+                              field={'orgunit.name.keyword'}
+                              label={'Insituição'}
+                            />
+                            <Facet
+                              key={'4'}
+                              field={'type.keyword'}
+                              label={'Tipo'}
+                            />
+                            <Facet
+                              key={'5'}
+                              field={'publicationDate.keyword'}
+                              filterType={'none'}
+                              label={'Ano'}
+                            />
+                            {/* <Facet
                             mapContextToProps={(context) => {
                               if (!context.facets['publicationDate.keyword'])
                                 return context
@@ -312,30 +316,31 @@ export default function App() {
                             label="ano"
                             show={10}
                           /> */}
+                          </div>
+                        }
+                        bodyContent={<Results resultView={CustomResultView} />}
+                        bodyHeader={
+                          <React.Fragment>
+                            {wasSearched && <PagingInfo />}
+                            {wasSearched && <ResultsPerPage />}
+                          </React.Fragment>
+                        }
+                        bodyFooter={<Paging />}
+                      />
+                      <div className={styles.indicators}>
+                        <div className="sui-layout-header">
+                          <div className="sui-layout-header__inner"></div>
                         </div>
-                      }
-                      bodyContent={<Results resultView={CustomResultView} />}
-                      bodyHeader={
-                        <React.Fragment>
-                          {wasSearched && <PagingInfo />}
-                          {wasSearched && <ResultsPerPage />}
-                        </React.Fragment>
-                      }
-                      bodyFooter={<Paging />}
-                    />
-                    <div className={styles.indicators}>
-                      <div className="sui-layout-header">
-                        <div className="sui-layout-header__inner"></div>
+                        <Indicators config={config} />
                       </div>
-                      <Indicators config={config} />
                     </div>
-                  </div>
-                </ErrorBoundary>
-              </div>
-            )
-          }}
-        </WithSearch>
-      </SearchProvider>
+                  </ErrorBoundary>
+                </div>
+              )
+            }}
+          </WithSearch>
+        </SearchProvider>
+      </div>
     </div>
   )
 }
