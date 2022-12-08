@@ -115,7 +115,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="container-fluid page px-5 mt-5">
+        <div className="container-fluid page px-5 mt-3">
           <div className="partners">
             {partners.map((partner: any, index) => (
               <div key={index}>

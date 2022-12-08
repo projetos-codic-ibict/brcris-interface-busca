@@ -93,7 +93,7 @@ a {
 
 .search-card {
   background-color: #2a2163 !important;
-  /* border-radius: 0 !important; */
+  border-radius: 0 !important;
 }
 
 .search-card .nav-tabs,
