@@ -93,7 +93,6 @@ a {
 
 .search-card {
   background-color: #2a2163 !important;
-  border-radius: 0 !important;
 }
 
 .search-card .nav-tabs,
@@ -125,7 +124,8 @@ a {
   background: #c6c7c8;
 }
 
-.sui-result, .sui-result__header a {
+.sui-result,
+.sui-result__header a {
   text-decoration: none;
 }
 

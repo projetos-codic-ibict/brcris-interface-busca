@@ -30,7 +30,7 @@ const connector = new Connector()
 const config = {
   debug: true,
   urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: false,
+  alwaysSearchOnInitialLoad: true,
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
@@ -239,6 +239,9 @@ export default function App() {
                                             className="btn btn-light search-btn"
                                             type="submit"
                                             value="Pesquisar"
+                                            disabled={
+                                              !value || value.length < 3
+                                            }
                                           />
                                         </div>
                                       </form>
@@ -254,7 +257,7 @@ export default function App() {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className={styles.content}>
                       <Layout
                         // header={}

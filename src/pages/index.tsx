@@ -1,9 +1,9 @@
+import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Link from 'next/link'
-import Image from 'next/image'
 
 import AllPublicationsVis from '../components/AllPublicationsVis'
 
@@ -42,14 +42,14 @@ export default function App() {
       description: ' Logo do LA Referencia',
     },
   ]
-
+  const [term, setTerm] = useState('')
   return (
     <div className={styles.home}>
       <Navbar />
       <div className={styles.textWhite}>
         <div className="container page">
           <div className="row">
-            <div className="col-md-6"> 
+            <div className="col-md-6">
               <AllPublicationsVis />
             </div>
 
@@ -84,11 +84,16 @@ export default function App() {
                             className="form-control seacrh-box"
                             name="q"
                             type="text"
+                            value={term}
+                            onChange={(e) => setTerm(e.target.value)}
                             placeholder="Busca..."
                           />
                         </div>
                         <div className="col-auto">
-                          <button className="btn btn-light search-btn">
+                          <button
+                            className="btn btn-light search-btn"
+                            disabled={!term || term.length < 3}
+                          >
                             Pesquisar
                           </button>
                         </div>
