@@ -1,74 +1,76 @@
-import React, { useEffect } from "react";
-import { Options, Edge, Node } from "vis-network/standalone/esm/vis-network";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-import useVisNetwork from "../services/useVisNetwork";
+import React, { useState } from 'react'
+import dynamic from 'next/dynamic'
+const Graph = dynamic(import('react-graph-vis'), { ssr: false })
+import 'vis-network/styles/vis-network.css'
+import { Edge, Node, Options } from 'vis-network'
 
+// Exemplo https://codesandbox.io/s/vis-test-fhir-test-2-forked-0m1l1x?file=/src/index.js:1774-1820
 const nodes: Node[] = [
   {
     id: 1,
-    label: "Publicações",
-    title: "Publicações",
+    label: 'Publicações',
+    title: '40.565 publicações',
     level: 1,
-    group: "struct",
-    color: "#F7964D",
+    shape: 'circle',
+    color: '#F7964D',
     font: {
-      color: "#ffffff",
+      color: '#ffffff',
     },
   },
   {
     id: 2,
-    label: "Pessoas",
-    title: "Pessoas",
+    label: 'Pessoas',
+    title: '10.00 pessoas',
     level: 2,
-    group: "struct",
-    color: "#CB6CE6",
+    shape: 'circle',
+    color: '#CB6CE6',
     font: {
-      color: "#ffffff"
+      color: '#ffffff',
     },
   },
   {
     id: 3,
-    label: "Instituições",
-    title: "Instituições",
+    label: 'Instituições',
+    title: '140 instituições',
     level: 3,
-    group: "struct",
-    color: "#00dafc",
+    shape: 'circle',
+    color: '#00dafc',
   },
   {
     id: 4,
-    label: "Revistas",
-    title: "Revistas",
+    label: 'Revistas',
+    title: '253 revistas',
     level: 4,
-    group: "struct",
-    color: "#FF5757",
+    shape: 'circle',
+    color: '#FF5757',
     font: {
-      color: "#ffffff"
+      color: '#ffffff',
     },
   },
   {
     id: 5,
-    label: "Autores",
-    title: "Autores",
+    label: 'Autores',
+    title: '3000 autores',
     level: 5,
-    group: "struct",
-    color: "#FFDE59",
+    shape: 'circle',
+    color: '#FFDE59',
   },
   {
     id: 6,
-    label: "Fundações",
-    title: "Fundações",
+    label: 'Fundações',
+    title: '5 fundações',
     level: 6,
-    group: "struct",
-    color: "#4152B3",
+    shape: 'circle',
+    color: '#4152B3',
     font: {
-      color: "#ffffff"
+      color: '#ffffff',
     },
   },
-  
-];
-
+]
 const edges: Edge[] = [
-  { from: 1, to: 2, id: 1 },
+  { from: 1, to: 2, id: 1, label: 'um' },
   { from: 1, to: 3, id: 3 },
   { from: 2, to: 3, id: 2 },
   // { from: 2, to: 4, id: 14 },
@@ -84,68 +86,48 @@ const edges: Edge[] = [
   { from: 7, to: 8, id: 9 },
   { from: 1, to: 7, id: 10 },
   { from: 6, to: 8, id: 11 },
-];
+]
 
 const options: Options = {
-  groups: {
-    market: {
-      shape: "triangleDown"
-    },
-    struct: {
-      shape: "circle"
-    }
-  },
-  interaction: {
-    selectable: true,
-    selectConnectedEdges: true
-  },
   edges: {
+    color: '#fff',
     smooth: {
       enabled: true,
-      type: "continuous",
-      roundness: 0
-    }
+      type: 'continuous',
+      roundness: 0,
+    },
   },
   nodes: {
-    shape: "dot",
-    size: 64
+    shape: 'dot',
+    size: 64,
+  },
+  interaction: {
+    dragNodes: false,
+    dragView: false,
+    hover: true,
   },
   layout: {
     hierarchical: {
-      enabled: false
-    }
+      enabled: false,
+      nodeSpacing: 100,
+    },
+  },
+}
+
+function VisGraph() {
+  const [graph] = useState({ nodes, edges })
+
+  const events = {
+    click: function (event: any) {
+      console.log('clicou', event.nodes)
+      window.location.href = `/search?index=${event.node}`
+    },
   }
-};
-
-export default () => {
-  const { ref, network } = useVisNetwork({
-    options,
-    edges,
-    nodes
-  });
-
-  const handleClick = () => {
-    if (!network) return;
-
-    // network.focus(5);
-  };
-
-  useEffect(() => {
-    if (!network) return;
-
-    network.once("beforeDrawing", () => {
-      // network.focus(5);
-    });
-    network.setSelection({
-      edges: [1, 2, 3],
-      nodes: [1, 2, 3]
-    });
-  }, [network]);
 
   return (
     <>
-      {/* <button onClick={handleClick}>Focus</button> */}
-      <div style={{ height: "50vh", width: "50vh" }} ref={ref} />
+      <Graph graph={graph} options={options} events={events} />
     </>
-  );
-};
+  )
+}
+export default VisGraph
