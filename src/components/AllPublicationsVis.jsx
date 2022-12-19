@@ -4,10 +4,10 @@ import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
 const Graph = dynamic(import('react-graph-vis'), { ssr: false })
 import 'vis-network/styles/vis-network.css'
-import { Edge, Node, Options } from 'vis-network'
+// import { Edge, Node, Options } from 'vis-network'
 
 // Exemplo https://codesandbox.io/s/vis-test-fhir-test-2-forked-0m1l1x?file=/src/index.js:1774-1820
-const nodes: Node[] = [
+const nodes = [
   {
     id: 1,
     label: 'Publicações',
@@ -69,7 +69,7 @@ const nodes: Node[] = [
     },
   },
 ]
-const edges: Edge[] = [
+const edges = [
   { from: 1, to: 2, id: 1, label: 'um' },
   { from: 1, to: 3, id: 3 },
   { from: 2, to: 3, id: 2 },
@@ -88,7 +88,7 @@ const edges: Edge[] = [
   { from: 6, to: 8, id: 11 },
 ]
 
-const options: Options = {
+const options = {
   edges: {
     color: '#fff',
     smooth: {
@@ -118,7 +118,7 @@ function VisGraph() {
   const [graph] = useState({ nodes, edges })
 
   const events = {
-    click: function (event: any) {
+    click: function (event) {
       console.log('clicou', event.nodes)
       window.location.href = `/search?index=${event.node}`
     },
