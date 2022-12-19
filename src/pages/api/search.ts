@@ -3,7 +3,7 @@ import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connecto
 // https://docs.elastic.co/search-ui/api/connectors/elasticsearch#customise-the-elasticsearch-request-body
 const connector = new ElasticsearchAPIConnector(
   {
-    host: process.env.HOST,
+    host: process.env.HOST_ELASTIC,
     index: 'pqseniors-pubs',
     apiKey: process.env.API_KEY,
   },

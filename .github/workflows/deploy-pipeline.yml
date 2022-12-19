@@ -1,0 +1,35 @@
+name: Deploy Brcris-Nextjs
+
+on:
+  push:
+    branches:
+      - main
+
+env: 
+  HOST_ELASTIC: ${{secrets.HOST_ELASTIC}}
+  API_KEY: ${{secrets.API_KEY}}
+
+
+jobs:
+  test:
+    runs-on:  [self-hosted, Linux, x64, runner-iroxa ]
+    environment:
+      name: test
+      url: 'http://172.16.16.79:3000'
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          sh scripts/deploy.sh
+
+          
+  # prod:
+  #   runs-on: [self-hosted, Linux, x64, runner-peroba]
+  #   environment:
+  #     name: prod
+  #     url: 'https://api-oasisbr.ibict.br/api/v1/'
+
+    # steps:
+    #   - uses: actions/checkout@v3
+    #   - run: |
+    #       sh scripts/deploy.sh

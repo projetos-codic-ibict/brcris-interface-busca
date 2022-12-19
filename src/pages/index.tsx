@@ -122,7 +122,7 @@ export default function App() {
 
         <div className="container-fluid page px-5 mt-3">
           <div className="partners">
-            {partners.map((partner: any, index) => (
+            {partners.map((partner, index) => (
               <div key={index}>
                 <Link href={partner.url} target="_blank">
                   <a className="">

@@ -5,7 +5,7 @@ const client = new Client({
   maxRetries: 5,
   requestTimeout: 60000,
   sniffOnStart: true,
-  node: process.env.HOST,
+  node: process.env.HOST_ELASTIC,
   auth: {
     apiKey: process.env.API_KEY!,
   },

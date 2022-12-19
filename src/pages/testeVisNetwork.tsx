@@ -7,7 +7,7 @@ import { Options, Edge, Node } from 'vis-network'
 import useVisNetwork from '../services/useVisNetwork'
 
 import useSWR from 'swr'
-import nodeTest from 'node:test'
+// import nodeTest from 'node:test'
 
 const nodesTest: any[] = [
   {
@@ -176,10 +176,10 @@ export default () => {
   const { data } = useSWR('/api/visNetwork', fetcher)
   const articles = data
   // console.log(articles)
-  let nodesTest = []
+  const nodesTest = []
 
   if (articles !== undefined && articles !== null) {
-    for (let article of articles) {
+    for (const article of articles) {
       nodesTest.push(
         {
           id: article._source.id,

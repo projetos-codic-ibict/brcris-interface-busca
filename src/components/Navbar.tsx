@@ -1,6 +1,6 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css' // Import bootstrap CSS
-import styles from '../styles/Home.module.css'
+// import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 
