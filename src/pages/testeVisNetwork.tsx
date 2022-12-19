@@ -177,6 +177,7 @@ export default () => {
   const articles = data
   // console.log(articles)
   const nodesTest = []
+  
 
   if (articles !== undefined && articles !== null) {
     for (const article of articles) {
