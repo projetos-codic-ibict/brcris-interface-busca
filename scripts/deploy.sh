@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-echo "Running yarn install"
-yarn
+echo "Running npm install"
+npm install
 echo "Running pm2 stop brcris-nextjs"
 pm2 stop brcris-nextjs
-echo "yarn deploy"
-yarn deploy
+echo "npm run deploy"
+npm run deploy
 echo "finished!"
