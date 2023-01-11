@@ -4,7 +4,7 @@ import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connecto
 const connector = new ElasticsearchAPIConnector(
   {
     host: process.env.HOST_ELASTIC,
-    index: 'pqseniors-pubs',
+    index: 'ca-publication',
     apiKey: process.env.API_KEY,
   },
   (requestBody, requestState, queryConfig) => {
@@ -32,6 +32,8 @@ const connector = new ElasticsearchAPIConnector(
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function handler(req: any, res: any) {
   const { requestState, queryConfig } = req.body
+  connector.config.index = queryConfig.index
+  console.log('req', queryConfig, connector.config.index)
   const response = await connector.onSearch(requestState, queryConfig)
   res.json(response)
 }

@@ -70,6 +70,19 @@ export default function App() {
                         Publicações
                       </button>
                     </li>
+                    <li className="nav-item" role="presentation">
+                      <button
+                        className="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#pessoas"
+                        type="button"
+                        role="tab"
+                        aria-controls="pub"
+                        aria-selected="true"
+                      >
+                        Pessoas
+                      </button>
+                    </li>
                   </ul>
                   <div className="tab-content" id="tabContent">
                     <div
@@ -78,7 +91,7 @@ export default function App() {
                       role="tabpanel"
                       aria-labelledby="pub-tab"
                     >
-                      <form className="row g-3 mb-5" action="/search">
+                      <form className="row g-3 mb-3" action="/publicacoes">
                         <div className="col">
                           <input
                             className="form-control seacrh-box"
@@ -99,6 +112,34 @@ export default function App() {
                         </div>
                       </form>
                     </div>
+                  </div>
+
+                  <div
+                    className="tab-pane fade"
+                    id="pessoas"
+                    role="tabpanel"
+                    aria-labelledby="pessoas-tab"
+                  >
+                    <form className="row g-3 mb-3" action="/pessoas">
+                      <div className="col">
+                        <input
+                          className="form-control seacrh-box"
+                          name="q"
+                          type="text"
+                          value={term}
+                          onChange={(e) => setTerm(e.target.value)}
+                          placeholder="Busca..."
+                        />
+                      </div>
+                      <div className="col-auto">
+                        <button
+                          className="btn btn-light search-btn"
+                          disabled={!term || term.length < 3}
+                        >
+                          Pesquisar
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>

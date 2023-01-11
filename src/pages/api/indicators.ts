@@ -100,7 +100,7 @@ const proxy = async (req: any, res: any) => {
   const querys: any[] = []
   data.forEach((item) => {
     const queryText = fillQuery(item)
-    querys.push({ index: 'pqseniors-pubs' })
+    querys.push({ index: 'ca-publication' })
     querys.push(queryText)
   })
 

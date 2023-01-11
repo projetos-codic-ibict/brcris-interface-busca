@@ -9,6 +9,11 @@ type OrgUnit = {
   id: string
   name: string
 }
+
+type Service = {
+  id: string
+  title: string[]
+}
 const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
   <li>
     <div className="sui-result__header">
@@ -27,13 +32,13 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
       <div className="sui-result__body">
         <ul className="sui-result__details">
           <li>
-            <span className="sui-result__key">Ano:</span>
+            <span className="sui-result__key">Ano</span>
             <span className="sui-result__value">
               {result.publicationDate?.raw}
             </span>
           </li>
           <li>
-            <span className="sui-result__key">Autor(es): </span>
+            <span className="sui-result__key">Autor(es)</span>
             <span className="sui-result__value">
               {result.author?.raw.map((author: Author) => (
                 <a
@@ -48,22 +53,35 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
             </span>
           </li>
           <li>
-            <span className="sui-result__key">OrgUnit:</span>
+            <span className="sui-result__key">Tipo</span>
+            <span className="sui-result__value">{result.type.raw}</span>
+          </li>
+          <li>
+            <span className="sui-result__key">
+              {' '}
+              {result.type.raw == 'doctoral thesis' ||
+              result.type.raw == 'master thesis'
+                ? 'Instituição'
+                : result.type.raw == 'conference proceedings'
+                ? 'Organização'
+                : 'Revista'}
+              {''}
+            </span>
             <span className="sui-result__value">
               {result.orgunit?.raw.map((org: OrgUnit) => (
                 <span key={org.id}>{org.name}</span>
               ))}
-            </span>
-          </li>
-          <li>
-            <span className="sui-result__key">Tipo:</span>
-            <span className="sui-result__value">{result.type.raw}</span>
-          </li>
-          <li>
-            <span className="sui-result__key">Revista: </span>
-            <span className="sui-result__value">
+
+              {result.service?.raw.map((service: Service) =>
+                service.title.map((title: string) => (
+                  <span key={title}>{title}</span>
+                ))
+              )}
+
               {result.journal?.raw.map((journal: any, index: any) => (
-                <span key={index}>{journal.title ? journal.title : journal}</span>
+                <span key={index}>
+                  {journal.title ? journal.title : journal}
+                </span>
               ))}
             </span>
           </li>

@@ -34,83 +34,33 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
+    index: 'ca-person',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
-      title: {},
+      name: {},
     },
     result_fields: {
-      title: {
-        snippet: {},
-      },
-      publicationDate: {
-        snippet: {},
-      },
-      author: {
-        raw: [],
-      },
-      keyword: {
-        snippet: {},
-      },
-      journal: {
+      name: {
         raw: {},
       },
-      type: {
+      lattesId: {
         raw: {},
       },
-      orgunit: {
-        snippet: {},
+      nationality: {
+        raw: {},
       },
-      vivo_link: {
+      orcid: {
+        raw: {},
+      },
+      researchArea: {
         raw: {},
       },
     },
-    disjunctiveFacets: [
-      'author.name.keyword',
-      'keyword.keyword',
-      'publicationDate.keyword',
-    ],
+    disjunctiveFacets: ['nationality.keyword', 'researchArea.keyword'],
     facets: {
-      // 'publicationDate.keyword': { type: 'value', size: 100 },
-      'author.name.keyword': { type: 'value' },
-      'keyword.keyword': { type: 'value' },
-      'type.keyword': { type: 'value' },
-      'orgunit.name.keyword': { type: 'value' },
-      'publicationDate.keyword': {
-        type: 'range',
-        ranges: [
-          {
-            from: '2020',
-            to: new Date().getUTCFullYear().toString(),
-            name: `2020 - ${new Date().getUTCFullYear()}`,
-          },
-          {
-            from: '2015',
-            to: '2020',
-            name: '2015 - 2020',
-          },
-          {
-            from: '2010',
-            to: '2015',
-            name: '2010 - 2015',
-          },
-          {
-            from: '2000',
-            to: '2010',
-            name: '2000 - 2010',
-          },
-          {
-            from: '1990',
-            to: '2000',
-            name: '1990 - 2000',
-          },
-          {
-            from: '1950',
-            to: '1990',
-            name: '1950 - 1990',
-          },
-        ],
-      },
+      'nationality.keyword': { type: 'value' },
+      'researchArea.keyword': { type: 'value' },
     },
   },
   // autocompleteQuery: {
@@ -148,19 +98,19 @@ const SORT_OPTIONS = [
     value: [],
   },
   {
-    name: 'Ano ASC',
+    name: 'Nome ASC',
     value: [
       {
-        field: 'publicationDate.keyword',
+        field: 'name.keyword',
         direction: 'asc',
       },
     ],
   },
   {
-    name: 'Ano DESC',
+    name: 'Nome DESC',
     value: [
       {
-        field: 'publicationDate.keyword',
+        field: 'name.keyword',
         direction: 'desc',
       },
     ],
@@ -184,7 +134,11 @@ export default function App() {
                   <ErrorBoundary>
                     <div className="container page">
                       <div className="row">
-                        <div className="col-md-6"></div>
+                        <div className="col-md-6">
+                          <div className="page-title">
+                            <h2>Pessoas</h2>
+                          </div>
+                        </div>
 
                         <div className="col-md-6">
                           <div className="card search-card">
@@ -196,18 +150,18 @@ export default function App() {
                               >
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title="Título"
+                                    title="Nome"
                                     active="true"
                                     config={config}
-                                    searchField="title"
+                                    searchField="name"
                                   />
                                 </li>
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title="Autor"
+                                    title="Área de pesquisa"
                                     active={false}
                                     config={config}
-                                    searchField="author.name"
+                                    searchField="researchArea"
                                   />
                                 </li>
                               </ul>
@@ -222,7 +176,7 @@ export default function App() {
                                     view={({ value, onChange, onSubmit }) => (
                                       <form
                                         onSubmit={onSubmit}
-                                        className="row g-3 mb-5"
+                                        className="row g-3 mb-3"
                                       >
                                         <div className="col">
                                           <input
@@ -269,61 +223,19 @@ export default function App() {
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
-                            {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
                             <Facet
                               key={'1'}
-                              field={'author.name.keyword'}
-                              label={'autores'}
+                              field={'nationality.keyword'}
+                              label={'nacionalidade'}
                             />
                             <Facet
                               key={'2'}
-                              field={'keyword.keyword'}
-                              label={'Palavra-chave'}
+                              field={'researchArea.keyword'}
+                              label={'Área de pesquisa'}
                             />
-                            <Facet
-                              key={'3'}
-                              field={'orgunit.name.keyword'}
-                              label={'Insituição'}
-                            />
-                            <Facet
-                              key={'4'}
-                              field={'type.keyword'}
-                              label={'Tipo'}
-                            />
-                            <Facet
-                              key={'5'}
-                              field={'publicationDate.keyword'}
-                              filterType={'none'}
-                              label={'Ano'}
-                            />
-                            {/* <Facet
-                            mapContextToProps={(context) => {
-                              if (!context.facets['publicationDate.keyword'])
-                                return context
-                              return {
-                                ...context,
-                                facets: {
-                                  ...(context.facets || {}),
-                                  year: context.facets[
-                                    'publicationDate.keyword'
-                                  ].map((s: any) => ({
-                                    ...s,
-                                    data: s.data.sort((a: any, b: any) => {
-                                      if (a.value > b.value) return -1
-                                      if (a.value < b.value) return 1
-                                      return 0
-                                    }),
-                                  })),
-                                },
-                              }
-                            }}
-                            field="publicationDate.keyword"
-                            label="ano"
-                            show={10}
-                          /> */}
                           </div>
                         }
-                        bodyContent={<Results resultView={CustomResultView} />}
+                        bodyContent={<Results />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}
@@ -336,7 +248,7 @@ export default function App() {
                         <div className="sui-layout-header">
                           <div className="sui-layout-header__inner"></div>
                         </div>
-                        <Indicators config={config} />
+                        {/* <Indicators config={config} /> */}
                       </div>
                     </div>
                   </ErrorBoundary>

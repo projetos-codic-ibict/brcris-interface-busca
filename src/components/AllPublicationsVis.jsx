@@ -117,10 +117,12 @@ const options = {
 function VisGraph() {
   const [graph] = useState({ nodes, edges })
 
+  const pages = ['/publicacoes', '/pessoas', '/#', '/#', '/#', '/#']
+
   const events = {
     click: function (event) {
-      console.log('clicou', event.nodes)
-      window.location.href = `/search?index=${event.node}`
+      console.log('clicou', event.nodes[0])
+      window.location.href = pages[event.nodes[0] - 1]
     },
   }
 
