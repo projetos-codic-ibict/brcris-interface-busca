@@ -15,20 +15,20 @@ type Service = {
   title: string[]
 }
 const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
-  <li>
-    <div className="sui-result__header">
-      <h6>
-        <a
-          onClick={onClickLink}
-          target="_blank"
-          href={result.vivo_link.raw}
-          rel="noreferrer"
-        >
-          {result.title.raw}
-        </a>
-      </h6>
-    </div>
-    <div className="sui-result">
+  <li className="sui-result">
+    <div>
+      <div className="sui-result__header">
+        <h6>
+          <a
+            onClick={onClickLink}
+            target="_blank"
+            href={result.vivo_link.raw}
+            rel="noreferrer"
+          >
+            {result.title.raw}
+          </a>
+        </h6>
+      </div>
       <div className="sui-result__body">
         <ul className="sui-result__details">
           <li>

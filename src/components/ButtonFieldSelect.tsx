@@ -1,9 +1,18 @@
+import type { SearchDriverOptions } from '@elastic/search-ui'
+
+type ButtonFieldSelectProps = {
+  title: string
+  active: boolean
+  config: SearchDriverOptions
+  searchField: string
+}
+
 export default function ButtonFieldSelect({
   title,
   active,
   config,
   searchField,
-}) {
+}: ButtonFieldSelectProps) {
   return (
     <button
       className={active ? 'nav-link active' : 'nav-link'}
@@ -15,9 +24,11 @@ export default function ButtonFieldSelect({
       data-field="title"
       aria-selected="true"
       onClick={() => {
-        config.searchQuery.search_fields = {
-          [searchField]: {},
-        }
+        config.searchQuery
+          ? (config.searchQuery.search_fields = {
+              [searchField]: {},
+            })
+          : null
       }}
     >
       {title}

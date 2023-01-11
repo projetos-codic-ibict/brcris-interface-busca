@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react'
 import { withSearch } from '@elastic/react-search-ui'
@@ -59,6 +60,12 @@ export const options = {
   },
 }
 
+type IndicatorType = {
+  key: string
+  doc_count: number
+}
+
+// @ts-ignore
 function Indicators({ filters, searchTerm, isLoading, config }) {
   const [indicators, setIndicators] = useState([])
 
@@ -81,15 +88,16 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
     config.searchQuery.operator,
   ])
 
-  const yearIndicators = indicators ? indicators[0] : []
+  const yearIndicators: IndicatorType[] = indicators ? indicators[0] : []
 
   const yearLabels =
     yearIndicators != null ? yearIndicators.map((d) => d.key) : []
 
-  const typeIndicators = indicators ? indicators[1] : []
+  const typeIndicators: IndicatorType[] = indicators ? indicators[1] : []
 
   const typeLabels =
     typeIndicators != null ? typeIndicators.map((d) => d.key) : []
+
   const typeDoc_count =
     typeIndicators != null ? typeIndicators.map((d) => d.doc_count) : []
 
@@ -97,6 +105,8 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
     <div className={styles.charts}>
       <Bar
         hidden={yearIndicators == null}
+        /** 
+      // @ts-ignore */
         options={options}
         width="500"
         data={{
@@ -130,6 +140,8 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
       />
 
       <Pie
+        /** 
+      // @ts-ignore */
         options={optionsType}
         hidden={typeIndicators == null}
         width="500"
@@ -163,7 +175,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
     </div>
   )
 }
-
+// @ts-ignore
 export default withSearch(({ filters, searchTerm, isLoading, config }) => ({
   filters,
   searchTerm,

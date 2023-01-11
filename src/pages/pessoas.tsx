@@ -151,7 +151,7 @@ export default function App() {
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title="Nome"
-                                    active="true"
+                                    active={true}
                                     config={config}
                                     searchField="name"
                                   />
@@ -235,7 +235,7 @@ export default function App() {
                             />
                           </div>
                         }
-                        bodyContent={<Results />}
+                        bodyContent={<Results titleField="name" />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}

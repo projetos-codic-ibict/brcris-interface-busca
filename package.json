@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "PORT=3000 && next start -p $PORT",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "deploy": "yarn && yarn build && pm2 start yarn --name 'brcris-nextjs' --interpreter bash -- start"
   },
   "dependencies": {

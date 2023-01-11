@@ -227,9 +227,8 @@ li .sui-result__key:after {
   border-color: var(--dark-color);
 }
 
-.page-search .sui-result__header {
-  position: relative;
-  top: 8px;
+.sui-result__header {
+  margin-top: -40px;
   border: 1px solid var(--accent-color);
   margin-right: 1rem;
   margin-left: 1rem;
@@ -237,6 +236,10 @@ li .sui-result__key:after {
   padding: 0.5rem 0.5rem 0 0.5rem;
   background-color: #fff;
   z-index: 1;
+}
+
+.sui-result__header .sui-result__title {
+  font-size: 1rem;
 }
 
 .page-search .css-qc6sy-singleValue {
@@ -247,10 +250,11 @@ li .sui-result__key:after {
 .page-search .sui-result {
   border: 1px solid var(--dark-color);
   border-radius: 5px;
+  overflow: visible;
 }
 
 .page-search .sui-layout-main-header {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .page-search .sui-layout-sidebar {

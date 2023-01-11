@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
+// @ts-ignore
 const Graph = dynamic(import('react-graph-vis'), { ssr: false })
 import 'vis-network/styles/vis-network.css'
 // import { Edge, Node, Options } from 'vis-network'
@@ -120,7 +123,7 @@ function VisGraph() {
   const pages = ['/publicacoes', '/pessoas', '/#', '/#', '/#', '/#']
 
   const events = {
-    click: function (event) {
+    click: function (event: any) {
       console.log('clicou', event.nodes[0])
       window.location.href = pages[event.nodes[0] - 1]
     },
@@ -128,6 +131,8 @@ function VisGraph() {
 
   return (
     <>
+      {/** 
+      // @ts-ignore */}
       <Graph graph={graph} options={options} events={events} />
     </>
   )

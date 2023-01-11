@@ -205,7 +205,7 @@ export default function App() {
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title="Título"
-                                    active="true"
+                                    active={true}
                                     config={config}
                                     searchField="title"
                                   />
@@ -344,6 +344,8 @@ export default function App() {
                         <div className="sui-layout-header">
                           <div className="sui-layout-header__inner"></div>
                         </div>
+                        {/** 
+                        // @ts-ignore */}
                         <Indicators config={config} />
                       </div>
                     </div>
