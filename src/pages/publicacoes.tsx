@@ -34,7 +34,7 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'ca-publication',
+    index: 'ca-journal',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {

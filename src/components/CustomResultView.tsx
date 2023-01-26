@@ -22,7 +22,7 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
           <a
             onClick={onClickLink}
             target="_blank"
-            href={result.vivo_link.raw}
+            href={result.vivo_link?.raw}
             rel="noreferrer"
           >
             {result.title.raw}
@@ -54,15 +54,15 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
           </li>
           <li>
             <span className="sui-result__key">Tipo</span>
-            <span className="sui-result__value">{result.type.raw}</span>
+            <span className="sui-result__value">{result.type?.raw}</span>
           </li>
           <li>
             <span className="sui-result__key">
               {' '}
-              {result.type.raw == 'doctoral thesis' ||
-              result.type.raw == 'master thesis'
+              {result.type?.raw === 'doctoral thesis' ||
+              result.type?.raw === 'master thesis'
                 ? 'Instituição'
-                : result.type.raw == 'conference proceedings'
+                : result.type?.raw === 'conference proceedings'
                 ? 'Organização'
                 : 'Revista'}
               {''}

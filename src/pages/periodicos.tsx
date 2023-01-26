@@ -34,34 +34,25 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'ca-person',
+    index: 'ca-journal',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
-      name: {},
+      title: {},
     },
     result_fields: {
-      name: {
+      title: {
         raw: {},
-      },
-      lattesId: {
+      },          
+      issn: {
         raw: {},
-      },
-      nationality: {
-        raw: {},
-      },
-      orcid: {
-        raw: {},
-      },
-      researchArea: {
-        raw: {},
-      },
+      }
     },
-    disjunctiveFacets: ['nationality.keyword', 'researchArea.keyword'],
-    facets: {
-      'nationality.keyword': { type: 'value' },
-      'researchArea.keyword': { type: 'value' },
-    },
+    // disjunctiveFacets: ['title.keyword', 'issn.keyword'],
+    // facets: {
+    //   'issn.keyword': { type: 'value' },
+    //   'title.keyword': { type: 'value' },
+    // },
   },
   // autocompleteQuery: {
   //   results: {
@@ -98,19 +89,19 @@ const SORT_OPTIONS = [
     value: [],
   },
   {
-    name: 'Nome ASC',
+    name: 'Title ASC',
     value: [
       {
-        field: 'name.keyword',
+        field: 'title.keyword',
         direction: 'asc',
       },
     ],
   },
   {
-    name: 'Nome DESC',
+    name: 'Title DESC',
     value: [
       {
-        field: 'name.keyword',
+        field: 'title.keyword',
         direction: 'desc',
       },
     ],
@@ -136,7 +127,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>Pessoas</h2>
+                            <h2>Periódicos</h2>
                           </div>
                         </div>
 
@@ -223,7 +214,7 @@ export default function App() {
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
-                            <Facet
+                            {/* <Facet
                               key={'1'}
                               field={'nationality.keyword'}
                               label={'nacionalidade'}
@@ -232,7 +223,7 @@ export default function App() {
                               key={'2'}
                               field={'researchArea.keyword'}
                               label={'Área de pesquisa'}
-                            />
+                            /> */}
                           </div>
                         }
                         bodyContent={<Results titleField="name" />}
@@ -248,9 +239,7 @@ export default function App() {
                         <div className="sui-layout-header">
                           <div className="sui-layout-header__inner"></div>
                         </div>
-                        {/** 
-                        // @ts-ignore */}
-                        <Indicators config={config} />
+                        {/* <Indicators config={config} /> */}
                       </div>
                     </div>
                   </ErrorBoundary>

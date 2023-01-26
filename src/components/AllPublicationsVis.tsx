@@ -43,7 +43,7 @@ const nodes = [
   },
   {
     id: 4,
-    label: 'Revistas',
+    label: 'Periódicos',
     title: '253 revistas',
     level: 4,
     shape: 'circle',
@@ -52,43 +52,43 @@ const nodes = [
       color: '#ffffff',
     },
   },
-  {
-    id: 5,
-    label: 'Autores',
-    title: '3000 autores',
-    level: 5,
-    shape: 'circle',
-    color: '#FFDE59',
-  },
-  {
-    id: 6,
-    label: 'Fundações',
-    title: '5 fundações',
-    level: 6,
-    shape: 'circle',
-    color: '#4152B3',
-    font: {
-      color: '#ffffff',
-    },
-  },
+  // {
+  //   id: 5,
+  //   label: 'Autores',
+  //   title: '3000 autores',
+  //   level: 5,
+  //   shape: 'circle',
+  //   color: '#FFDE59',
+  // },
+  // {
+  //   id: 6,
+  //   label: 'Fundações',
+  //   title: '5 fundações',
+  //   level: 6,
+  //   shape: 'circle',
+  //   color: '#4152B3',
+  //   font: {
+  //     color: '#ffffff',
+  //   },
+  // },
 ]
 const edges = [
   { from: 1, to: 2, id: 1, label: 'um' },
-  { from: 1, to: 3, id: 3 },
-  { from: 2, to: 3, id: 2 },
+  { from: 1, to: 4, id: 3 },
+  // { from: 2, to: 3, id: 2 },
   // { from: 2, to: 4, id: 14 },
-  { from: 1, to: 4, id: 4 },
-  { from: 3, to: 5, id: 12 },
+  // { from: 1, to: 4, id: 3 },
+  { from: 3, to: 4, id: 12 },
 
-  { from: 4, to: 5, id: 6 },
-  { from: 4, to: 6, id: 13 },
-  { from: 1, to: 6, id: 5 },
-  { from: 6, to: 2, id: 7 },
+  // { from: 4, to: 5, id: 6 },
+  { from: 4, to: 2, id: 13 },
+  { from: 1, to: 3, id: 2 },
+  { from: 3, to: 2, id: 7 },
   { from: 1, to: 5, id: 8 },
 
   { from: 7, to: 8, id: 9 },
   { from: 1, to: 7, id: 10 },
-  { from: 6, to: 8, id: 11 },
+  { from: 8, to: 8, id: 11 },
 ]
 
 const options = {
@@ -120,7 +120,7 @@ const options = {
 function VisGraph() {
   const [graph] = useState({ nodes, edges })
 
-  const pages = ['/publicacoes', '/pessoas', '/#', '/#', '/#', '/#']
+  const pages = ['/publicacoes', '/pessoas', '/instituicoes', '/periodicos', '/#', '/#']
 
   const events = {
     click: function (event: any) {

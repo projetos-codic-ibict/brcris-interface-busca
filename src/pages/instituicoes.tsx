@@ -34,7 +34,7 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'ca-person',
+    index: 'ca-orgunit',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -44,24 +44,12 @@ const config = {
       name: {
         raw: {},
       },
-      lattesId: {
-        raw: {},
-      },
-      nationality: {
-        raw: {},
-      },
-      orcid: {
-        raw: {},
-      },
-      researchArea: {
-        raw: {},
-      },
     },
-    disjunctiveFacets: ['nationality.keyword', 'researchArea.keyword'],
-    facets: {
-      'nationality.keyword': { type: 'value' },
-      'researchArea.keyword': { type: 'value' },
-    },
+    // disjunctiveFacets: ['nationality.keyword', 'researchArea.keyword'],
+    // facets: {
+    //   'nationality.keyword': { type: 'value' },
+    //   'researchArea.keyword': { type: 'value' },
+    // },
   },
   // autocompleteQuery: {
   //   results: {
@@ -136,7 +124,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>Pessoas</h2>
+                            <h2>Instituições</h2>
                           </div>
                         </div>
 
@@ -223,7 +211,7 @@ export default function App() {
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
-                            <Facet
+                            {/* <Facet
                               key={'1'}
                               field={'nationality.keyword'}
                               label={'nacionalidade'}
@@ -232,7 +220,7 @@ export default function App() {
                               key={'2'}
                               field={'researchArea.keyword'}
                               label={'Área de pesquisa'}
-                            />
+                            /> */}
                           </div>
                         }
                         bodyContent={<Results titleField="name" />}
@@ -248,9 +236,7 @@ export default function App() {
                         <div className="sui-layout-header">
                           <div className="sui-layout-header__inner"></div>
                         </div>
-                        {/** 
-                        // @ts-ignore */}
-                        <Indicators config={config} />
+                        {/* <Indicators config={config} /> */}
                       </div>
                     </div>
                   </ErrorBoundary>

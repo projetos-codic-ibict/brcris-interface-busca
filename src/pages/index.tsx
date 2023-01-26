@@ -83,6 +83,32 @@ export default function App() {
                         Pessoas
                       </button>
                     </li>
+                    <li className="nav-item" role="presentation">
+                      <button
+                        className="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#pessoas"
+                        type="button"
+                        role="tab"
+                        aria-controls="pub"
+                        aria-selected="true"
+                      >
+                        Periódicos
+                      </button>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                      <button
+                        className="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#pessoas"
+                        type="button"
+                        role="tab"
+                        aria-controls="pub"
+                        aria-selected="true"
+                      >
+                        Instituições
+                      </button>
+                    </li>
                   </ul>
                   <div className="tab-content" id="tabContent">
                     <div
