@@ -36,7 +36,7 @@ export const optionsType = {
     },
     title: {
       display: true,
-      text: 'Tipos de documentos',
+      text: 'Nacionalidade',
     },
   },
 }
@@ -55,7 +55,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Artigos por ano',
+      text: 'Área de pesquisa',
     },
   },
 }
@@ -88,6 +88,8 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
     config.searchQuery.operator,
   ])
 
+  console.log('biro', indicators)
+
   const yearIndicators: IndicatorType[] = indicators ? indicators[0] : []
 
   const yearLabels =
@@ -114,7 +116,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
           datasets: [
             {
               data: yearIndicators,
-              label: 'Artigos por ano',
+              label: 'Área de pesquisa',
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(255, 159, 64, 0.2)',
@@ -150,7 +152,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
           datasets: [
             {
               data: typeDoc_count,
-              label: '# of Votes',
+              label: 'NacionalidadeF',
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

@@ -19,7 +19,7 @@ import { SearchDriverOptions } from '@elastic/search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import Navbar from '../components/Navbar'
-import Indicators from '../components/Indicators'
+import IndicatorsPessoas from '../components/IndicatorsPessoas'
 import ClearFilters from '../components/ClearFilters'
 import CustomResultView from '../components/CustomResultView'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
@@ -244,13 +244,13 @@ export default function App() {
                         }
                         bodyFooter={<Paging />}
                       />
-                      <div className={styles.indicators}>
+                      <div className={styles.Indicators}>
                         <div className="sui-layout-header">
                           <div className="sui-layout-header__inner"></div>
                         </div>
                         {/** 
                         // @ts-ignore */}
-                        <Indicators config={config} />
+                        <IndicatorsPessoas config={config} />
                       </div>
                     </div>
                   </ErrorBoundary>
