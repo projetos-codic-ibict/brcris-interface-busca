@@ -3,17 +3,20 @@ const proxy = async (
   filters: any,
   searchTerm: string | undefined,
   fieldSearch: string | undefined,
-  operator: string
+  operator: string,
+  index: string,
+  indicator: string
 ) => {
   const body = JSON.stringify([
     {
       filters,
       searchTerm,
       fieldSearch,
-      indicator: 'publicationDate.keyword',
       operator,
+      index,
+      indicator: indicator,
     },
-    { filters, searchTerm, fieldSearch, indicator: 'type.keyword' },
+    { filters, searchTerm, fieldSearch, operator, index, indicator: 'type.keyword' },
   ])
   const response = await fetch('/api/indicators', {
     method: 'POST',

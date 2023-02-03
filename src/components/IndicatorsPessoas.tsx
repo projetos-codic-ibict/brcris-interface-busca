@@ -75,7 +75,9 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
           filters,
           searchTerm,
           Object.keys(config.searchQuery.search_fields)[0],
-          config.searchQuery.operator
+          config.searchQuery.operator,
+          config.searchQuery.index,
+          'nationality.keyword'
         ).then((data) => {
           setIndicators(data)
         })
@@ -87,8 +89,6 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
     config.searchQuery.search_fields,
     config.searchQuery.operator,
   ])
-
-  console.log('biro', indicators)
 
   const yearIndicators: IndicatorType[] = indicators ? indicators[0] : []
 

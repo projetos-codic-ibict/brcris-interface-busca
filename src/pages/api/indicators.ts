@@ -43,9 +43,10 @@ const queryTextModel = {
 type RequestData = {
   searchTerm: string
   fieldSearch: string
-  indicator: string
   filters: Filter[]
   operator: string
+  index: string,
+  indicator: string
 }
 
 function fillQuery(data: RequestData) {
@@ -100,7 +101,8 @@ const proxy = async (req: any, res: any) => {
   const querys: any[] = []
   data.forEach((item) => {
     const queryText = fillQuery(item)
-    querys.push({ index: 'ca-publication' })
+    console.log(item.index)
+    querys.push({ index: item.index })
     querys.push(queryText)
   })
 
@@ -110,7 +112,7 @@ const proxy = async (req: any, res: any) => {
   })
 
   const buckets = body.responses.map(
-    (resp: any) => resp.aggregations.aggregate.buckets
+    (resp: any) => resp.aggregations?.aggregate.buckets
   )
 
   res.json(buckets)
