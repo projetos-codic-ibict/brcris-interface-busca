@@ -45,7 +45,7 @@ type RequestData = {
   fieldSearch: string
   filters: Filter[]
   operator: string
-  index: string,
+  index: string
   indicator: string
 }
 
@@ -98,6 +98,7 @@ function getFilterFormated(filter: Filter): any {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const proxy = async (req: any, res: any) => {
   const data: RequestData[] = JSON.parse(req.body)
+  console.log('data', data)
   const querys: any[] = []
   data.forEach((item) => {
     const queryText = fillQuery(item)

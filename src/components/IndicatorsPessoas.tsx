@@ -14,7 +14,7 @@ import {
   Legend,
   ArcElement,
 } from 'chart.js'
-import { Bar, Pie } from 'react-chartjs-2'
+import { Pie } from 'react-chartjs-2'
 import ElasticSearchService from '../services/ElasticSearchService'
 
 ChartJS.register(
@@ -77,7 +77,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
           Object.keys(config.searchQuery.search_fields)[0],
           config.searchQuery.operator,
           config.searchQuery.index,
-          'nationality.keyword'
+          ['nationality.keyword', 'researchArea.keyword']
         ).then((data) => {
           setIndicators(data)
         })
@@ -90,50 +90,55 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
     config.searchQuery.operator,
   ])
 
-  const yearIndicators: IndicatorType[] = indicators ? indicators[0] : []
+  const nationalityIndicators: IndicatorType[] = indicators ? indicators[0] : []
 
-  const yearLabels =
-    yearIndicators != null ? yearIndicators.map((d) => d.key) : []
 
-  const typeIndicators: IndicatorType[] = indicators ? indicators[1] : []
+  const nationalityLabels =
+    nationalityIndicators != null ? nationalityIndicators.map((d) => d.key) : []
 
-  const typeLabels =
-    typeIndicators != null ? typeIndicators.map((d) => d.key) : []
+  const nationalityValues =
+    nationalityIndicators != null
+      ? nationalityIndicators.map((d) => d.doc_count)
+      : []
 
-  const typeDoc_count =
-    typeIndicators != null ? typeIndicators.map((d) => d.doc_count) : []
+
+  const keywordIndicators: IndicatorType[] = indicators ? indicators[1] : []
+
+  const keywordLabels =
+    keywordIndicators != null ? keywordIndicators.map((d) => d.key) : []
+
+  const keywordValues =
+    keywordIndicators != null ? keywordIndicators.map((d) => d.doc_count) : []
 
   return (
     <div className={styles.charts}>
-      <Bar
-        hidden={yearIndicators == null}
+      <Pie
+        // hidden={nationalityIndicators == null}
         /** 
       // @ts-ignore */
         options={options}
-        width="500"
+        width="300"
         data={{
-          labels: yearLabels,
+          labels: nationalityLabels,
           datasets: [
             {
-              data: yearIndicators,
-              label: 'Área de pesquisa',
+              data: nationalityValues,
+              label: 'NacionalidadeF',
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
               ],
               borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
               ],
               borderWidth: 1,
             },
@@ -145,14 +150,14 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
         /** 
       // @ts-ignore */
         options={optionsType}
-        hidden={typeIndicators == null}
+        hidden={keywordIndicators == null}
         width="500"
         data={{
-          labels: typeLabels,
+          labels: keywordLabels,
           datasets: [
             {
-              data: typeDoc_count,
-              label: 'NacionalidadeF',
+              data: keywordValues,
+              label: 'Palavra-chave',
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

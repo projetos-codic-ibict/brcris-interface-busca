@@ -77,7 +77,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
           Object.keys(config.searchQuery.search_fields)[0],
           config.searchQuery.operator,
           config.searchQuery.index,
-          'publicationDate.keyword'
+          ['publicationDate.keyword', 'type.keyword']
         ).then((data) => {
           setIndicators(data)
         })
