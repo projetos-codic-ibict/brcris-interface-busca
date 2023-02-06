@@ -14,7 +14,8 @@ import {
   Legend,
   ArcElement,
 } from 'chart.js'
-import { Bar, Pie } from 'react-chartjs-2'
+import { Pie } from 'react-chartjs-2'
+// @ts-ignore
 import { TagCloud } from 'react-tagcloud'
 import ElasticSearchService from '../services/ElasticSearchService'
 
