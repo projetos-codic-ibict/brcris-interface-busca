@@ -39,7 +39,7 @@ export const optionsKey = {
     },
     title: {
       display: true,
-      text: 'Área de pesquisa',
+      text: 'Área de pesquisa - Top 10',
     },
   },
 }
@@ -58,7 +58,7 @@ export const optionsNat = {
     },
     title: {
       display: true,
-      text: 'Nacionalidade',
+      text: 'Nacionalidade - Top 10',
     },
   },
 }
@@ -216,7 +216,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
         }}
         className="text-center"
       >
-        Nacionalidade
+        Nacionalidade - Top 10
       </p>
       <TagCloud
         minSize={12}
