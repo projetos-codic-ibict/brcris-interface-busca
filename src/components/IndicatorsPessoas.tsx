@@ -18,6 +18,7 @@ import { Pie } from 'react-chartjs-2'
 // @ts-ignore
 import { TagCloud } from 'react-tagcloud'
 import ElasticSearchService from '../services/ElasticSearchService'
+import { Filter } from '@elastic/search-ui'
 
 ChartJS.register(
   CategoryScale,
@@ -136,7 +137,7 @@ function getKeywordQuery(
   }
   if (filters && filters.length > 0) {
     queryBase.query.bool.filter = []
-    filters.forEach((filter) => {
+    filters.forEach((filter: Filter) => {
       queryBase.query.bool.filter.push({
         terms: { [filter.field]: filter.values },
       })
