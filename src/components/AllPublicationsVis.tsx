@@ -73,7 +73,7 @@ const nodes = [
   // },
 ]
 const edges = [
-  { from: 1, to: 2, id: 1, label: 'um' },
+  { from: 1, to: 2, id: 1 },
   { from: 1, to: 4, id: 3 },
   // { from: 2, to: 3, id: 2 },
   // { from: 2, to: 4, id: 14 },
@@ -108,6 +108,7 @@ const options = {
     dragNodes: false,
     dragView: false,
     hover: true,
+    zoomView: false,
   },
   layout: {
     hierarchical: {
@@ -120,12 +121,21 @@ const options = {
 function VisGraph() {
   const [graph] = useState({ nodes, edges })
 
-  const pages = ['/publicacoes', '/pessoas', '/instituicoes', '/periodicos', '/#', '/#']
+  const pages = [
+    '/publicacoes',
+    '/pessoas',
+    '/instituicoes',
+    '/periodicos',
+    '/#',
+    '/#',
+  ]
 
   const events = {
     click: function (event: any) {
       console.log('clicou', event.nodes[0])
-      window.location.href = pages[event.nodes[0] - 1]
+      if (event.nodes[0] && pages[event.nodes[0] - 1]) {
+        window.location.href = pages[event.nodes[0] - 1]
+      }
     },
   }
 
