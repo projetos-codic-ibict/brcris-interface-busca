@@ -95,14 +95,15 @@ const queryCommonBase = {
 
 function getKeywordQuery(
   queryBase: any,
+  indicador: string,
   filters: any,
   searchTerm: any,
   config: any
 ) {
   const field = Object.keys(config.searchQuery.search_fields)[0]
-  if (field) {
-    queryBase._source = [field]
-    queryBase.aggs.aggregate.terms.field = field
+  if (indicador) {
+    queryBase._source = [indicador]
+    queryBase.aggs.aggregate.terms.field = indicador
   }
 
   if (searchTerm) {
@@ -153,10 +154,22 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
       ? ElasticSearchService(
           [
             JSON.stringify(
-              getKeywordQuery(queryCommonBase, filters, searchTerm, config)
+              getKeywordQuery(
+                queryCommonBase,
+                'publicationDate.keyword',
+                filters,
+                searchTerm,
+                config
+              )
             ),
             JSON.stringify(
-              getKeywordQuery(queryCommonBase, filters, searchTerm, config)
+              getKeywordQuery(
+                queryCommonBase,
+                'type.keyword',
+                filters,
+                searchTerm,
+                config
+              )
             ),
           ],
           config.searchQuery.index
