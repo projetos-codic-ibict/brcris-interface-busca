@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { withSearch } from '@elastic/react-search-ui'
 import styles from '../styles/Indicators.module.css'
+import { Filter } from '@elastic/search-ui'
 
 import {
   Chart as ChartJS,
@@ -65,6 +66,84 @@ type IndicatorType = {
   doc_count: number
 }
 
+const queryCommonBase = {
+  track_total_hits: true,
+  _source: [],
+  size: 0,
+  aggs: {
+    aggregate: {
+      terms: {
+        field: '',
+        size: 100000,
+        order: {
+          _key: 'desc',
+        },
+      },
+    },
+  },
+  query: {
+    bool: {
+      must: {
+        query_string: {
+          query: '*',
+        },
+      },
+      filter: [],
+    },
+  },
+}
+
+function getKeywordQuery(
+  queryBase: any,
+  filters: any,
+  searchTerm: any,
+  config: any
+) {
+  const field = Object.keys(config.searchQuery.search_fields)[0]
+  if (field) {
+    queryBase._source = [field]
+    queryBase.aggs.aggregate.terms.field = field
+  }
+
+  if (searchTerm) {
+    queryBase.query.bool.must.query_string.default_field = field
+    queryBase.query.bool.must.query_string.default_operator =
+      config.searchQuery.operator
+    queryBase.query.bool.must.query_string.query = searchTerm
+  } else {
+    queryBase.query.bool.must.query_string.query = '*'
+  }
+  if (filters && filters.length > 0) {
+    queryBase.query.bool.filter = []
+    filters.forEach((filter: Filter) => {
+      queryBase.query.bool.filter.push(getFilterFormated(filter))
+    })
+  } else {
+    queryBase.query.bool.filter = []
+  }
+  return queryBase
+}
+
+function getFilterFormated(filter: Filter): any {
+  if (filter.type === 'none') {
+    const matrix = filter.values.map((val: any) => val.split(' - '))
+    const values = [].concat(...matrix)
+    values.sort()
+    const from = values[0]
+    const to = values[values.length - 1]
+
+    return {
+      range: {
+        [filter.field]: {
+          gte: from,
+          lte: to,
+        },
+      },
+    }
+  }
+  return { terms: { [filter.field]: filter.values } }
+}
+
 // @ts-ignore
 function Indicators({ filters, searchTerm, isLoading, config }) {
   const [indicators, setIndicators] = useState([])
@@ -72,12 +151,15 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
   useEffect(() => {
     isLoading
       ? ElasticSearchService(
-          filters,
-          searchTerm,
-          Object.keys(config.searchQuery.search_fields)[0],
-          config.searchQuery.operator,
-          config.searchQuery.index,
-          ['publicationDate.keyword', 'type.keyword']
+          [
+            JSON.stringify(
+              getKeywordQuery(queryCommonBase, filters, searchTerm, config)
+            ),
+            JSON.stringify(
+              getKeywordQuery(queryCommonBase, filters, searchTerm, config)
+            ),
+          ],
+          config.searchQuery.index
         ).then((data) => {
           setIndicators(data)
         })

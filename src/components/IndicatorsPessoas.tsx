@@ -14,7 +14,8 @@ import {
   Legend,
   ArcElement,
 } from 'chart.js'
-import { Pie } from 'react-chartjs-2'
+import { Bar, Pie } from 'react-chartjs-2'
+import { TagCloud } from 'react-tagcloud'
 import ElasticSearchService from '../services/ElasticSearchService'
 
 ChartJS.register(
@@ -27,8 +28,27 @@ ChartJS.register(
   ArcElement
 )
 
-export const optionsType = {
+export const optionsKey = {
   responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom',
+      display: true,
+    },
+    title: {
+      display: true,
+      text: 'Área de pesquisa',
+    },
+  },
+}
+
+export const optionsNat = {
+  parsing: {
+    xAxisKey: 'key',
+    yAxisKey: 'doc_count',
+  },
+  responsive: true,
+  aspectRatio: 1,
   plugins: {
     legend: {
       position: 'bottom',
@@ -41,28 +61,89 @@ export const optionsType = {
   },
 }
 
-export const options = {
-  parsing: {
-    xAxisKey: 'key',
-    yAxisKey: 'doc_count',
-  },
-  responsive: true,
-  aspectRatio: 1,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: false,
+type IndicatorType = {
+  key: string
+  doc_count: number
+}
+
+const nationtalityQueryBase = {
+  track_total_hits: true,
+  _source: ['nationality.keyword'],
+  size: 0,
+  aggs: {
+    aggregate: {
+      terms: {
+        field: 'nationality.keyword',
+        size: 10,
+        // order: {
+        //   _key: 'desc',
+        // },
+      },
     },
-    title: {
-      display: true,
-      text: 'Área de pesquisa',
+  },
+  query: {
+    bool: {
+      must: {
+        query_string: {
+          query: '*',
+        },
+      },
+      filter: [],
     },
   },
 }
 
-type IndicatorType = {
-  key: string
-  doc_count: number
+const keywordQueryBase = {
+  track_total_hits: true,
+  _source: ['researchArea.keyword'],
+  size: 0,
+  aggs: {
+    aggregate: {
+      terms: {
+        field: 'researchArea.keyword',
+        size: 10,
+      },
+    },
+  },
+  query: {
+    bool: {
+      must: {
+        query_string: {
+          query: '*',
+        },
+      },
+      filter: [],
+    },
+  },
+}
+
+function getKeywordQuery(
+  queryBase: any,
+  filters: any,
+  searchTerm: any,
+  config: any
+) {
+  if (searchTerm) {
+    queryBase.query.bool.must.query_string.default_field = Object.keys(
+      config.searchQuery.search_fields
+    )[0]
+    queryBase.query.bool.must.query_string.default_operator =
+      config.searchQuery.operator
+    queryBase.query.bool.must.query_string.query = searchTerm
+  } else {
+    queryBase.query.bool.must.query_string.query = '*'
+  }
+  if (filters && filters.length > 0) {
+    queryBase.query.bool.filter = []
+    filters.forEach((filter) => {
+      queryBase.query.bool.filter.push({
+        terms: { [filter.field]: filter.values },
+      })
+    })
+  } else {
+    queryBase.query.bool.filter = []
+  }
+  return queryBase
 }
 
 // @ts-ignore
@@ -72,12 +153,20 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
   useEffect(() => {
     isLoading
       ? ElasticSearchService(
-          filters,
-          searchTerm,
-          Object.keys(config.searchQuery.search_fields)[0],
-          config.searchQuery.operator,
-          config.searchQuery.index,
-          ['nationality.keyword', 'researchArea.keyword']
+          [
+            JSON.stringify(
+              getKeywordQuery(
+                nationtalityQueryBase,
+                filters,
+                searchTerm,
+                config
+              )
+            ),
+            JSON.stringify(
+              getKeywordQuery(keywordQueryBase, filters, searchTerm, config)
+            ),
+          ],
+          config.searchQuery.index
         ).then((data) => {
           setIndicators(data)
         })
@@ -92,17 +181,24 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
 
   const nationalityIndicators: IndicatorType[] = indicators ? indicators[0] : []
 
-
-  const nationalityLabels =
-    nationalityIndicators != null ? nationalityIndicators.map((d) => d.key) : []
-
-  const nationalityValues =
+  const nationalitys =
     nationalityIndicators != null
-      ? nationalityIndicators.map((d) => d.doc_count)
+      ? nationalityIndicators.map((d) => ({ value: d.key, count: d.doc_count }))
       : []
 
+  // const nationalityLabels =
+  //   nationalityIndicators != null ? nationalityIndicators.map((d) => d.key) : []
+
+  // const nationalityValues =
+  //   nationalityIndicators != null
+  //     ? nationalityIndicators.map((d) => d.doc_count)
+  //     : []
 
   const keywordIndicators: IndicatorType[] = indicators ? indicators[1] : []
+  // const keywords =
+  //   keywordIndicators != null
+  //     ? keywordIndicators.map((d) => ({ value: d.key, count: d.doc_count }))
+  //     : []
 
   const keywordLabels =
     keywordIndicators != null ? keywordIndicators.map((d) => d.key) : []
@@ -112,52 +208,71 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
 
   return (
     <div className={styles.charts}>
-      <Pie
-        // hidden={nationalityIndicators == null}
-        /** 
-      // @ts-ignore */
-        options={options}
+      <p
+        style={{
+          display: nationalitys && nationalitys.length > 0 ? 'block' : 'none',
+        }}
+        className="text-center"
+      >
+        Nacionalidade
+      </p>
+      <TagCloud
+        minSize={12}
+        maxSize={35}
+        tags={nationalitys}
+        style={{
+          width: 300,
+          textAlign: 'center',
+        }}
+        randomSeed={42}
+        onClick={(tag: any) => alert(`'${tag.value}' was selected!`)}
+      />
+
+      {/* <Bar
+        hidden={nationalityIndicators == null}
+        options={optionsNat}
         width="300"
         data={{
           labels: nationalityLabels,
           datasets: [
             {
               data: nationalityValues,
-              label: 'NacionalidadeF',
+              label: 'Pessoas',
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)',
               ],
               borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)',
               ],
               borderWidth: 1,
             },
           ],
         }}
-      />
-
+      /> */}
       <Pie
         /** 
       // @ts-ignore */
-        options={optionsType}
-        hidden={keywordIndicators == null}
-        width="500"
+        options={optionsKey}
+        hidden={keywordIndicators == null || keywordIndicators.length == 0}
+        width="300"
         data={{
           labels: keywordLabels,
           datasets: [
             {
               data: keywordValues,
-              label: 'Palavra-chave',
+              label: '# Pessoas',
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

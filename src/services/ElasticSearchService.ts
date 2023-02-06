@@ -1,30 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const proxy = async (
-  filters: any,
-  searchTerm: string | undefined,
-  fieldSearch: string | undefined,
-  operator: string,
-  index: string,
-  indicator: string[]
-) => {
-  const body = JSON.stringify([
-    {
-      filters,
-      searchTerm,
-      fieldSearch,
-      operator,
-      index,
-      indicator: indicator[0],
-    },
-    {
-      filters,
-      searchTerm,
-      fieldSearch,
-      operator,
-      index,
-      indicator: indicator[1],
-    },
-  ])
+const proxy = async (querys: string[], index: string) => {
+  const body = JSON.stringify({ querys, index })
   const response = await fetch('/api/indicators', {
     method: 'POST',
 

@@ -41,14 +41,9 @@ const queryTextModel = {
 }
 
 type RequestData = {
-  searchTerm: string
-  fieldSearch: string
-  filters: Filter[]
-  operator: string
+  querys: string[]
   index: string
-  indicator: string
 }
-
 function fillQuery(data: RequestData) {
   const queryText = JSON.parse(JSON.stringify(queryTextModel))
 
@@ -97,14 +92,12 @@ function getFilterFormated(filter: Filter): any {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const proxy = async (req: any, res: any) => {
-  const data: RequestData[] = JSON.parse(req.body)
+  const data: RequestData = JSON.parse(req.body)
   console.log('data', data)
   const querys: any[] = []
-  data.forEach((item) => {
-    const queryText = fillQuery(item)
-    console.log(item.index)
-    querys.push({ index: item.index })
-    querys.push(queryText)
+  data.querys.forEach((query) => {
+    querys.push({ index: data.index })
+    querys.push(query)
   })
 
   // https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.17/msearch_examples.html
