@@ -59,10 +59,10 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
           <li>
             <span className="sui-result__key">
               {' '}
-              {result.type?.raw === 'doctoral thesis' ||
-              result.type?.raw === 'master thesis'
+              {result.type?.raw == 'doctoral thesis' ||
+              result.type?.raw == 'master thesis'
                 ? 'Instituição'
-                : result.type?.raw === 'conference proceedings'
+                : result.type?.raw == 'conference proceedings'
                 ? 'Organização'
                 : 'Revista'}
               {''}
