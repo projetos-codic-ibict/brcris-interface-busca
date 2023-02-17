@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { withSearch } from '@elastic/react-search-ui'
 import styles from '../styles/Indicators.module.css'
 import { Filter } from '@elastic/search-ui'
+import { CSVLink, CSVDownload } from 'react-csv'
 
 import {
   Chart as ChartJS,
@@ -65,6 +66,17 @@ type IndicatorType = {
   key: string
   doc_count: number
 }
+
+const data = [
+  { key: 'Ahmed', doc_count: 10 },
+  { key: 'teste', doc_count: 100 },
+  { key: 'ojk', doc_count: 15 },
+]
+
+const headers = [
+  { label: 'Ano', key: 'key' },
+  { label: 'Quantidade', key: 'doc_count' },
+]
 
 const queryCommonBase = {
   track_total_hits: true,
@@ -200,41 +212,51 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
 
   return (
     <div className={styles.charts}>
-      <Bar
-        hidden={yearIndicators == null}
-        /** 
+      <div className="chart">
+        <CSVLink
+          className="icon-download "
+          data={yearIndicators ? yearIndicators : []}
+          filename={'arquivo.csv'}
+          headers={headers}
+        >
+          &#8964;
+        </CSVLink>
+        <Bar
+          hidden={yearIndicators == null}
+          /** 
       // @ts-ignore */
-        options={options}
-        width="500"
-        data={{
-          labels: yearLabels,
-          datasets: [
-            {
-              data: yearIndicators,
-              label: 'Artigos por ano',
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)',
-              ],
-              borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)',
-              ],
-              borderWidth: 1,
-            },
-          ],
-        }}
-      />
+          options={options}
+          width="500"
+          data={{
+            labels: yearLabels,
+            datasets: [
+              {
+                data: yearIndicators,
+                label: 'Artigos por ano',
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 205, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(201, 203, 207, 0.2)',
+                ],
+                borderColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(255, 159, 64)',
+                  'rgb(255, 205, 86)',
+                  'rgb(75, 192, 192)',
+                  'rgb(54, 162, 235)',
+                  'rgb(153, 102, 255)',
+                  'rgb(201, 203, 207)',
+                ],
+                borderWidth: 1,
+              },
+            ],
+          }}
+        />
+      </div>
 
       <Pie
         /** 

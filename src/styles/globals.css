@@ -270,3 +270,13 @@ li .sui-result__key:after {
 .page-search .sui-select__control--is-focused {
   border-color: var(--accent-color);
 }
+
+.chart {
+  position: relative;
+}
+
+.icon-download {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
