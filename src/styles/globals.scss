@@ -271,8 +271,18 @@ li .sui-result__key:after {
   border-color: var(--accent-color);
 }
 
+.page-search .sui-layout-header {
+  border-bottom: none;
+}
+
 .chart {
   position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 16px;
+  }
 }
 
 .icon-download {
