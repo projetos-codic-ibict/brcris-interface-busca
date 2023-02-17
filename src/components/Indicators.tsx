@@ -264,9 +264,9 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
         <CSVLink
           className="icon-download "
           title="Exportar para csv"
-          data={yearIndicators ? yearIndicators : []}
+          data={typeIndicators ? typeIndicators : []}
           filename={'arquivo.csv'}
-          headers={headersPublicationsByYear}
+          headers={headersType}
         >
           <IoCloudDownloadOutline />
         </CSVLink>
