@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react'
 import { withSearch } from '@elastic/react-search-ui'
 import styles from '../styles/Indicators.module.css'
 import { Filter } from '@elastic/search-ui'
-import { CSVLink, CSVDownload } from 'react-csv'
+import { CSVLink } from 'react-csv'
 
 import {
   Chart as ChartJS,
@@ -66,12 +67,6 @@ type IndicatorType = {
   key: string
   doc_count: number
 }
-
-const data = [
-  { key: 'Ahmed', doc_count: 10 },
-  { key: 'teste', doc_count: 100 },
-  { key: 'ojk', doc_count: 15 },
-]
 
 const headers = [
   { label: 'Ano', key: 'key' },
