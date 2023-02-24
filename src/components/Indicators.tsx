@@ -215,7 +215,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
     <div className={styles.charts}>
       <div className="chart">
         <CSVLink
-          className="icon-download "
+          className="icon-download"
           title="Exportar para csv"
           data={yearIndicators ? yearIndicators : []}
           filename={'arquivo.csv'}
