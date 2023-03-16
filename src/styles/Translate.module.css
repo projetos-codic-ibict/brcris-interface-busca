@@ -1,0 +1,44 @@
+.translateBtn {
+  position: fixed;
+  right: -192px;
+  top: 60%;
+  margin-top: -32vh;
+  width: 230px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s cubic-bezier(0.76, 0, 0.27, 0.99);
+  z-index: 999;
+}
+
+.translateBtn.active {
+  right: 0px;
+  background: #FFFFFF;
+}
+
+.translateBtn div:first-child {
+  width: 34px;
+  background: #fff;
+  padding: 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+.toggle::after {
+  transition: all ease-in-out 0.2s;
+  content: attr(data-tooltip);
+  position: absolute;
+  background-color: var(--color-hex-primary-base);
+  color: white;
+  border-radius: 4px;
+  transform: translate(-165px, -4px) scale(0.9);
+  padding: 8px;
+  text-align: center;
+  opacity: 0;
+}
+
+.toggle:hover::after {
+  opacity: 1;
+}
