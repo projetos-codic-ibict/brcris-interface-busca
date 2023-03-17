@@ -105,10 +105,10 @@ const options = {
     size: 64,
   },
   interaction: {
-    dragNodes: false,
-    dragView: false,
+    // dragNodes: false,
+    // dragView: false,
     hover: true,
-    zoomView: false,
+    // zoomView: false,
   },
   layout: {
     hierarchical: {
