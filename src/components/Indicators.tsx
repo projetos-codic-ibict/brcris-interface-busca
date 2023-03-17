@@ -40,7 +40,7 @@ export const optionsType = {
     },
     title: {
       display: true,
-      text: 'Tipos de documentos',
+      text: 'Type of documents',
     },
   },
 }
@@ -59,7 +59,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Artigos por ano',
+      text: 'Articles per Year',
     },
   },
 }
@@ -70,13 +70,13 @@ type IndicatorType = {
 }
 
 const headersPublicationsByYear = [
-  { label: 'Ano', key: 'key' },
-  { label: 'Quantidade', key: 'doc_count' },
+  { label: 'Year', key: 'key' },
+  { label: 'Quantity', key: 'doc_count' },
 ]
 
 const headersType = [
-  { label: 'Tipo', key: 'key' },
-  { label: 'Quantidade', key: 'doc_count' },
+  { label: 'Type', key: 'key' },
+  { label: 'Quantity', key: 'doc_count' },
 ]
 
 const queryCommonBase = {
@@ -216,7 +216,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
       <div className="chart">
         <CSVLink
           className="icon-download"
-          title="Exportar para csv"
+          title="Export to csv"
           data={yearIndicators ? yearIndicators : []}
           filename={'arquivo.csv'}
           headers={headersPublicationsByYear}
@@ -234,7 +234,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
             datasets: [
               {
                 data: yearIndicators,
-                label: 'Artigos por ano',
+                label: 'Articles per Year',
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(255, 159, 64, 0.2)',
@@ -263,7 +263,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
       <div className="chart">
         <CSVLink
           className="icon-download "
-          title="Exportar para csv"
+          title="Export to csv"
           data={typeIndicators ? typeIndicators : []}
           filename={'arquivo.csv'}
           headers={headersType}

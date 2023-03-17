@@ -32,13 +32,13 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
       <div className="sui-result__body">
         <ul className="sui-result__details">
           <li>
-            <span className="sui-result__key">Ano</span>
+            <span className="sui-result__key">Year</span>
             <span className="sui-result__value">
               {result.publicationDate?.raw}
             </span>
           </li>
           <li>
-            <span className="sui-result__key">Autor(es)</span>
+            <span className="sui-result__key">Author(s)</span>
             <span className="sui-result__value">
               {result.author?.raw.map((author: Author) => (
                 <a
@@ -53,7 +53,7 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
             </span>
           </li>
           <li>
-            <span className="sui-result__key">Tipo</span>
+            <span className="sui-result__key">Type</span>
             <span className="sui-result__value">{result.type?.raw}</span>
           </li>
           <li>

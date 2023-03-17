@@ -67,7 +67,7 @@ export default function App() {
                         aria-controls="pub"
                         aria-selected="true"
                       >
-                        Publicações
+                        Publications
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -80,7 +80,7 @@ export default function App() {
                         aria-controls="pub"
                         aria-selected="true"
                       >
-                        Pessoas
+                        People
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -93,7 +93,7 @@ export default function App() {
                         aria-controls="pub"
                         aria-selected="true"
                       >
-                        Periódicos
+                        Periodicals
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -106,7 +106,7 @@ export default function App() {
                         aria-controls="pub"
                         aria-selected="true"
                       >
-                        Instituições
+                        Institutions
                       </button>
                     </li>
                   </ul>
@@ -133,7 +133,7 @@ export default function App() {
                             className="btn btn-light search-btn"
                             disabled={!term || term.length < 3}
                           >
-                            Pesquisar
+                            Search
                           </button>
                         </div>
                       </form>
@@ -162,7 +162,7 @@ export default function App() {
                           className="btn btn-light search-btn"
                           disabled={!term || term.length < 3}
                         >
-                          Pesquisar
+                          Search
                         </button>
                       </div>
                     </form>

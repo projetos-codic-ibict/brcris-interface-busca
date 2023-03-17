@@ -124,7 +124,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>Instituições</h2>
+                            <h2>Institutions</h2>
                           </div>
                         </div>
 

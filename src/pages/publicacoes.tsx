@@ -190,7 +190,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>Publicações</h2>
+                            <h2>Publications</h2>
                           </div>
                         </div>
 

@@ -56,19 +56,19 @@ function Navbar() {
 
             <li className="nav-item me-5" role="presentation">
               <Link href="/">
-                <a className="nav-link">Painéis de Indicadores</a>
+                <a className="nav-link">Indicator Panels</a>
               </Link>
             </li>
 
             <li className="nav-item me-5" role="presentation">
               <Link href="/">
-                <a className="nav-link">Equipe</a>
+                <a className="nav-link">Team</a>
               </Link>
             </li>
 
             <li className="nav-item me-5" role="presentation">
               <Link href="/">
-                <a className="nav-link">Sobre</a>
+                <a className="nav-link">About</a>
               </Link>
             </li>
           </ul>

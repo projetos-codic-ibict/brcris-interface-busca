@@ -42,7 +42,7 @@ export const optionsKey = {
     },
     title: {
       display: true,
-      text: 'Área de pesquisa - Top 10',
+      text: 'Search area - Top 10',
     },
   },
 }
@@ -61,7 +61,7 @@ export const optionsNat = {
     },
     title: {
       display: true,
-      text: 'Nacionalidade - Top 10',
+      text: 'Nacionality - Top 10',
     },
   },
 }
@@ -72,13 +72,13 @@ type IndicatorType = {
 }
 
 const headersNacionality = [
-  { label: 'Nacionalidade', key: 'key' },
-  { label: 'Quantidade', key: 'doc_count' },
+  { label: 'Nacionality', key: 'key' },
+  { label: 'Quantity', key: 'doc_count' },
 ]
 
 const headersResearchArea = [
-  { label: 'Área de Pesquisa', key: 'key' },
-  { label: 'Quantidade', key: 'doc_count' },
+  { label: 'Search area', key: 'key' },
+  { label: 'Quantity', key: 'doc_count' },
 ]
 
 const nationtalityQueryBase = {
@@ -241,7 +241,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
           }}
           className="text-center"
         >
-          Nacionalidade - Top 10
+          Nacionality - Top 10
         </p>
         <TagCloud
           minSize={12}
@@ -293,7 +293,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
       <div className="chart">  
         <CSVLink
           className="icon-download d-block"
-          title="Exportar para csv"
+          title="Export to csv"
           data={researchAreaIndicators ? researchAreaIndicators : []}
           filename={'arquivo.csv'}
           headers={headersResearchArea}
@@ -311,7 +311,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
             datasets: [
               {
                 data: keywordValues,
-                label: '# Pessoas',
+                label: '# People',
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
