@@ -15,7 +15,7 @@ const App = () => {
     // @ts-ignore
     new window.google.translate.TranslateElement(
       {
-        pageLanguage: 'pt-br',
+        pageLanguage: 'en-us',
         autoDisplay: false,
       },
       'google_translate_element'

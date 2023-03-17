@@ -187,7 +187,7 @@ export default () => {
         }
       )
     }
-    console.log('teste: ', nodesTest)
+    // console.log('teste: ', nodesTest)
   }
 
   const nodes: Node[] = []

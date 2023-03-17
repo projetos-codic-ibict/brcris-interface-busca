@@ -16,7 +16,7 @@ function ClearFilters({
           setSearchTerm('')
         }}
       >
-        Limpar filtros
+        Clear filters
       </button>
     </div>
   ) : (

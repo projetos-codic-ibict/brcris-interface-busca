@@ -13,7 +13,7 @@ import 'vis-network/styles/vis-network.css'
 const nodes = [
   {
     id: 1,
-    label: 'Publicações',
+    label: 'Publications',
     title: '40.565 publicações',
     level: 1,
     shape: 'circle',
@@ -24,7 +24,7 @@ const nodes = [
   },
   {
     id: 2,
-    label: 'Pessoas',
+    label: 'People',
     title: '10.00 pessoas',
     level: 2,
     shape: 'circle',
@@ -35,7 +35,7 @@ const nodes = [
   },
   {
     id: 3,
-    label: 'Instituições',
+    label: 'Institutions',
     title: '140 instituições',
     level: 3,
     shape: 'circle',
@@ -43,7 +43,7 @@ const nodes = [
   },
   {
     id: 4,
-    label: 'Periódicos',
+    label: 'Periodicals',
     title: '253 revistas',
     level: 4,
     shape: 'circle',
@@ -132,7 +132,7 @@ function VisGraph() {
 
   const events = {
     click: function (event: any) {
-      console.log('clicou', event.nodes[0])
+      // console.log('clicou', event.nodes[0])
       if (event.nodes[0] && pages[event.nodes[0] - 1]) {
         window.location.href = pages[event.nodes[0] - 1]
       }
