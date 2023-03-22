@@ -43,7 +43,7 @@ const nodes = [
   },
   {
     id: 4,
-    label: 'Periodicals',
+    label: 'Journals',
     title: '253 revistas',
     level: 4,
     shape: 'circle',

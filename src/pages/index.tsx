@@ -93,7 +93,7 @@ export default function App() {
                         aria-controls="pub"
                         aria-selected="true"
                       >
-                        Periodicals
+                        Journals
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">

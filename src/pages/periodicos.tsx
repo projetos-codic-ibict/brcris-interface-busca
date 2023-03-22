@@ -43,10 +43,10 @@ const config = {
     result_fields: {
       title: {
         raw: {},
-      },          
+      },
       issn: {
         raw: {},
-      }
+      },
     },
     // disjunctiveFacets: ['title.keyword', 'issn.keyword'],
     // facets: {
@@ -127,7 +127,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>Periodicals</h2>
+                            <h2>Journals</h2>
                           </div>
                         </div>
 
