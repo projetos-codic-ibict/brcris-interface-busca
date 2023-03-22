@@ -15,7 +15,7 @@
 }
 
 .translateBtn.active {
-  right: 0px;
+  right: 0;
   background: #FFFFFF;
 }
 
@@ -30,7 +30,7 @@
   transition: all ease-in-out 0.2s;
   content: attr(data-tooltip);
   position: absolute;
-  background-color: var(--color-hex-primary-base);
+  background-color: var(--dark-color);
   color: white;
   border-radius: 4px;
   transform: translate(-165px, -4px) scale(0.9);
