@@ -124,7 +124,6 @@ a {
 
 .search-card .sui-search-box__submit {
   background-color: #f8f9fa;
-  background: #f8f9fa;
   color: var(--dark-color);
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
@@ -133,7 +132,6 @@ a {
 .search-card .sui-search-box__submit:hover,
 .search-card .sui-search-box__submit:active {
   background-color: #c6c7c8;
-  background: #c6c7c8;
 }
 
 .sui-result,
@@ -180,7 +178,6 @@ li .sui-result__key:after {
 
 .page {
   padding-top: 2rem;
-  min-height: 0vh;
 }
 
 .page .nav-tabs .nav-item.show .nav-link,
