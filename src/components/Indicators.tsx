@@ -40,7 +40,7 @@ export const optionsType = {
     },
     title: {
       display: true,
-      text: 'Type of documents',
+      text: 'Document type',
     },
   },
 }
@@ -59,7 +59,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Articles per Year',
+      text: 'Documents by year',
     },
   },
 }
