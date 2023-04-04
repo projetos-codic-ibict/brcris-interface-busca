@@ -21,7 +21,7 @@ import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import Navbar from '../components/Navbar'
 import Indicators from '../components/Indicators'
 import ClearFilters from '../components/ClearFilters'
-import CustomResultView from '../components/CustomResultView'
+import CustomResultViewPublications from '../components/CustomResultViewPublications'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import OperatorSelect from '../components/OperatorSelect'
 
@@ -173,7 +173,6 @@ const SORT_OPTIONS = [
 
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
-
   return (
     <div>
       <Navbar />
@@ -281,28 +280,28 @@ export default function App() {
                             <Facet
                               key={'1'}
                               field={'author.name.keyword'}
-                              label={'autores'}
+                              label={'Authors'}
                             />
                             <Facet
                               key={'2'}
                               field={'keyword.keyword'}
-                              label={'Palavra-chave'}
+                              label={'Keyword'}
                             />
                             <Facet
                               key={'3'}
                               field={'orgunit.name.keyword'}
-                              label={'Insituição'}
+                              label={'Insitution'}
                             />
                             <Facet
                               key={'4'}
                               field={'type.keyword'}
-                              label={'Tipo'}
+                              label={'Type'}
                             />
                             <Facet
                               key={'5'}
                               field={'publicationDate.keyword'}
                               filterType={'none'}
-                              label={'Ano'}
+                              label={'Year'}
                             />
                             {/* <Facet
                             mapContextToProps={(context) => {
@@ -331,7 +330,7 @@ export default function App() {
                           /> */}
                           </div>
                         }
-                        bodyContent={<Results resultView={CustomResultView} />}
+                        bodyContent={<Results resultView={CustomResultViewPublications} />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}

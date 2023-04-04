@@ -24,8 +24,8 @@ const nodes = [
   },
   {
     id: 2,
-    label: 'People',
-    title: '10.00 pessoas',
+    label: 'Person',
+    title: '10.00 person',
     level: 2,
     shape: 'circle',
     color: '#CB6CE6',
@@ -122,8 +122,8 @@ function VisGraph() {
   const [graph] = useState({ nodes, edges })
 
   const pages = [
-    '/publicacoes',
-    '/pessoas',
+    '/publications',
+    '/person',
     '/instituicoes',
     '/periodicos',
     '/#',

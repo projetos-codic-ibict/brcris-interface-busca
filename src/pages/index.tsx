@@ -61,7 +61,7 @@ export default function App() {
                       <button
                         className="nav-link active"
                         data-bs-toggle="tab"
-                        data-bs-target="#pub"
+                        data-bs-target="#publications"
                         type="button"
                         role="tab"
                         aria-controls="pub"
@@ -74,20 +74,20 @@ export default function App() {
                       <button
                         className="nav-link"
                         data-bs-toggle="tab"
-                        data-bs-target="#pessoas"
+                        data-bs-target="#person"
                         type="button"
                         role="tab"
                         aria-controls="pub"
                         aria-selected="true"
                       >
-                        People
+                        Person
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
                       <button
                         className="nav-link"
                         data-bs-toggle="tab"
-                        data-bs-target="#pessoas"
+                        data-bs-target="#journals"
                         type="button"
                         role="tab"
                         aria-controls="pub"
@@ -100,7 +100,7 @@ export default function App() {
                       <button
                         className="nav-link"
                         data-bs-toggle="tab"
-                        data-bs-target="#pessoas"
+                        data-bs-target="#institutions"
                         type="button"
                         role="tab"
                         aria-controls="pub"
@@ -117,7 +117,7 @@ export default function App() {
                       role="tabpanel"
                       aria-labelledby="pub-tab"
                     >
-                      <form className="row g-3 mb-3" action="/publicacoes">
+                      <form className="row g-3 mb-3" action="/publications">
                         <div className="col">
                           <input
                             className="form-control seacrh-box"

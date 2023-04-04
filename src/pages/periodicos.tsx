@@ -21,7 +21,7 @@ import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import Navbar from '../components/Navbar'
 import Indicators from '../components/Indicators'
 import ClearFilters from '../components/ClearFilters'
-import CustomResultView from '../components/CustomResultView'
+import CustomResultView from '../components/CustomResultViewPublications'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import OperatorSelect from '../components/OperatorSelect'
 

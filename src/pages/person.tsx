@@ -19,9 +19,9 @@ import { SearchDriverOptions } from '@elastic/search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import Navbar from '../components/Navbar'
-import IndicatorsPessoas from '../components/IndicatorsPessoas'
+import IndicatorsPerson from '../components/IndicatorsPerson'
 import ClearFilters from '../components/ClearFilters'
-import CustomResultView from '../components/CustomResultView'
+import CustomResultViewPerson from '../components/CustomResultViewPerson'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import OperatorSelect from '../components/OperatorSelect'
 
@@ -82,7 +82,7 @@ const config = {
   //     },
   //   },
   //   suggestions: {
-  //     types: {
+  //     types: {     
   //       documents: {
   //         fields: ['suggest'],
   //       },
@@ -119,7 +119,6 @@ const SORT_OPTIONS = [
 
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
-
   return (
     <div>
       <Navbar />
@@ -136,7 +135,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>People</h2>
+                            <h2>Person</h2>
                           </div>
                         </div>
 
@@ -235,7 +234,7 @@ export default function App() {
                             />
                           </div>
                         }
-                        bodyContent={<Results titleField="name" />}
+                        bodyContent={<Results resultView={CustomResultViewPerson} />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}
@@ -250,7 +249,7 @@ export default function App() {
                         </div>
                         {/** 
                         // @ts-ignore */}
-                        <IndicatorsPessoas config={config} />
+                        <IndicatorsPerson config={config} />
                       </div>
                     </div>
                   </ErrorBoundary>

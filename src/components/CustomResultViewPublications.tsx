@@ -14,7 +14,7 @@ type Service = {
   id: string
   title: string[]
 }
-const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
+const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) => (
   <li className="sui-result">
     <div>
       <div className="sui-result__header">
@@ -29,6 +29,7 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
           </a>
         </h6>
       </div>
+
       <div className="sui-result__body">
         <ul className="sui-result__details">
           <li>
@@ -37,6 +38,7 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
               {result.publicationDate?.raw}
             </span>
           </li>
+
           <li>
             <span className="sui-result__key">Author(s)</span>
             <span className="sui-result__value">
@@ -52,36 +54,55 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
               ))}
             </span>
           </li>
+
           <li>
             <span className="sui-result__key">Type</span>
             <span className="sui-result__value">{result.type?.raw}</span>
           </li>
+
           <li>
             <span className="sui-result__key">
               {' '}
               {result.type?.raw == 'doctoral thesis' ||
               result.type?.raw == 'master thesis'
-                ? 'Instituição'
+                ? 'Institution'
                 : result.type?.raw == 'conference proceedings'
-                ? 'Organização'
-                : 'Revista'}
+                ? 'Organization'
+                : 'Journal'}
               {''}
             </span>
+
             <span className="sui-result__value">
               {result.orgunit?.raw.map((org: OrgUnit) => (
-                <span key={org.id}>{org.name}</span>
+                <a
+                  key={org.id}
+                  target='_blank'
+                  href={`${org.id}`}
+                >
+                  {org.id}
+                </a>
               ))}
 
               {result.service?.raw.map((service: Service) =>
                 service.title.map((title: string) => (
-                  <span key={title}>{title}</span>
+                  <a
+                    key={title}
+                    target='_blank'
+                    href={`${title}`}
+                    >
+                    {title}
+                  </a>
                 ))
               )}
 
               {result.journal?.raw.map((journal: any, index: any) => (
-                <span key={index}>
+                <a
+                  key={index}
+                  target='_blank'
+                  href={`${journal.title ? journal.title : journal}`}
+                >
                   {journal.title ? journal.title : journal}
-                </span>
+                </a>
               ))}
             </span>
           </li>
@@ -91,4 +112,4 @@ const CustomResultView = ({ result, onClickLink }: ResultViewProps) => (
   </li>
 )
 
-export default CustomResultView
+export default CustomResultViewPublications
