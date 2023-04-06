@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connector'
 // https://docs.elastic.co/search-ui/api/connectors/elasticsearch#customise-the-elasticsearch-request-body
@@ -17,8 +18,9 @@ function builConnector(index: string) {
       requestBody.query = {
         multi_match: {
           query: requestState.searchTerm,
-          operator: 'OR',
-          // operator: queryConfig.operator,
+          // operator: 'OR',
+          // @ts-ignore
+          operator: queryConfig.operator,
           fields: Object.keys(searchFields).map((fieldName) => {
             const weight = searchFields[fieldName].weight || 1
             return `${fieldName}^${weight}`

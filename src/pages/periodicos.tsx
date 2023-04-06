@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react'
 import Connector from '../services/APIConnector'
+import { useRouter } from 'next/router'
 import styles from '../styles/Home.module.css'
 import {
   ErrorBoundary,
@@ -27,7 +28,7 @@ import OperatorSelect from '../components/OperatorSelect'
 
 const connector = new Connector()
 
-const config = {
+const configDefault = {
   debug: true,
   urlPushDebounceLength: 500,
   alwaysSearchOnInitialLoad: true,
@@ -109,7 +110,17 @@ const SORT_OPTIONS = [
 ]
 
 export default function App() {
-  // const [config, setConfig] = useState(configDefault)
+  const [config, setConfig] = useState(configDefault)
+  const router = useRouter()
+  const op: string = router.query['op'] as string
+  useEffect(() => {
+    if (op) {
+      setConfig({
+        ...config,
+        searchQuery: { ...config.searchQuery, operator: op },
+      })
+    }
+  }, [op])
 
   return (
     <div>
@@ -226,7 +237,7 @@ export default function App() {
                             /> */}
                           </div>
                         }
-                        bodyContent={<Results titleField="name" />}
+                        bodyContent={<Results titleField="title" />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}

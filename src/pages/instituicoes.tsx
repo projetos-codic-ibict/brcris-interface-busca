@@ -24,10 +24,11 @@ import ClearFilters from '../components/ClearFilters'
 import CustomResultView from '../components/CustomResultViewPublications'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import OperatorSelect from '../components/OperatorSelect'
+import { useRouter } from 'next/router'
 
 const connector = new Connector()
 
-const config = {
+const configDefault = {
   debug: true,
   urlPushDebounceLength: 500,
   alwaysSearchOnInitialLoad: true,
@@ -106,7 +107,17 @@ const SORT_OPTIONS = [
 ]
 
 export default function App() {
-  // const [config, setConfig] = useState(configDefault)
+  const [config, setConfig] = useState(configDefault)
+  const router = useRouter()
+  const op: string = router.query['op'] as string
+  useEffect(() => {
+    if (op) {
+      setConfig({
+        ...config,
+        searchQuery: { ...config.searchQuery, operator: op },
+      })
+    }
+  }, [op])
 
   return (
     <div>

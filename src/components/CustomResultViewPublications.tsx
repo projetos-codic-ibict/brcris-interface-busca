@@ -14,7 +14,10 @@ type Service = {
   id: string
   title: string[]
 }
-const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) => (
+const CustomResultViewPublications = ({
+  result,
+  onClickLink,
+}: ResultViewProps) => (
   <li className="sui-result">
     <div>
       <div className="sui-result__header">
@@ -76,11 +79,11 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
               {result.orgunit?.raw.map((org: OrgUnit) => (
                 <a
                   key={org.id}
-                  target='_blank'
+                  target="_blank"
                   rel="noreferrer"
-                  href={`${org.id}`}
+                  href={`instituicoes?q=${org.name}&op=AND`}
                 >
-                  {org.id}
+                  {org.name}
                 </a>
               ))}
 
@@ -88,10 +91,10 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                 service.title.map((title: string) => (
                   <a
                     key={title}
-                    target='_blank'
-                    rel="noreferrer"
-                    href={`${title}`}
-                    >
+                    // target="_blank"
+                    // rel="noreferrer"
+                    href={`#${title}`}
+                  >
                     {title}
                   </a>
                 ))
@@ -100,9 +103,11 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
               {result.journal?.raw.map((journal: any, index: any) => (
                 <a
                   key={index}
-                  target='_blank'
+                  target="_blank"
                   rel="noreferrer"
-                  href={`${journal.title ? journal.title : journal}`}
+                  href={`periodicos?q=${
+                    journal.title ? journal.title : journal
+                  }&op=AND`}
                 >
                   {journal.title ? journal.title : journal}
                 </a>
