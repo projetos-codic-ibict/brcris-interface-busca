@@ -39,6 +39,7 @@ const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
             <span className="sui-result__value">
               <a
                 target='_blank'
+                rel="noreferrer"
                 href={`http://lattes.cnpq.br/${result.lattesId.raw}`}
               >
                 http://lattes.cnpq.br/{result.lattesId.raw}
@@ -58,6 +59,7 @@ const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
             <span className="sui-result__value">
               <a
                 target='_blank'
+                rel="noreferrer"
                 href={`https://orcid.org/${result.orcid?.raw}`}>
 
                 https://orcid.org/{result.orcid?.raw}

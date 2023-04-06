@@ -77,6 +77,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                 <a
                   key={org.id}
                   target='_blank'
+                  rel="noreferrer"
                   href={`${org.id}`}
                 >
                   {org.id}
@@ -88,6 +89,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                   <a
                     key={title}
                     target='_blank'
+                    rel="noreferrer"
                     href={`${title}`}
                     >
                     {title}
@@ -99,6 +101,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                 <a
                   key={index}
                   target='_blank'
+                  rel="noreferrer"
                   href={`${journal.title ? journal.title : journal}`}
                 >
                   {journal.title ? journal.title : journal}
