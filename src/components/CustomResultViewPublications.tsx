@@ -14,6 +14,9 @@ type Service = {
   id: string
   title: string[]
 }
+
+const VIVO_URL_BASE = process.env.VIVO_URL_BASE
+
 const CustomResultViewPublications = ({
   result,
   onClickLink,
@@ -25,7 +28,7 @@ const CustomResultViewPublications = ({
           <a
             onClick={onClickLink}
             target="_blank"
-            href={result.vivo_link?.raw}
+            href={`${VIVO_URL_BASE}/pub_${result.id.raw}`}
             rel="noreferrer"
           >
             {result.title.raw}
@@ -49,7 +52,7 @@ const CustomResultViewPublications = ({
                 <a
                   key={author.id}
                   target="_blank"
-                  href={`https://brcris.ibict.br/vivo/display/pers_${author.id}`}
+                  href={`${VIVO_URL_BASE}/individual?uri=https%3A%2F%2Fibict.br%2Fbrcris%2Findividual%2Fpers_${author.id}`}
                   rel="noreferrer"
                 >
                   {author.name}
@@ -81,7 +84,7 @@ const CustomResultViewPublications = ({
                   key={org.id}
                   target="_blank"
                   rel="noreferrer"
-                  href={`instituicoes?q=${org.name}&op=AND`}
+                  href={`${VIVO_URL_BASE}/${org.name}`}
                 >
                   {org.name}
                 </a>
@@ -91,9 +94,9 @@ const CustomResultViewPublications = ({
                 service.title.map((title: string) => (
                   <a
                     key={title}
-                    // target="_blank"
-                    // rel="noreferrer"
-                    href={`#${title}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    href={`${VIVO_URL_BASE}/${service.id}`}
                   >
                     {title}
                   </a>
@@ -105,9 +108,7 @@ const CustomResultViewPublications = ({
                   key={index}
                   target="_blank"
                   rel="noreferrer"
-                  href={`periodicos?q=${
-                    journal.title ? journal.title : journal
-                  }&op=AND`}
+                  href={`${VIVO_URL_BASE}/${journal.id}`}
                 >
                   {journal.title ? journal.title : journal}
                 </a>
