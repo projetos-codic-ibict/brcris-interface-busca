@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+// import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import AllPublicationsVis from '../components/AllPublicationsVis'
 
@@ -22,7 +22,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
   const router = useRouter()
-  const { t } = useTranslation('navbar')
+  // const { t } = useTranslation('navbar')
 
   const partners = [
     {
