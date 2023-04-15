@@ -25,6 +25,18 @@ import CustomResultViewPublications from '../components/CustomResultViewPublicat
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import OperatorSelect from '../components/OperatorSelect'
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+type Props = {
+  // Add custom props here
+}
+// or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
+export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
+  },
+})
+
 const connector = new Connector()
 
 const config = {
@@ -330,7 +342,9 @@ export default function App() {
                           /> */}
                           </div>
                         }
-                        bodyContent={<Results resultView={CustomResultViewPublications} />}
+                        bodyContent={
+                          <Results resultView={CustomResultViewPublications} />
+                        }
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}

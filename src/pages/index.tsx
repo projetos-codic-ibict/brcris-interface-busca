@@ -2,13 +2,27 @@ import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-
 import AllPublicationsVis from '../components/AllPublicationsVis'
+
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+type Props = {
+  // Add custom props here
+}
+// or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
+export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
+  },
+})
 
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
+  const router = useRouter()
+  const { t } = useTranslation('navbar')
 
   const partners = [
     {
@@ -44,6 +58,7 @@ export default function App() {
   ]
   const [term, setTerm] = useState('')
   const [searchPage, setSearchPage] = useState('publications')
+
   return (
     <div className={styles.home}>
       <Navbar />
@@ -122,7 +137,10 @@ export default function App() {
                       role="tabpanel"
                       aria-labelledby="form-tab"
                     >
-                      <form className="row g-3 mb-3" action={`/${searchPage}`}>
+                      <form
+                        className="row g-3 mb-3"
+                        action={`/${router.locale}/${searchPage}`}
+                      >
                         <div className="col">
                           <input
                             className="form-control seacrh-box"

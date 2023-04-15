@@ -1,8 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css' // Import bootstrap CSS
-// import styles from '../styles/Home.module.css'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 
 function Navbar() {
+  const router = useRouter()
+  const { t } = useTranslation('navbar')
+
+  const changeTo = router.locale === 'en' ? 'pt-BR' : 'en'
+
   return (
     <nav className="navbar navbar-expand-lg bg-violet px-5">
       <div className="container-fluid">
@@ -49,25 +55,32 @@ function Navbar() {
           <ul className="navbar-nav nav nav-tabs me-2" role="tablist">
             <li className="nav-item me-5" role="presentation">
               <Link href="/">
-                <a className="nav-link">Home</a>
+                <a className="nav-link">{t('Home')}</a>
               </Link>
             </li>
 
             <li className="nav-item me-5" role="presentation">
               <Link href="/">
-                <a className="nav-link">Indicator Panels</a>
+                <a className="nav-link">{t('Team')}</a>
               </Link>
             </li>
 
             <li className="nav-item me-5" role="presentation">
-              <Link href="/">
-                <a className="nav-link">Team</a>
+              <Link href="/about">
+                <a className="nav-link">{t('About')}</a>
               </Link>
             </li>
 
             <li className="nav-item me-5" role="presentation">
-              <Link href="/">
-                <a className="nav-link">About</a>
+              <Link href="#" locale={changeTo}>
+                <picture className="">
+                  <img
+                    className="icon-lang"
+                    src={`/${changeTo}.png`}
+                    alt="bandeira do idioma"
+                    title={t('change_language') || ''}
+                  />
+                </picture>
               </Link>
             </li>
           </ul>
