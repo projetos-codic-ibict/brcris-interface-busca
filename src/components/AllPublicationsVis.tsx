@@ -124,8 +124,8 @@ function VisGraph() {
   const pages = [
     '/publications',
     '/person',
-    '/instituicoes',
-    '/periodicos',
+    '/institutions',
+    '/journals',
     '/#',
     '/#',
   ]

@@ -43,6 +43,7 @@ export default function App() {
     },
   ]
   const [term, setTerm] = useState('')
+  const [searchPage, setSearchPage] = useState('publications')
   return (
     <div className={styles.home}>
       <Navbar />
@@ -61,11 +62,12 @@ export default function App() {
                       <button
                         className="nav-link active"
                         data-bs-toggle="tab"
-                        data-bs-target="#publications"
+                        data-bs-target="#tabForm"
                         type="button"
                         role="tab"
-                        aria-controls="pub"
+                        aria-controls="form"
                         aria-selected="true"
+                        onClick={() => setSearchPage('publications')}
                       >
                         Publications
                       </button>
@@ -74,11 +76,12 @@ export default function App() {
                       <button
                         className="nav-link"
                         data-bs-toggle="tab"
-                        data-bs-target="#person"
+                        data-bs-target="#tabForm"
                         type="button"
                         role="tab"
-                        aria-controls="pub"
-                        aria-selected="true"
+                        aria-controls="form"
+                        aria-selected="false"
+                        onClick={() => setSearchPage('person')}
                       >
                         Person
                       </button>
@@ -87,11 +90,12 @@ export default function App() {
                       <button
                         className="nav-link"
                         data-bs-toggle="tab"
-                        data-bs-target="#journals"
+                        data-bs-target="#tabForm"
                         type="button"
                         role="tab"
-                        aria-controls="pub"
-                        aria-selected="true"
+                        aria-controls="form"
+                        aria-selected="false"
+                        onClick={() => setSearchPage('journals')}
                       >
                         Journals
                       </button>
@@ -100,11 +104,12 @@ export default function App() {
                       <button
                         className="nav-link"
                         data-bs-toggle="tab"
-                        data-bs-target="#institutions"
+                        data-bs-target="#tabForm"
                         type="button"
                         role="tab"
-                        aria-controls="pub"
-                        aria-selected="true"
+                        aria-controls="form"
+                        aria-selected="false"
+                        onClick={() => setSearchPage('institutions')}
                       >
                         Institutions
                       </button>
@@ -112,12 +117,12 @@ export default function App() {
                   </ul>
                   <div className="tab-content" id="tabContent">
                     <div
-                      className="tab-pane fade show active"
-                      id="pub"
+                      className="tab-pane fade active show"
+                      id="tabForm"
                       role="tabpanel"
-                      aria-labelledby="pub-tab"
+                      aria-labelledby="form-tab"
                     >
-                      <form className="row g-3 mb-3" action="/publications">
+                      <form className="row g-3 mb-3" action={`/${searchPage}`}>
                         <div className="col">
                           <input
                             className="form-control seacrh-box"
@@ -138,34 +143,6 @@ export default function App() {
                         </div>
                       </form>
                     </div>
-                  </div>
-
-                  <div
-                    className="tab-pane fade"
-                    id="pessoas"
-                    role="tabpanel"
-                    aria-labelledby="pessoas-tab"
-                  >
-                    <form className="row g-3 mb-3" action="/pessoas">
-                      <div className="col">
-                        <input
-                          className="form-control seacrh-box"
-                          name="q"
-                          type="text"
-                          value={term}
-                          onChange={(e) => setTerm(e.target.value)}
-                          placeholder="Busca..."
-                        />
-                      </div>
-                      <div className="col-auto">
-                        <button
-                          className="btn btn-light search-btn"
-                          disabled={!term || term.length < 3}
-                        >
-                          Search
-                        </button>
-                      </div>
-                    </form>
                   </div>
                 </div>
               </div>
