@@ -1,5 +1,6 @@
 import { withSearch } from '@elastic/react-search-ui'
 import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch'
+import { useTranslation } from 'next-i18next'
 
 function ClearFilters({
   filters,
@@ -7,6 +8,7 @@ function ClearFilters({
   setSearchTerm,
   clearFilters,
 }: SearchContextState) {
+  const { t } = useTranslation('common')
   return searchTerm || (filters && filters.length > 0) ? (
     <div>
       <button
@@ -16,7 +18,7 @@ function ClearFilters({
           setSearchTerm('')
         }}
       >
-        Clear filters
+        {t('Clear filters')}
       </button>
     </div>
   ) : (

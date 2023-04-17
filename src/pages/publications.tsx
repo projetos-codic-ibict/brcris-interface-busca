@@ -23,8 +23,8 @@ import Indicators from '../components/Indicators'
 import ClearFilters from '../components/ClearFilters'
 import CustomResultViewPublications from '../components/CustomResultViewPublications'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
-import OperatorSelect from '../components/OperatorSelect'
-
+// import OperatorSelect from '../components/OperatorSelect'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
 type Props = {
@@ -157,8 +157,11 @@ const config = {
   //   },
   // },
 }
-
-const SORT_OPTIONS = [
+type SortOptionsType = {
+  name: string
+  value: any[]
+}
+const SORT_OPTIONS: SortOptionsType[] = [
   {
     name: 'Relevance',
     value: [],
@@ -185,6 +188,9 @@ const SORT_OPTIONS = [
 
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
+  const { t } = useTranslation('common')
+  // tradução
+  SORT_OPTIONS.forEach((option) => (option.name = t(option.name)))
   return (
     <div>
       <Navbar />
@@ -201,7 +207,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>Publications</h2>
+                            <h2>{t('Publications')}</h2>
                           </div>
                         </div>
 
@@ -215,7 +221,7 @@ export default function App() {
                               >
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title="Título"
+                                    title={t('Title')}
                                     active={true}
                                     config={config}
                                     searchField="title"
@@ -223,7 +229,7 @@ export default function App() {
                                 </li>
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title="Autor"
+                                    title={t('Author')}
                                     active={false}
                                     config={config}
                                     searchField="author.name"
@@ -257,7 +263,7 @@ export default function App() {
                                           <input
                                             className="btn btn-light search-btn"
                                             type="submit"
-                                            value="Pesquisar"
+                                            value={t('Search') || ''}
                                             disabled={
                                               !value || value.length < 3
                                             }
@@ -284,7 +290,7 @@ export default function App() {
                           <div>
                             {wasSearched && (
                               <Sorting
-                                label={'Sort by'}
+                                label={t('Sort by') || ''}
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
@@ -292,28 +298,28 @@ export default function App() {
                             <Facet
                               key={'1'}
                               field={'author.name.keyword'}
-                              label={'Authors'}
+                              label={t('Authors')}
                             />
                             <Facet
                               key={'2'}
                               field={'keyword.keyword'}
-                              label={'Keyword'}
+                              label={t('Keyword')}
                             />
                             <Facet
                               key={'3'}
                               field={'orgunit.name.keyword'}
-                              label={'Insitution'}
+                              label={t('Insitution')}
                             />
                             <Facet
                               key={'4'}
                               field={'type.keyword'}
-                              label={'Type'}
+                              label={t('Type')}
                             />
                             <Facet
                               key={'5'}
                               field={'publicationDate.keyword'}
                               filterType={'none'}
-                              label={'Year'}
+                              label={t('Year')}
                             />
                             {/* <Facet
                             mapContextToProps={(context) => {

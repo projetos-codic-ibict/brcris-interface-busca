@@ -72,7 +72,7 @@ function Navbar() {
             </li>
 
             <li className="nav-item me-5" role="presentation">
-              <Link href="#" locale={changeTo}>
+              <Link href="" locale={changeTo}>
                 <picture className="">
                   <img
                     className="icon-lang"
@@ -92,10 +92,6 @@ function Navbar() {
 
             <li className="nav-item">
               <button className="navbar-btn btn-api mx-2">API</button>
-            </li>
-
-            <li className="nav-item">
-              <button className="navbar-btn btn-lorem">LOREM</button>
             </li>
           </ul>
         </div>

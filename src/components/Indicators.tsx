@@ -7,6 +7,7 @@ import styles from '../styles/Indicators.module.css'
 import { Filter } from '@elastic/search-ui'
 import { CSVLink } from 'react-csv'
 import { IoCloudDownloadOutline } from 'react-icons/io5'
+import { useTranslation } from 'next-i18next'
 
 import {
   Chart as ChartJS,
@@ -17,6 +18,7 @@ import {
   Tooltip,
   Legend,
   ArcElement,
+  ChartOptions,
 } from 'chart.js'
 import { Bar, Pie } from 'react-chartjs-2'
 import ElasticSearchService from '../services/ElasticSearchService'
@@ -40,12 +42,12 @@ export const optionsType = {
     },
     title: {
       display: true,
-      text: 'Document type',
+      text: 'Documents by type',
     },
   },
 }
 
-export const options = {
+export const options: ChartOptions = {
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -197,6 +199,11 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
     config.searchQuery.search_fields,
     config.searchQuery.operator,
   ])
+  const { t } = useTranslation('common')
+  // tradução
+  // @ts-ignore
+  options.plugins.title.text = t(options.plugins?.title?.text)
+  optionsType.plugins.title.text = t(optionsType.plugins?.title?.text)
 
   const yearIndicators: IndicatorType[] = indicators ? indicators[0] : []
 
@@ -263,7 +270,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
       <div className="chart">
         <CSVLink
           className="icon-download "
-          title="Export to csv"
+          title={t('Export to csv') || ''}
           data={typeIndicators ? typeIndicators : []}
           filename={'arquivo.csv'}
           headers={headersType}

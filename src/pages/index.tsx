@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useRouter } from 'next/router'
-// import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import AllPublicationsVis from '../components/AllPublicationsVis'
 
@@ -22,7 +22,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
   const router = useRouter()
-  // const { t } = useTranslation('navbar')
+  const { t } = useTranslation('common')
 
   const partners = [
     {
@@ -84,7 +84,7 @@ export default function App() {
                         aria-selected="true"
                         onClick={() => setSearchPage('publications')}
                       >
-                        Publications
+                        {t('Publications')}
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -98,7 +98,7 @@ export default function App() {
                         aria-selected="false"
                         onClick={() => setSearchPage('person')}
                       >
-                        Person
+                        {t('Person')}
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -112,7 +112,7 @@ export default function App() {
                         aria-selected="false"
                         onClick={() => setSearchPage('journals')}
                       >
-                        Journals
+                        {t('Journals')}
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -126,7 +126,7 @@ export default function App() {
                         aria-selected="false"
                         onClick={() => setSearchPage('institutions')}
                       >
-                        Institutions
+                        {t('Institutions')}
                       </button>
                     </li>
                   </ul>
@@ -148,7 +148,7 @@ export default function App() {
                             type="text"
                             value={term}
                             onChange={(e) => setTerm(e.target.value)}
-                            placeholder="Busca..."
+                            placeholder={`${t('Search')}...`}
                           />
                         </div>
                         <div className="col-auto">
@@ -156,7 +156,7 @@ export default function App() {
                             className="btn btn-light search-btn"
                             disabled={!term || term.length < 3}
                           >
-                            Search
+                            {t('Search')}
                           </button>
                         </div>
                       </form>
@@ -166,16 +166,9 @@ export default function App() {
               </div>
               <div className="col-md-12 mt-5">
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
-                  veritatis, earum distinctio nisi ipsa ea, corporis quas minus
-                  placeat ducimus et, vero obcaecati labore explicabo fugit
-                  illum amet eius ratione?
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
-                  veritatis, earum distinctio nisi ipsa ea, corporis quas minus
-                  placeat ducimus et, vero obcaecati labore explicabo fugit
-                  illum amet eius ratione?
+                  BrCRIS (Current Research Information System) tem como objetivo
+                  estabelecer um modelo único de organização da informação
+                  científica de todo o ecossistema da pesquisa brasileiro.
                 </p>
               </div>
             </div>

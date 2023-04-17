@@ -8,9 +8,11 @@ import dynamic from 'next/dynamic'
 const Graph = dynamic(import('react-graph-vis'), { ssr: false })
 import 'vis-network/styles/vis-network.css'
 // import { Edge, Node, Options } from 'vis-network'
+import { useTranslation } from 'next-i18next'
+import { Node } from 'vis'
 
 // Exemplo https://codesandbox.io/s/vis-test-fhir-test-2-forked-0m1l1x?file=/src/index.js:1774-1820
-const nodes = [
+const nodes: Node[] = [
   {
     id: 1,
     label: 'Publications',
@@ -120,6 +122,11 @@ const options = {
 
 function VisGraph() {
   const [graph] = useState({ nodes, edges })
+  const { t } = useTranslation('common')
+
+  // pegar a tradução
+  // @ts-ignore
+  nodes.forEach((node) => (node.label = t(node.label)))
 
   const pages = [
     '/publications',

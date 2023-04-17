@@ -24,6 +24,18 @@ import ClearFilters from '../components/ClearFilters'
 import CustomResultViewPerson from '../components/CustomResultViewPerson'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import OperatorSelect from '../components/OperatorSelect'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+type Props = {
+  // Add custom props here
+}
+// or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
+export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
+  },
+})
 
 const connector = new Connector()
 
@@ -82,7 +94,7 @@ const config = {
   //     },
   //   },
   //   suggestions: {
-  //     types: {     
+  //     types: {
   //       documents: {
   //         fields: ['suggest'],
   //       },
@@ -91,8 +103,11 @@ const config = {
   //   },
   // },
 }
-
-const SORT_OPTIONS = [
+type SortOptionsType = {
+  name: string
+  value: any[]
+}
+const SORT_OPTIONS: SortOptionsType[] = [
   {
     name: 'Relevance',
     value: [],
@@ -119,6 +134,9 @@ const SORT_OPTIONS = [
 
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
+  const { t } = useTranslation('common')
+  // tradução
+  SORT_OPTIONS.forEach((option) => (option.name = t(option.name)))
   return (
     <div>
       <Navbar />
@@ -135,7 +153,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>Person</h2>
+                            <h2>{t('Person')}</h2>
                           </div>
                         </div>
 
@@ -149,7 +167,7 @@ export default function App() {
                               >
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title="Nome"
+                                    title={t('Nome')}
                                     active={true}
                                     config={config}
                                     searchField="name"
@@ -157,7 +175,7 @@ export default function App() {
                                 </li>
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title="Área de pesquisa"
+                                    title={t('Research field')}
                                     active={false}
                                     config={config}
                                     searchField="researchArea"
@@ -191,7 +209,7 @@ export default function App() {
                                           <input
                                             className="btn btn-light search-btn"
                                             type="submit"
-                                            value="Pesquisar"
+                                            value={t('Search') || ''}
                                             disabled={
                                               !value || value.length < 3
                                             }
@@ -218,23 +236,25 @@ export default function App() {
                           <div>
                             {wasSearched && (
                               <Sorting
-                                label={'Sort by'}
+                              label={t('Sort by') || ''}
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
                             <Facet
                               key={'1'}
                               field={'nationality.keyword'}
-                              label={'nacionalidade'}
+                              label={t('Nationality')}
                             />
                             <Facet
                               key={'2'}
                               field={'researchArea.keyword'}
-                              label={'Área de pesquisa'}
+                              label={t('Research field')}
                             />
                           </div>
                         }
-                        bodyContent={<Results resultView={CustomResultViewPerson} />}
+                        bodyContent={
+                          <Results resultView={CustomResultViewPerson} />
+                        }
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}

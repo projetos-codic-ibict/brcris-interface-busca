@@ -24,7 +24,19 @@ import Indicators from '../components/Indicators'
 import ClearFilters from '../components/ClearFilters'
 import CustomResultView from '../components/CustomResultViewPublications'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
-import OperatorSelect from '../components/OperatorSelect'
+// import OperatorSelect from '../components/OperatorSelect'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+type Props = {
+  // Add custom props here
+}
+// or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
+export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
+  },
+})
 
 const connector = new Connector()
 
@@ -49,42 +61,14 @@ const configDefault = {
         raw: {},
       },
     },
-    // disjunctiveFacets: ['title.keyword', 'issn.keyword'],
-    // facets: {
-    //   'issn.keyword': { type: 'value' },
-    //   'title.keyword': { type: 'value' },
-    // },
   },
-  // autocompleteQuery: {
-  //   results: {
-  //     search_fields: {
-  //       'titlesuggest.suggest': {},
-  //     },
-  //     resultsPerPage: 5,
-  //     result_fields: {
-  //       title: {
-  //         snippet: {
-  //           size: 100,
-  //           fallback: true,
-  //         },
-  //       },
-  //       vivo_link: {
-  //         raw: {},
-  //       },
-  //     },
-  //   },
-  //   suggestions: {
-  //     types: {
-  //       documents: {
-  //         fields: ['suggest'],
-  //       },
-  //     },
-  //     size: 4,
-  //   },
-  // },
-}
 
-const SORT_OPTIONS = [
+}
+type SortOptionsType = {
+  name: string
+  value: any[]
+}
+const SORT_OPTIONS: SortOptionsType[] = [
   {
     name: 'Relevance',
     value: [],
@@ -111,16 +95,9 @@ const SORT_OPTIONS = [
 
 export default function App() {
   const [config, setConfig] = useState(configDefault)
-  const router = useRouter()
-  const op: string = router.query['op'] as string
-  useEffect(() => {
-    if (op) {
-      setConfig({
-        ...config,
-        searchQuery: { ...config.searchQuery, operator: op },
-      })
-    }
-  }, [op])
+  const { t } = useTranslation('common')
+  // tradução
+  SORT_OPTIONS.forEach((option) => (option.name = t(option.name)))
 
   return (
     <div>
@@ -138,7 +115,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>Journals</h2>
+                            <h2>{t('Journals')}</h2>
                           </div>
                         </div>
 
@@ -152,7 +129,7 @@ export default function App() {
                               >
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title="Nome"
+                                    title={t('Title')}
                                     active={true}
                                     config={config}
                                     searchField="name"
@@ -160,7 +137,7 @@ export default function App() {
                                 </li>
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title="Área de pesquisa"
+                                    title={t('Research field')}
                                     active={false}
                                     config={config}
                                     searchField="researchArea"
@@ -194,7 +171,7 @@ export default function App() {
                                           <input
                                             className="btn btn-light search-btn"
                                             type="submit"
-                                            value="Pesquisar"
+                                            value={t('Search') || ''}
                                             disabled={
                                               !value || value.length < 3
                                             }
@@ -221,7 +198,7 @@ export default function App() {
                           <div>
                             {wasSearched && (
                               <Sorting
-                                label={'Sort by'}
+                              label={t('Sort by') || ''}
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}

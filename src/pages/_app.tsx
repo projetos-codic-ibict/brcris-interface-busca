@@ -1,7 +1,6 @@
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 import { useEffect } from 'react'
-import GoogleTranslate from '../components/GoogleTranslate'
 import { appWithTranslation } from 'next-i18next'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -10,7 +9,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [])
   return (
     <>
-      <GoogleTranslate />
       <Component {...pageProps} />{' '}
     </>
   )
