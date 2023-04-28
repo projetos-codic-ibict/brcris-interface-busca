@@ -26,12 +26,13 @@ import ButtonFieldSelect from '../components/ButtonFieldSelect'
 // import OperatorSelect from '../components/OperatorSelect'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 type Props = {
   // Add custom props here
 }
-// or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
-export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  locale,
+}) => ({
   props: {
     ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
   },
@@ -41,6 +42,7 @@ const connector = new Connector()
 
 const config = {
   debug: true,
+  indicators: [],
   urlPushDebounceLength: 500,
   alwaysSearchOnInitialLoad: true,
   hasA11yNotifications: true,
@@ -185,6 +187,11 @@ const SORT_OPTIONS: SortOptionsType[] = [
     ],
   },
 ]
+
+const indicatorsState = {
+  config,
+  data: [],
+}
 
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
@@ -365,7 +372,7 @@ export default function App() {
                         </div>
                         {/** 
                         // @ts-ignore */}
-                        <Indicators config={config} />
+                        <Indicators indicatorsState={indicatorsState} />
                       </div>
                     </div>
                   </ErrorBoundary>

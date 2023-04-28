@@ -161,10 +161,15 @@ function getFilterFormated(filter: Filter): any {
 }
 
 // @ts-ignore
-function Indicators({ filters, searchTerm, isLoading, config }) {
-  const [indicators, setIndicators] = useState([])
+function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
+  const [indicators, setIndicators] = useState(indicatorsState.data)
+  const { t } = useTranslation('common')
 
   useEffect(() => {
+    // tradução
+    // @ts-ignore
+    options.plugins.title.text = t(options.plugins?.title?.text)
+    optionsType.plugins.title.text = t(optionsType.plugins?.title?.text)
     isLoading
       ? ElasticSearchService(
           [
@@ -174,7 +179,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
                 'publicationDate.keyword',
                 filters,
                 searchTerm,
-                config
+                indicatorsState.config
               )
             ),
             JSON.stringify(
@@ -183,27 +188,23 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
                 'type.keyword',
                 filters,
                 searchTerm,
-                config
+                indicatorsState.config
               )
             ),
           ],
-          config.searchQuery.index
+          indicatorsState.config.searchQuery.index
         ).then((data) => {
           setIndicators(data)
+          indicatorsState.data = data
         })
       : null
   }, [
     filters,
     searchTerm,
     isLoading,
-    config.searchQuery.search_fields,
-    config.searchQuery.operator,
+    indicatorsState.config.searchQuery.search_fields,
+    indicatorsState.config.searchQuery.operator,
   ])
-  const { t } = useTranslation('common')
-  // tradução
-  // @ts-ignore
-  options.plugins.title.text = t(options.plugins?.title?.text)
-  optionsType.plugins.title.text = t(optionsType.plugins?.title?.text)
 
   const yearIndicators: IndicatorType[] = indicators ? indicators[0] : []
 
@@ -314,10 +315,12 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
     </div>
   )
 }
-// @ts-ignore
-export default withSearch(({ filters, searchTerm, isLoading, config }) => ({
-  filters,
-  searchTerm,
-  isLoading,
-  config,
-}))(Indicators)
+export default withSearch(
+  // @ts-ignore
+  ({ filters, searchTerm, isLoading, indicatorsState }) => ({
+    filters,
+    searchTerm,
+    isLoading,
+    indicatorsState,
+  })
+)(Indicators)
