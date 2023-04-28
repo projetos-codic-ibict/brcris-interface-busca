@@ -16,7 +16,7 @@ const nodes: Node[] = [
   {
     id: 1,
     label: 'Publications',
-    title: '40.565 publicações',
+    title: '40.565 ',
     level: 1,
     shape: 'circle',
     color: '#F7964D',
@@ -27,7 +27,7 @@ const nodes: Node[] = [
   {
     id: 2,
     label: 'Person',
-    title: '10.00 person',
+    title: '10.00 ',
     level: 2,
     shape: 'circle',
     color: '#CB6CE6',
@@ -38,7 +38,7 @@ const nodes: Node[] = [
   {
     id: 3,
     label: 'Institutions',
-    title: '140 instituições',
+    title: '140 ',
     level: 3,
     shape: 'circle',
     color: '#00dafc',
@@ -46,7 +46,7 @@ const nodes: Node[] = [
   {
     id: 4,
     label: 'Journals',
-    title: '253 revistas',
+    title: '253 ',
     level: 4,
     shape: 'circle',
     color: '#FF5757',
@@ -125,8 +125,18 @@ function VisGraph() {
   const { t } = useTranslation('common')
 
   // pegar a tradução
-  // @ts-ignore
-  nodes.forEach((node) => (node.label = t(node.label)))
+  nodes.forEach((node) => {
+    // @ts-ignore
+    node.label = t(node.label)
+    // @ts-ignore
+    if (!node.title?.includes(node.label)) {
+      // @ts-ignore
+      node.title += node.label
+    }
+  })
+  
+  //nodes.forEach((node) => (node.title = node.title.concat(node.label)))
+  
 
   const pages = [
     '/publications',

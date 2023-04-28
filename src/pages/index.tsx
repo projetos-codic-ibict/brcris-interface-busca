@@ -166,16 +166,14 @@ export default function App() {
               </div>
               <div className="col-md-12 mt-5">
                 <p>
-                  BrCRIS (Current Research Information System) tem como objetivo
-                  estabelecer um modelo único de organização da informação
-                  científica de todo o ecossistema da pesquisa brasileiro.
+                  {t('BrCrisText')}
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="container-fluid page px-5 mt-3">
+        <div className="container-fluid page px-5 mb-5 fixed-bottom">
           <div className="partners">
             {partners.map((partner, index) => (
               <div key={index}>

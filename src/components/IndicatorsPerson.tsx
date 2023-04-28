@@ -23,6 +23,8 @@ import { TagCloud } from 'react-tagcloud'
 import ElasticSearchService from '../services/ElasticSearchService'
 import { Filter } from '@elastic/search-ui'
 
+import { useTranslation } from 'next-i18next'
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -163,6 +165,8 @@ function getKeywordQuery(
 
 // @ts-ignore
 function Indicators({ filters, searchTerm, isLoading, config }) {
+  const { t } = useTranslation('common')
+
   const [indicators, setIndicators] = useState([])
 
   useEffect(() => {
@@ -241,7 +245,7 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
           }}
           className="text-center"
         >
-          Nacionality - Top 10
+          {t('Nacionality')} - Top 10
         </p>
         <TagCloud
           minSize={12}
