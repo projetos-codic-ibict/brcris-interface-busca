@@ -91,7 +91,7 @@ const CustomResultViewPublications = ({
               ))}
 
               {result.service?.raw.map((service: Service) =>
-                service.title.map((title: string) => (
+                service.title?.map((title: string) => (
                   <a
                     key={title}
                     target="_blank"
