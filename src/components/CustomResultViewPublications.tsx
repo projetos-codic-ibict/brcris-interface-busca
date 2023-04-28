@@ -28,7 +28,7 @@ const CustomResultViewPublications = ({
           <a
             onClick={onClickLink}
             target="_blank"
-            href={`${VIVO_URL_BASE}/individual?uri=https%3A%2F%2Fibict.br%2Fbrcris%2Findividual%2Fpubl_${result.id.raw}`}
+            href={`${VIVO_URL_BASE}/publ_${result.id.raw}`}
             rel="noreferrer"
           >
             {result.title.raw}
@@ -52,7 +52,7 @@ const CustomResultViewPublications = ({
                 <a
                   key={author.id}
                   target="_blank"
-                  href={`${VIVO_URL_BASE}/individual?uri=https%3A%2F%2Fibict.br%2Fbrcris%2Findividual%2Fpers_${author.id}`}
+                  href={`${VIVO_URL_BASE}/pers_${author.id}`}
                   rel="noreferrer"
                 >
                   {author.name}
@@ -84,7 +84,7 @@ const CustomResultViewPublications = ({
                   key={org.id}
                   target="_blank"
                   rel="noreferrer"
-                  href={`${VIVO_URL_BASE}/individual?uri=https%3A%2F%2Fibict.br%2Fbrcris%2Findividual%2Forg_${org.id}`}
+                  href={`${VIVO_URL_BASE}/org_${org.id}`}
                 >
                   {org.name}
                 </a>
@@ -96,7 +96,7 @@ const CustomResultViewPublications = ({
                     key={title}
                     target="_blank"
                     rel="noreferrer"
-                    href={`${VIVO_URL_BASE}/individual?uri=https%3A%2F%2Fibict.br%2Fbrcris%2Findividual%2Fserv_${service.id}`}
+                    href={`${VIVO_URL_BASE}/serv_${service.id}`}
                   >
                     {title}
                   </a>
@@ -108,7 +108,7 @@ const CustomResultViewPublications = ({
                   key={index}
                   target="_blank"
                   rel="noreferrer"
-                  href={`${VIVO_URL_BASE}/individual?uri=https%3A%2F%2Fibict.br%2Fbrcris%2Findividual%2Fjourn_${journal.id}`}
+                  href={`${VIVO_URL_BASE}/journ_${journal.id}`}
                 >
                   {journal.title ? journal.title : journal}
                 </a>
