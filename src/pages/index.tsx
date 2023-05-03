@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import AllPublicationsVis from '../components/AllPublicationsVis'
+import AllIndexVisNetwork from '../components/AllIndexVisNetwork'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
@@ -66,7 +66,7 @@ export default function App() {
         <div className="container page">
           <div className="row">
             <div className="col-md-6">
-              <AllPublicationsVis />
+              <AllIndexVisNetwork />
             </div>
 
             <div className="col-md-6">
