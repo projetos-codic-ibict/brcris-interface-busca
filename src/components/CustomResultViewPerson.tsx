@@ -15,6 +15,7 @@ import { ResultViewProps } from '@elastic/react-search-ui-views'
 //   id: string
 //   title: string[]
 // }
+const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
 const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
   <li className="sui-result">
@@ -24,7 +25,7 @@ const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
           <a
             onClick={onClickLink}
             target="_blank"
-            href={result.vivo_link?.raw}
+            href={`${VIVO_URL_BASE}/pers_${result.id.raw}`}
             rel="noreferrer"
           >
             {result.name.raw}

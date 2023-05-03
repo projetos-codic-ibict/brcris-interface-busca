@@ -53,6 +53,9 @@ const config = {
       name: {},
     },
     result_fields: {
+      id: {
+        raw: {}
+      },
       name: {
         raw: {},
       },

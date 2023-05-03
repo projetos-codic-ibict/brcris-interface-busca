@@ -22,7 +22,7 @@ import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import Navbar from '../components/Navbar'
 import Indicators from '../components/Indicators'
 import ClearFilters from '../components/ClearFilters'
-import CustomResultView from '../components/CustomResultViewPublications'
+import CustomResultViewJournals from '../components/CustomResultViewJournals'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 // import OperatorSelect from '../components/OperatorSelect'
 import { useTranslation } from 'next-i18next'
@@ -54,6 +54,9 @@ const configDefault = {
       title: {},
     },
     result_fields: {
+      id: {
+        raw: {},
+      },
       title: {
         raw: {},
       },
@@ -214,7 +217,7 @@ export default function App() {
                             /> */}
                           </div>
                         }
-                        bodyContent={<Results titleField="title" />}
+                        bodyContent={<Results resultView={CustomResultViewJournals} />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}

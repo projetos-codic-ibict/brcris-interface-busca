@@ -21,7 +21,7 @@ import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import Navbar from '../components/Navbar'
 import Indicators from '../components/Indicators'
 import ClearFilters from '../components/ClearFilters'
-import CustomResultView from '../components/CustomResultViewPublications'
+import CustomResultViewInstitutions from '../components/CustomResultViewInstitutions'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import OperatorSelect from '../components/OperatorSelect'
 import { useRouter } from 'next/router'
@@ -54,6 +54,9 @@ const configDefault = {
       name: {},
     },
     result_fields: {
+      id: {
+        raw: {},
+      },
       name: {
         raw: {},
       },
@@ -200,7 +203,7 @@ export default function App() {
                             )}
                           </div>
                         }
-                        bodyContent={<Results titleField="name" />}
+                        bodyContent={<Results resultView={CustomResultViewInstitutions} />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}

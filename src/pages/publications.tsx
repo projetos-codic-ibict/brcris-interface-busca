@@ -315,7 +315,7 @@ export default function App() {
                             <Facet
                               key={'3'}
                               field={'orgunit.name.keyword'}
-                              label={t('Insitution')}
+                              label={t('Institution')}
                             />
                             <Facet
                               key={'4'}
