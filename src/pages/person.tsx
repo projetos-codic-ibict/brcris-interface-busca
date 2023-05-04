@@ -54,7 +54,7 @@ const config = {
     },
     result_fields: {
       id: {
-        raw: {}
+        raw: {},
       },
       name: {
         raw: {},
@@ -134,6 +134,11 @@ const SORT_OPTIONS: SortOptionsType[] = [
     ],
   },
 ]
+
+const indicatorsState = {
+  config,
+  data: [],
+}
 
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
@@ -239,7 +244,7 @@ export default function App() {
                           <div>
                             {wasSearched && (
                               <Sorting
-                              label={t('Sort by') || ''}
+                                label={t('Sort by') || ''}
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
@@ -272,7 +277,7 @@ export default function App() {
                         </div>
                         {/** 
                         // @ts-ignore */}
-                        <IndicatorsPerson config={config} />
+                        <IndicatorsPerson indicatorsState={indicatorsState} />
                       </div>
                     </div>
                   </ErrorBoundary>

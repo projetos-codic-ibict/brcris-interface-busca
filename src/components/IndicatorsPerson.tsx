@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react'
@@ -164,10 +165,10 @@ function getKeywordQuery(
 }
 
 // @ts-ignore
-function Indicators({ filters, searchTerm, isLoading, config }) {
+function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
   const { t } = useTranslation('common')
 
-  const [indicators, setIndicators] = useState([])
+  const [indicators, setIndicators] = useState(indicatorsState.data)
 
   useEffect(() => {
     isLoading
@@ -178,24 +179,25 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
                 nationtalityQueryBase,
                 filters,
                 searchTerm,
-                config
+                indicatorsState.config
               )
             ),
             JSON.stringify(
-              getKeywordQuery(keywordQueryBase, filters, searchTerm, config)
+              getKeywordQuery(keywordQueryBase, filters, searchTerm, indicatorsState.config)
             ),
           ],
-          config.searchQuery.index
+          indicatorsState.config.searchQuery.index
         ).then((data) => {
           setIndicators(data)
+          indicatorsState.data = data
         })
       : null
   }, [
     filters,
     searchTerm,
     isLoading,
-    config.searchQuery.search_fields,
-    config.searchQuery.operator,
+    indicatorsState.config.searchQuery.search_fields,
+    indicatorsState.config.searchQuery.operator,
   ])
 
   const nationalityIndicators: IndicatorType[] = indicators ? indicators[0] : []
@@ -342,9 +344,9 @@ function Indicators({ filters, searchTerm, isLoading, config }) {
   )
 }
 // @ts-ignore
-export default withSearch(({ filters, searchTerm, isLoading, config }) => ({
+export default withSearch(({ filters, searchTerm, isLoading, indicatorsState }) => ({
   filters,
   searchTerm,
   isLoading,
-  config,
+  indicatorsState,
 }))(Indicators)
