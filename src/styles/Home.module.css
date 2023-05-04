@@ -7,6 +7,9 @@
   /* background: #210d41; */
   background-image: radial-gradient(circle at 118% 80%, #A159B3 17%, #210d41 25%);
   /* background-image: radial-gradient(farthest-side at 130% 70%, #A159B3 20%, #210d41 40% ); */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .textWhite {
@@ -127,11 +130,30 @@
   width: 25%;
 }
 
-@media (max-width: 600px) {
+.indicatorsTitle {
+  display: none;
+}
+
+@media (max-width: 760px) {
   .grid {
     width: 100%;
     flex-direction: column;
   }
+
+  .content {
+    flex-direction: column;
+  }
+
+  .indicators {
+    width: calc(100% - 32px);
+    margin-left: 16px;
+  }
+
+  .indicatorsTitle {
+    display: block;
+  }
+
+
 }
 
 @media (prefers-color-scheme: dark) {

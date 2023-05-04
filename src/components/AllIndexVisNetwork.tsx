@@ -134,9 +134,8 @@ function VisGraph() {
       node.title += node.label
     }
   })
-  
+
   //nodes.forEach((node) => (node.title = node.title.concat(node.label)))
-  
 
   const pages = [
     '/publications',
@@ -149,7 +148,6 @@ function VisGraph() {
 
   const events = {
     click: function (event: any) {
-      // console.log('clicou', event.nodes[0])
       if (event.nodes[0] && pages[event.nodes[0] - 1]) {
         window.location.href = pages[event.nodes[0] - 1]
       }
@@ -157,11 +155,11 @@ function VisGraph() {
   }
 
   return (
-    <>
+    <div className="graph">
       {/** 
       // @ts-ignore */}
       <Graph graph={graph} options={options} events={events} />
-    </>
+    </div>
   )
 }
 export default VisGraph

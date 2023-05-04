@@ -5,6 +5,7 @@ const nextConfig = {
   swcMinify: false,
   env: {
     VIVO_URL_BASE: process.env.VIVO_URL_BASE,
+    LANGUAGES: process.env.LANGUAGES,
   },
   i18n,
 }

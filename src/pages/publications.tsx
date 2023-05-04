@@ -367,8 +367,12 @@ export default function App() {
                         bodyFooter={<Paging />}
                       />
                       <div className={styles.indicators}>
-                        <div className="sui-layout-header">
-                          <div className="sui-layout-header__inner"></div>
+                        <div className="sui-layout-header indicators-header">
+                          <div className="sui-layout-header__inner">
+                            <h3 className={styles.indicatorsTitle}>
+                              {t('Indicators')}
+                            </h3>
+                          </div>
                         </div>
                         {/** 
                         // @ts-ignore */}

@@ -144,9 +144,6 @@ function addNode(inst: any) {
   }
 }
 
-console.log('nodes: ', nodes)
-console.log('edges: ', edges)
-
 const options: Options = {
   interaction: {
     selectable: true,
@@ -175,7 +172,6 @@ export default () => {
 
   const { data } = useSWR('/api/visNetwork', fetcher)
   const articles = data
-  // console.log(articles)
   const nodesTest = []
 
   if (articles !== undefined && articles !== null) {
@@ -187,7 +183,6 @@ export default () => {
         }
       )
     }
-    // console.log('teste: ', nodesTest)
   }
 
   const nodes: Node[] = []

@@ -29,6 +29,7 @@ export default function App() {
       url: 'https://www.gov.br/ibict/pt-br',
       path: '/logos/logo-ibict-pb.png',
       description: 'Logo do IBICT',
+      class: 'hilight',
     },
     {
       url: 'http://www.finep.gov.br/',
@@ -54,6 +55,7 @@ export default function App() {
       url: 'https://www.lareferencia.info/pt/',
       path: '/logos/la_referencia_pb.png',
       description: ' Logo do LA Referencia',
+      class: 'hilight',
     },
   ]
   const [term, setTerm] = useState('')
@@ -165,21 +167,20 @@ export default function App() {
                 </div>
               </div>
               <div className="col-md-12 mt-5">
-                <p>
-                  {t('BrCrisText')}
-                </p>
+                <p>{t('BrCrisText')}</p>
               </div>
             </div>
           </div>
         </div>
-
-        <div className="container-fluid page px-5 mb-5 fixed-bottom">
+      </div>
+      <footer>
+        <div className="container-fluid page px-5 mb-5">
           <div className="partners">
             {partners.map((partner, index) => (
-              <div key={index}>
+              <div key={index} className={partner.class}>
                 <Link href={partner.url} target="_blank">
                   <a className="">
-                    <picture className="">
+                    <picture>
                       <img src={partner.path} alt={partner.description} />
                     </picture>
                   </a>
@@ -188,7 +189,7 @@ export default function App() {
             ))}
           </div>
         </div>
-      </div>
+      </footer>
     </div>
   )
 }

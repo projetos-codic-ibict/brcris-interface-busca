@@ -4,3 +4,10 @@
   padding: 1rem 0.5rem;
   margin-right: 24px;
 }
+
+@media (max-width: 760px) {
+  .charts {
+    margin-right: 0;
+    margin-bottom: 32px;
+  }
+}

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
 
-
 // type Author = {
 //   id: string
 //   name: string
@@ -32,40 +31,38 @@ const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
           </a>
         </h6>
       </div>
-      
+
       <div className="sui-result__body">
         <ul className="sui-result__details">
           <li>
             <span className="sui-result__key">Lattes</span>
-            <span className="sui-result__value">
+            <div className="sui-result__value">
               <a
-                target='_blank'
+                target="_blank"
                 rel="noreferrer"
                 href={`http://lattes.cnpq.br/${result.lattesId.raw}`}
               >
                 http://lattes.cnpq.br/{result.lattesId.raw}
               </a>
-            </span>
+            </div>
           </li>
 
           <li>
             <span className="sui-result__key">Nationality</span>
-            <span className="sui-result__value">
-              {result.nationality?.raw}
-            </span>
+            <span className="sui-result__value">{result.nationality?.raw}</span>
           </li>
 
           <li>
             <span className="sui-result__key">Orcid</span>
-            <span className="sui-result__value">
+            <div className="sui-result__value">
               <a
-                target='_blank'
+                target="_blank"
                 rel="noreferrer"
-                href={`https://orcid.org/${result.orcid?.raw}`}>
-
+                href={`https://orcid.org/${result.orcid?.raw}`}
+              >
                 https://orcid.org/{result.orcid?.raw}
               </a>
-            </span>
+            </div>
           </li>
 
           <li>
