@@ -186,6 +186,7 @@ export default function App() {
             ))}
           </div>
         </div>
+        <p className="text-white text-center">by IBICT</p>
       </footer>
     </div>
   )

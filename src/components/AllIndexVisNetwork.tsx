@@ -127,31 +127,22 @@ function VisGraph() {
     },
   }
 
-  const translatedTextRef = useRef(t)
-
   useEffect(() => {
-    if (translatedTextRef.current) {
-      translatedTextRef.current = t
-      const newNodes: Node[] = []
-      for (let i = 0; i < keysLanguage.length; i++) {
+    const newNodes: Node[] = []
+    for (let i = 0; i < keysLanguage.length; i++) {
+      // @ts-ignore
+      nodes[i].label = t(keysLanguage[i])
+      // @ts-ignore
+      if (!nodes[i].title?.includes(nodes[i].label)) {
         // @ts-ignore
-        nodes[i].label = t(keysLanguage[i])
-        console.log('keysLanguage', t(keysLanguage[i]))
-        // @ts-ignore
-        if (!nodes[i].title?.includes(nodes[i].label)) {
-          // @ts-ignore
-          nodes[i].title += nodes[i].label
-        }
-        newNodes.push({ ...nodes[i] })
+        nodes[i].title += nodes[i].label
       }
-
-      setGraph({ ...graph, nodes: newNodes })
-      console.log(graph)
+      newNodes.push({ ...nodes[i] })
     }
-  }, [t, translatedTextRef])
 
-  useEffect(() => {
-    translatedTextRef.current = t
+    setGraph({ ...graph, nodes: newNodes })
+    console.log(graph)
+    // }
   }, [t])
 
   return (
