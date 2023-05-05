@@ -4,7 +4,6 @@ import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import Link from 'next/link'
 import AllIndexVisNetwork from '../components/AllIndexVisNetwork'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
