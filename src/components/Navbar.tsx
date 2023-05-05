@@ -26,17 +26,20 @@ function Navbar() {
               </picture>
             </a>
           </Link>
-          <Link href="/">
-            <a className="navbar-brand">
-              <picture className="navbar-logo">
-                <img
-                  className="img-fluid ibict"
-                  src="/logos/logo-ibict-pb-st.png"
-                  alt="logo do ibict"
-                />
-              </picture>
-            </a>
-          </Link>
+          <a
+            className="navbar-brand"
+            href="https://www.gov.br/ibict/pt-br"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <picture className="navbar-logo">
+              <img
+                className="img-fluid ibict"
+                src="/logos/logo-ibict-pb-st.png"
+                alt="logo do ibict"
+              />
+            </picture>
+          </a>
 
           <button
             className="navbar-toggler"

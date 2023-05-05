@@ -156,7 +156,7 @@ export default function App() {
                         <div className="col-auto">
                           <button
                             className="btn btn-light search-btn"
-                            disabled={!term || term.length < 3}
+                            // disabled={!term || term.length < 3}
                           >
                             {t('Search')}
                           </button>
@@ -178,13 +178,11 @@ export default function App() {
           <div className="partners">
             {partners.map((partner, index) => (
               <div key={index} className={partner.class}>
-                <Link href={partner.url} target="_blank">
-                  <a className="">
-                    <picture>
-                      <img src={partner.path} alt={partner.description} />
-                    </picture>
-                  </a>
-                </Link>
+                <a href={partner.url} target="_blank" rel="noreferrer">
+                  <picture>
+                    <img src={partner.path} alt={partner.description} />
+                  </picture>
+                </a>
               </div>
             ))}
           </div>
