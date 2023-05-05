@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 // @ts-ignore
 const Graph = dynamic(import('react-graph-vis'), { ssr: false })
@@ -54,26 +54,10 @@ const nodes: Node[] = [
       color: '#ffffff',
     },
   },
-  // {
-  //   id: 5,
-  //   label: 'Autores',
-  //   title: '3000 autores',
-  //   level: 5,
-  //   shape: 'circle',
-  //   color: '#FFDE59',
-  // },
-  // {
-  //   id: 6,
-  //   label: 'Fundações',
-  //   title: '5 fundações',
-  //   level: 6,
-  //   shape: 'circle',
-  //   color: '#4152B3',
-  //   font: {
-  //     color: '#ffffff',
-  //   },
-  // },
 ]
+
+const keysLanguage = ['Publications', 'Person', 'Institutions', 'Journals']
+
 const edges = [
   { from: 1, to: 2, id: 1 },
   { from: 1, to: 4, id: 3 },
@@ -121,19 +105,8 @@ const options = {
 }
 
 function VisGraph() {
-  const [graph] = useState({ nodes, edges })
+  const [graph, setGraph] = useState({ nodes, edges })
   const { t } = useTranslation('common')
-
-  // pegar a tradução
-  nodes.forEach((node) => {
-    // @ts-ignore
-    node.label = t(node.label)
-    // @ts-ignore
-    if (!node.title?.includes(node.label)) {
-      // @ts-ignore
-      node.title += node.label
-    }
-  })
 
   //nodes.forEach((node) => (node.title = node.title.concat(node.label)))
 
@@ -153,6 +126,33 @@ function VisGraph() {
       }
     },
   }
+
+  const translatedTextRef = useRef(t)
+
+  useEffect(() => {
+    if (translatedTextRef.current) {
+      translatedTextRef.current = t
+      const newNodes: Node[] = []
+      for (let i = 0; i < keysLanguage.length; i++) {
+        // @ts-ignore
+        nodes[i].label = t(keysLanguage[i])
+        console.log('keysLanguage', t(keysLanguage[i]))
+        // @ts-ignore
+        if (!nodes[i].title?.includes(nodes[i].label)) {
+          // @ts-ignore
+          nodes[i].title += nodes[i].label
+        }
+        newNodes.push({ ...nodes[i] })
+      }
+
+      setGraph({ ...graph, nodes: newNodes })
+      console.log(graph)
+    }
+  }, [t, translatedTextRef])
+
+  useEffect(() => {
+    translatedTextRef.current = t
+  }, [t])
 
   return (
     <div className="graph">
