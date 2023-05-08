@@ -6,6 +6,7 @@ const nextConfig = {
   env: {
     VIVO_URL_BASE: process.env.VIVO_URL_BASE,
     LANGUAGES: process.env.LANGUAGES,
+    VIVO_URL_HOME: process.env.VIVO_URL_HOME,
   },
   i18n,
 }

@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
-import Navbar from "../components/Navbar";
+import Navbar from '../components/Navbar'
 type Props = {
   // Add custom props here
 }
@@ -18,7 +18,7 @@ export default function About() {
   return (
     <>
       <Navbar />
-      <h1>{t('About')}</h1>
+      <h1>{t('Contact')}</h1>
     </>
   )
 }

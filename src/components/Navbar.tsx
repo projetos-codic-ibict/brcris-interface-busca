@@ -64,14 +64,18 @@ function Navbar() {
             </li>
 
             <li className="nav-item me-5" role="presentation">
-              <Link href="/">
+              <Link href={`${process.env.VIVO_URL_HOME}/team`}>
                 <a className="nav-link">{t('Team')}</a>
               </Link>
             </li>
-
             <li className="nav-item me-5" role="presentation">
-              <Link href="/about">
+              <Link href={`${process.env.VIVO_URL_HOME}/about`}>
                 <a className="nav-link">{t('About')}</a>
+              </Link>
+            </li>
+            <li className="nav-item me-5" role="presentation">
+              <Link href="/contact">
+                <a className="nav-link">{t('Contact')}</a>
               </Link>
             </li>
             <li className="nav-item me-5" role="presentation">
