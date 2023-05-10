@@ -18,21 +18,19 @@ const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
           </a>
         </h6>
       </div>
-      
+
       <div className="sui-result__body">
         <ul className="sui-result__details">
-          <li>
+          {/* <li>
             <span className="sui-result__key">id</span>
             <span className="sui-result__value">
               {result.id.raw}
             </span>
-          </li>
+          </li> */}
 
           <li>
             <span className="sui-result__key">name</span>
-            <span className="sui-result__value">
-              {result.name.raw}
-            </span>
+            <span className="sui-result__value">{result.name.raw}</span>
           </li>
         </ul>
       </div>
