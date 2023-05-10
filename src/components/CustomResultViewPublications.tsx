@@ -47,7 +47,7 @@ const CustomResultViewPublications = ({
 
           <li>
             <span className="sui-result__key">Author(s)</span>
-            <div className="sui-result__value">
+            <span className="sui-result__value">
               {result.author?.raw.map((author: Author) => (
                 <a
                   key={author.id}
@@ -58,7 +58,7 @@ const CustomResultViewPublications = ({
                   {author.name}
                 </a>
               ))}
-            </div>
+            </span>
           </li>
 
           <li>
@@ -78,7 +78,7 @@ const CustomResultViewPublications = ({
               {''}
             </span>
 
-            <div className="sui-result__value">
+            <span className="sui-result__value">
               {result.orgunit?.raw.map((org: OrgUnit) => (
                 <a
                   key={org.id}
@@ -113,7 +113,7 @@ const CustomResultViewPublications = ({
                   {journal.title ? journal.title : journal}
                 </a>
               ))}
-            </div>
+            </span>
           </li>
         </ul>
       </div>
