@@ -36,15 +36,19 @@ const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
         <ul className="sui-result__details">
           <li>
             <span className="sui-result__key">Lattes</span>
-            <div className="sui-result__value">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={`http://lattes.cnpq.br/${result.lattesId.raw}`}
-              >
-                http://lattes.cnpq.br/{result.lattesId.raw}
-              </a>
-            </div>
+            <span className="sui-result__value">
+              {result.lattesId ? (
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={`http://lattes.cnpq.br/${result.lattesId.raw}`}
+                >
+                  http://lattes.cnpq.br/{result.lattesId.raw}
+                </a>
+              ) : (
+                ''
+              )}
+            </span>
           </li>
 
           <li>
@@ -54,21 +58,27 @@ const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
 
           <li>
             <span className="sui-result__key">Orcid</span>
-            <div className="sui-result__value">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={`https://orcid.org/${result.orcid?.raw}`}
-              >
-                https://orcid.org/{result.orcid?.raw}
-              </a>
-            </div>
+            <span className="sui-result__value">
+              {result.orcid ? (
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={`https://orcid.org/${result.orcid?.raw}`}
+                >
+                  https://orcid.org/{result.orcid?.raw}
+                </a>
+              ) : (
+                ''
+              )}
+            </span>
           </li>
 
           <li>
             <span className="sui-result__key">Research Area</span>
             <span className="sui-result__value">
-              {result.researchArea?.raw}
+              {result.researchArea?.raw.map((area: string) => (
+                <span key={area}>{area}</span>
+              ))}
             </span>
           </li>
         </ul>

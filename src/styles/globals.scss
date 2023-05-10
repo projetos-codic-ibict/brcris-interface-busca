@@ -155,10 +155,6 @@ a {
   padding-left: 0;
 }
 
-.sui-result__value {
-  word-break: break-all;
-}
-
 .sui-result__value a {
   margin-right: 0.5rem;
 }
@@ -347,6 +343,10 @@ li .sui-result__key:after {
 }
 
 @media (max-width: 760px) {
+  .sui-result__value {
+    word-break: break-all;
+  }
+
   .navbar-logo img {
     max-width: 25vw;
   }
