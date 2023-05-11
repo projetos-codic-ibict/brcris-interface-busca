@@ -8,6 +8,8 @@ import AllIndexVisNetwork from '../components/AllIndexVisNetwork'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
+import ContactForm from '../components/ContactForm'
+
 type Props = {
   // Add custom props here
 }
@@ -170,8 +172,15 @@ export default function App() {
               </div>
             </div>
           </div>
+
+          <div className="row justify-content-center">
+            <div className="col-md-6">
+              <ContactForm />
+            </div>
+          </div>
         </div>
       </div>
+
       <footer>
         <div className="container-fluid page px-5 mb-5">
           <div className="partners">
