@@ -13,7 +13,7 @@ function ContactForm() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
-  /* const [submitted, setSubmitted] = useState(false) */
+  const [submitted, setSubmitted] = useState(false)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = (event: any) => {
@@ -24,7 +24,24 @@ function ContactForm() {
       email,
       message,
     }
-    console.log('Enviando contato', data, event)
+
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      console.log('Response', res)
+      if (res.status === 200) {
+        setSubmitted(true)
+        setName('')
+        setEmail('')
+        /* setBody('') */
+        console.log('Succeeded!', submitted)
+      }
+    })
   }
 
   return (
