@@ -27,6 +27,7 @@ import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetServerSideProps } from 'next'
+import Footer from '../components/Footer'
 type Props = {
   // Add custom props here
 }
@@ -386,6 +387,7 @@ export default function App() {
           </WithSearch>
         </SearchProvider>
       </div>
+      <Footer />
     </div>
   )
 }

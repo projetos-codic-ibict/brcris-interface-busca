@@ -28,6 +28,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
+import Footer from '../components/Footer'
 type Props = {
   // Add custom props here
 }
@@ -203,7 +204,9 @@ export default function App() {
                             )}
                           </div>
                         }
-                        bodyContent={<Results resultView={CustomResultViewInstitutions} />}
+                        bodyContent={
+                          <Results resultView={CustomResultViewInstitutions} />
+                        }
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}
@@ -226,6 +229,7 @@ export default function App() {
           </WithSearch>
         </SearchProvider>
       </div>
+      <Footer />
     </div>
   )
 }

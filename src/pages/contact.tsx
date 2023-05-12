@@ -2,6 +2,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
 import Navbar from '../components/Navbar'
 import ContactForm from '../components/ContactForm'
+import Footer from '../components/Footer'
 
 type Props = {
   // Add custom props here
@@ -29,6 +30,7 @@ export default function About() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

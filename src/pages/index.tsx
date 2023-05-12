@@ -8,6 +8,7 @@ import AllIndexVisNetwork from '../components/AllIndexVisNetwork'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
+import Footer from '../components/Footer'
 
 type Props = {
   // Add custom props here
@@ -62,119 +63,119 @@ export default function App() {
   const [searchPage, setSearchPage] = useState('publications')
 
   return (
-    <div className={styles.home}>
-      <Navbar />
-      <div className={styles.textWhite}>
-        <div className="container page">
-          <div className="row">
-            <div className="col-md-6">
-              <AllIndexVisNetwork />
-            </div>
+    <>
+      <div className={styles.home}>
+        <Navbar />
+        <div className={styles.textWhite}>
+          <div className="container page">
+            <div className="row">
+              <div className="col-md-6">
+                <AllIndexVisNetwork />
+              </div>
 
-            <div className="col-md-6">
-              <div className="card search-card">
-                <div className="card-body">
-                  <ul className="nav nav-tabs" role="tablist">
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link active"
-                        data-bs-toggle="tab"
-                        data-bs-target="#tabForm"
-                        type="button"
-                        role="tab"
-                        aria-controls="form"
-                        aria-selected="true"
-                        onClick={() => setSearchPage('publications')}
+              <div className="col-md-6">
+                <div className="card search-card">
+                  <div className="card-body">
+                    <ul className="nav nav-tabs" role="tablist">
+                      <li className="nav-item" role="presentation">
+                        <button
+                          className="nav-link active"
+                          data-bs-toggle="tab"
+                          data-bs-target="#tabForm"
+                          type="button"
+                          role="tab"
+                          aria-controls="form"
+                          aria-selected="true"
+                          onClick={() => setSearchPage('publications')}
+                        >
+                          {t('Publications')}
+                        </button>
+                      </li>
+                      <li className="nav-item" role="presentation">
+                        <button
+                          className="nav-link"
+                          data-bs-toggle="tab"
+                          data-bs-target="#tabForm"
+                          type="button"
+                          role="tab"
+                          aria-controls="form"
+                          aria-selected="false"
+                          onClick={() => setSearchPage('person')}
+                        >
+                          {t('Person')}
+                        </button>
+                      </li>
+                      <li className="nav-item" role="presentation">
+                        <button
+                          className="nav-link"
+                          data-bs-toggle="tab"
+                          data-bs-target="#tabForm"
+                          type="button"
+                          role="tab"
+                          aria-controls="form"
+                          aria-selected="false"
+                          onClick={() => setSearchPage('journals')}
+                        >
+                          {t('Journals')}
+                        </button>
+                      </li>
+                      <li className="nav-item" role="presentation">
+                        <button
+                          className="nav-link"
+                          data-bs-toggle="tab"
+                          data-bs-target="#tabForm"
+                          type="button"
+                          role="tab"
+                          aria-controls="form"
+                          aria-selected="false"
+                          onClick={() => setSearchPage('institutions')}
+                        >
+                          {t('Institutions')}
+                        </button>
+                      </li>
+                    </ul>
+                    <div className="tab-content" id="tabContent">
+                      <div
+                        className="tab-pane fade active show"
+                        id="tabForm"
+                        role="tabpanel"
+                        aria-labelledby="form-tab"
                       >
-                        {t('Publications')}
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        data-bs-toggle="tab"
-                        data-bs-target="#tabForm"
-                        type="button"
-                        role="tab"
-                        aria-controls="form"
-                        aria-selected="false"
-                        onClick={() => setSearchPage('person')}
-                      >
-                        {t('Person')}
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        data-bs-toggle="tab"
-                        data-bs-target="#tabForm"
-                        type="button"
-                        role="tab"
-                        aria-controls="form"
-                        aria-selected="false"
-                        onClick={() => setSearchPage('journals')}
-                      >
-                        {t('Journals')}
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        data-bs-toggle="tab"
-                        data-bs-target="#tabForm"
-                        type="button"
-                        role="tab"
-                        aria-controls="form"
-                        aria-selected="false"
-                        onClick={() => setSearchPage('institutions')}
-                      >
-                        {t('Institutions')}
-                      </button>
-                    </li>
-                  </ul>
-                  <div className="tab-content" id="tabContent">
-                    <div
-                      className="tab-pane fade active show"
-                      id="tabForm"
-                      role="tabpanel"
-                      aria-labelledby="form-tab"
-                    >
-                      <form
-                        className="row g-3 mb-3"
-                        action={`/${router.locale}/${searchPage}`}
-                      >
-                        <div className="col">
-                          <input
-                            className="form-control seacrh-box"
-                            name="q"
-                            type="text"
-                            value={term}
-                            onChange={(e) => setTerm(e.target.value)}
-                            placeholder={`${t('Search')}...`}
-                          />
-                        </div>
-                        <div className="col-auto">
-                          <button
-                            className="btn btn-light search-btn"
-                            // disabled={!term || term.length < 3}
-                          >
-                            {t('Search')}
-                          </button>
-                        </div>
-                      </form>
+                        <form
+                          className="row g-3 mb-3"
+                          action={`/${router.locale}/${searchPage}`}
+                        >
+                          <div className="col">
+                            <input
+                              className="form-control seacrh-box"
+                              name="q"
+                              type="text"
+                              value={term}
+                              onChange={(e) => setTerm(e.target.value)}
+                              placeholder={`${t('Search')}...`}
+                            />
+                          </div>
+                          <div className="col-auto">
+                            <button
+                              className="btn btn-light search-btn"
+                              // disabled={!term || term.length < 3}
+                            >
+                              {t('Search')}
+                            </button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-md-12 mt-5">
-                <p>{t('BrCrisText')}</p>
+                <div className="col-md-12 mt-5">
+                  <p>{t('BrCrisText')}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <footer>
         <div className="container-fluid page px-5 mb-5">
           <div className="partners">
             {partners.map((partner, index) => (
@@ -188,8 +189,8 @@ export default function App() {
             ))}
           </div>
         </div>
-        <p className="text-white text-center">by IBICT</p>
-      </footer>
-    </div>
+      </div>
+      <Footer />
+    </>
   )
 }

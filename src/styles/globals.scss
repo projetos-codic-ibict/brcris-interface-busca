@@ -342,6 +342,31 @@ li .sui-result__key:after {
   justify-content: space-between;
 }
 
+footer {
+  background-color: #fff;
+}
+
+.social-media-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  background-color: var(--dark-color);
+  height: 48px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-adress {
+  font-size: 0.75rem;
+  text-align: center;
+}
+
 @media (max-width: 760px) {
   .sui-result__value {
     word-break: break-all;
