@@ -1,3 +1,4 @@
+import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css' // Import bootstrap CSS
 /* import { useRouter } from 'next/router' */
 import { useTranslation } from 'next-i18next'
@@ -23,7 +24,7 @@ function ContactForm() {
       email,
       message,
     }
-    console.log('Enviando contato', data)
+    console.log('Enviando contato', data, event)
   }
 
   return (
@@ -33,7 +34,11 @@ function ContactForm() {
           <h5 className="text-center">{t('ContactUs')}</h5>
         </div>
 
-        <form action="">
+        <form
+          onSubmit={(event) => {
+            handleSubmit(event)
+          }}
+        >
           <div className="col-sm-12">
             <input
               className="form-control seacrh-box"
@@ -59,9 +64,9 @@ function ContactForm() {
           </div>
 
           <div className="col-sm-12">
-            <input
+            <textarea
               className="form-control seacrh-box"
-              type="text"
+              rows={6}
               placeholder={`${t('Message')}`}
               required
               onChange={(event) => {
@@ -71,13 +76,7 @@ function ContactForm() {
           </div>
 
           <div className="submit-btn col-sm-12 mt-2 d-flex justify-content-end">
-            <button
-              className="btn btn-light"
-              type="submit"
-              onChange={(event) => {
-                handleSubmit(event)
-              }}
-            >
+            <button className="btn btn-light" type="submit">
               {t('Submit')}
             </button>
           </div>

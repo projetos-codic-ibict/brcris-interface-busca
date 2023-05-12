@@ -3,6 +3,8 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
 import Navbar from '../components/Navbar'
+import ContactForm from '../components/ContactForm'
+
 type Props = {
   // Add custom props here
 }
@@ -14,11 +16,30 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 })
 
 export default function About() {
-  const { t } = useTranslation('navbar')
+  const { t } = useTranslation('contactForm')
   return (
     <>
       <Navbar />
-      <h1>{t('Contact')}</h1>
+
+      <div className="page-search">
+        <div className="App">
+          <div className="container page">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="page-title">
+                  <h2>{t('Contact')}</h2>
+                </div>
+              </div>
+            </div>
+
+            <div className="row justify-content-center m-5">
+              <div className="col-md-8">
+                <ContactForm />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
