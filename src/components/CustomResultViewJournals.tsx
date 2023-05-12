@@ -3,7 +3,7 @@ import { ResultViewProps } from '@elastic/react-search-ui-views'
 
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
-const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
+const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => (
   <li className="sui-result">
     <div>
       <div className="sui-result__header">
@@ -18,28 +18,22 @@ const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
           </a>
         </h6>
       </div>
-      
+
       <div className="sui-result__body">
         <ul className="sui-result__details">
           <li>
             <span className="sui-result__key">id</span>
-            <span className="sui-result__value">
-              {result.id.raw}
-            </span>
+            <span className="sui-result__value">{result.id.raw}</span>
           </li>
 
           <li>
             <span className="sui-result__key">issn</span>
-            <span className="sui-result__value">
-              {result.issn.raw}
-            </span>
+            <span className="sui-result__value">{result.issn.raw}</span>
           </li>
 
           <li>
             <span className="sui-result__key">title</span>
-            <span className="sui-result__value">
-              {result.title.raw}
-            </span>
+            <span className="sui-result__value">{result.title.raw}</span>
           </li>
         </ul>
       </div>
@@ -47,4 +41,4 @@ const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
   </li>
 )
 
-export default CustomResultViewPerson
+export default CustomResultViewPeople

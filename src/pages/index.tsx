@@ -97,9 +97,9 @@ export default function App() {
                           role="tab"
                           aria-controls="form"
                           aria-selected="false"
-                          onClick={() => setSearchPage('person')}
+                          onClick={() => setSearchPage('people')}
                         >
-                          {t('Person')}
+                          {t('People')}
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">

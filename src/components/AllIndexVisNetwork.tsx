@@ -26,7 +26,7 @@ const nodes: Node[] = [
   },
   {
     id: 2,
-    label: 'Person',
+    label: 'People',
     title: '10.00 ',
     level: 2,
     shape: 'circle',
@@ -56,7 +56,7 @@ const nodes: Node[] = [
   },
 ]
 
-const keysLanguage = ['Publications', 'Person', 'Institutions', 'Journals']
+const keysLanguage = ['Publications', 'People', 'Institutions', 'Journals']
 
 const edges = [
   { from: 1, to: 2, id: 1 },
@@ -112,7 +112,7 @@ function VisGraph() {
 
   const pages = [
     '/publications',
-    '/person',
+    '/people',
     '/institutions',
     '/journals',
     '/#',

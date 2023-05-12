@@ -16,7 +16,7 @@ import { ResultViewProps } from '@elastic/react-search-ui-views'
 // }
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
-const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
+const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => (
   <li className="sui-result">
     <div>
       <div className="sui-result__header">
@@ -87,4 +87,4 @@ const CustomResultViewPerson = ({ result, onClickLink }: ResultViewProps) => (
   </li>
 )
 
-export default CustomResultViewPerson
+export default CustomResultViewPeople

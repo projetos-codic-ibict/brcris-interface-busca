@@ -183,7 +183,12 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
               )
             ),
             JSON.stringify(
-              getKeywordQuery(keywordQueryBase, filters, searchTerm, indicatorsState.config)
+              getKeywordQuery(
+                keywordQueryBase,
+                filters,
+                searchTerm,
+                indicatorsState.config
+              )
             ),
           ],
           indicatorsState.config.searchQuery.index
@@ -207,7 +212,9 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
       ? nationalityIndicators.map((d) => ({ value: d.key, count: d.doc_count }))
       : []
 
-  const researchAreaIndicators: IndicatorType[] = indicators ? indicators[0] : []
+  const researchAreaIndicators: IndicatorType[] = indicators
+    ? indicators[0]
+    : []
 
   // const nationalityLabels =
   //   nationalityIndicators != null ? nationalityIndicators.map((d) => d.key) : []
@@ -296,7 +303,7 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
         /> */}
       </div>
 
-      <div className="chart">  
+      <div className="chart">
         <CSVLink
           className="icon-download d-block"
           title="Export to csv"
@@ -317,7 +324,7 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
             datasets: [
               {
                 data: keywordValues,
-                label: '# Person',
+                label: '# People',
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
@@ -344,9 +351,11 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
   )
 }
 // @ts-ignore
-export default withSearch(({ filters, searchTerm, isLoading, indicatorsState }) => ({
-  filters,
-  searchTerm,
-  isLoading,
-  indicatorsState,
-}))(Indicators)
+export default withSearch(
+  ({ filters, searchTerm, isLoading, indicatorsState }) => ({
+    filters,
+    searchTerm,
+    isLoading,
+    indicatorsState,
+  })
+)(Indicators)

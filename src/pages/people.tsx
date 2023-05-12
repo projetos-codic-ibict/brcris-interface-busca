@@ -18,9 +18,9 @@ import {
 import { SearchDriverOptions } from '@elastic/search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
-import IndicatorsPerson from '../components/IndicatorsPerson'
+import IndicatorsPeople from '../components/IndicatorsPeople'
 import ClearFilters from '../components/ClearFilters'
-import CustomResultViewPerson from '../components/CustomResultViewPerson'
+import CustomResultViewPeople from '../components/CustomResultViewPeople'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import OperatorSelect from '../components/OperatorSelect'
 import { useTranslation } from 'next-i18next'
@@ -159,7 +159,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>{t('Person')}</h2>
+                            <h2>{t('People')}</h2>
                           </div>
                         </div>
 
@@ -259,7 +259,7 @@ export default function App() {
                           </div>
                         }
                         bodyContent={
-                          <Results resultView={CustomResultViewPerson} />
+                          <Results resultView={CustomResultViewPeople} />
                         }
                         bodyHeader={
                           <React.Fragment>
@@ -275,7 +275,7 @@ export default function App() {
                         </div>
                         {/** 
                         // @ts-ignore */}
-                        <IndicatorsPerson indicatorsState={indicatorsState} />
+                        <IndicatorsPeople indicatorsState={indicatorsState} />
                       </div>
                     </div>
                   </ErrorBoundary>
