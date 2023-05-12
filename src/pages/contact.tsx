@@ -16,7 +16,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 })
 
 export default function About() {
-  const { t } = useTranslation('contactForm')
+  const { t } = useTranslation('contact')
   return (
     <>
       <Navbar />

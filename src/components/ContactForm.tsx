@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 function ContactForm() {
   /* const router = useRouter() */
-  const { t } = useTranslation('contactForm')
+  const { t } = useTranslation('contact')
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
