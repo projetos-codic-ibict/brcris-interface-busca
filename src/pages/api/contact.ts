@@ -5,9 +5,6 @@ export default async function transporter(req: any, res: any) {
   const EMAIL = process.env.EMAIL
   const PASSWORD = process.env.PASSWORD
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  /* const nodemailer = require('nodemailer') */
-
   const transporter = nodemailer.createTransport({
     port: 465,
     host: 'smtp.gmail.com',
