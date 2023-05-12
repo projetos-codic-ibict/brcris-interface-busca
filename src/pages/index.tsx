@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Navbar from '../components/Navbar'
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useRouter } from 'next/router'
@@ -8,7 +7,6 @@ import AllIndexVisNetwork from '../components/AllIndexVisNetwork'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
-import Footer from '../components/Footer'
 
 type Props = {
   // Add custom props here
@@ -65,7 +63,6 @@ export default function App() {
   return (
     <>
       <div className={styles.home}>
-        <Navbar />
         <div className={styles.textWhite}>
           <div className="container page">
             <div className="row">
@@ -190,7 +187,6 @@ export default function App() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

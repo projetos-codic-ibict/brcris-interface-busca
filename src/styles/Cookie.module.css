@@ -1,0 +1,31 @@
+.cookieMessage {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  bottom: 1rem;
+  border-radius: 4px;
+}
+
+.cookieItems {
+  display: flex;
+  align-items: stretch;
+  background-color: #e5e6eb;
+  padding: 16px;
+}
+
+.cookieItems p {
+  padding: 8px;
+}
+
+.cookieItems button {
+  background-color: #383e52;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 8px;
+  white-space: nowrap;
+  border: none;
+  border-radius: 4px;
+}
