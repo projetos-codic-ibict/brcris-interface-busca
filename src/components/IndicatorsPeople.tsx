@@ -352,6 +352,7 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
 }
 // @ts-ignore
 export default withSearch(
+   // @ts-ignore
   ({ filters, searchTerm, isLoading, indicatorsState }) => ({
     filters,
     searchTerm,
