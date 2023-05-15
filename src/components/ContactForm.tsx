@@ -44,7 +44,7 @@ function ContactForm() {
       setMessage('')
       alertService.success(t('Mail sent success'), options)
     } else {
-      alertService.success(t('Mail sent error'), options)
+      alertService.error(t('Mail sent error'), options)
     }
   }
 
