@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import nodemailer from 'nodemailer'
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const proxy = async (req: any, res: any) => {
   const PORTMAIL = process.env.PORTMAIL
   const HOSTMAIL = process.env.HOSTMAIL
