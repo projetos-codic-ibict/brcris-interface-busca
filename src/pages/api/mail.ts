@@ -2,22 +2,32 @@
 import nodemailer from 'nodemailer'
 
 const proxy = async (req: any, res: any) => {
-  const EMAIL = process.env.EMAIL
-  const PASSWORD = process.env.PASSWORD
+  const PORTMAIL = process.env.PORTMAIL
+  const HOSTMAIL = process.env.HOSTMAIL
+  const EMAILFROM = process.env.EMAILFROM
+  const PASSWORD2FA = process.env.PASSWORD2FA
+  const EMAILTO = process.env.EMAILTO
+
+  if (!HOSTMAIL || !EMAILFROM || !PASSWORD2FA || !EMAILTO) {
+    // Trate o caso em que as variáveis de ambiente estão faltando ou são undefined
+    console.error('Variáveis de ambiente faltando ou indefinidas')
+    res.send('error')
+    return
+  }
 
   const transporter = nodemailer.createTransport({
-    port: 465,
-    host: 'smtp.gmail.com',
+    port: Number(PORTMAIL),
+    host: HOSTMAIL,
     auth: {
-      user: EMAIL,
-      pass: PASSWORD,
+      user: EMAILFROM,
+      pass: PASSWORD2FA,
     },
     secure: true,
   })
 
   const mailData = {
-    from: EMAIL,
-    to: 'jesielsilva@ibict.br',
+    from: EMAILFROM,
+    to: EMAILTO,
     subject: `Message from ${req.body.name}`,
     text: req.body.message + ' | Sent from: ' + req.body.email,
     html: `<div>${req.body.message}</div> <p>Sent from: ${req.body.email}</p>`,
