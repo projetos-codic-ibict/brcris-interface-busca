@@ -66,6 +66,7 @@ function ContactForm() {
               type="text"
               placeholder={`${t('Name')}`}
               required
+              value={name}
               onChange={(event) => {
                 setName(event.target.value)
               }}
@@ -78,6 +79,7 @@ function ContactForm() {
               type="email"
               placeholder={`${t('Email')}`}
               required
+              value={email}
               onChange={(event) => {
                 setEmail(event.target.value)
               }}
@@ -90,6 +92,7 @@ function ContactForm() {
               rows={6}
               placeholder={`${t('Message')}`}
               required
+              value={message}
               onChange={(event) => {
                 setMessage(event.target.value)
               }}
