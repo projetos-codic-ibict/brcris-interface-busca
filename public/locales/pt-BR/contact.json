@@ -4,5 +4,7 @@
   "Email": "Email",
   "Message": "Menssagem",
   "Submit": "Enviar",
-  "ContactUs": "Fale conosco"
+  "ContactUs": "Fale conosco",
+  "Mail sent success": "Sua mensagem foi enviada!",
+  "Mail sent error": "Erro ao enviar a mensagem. Tente novamente mais tarde."
 }

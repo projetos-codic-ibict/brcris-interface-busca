@@ -5,18 +5,27 @@ import { useTranslation } from 'next-i18next'
 import contactForm from '../styles/ContactForm.module.css'
 /* import Link from 'next/link' */
 import { useState } from 'react'
+import MailService from '../services/MailService'
+import { alertService } from '../services/AlertService'
+import LoadingScreen from './LoadingScreen'
 
 function ContactForm() {
   /* const router = useRouter() */
   const { t } = useTranslation('contact')
 
+  const options = {
+    autoClose: true,
+    keepAfterRouteChange: false,
+  }
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  // const [submitted, setSubmitted] = useState(false)
+  const [isLoading, setLoading] = useState(false)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
 
     const data = {
@@ -25,32 +34,27 @@ function ContactForm() {
       message,
     }
 
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }).then((res) => {
-      console.log('Response', res)
-      if (res.status === 200) {
-        setSubmitted(true)
-        setName('')
-        setEmail('')
-        /* setBody('') */
-        console.log('Succeeded!', submitted)
-      }
-    })
+    setLoading(true)
+    const response = await MailService(JSON.stringify(data))
+    setLoading(false)
+
+    if (response.status === 200) {
+      setName('')
+      setEmail('')
+      setMessage('')
+      alertService.success(t('Mail sent success'), options)
+    } else {
+      alertService.success(t('Mail sent error'), options)
+    }
   }
 
   return (
     <div className="card">
+      {isLoading ? <LoadingScreen /> : ''}
       <div className="card-body search-card">
         <div className={`${contactForm.contactUs} mb-3 mx-auto`}>
           <h5 className="text-center">{t('ContactUs')}</h5>
         </div>
-
         <form
           onSubmit={(event) => {
             handleSubmit(event)
@@ -98,6 +102,7 @@ function ContactForm() {
             </button>
           </div>
         </form>
+        A
       </div>
     </div>
   )
