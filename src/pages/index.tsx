@@ -7,6 +7,7 @@ import AllIndexVisNetwork from '../components/AllIndexVisNetwork'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
+import Head from 'next/head'
 
 type Props = {
   // Add custom props here
@@ -62,6 +63,9 @@ export default function App() {
 
   return (
     <>
+      <Head>
+        <title>BrCris - {t('Home')}</title>
+      </Head>
       <div className={styles.home}>
         <div className={styles.textWhite}>
           <div className="container page">

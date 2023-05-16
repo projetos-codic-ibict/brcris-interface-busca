@@ -27,6 +27,7 @@ import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
+import Head from 'next/head'
 type Props = {
   // Add custom props here
 }
@@ -102,6 +103,9 @@ export default function App() {
 
   return (
     <div>
+      <Head>
+        <title>BrCris - {t('Journals')}</title>
+      </Head>
       <div className="page-search">
         <SearchProvider config={config}>
           <WithSearch

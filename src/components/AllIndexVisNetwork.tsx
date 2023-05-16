@@ -10,6 +10,7 @@ import 'vis-network/styles/vis-network.css'
 // import { Edge, Node, Options } from 'vis-network'
 import { useTranslation } from 'next-i18next'
 import { Node } from 'vis'
+import { useRouter } from 'next/router'
 
 // Exemplo https://codesandbox.io/s/vis-test-fhir-test-2-forked-0m1l1x?file=/src/index.js:1774-1820
 const nodes: Node[] = [
@@ -105,18 +106,17 @@ const options = {
 }
 
 function VisGraph() {
+  const router = useRouter()
   const [graph, setGraph] = useState({ nodes, edges })
   const { t } = useTranslation('common')
 
   //nodes.forEach((node) => (node.title = node.title.concat(node.label)))
 
   const pages = [
-    '/publications',
-    '/people',
-    '/institutions',
-    '/journals',
-    '/#',
-    '/#',
+    `/${router.locale}/publications`,
+    `/${router.locale}/people`,
+    `/${router.locale}/institutions`,
+    `/${router.locale}/journals`,
   ]
 
   const events = {
