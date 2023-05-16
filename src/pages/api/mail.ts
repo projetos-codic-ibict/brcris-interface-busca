@@ -2,13 +2,13 @@ import nodemailer from 'nodemailer'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proxy = async (req: any, res: any) => {
-  const PORTMAIL = process.env.PORTMAIL
-  const HOSTMAIL = process.env.HOSTMAIL
-  const EMAILFROM = process.env.EMAILFROM
-  const PASSWORD2FA = process.env.PASSWORD2FA
-  const EMAILTO = process.env.EMAILTO
+  const MAILPORT = process.env.MAIL_PORT
+  const MAILHOST = process.env.MAIL_HOST
+  const MAILFROM = process.env.MAIL_FROM
+  const PASSWORD = process.env.MAIL_PASSWORD
+  const MAILTO = process.env.MAIL_TO
 
-  if (!HOSTMAIL || !EMAILFROM || !PASSWORD2FA || !EMAILTO) {
+  if (!MAILHOST || !MAILFROM || !PASSWORD || !MAILTO) {
     // Trate o caso em que as variáveis de ambiente estão faltando ou são undefined
     console.error('Variáveis de ambiente faltando ou indefinidas')
     res.send('error')
@@ -16,18 +16,18 @@ const proxy = async (req: any, res: any) => {
   }
 
   const transporter = nodemailer.createTransport({
-    port: Number(PORTMAIL),
-    host: HOSTMAIL,
+    port: Number(MAILPORT),
+    host: MAILHOST,
     auth: {
-      user: EMAILFROM,
-      pass: PASSWORD2FA,
+      user: MAILFROM,
+      pass: PASSWORD,
     },
     secure: true,
   })
 
   const mailData = {
-    from: EMAILFROM,
-    to: EMAILTO,
+    from: MAILFROM,
+    to: MAILTO,
     subject: `Message from ${req.body.name}`,
     text: req.body.message + ' | Sent from: ' + req.body.email,
     html: `<div>${req.body.message}</div> <p>Sent from: ${req.body.email}</p>`,

@@ -2,12 +2,12 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css' // Import bootstrap CSS
 /* import { useRouter } from 'next/router' */
 import { useTranslation } from 'next-i18next'
-import contactForm from '../styles/ContactForm.module.css'
+import style from '../styles/ContactForm.module.css'
 /* import Link from 'next/link' */
 import { useState } from 'react'
 import MailService from '../services/MailService'
 import { alertService } from '../services/AlertService'
-import LoadingScreen from './LoadingScreen'
+import Loader from './Loader'
 
 function ContactForm() {
   /* const router = useRouter() */
@@ -49,10 +49,10 @@ function ContactForm() {
   }
 
   return (
-    <div className="card">
-      {isLoading ? <LoadingScreen /> : ''}
-      <div className="card-body search-card">
-        <div className={`${contactForm.contactUs} mb-3 mx-auto`}>
+    <div>
+      {isLoading ? <Loader /> : ''}
+      <div className={style.contact}>
+        <div className={`${style.contactUs} mb-3 mx-auto`}>
           <h5 className="text-center">{t('ContactUs')}</h5>
         </div>
         <form
@@ -100,12 +100,11 @@ function ContactForm() {
           </div>
 
           <div className="submit-btn col-sm-12 mt-2 d-flex justify-content-end">
-            <button className="btn btn-light" type="submit">
+            <button className="btn btn-primary" type="submit">
               {t('Submit')}
             </button>
           </div>
         </form>
-        A
       </div>
     </div>
   )
