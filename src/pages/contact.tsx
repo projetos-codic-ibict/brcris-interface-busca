@@ -1,8 +1,8 @@
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
 import ContactForm from '../components/ContactForm'
 import Head from 'next/head'
 import { useTranslation } from 'react-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 type Props = {
   // Add custom props here
@@ -19,7 +19,7 @@ export default function About() {
   return (
     <>
       <Head>
-        <title>BrCris - {t('Contact')}</title>
+        <title>{`BrCris - ${t('Contact')}`}</title>
       </Head>
       <div className="page-search">
         <div className="App">

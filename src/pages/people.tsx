@@ -148,7 +148,7 @@ export default function App() {
   return (
     <div>
       <Head>
-        <title>BrCris - {t('People')}</title>
+        <title>{`BrCris - ${t('People')}`}</title>
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>

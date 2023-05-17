@@ -201,7 +201,7 @@ export default function App() {
   return (
     <div>
       <Head>
-        <title>BrCris - {t('Publications')}</title>
+        <title>{`BrCris - ${t('Publications')}`}</title>
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>

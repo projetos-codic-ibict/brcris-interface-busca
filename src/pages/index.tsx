@@ -2,9 +2,8 @@ import { useState } from 'react'
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
 import AllIndexVisNetwork from '../components/AllIndexVisNetwork'
-
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
@@ -63,7 +62,7 @@ export default function App() {
   return (
     <>
       <Head>
-        <title>BrCris - {t('Home')}</title>
+        <title>{`BrCris - ${t('Home')}`}</title>
       </Head>
       <div className={styles.home}>
         <div className={styles.textWhite}>
