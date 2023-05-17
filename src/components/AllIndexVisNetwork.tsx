@@ -11,13 +11,24 @@ import 'vis-network/styles/vis-network.css'
 import { useTranslation } from 'next-i18next'
 import { Node } from 'vis'
 import { useRouter } from 'next/router'
+import ElasticSearchStatsService from '../services/ElasticSearchStatsService'
+
+type IndexStat = {
+  index: string
+  'docs.count': number
+}
+
+interface IndexNode extends Node {
+  index: string
+}
 
 // Exemplo https://codesandbox.io/s/vis-test-fhir-test-2-forked-0m1l1x?file=/src/index.js:1774-1820
-const nodes: Node[] = [
+const nodes: IndexNode[] = [
   {
     id: 1,
     label: 'Publications',
     title: '40.565 ',
+    index: 'ca-publication',
     level: 1,
     shape: 'circle',
     color: '#F7964D',
@@ -27,6 +38,7 @@ const nodes: Node[] = [
   },
   {
     id: 2,
+    index: 'ca-person',
     label: 'People',
     title: '10.00 ',
     level: 2,
@@ -38,6 +50,7 @@ const nodes: Node[] = [
   },
   {
     id: 3,
+    index: 'ca-orgunit',
     label: 'Institutions',
     title: '140 ',
     level: 3,
@@ -46,6 +59,7 @@ const nodes: Node[] = [
   },
   {
     id: 4,
+    index: 'ca-journal',
     label: 'Journals',
     title: '253 ',
     level: 4,
@@ -108,9 +122,9 @@ const options = {
 function VisGraph() {
   const router = useRouter()
   const [graph, setGraph] = useState({ nodes, edges })
+  const [indexesStats, setIndexesStats] = useState<IndexStat[]>([])
   const { t } = useTranslation('common')
-
-  //nodes.forEach((node) => (node.title = node.title.concat(node.label)))
+  const numberFormat = new Intl.NumberFormat('pt-BR')
 
   const pages = [
     `/${router.locale}/publications`,
@@ -128,8 +142,21 @@ function VisGraph() {
   }
 
   useEffect(() => {
-    const newNodes: Node[] = []
+    ElasticSearchStatsService().then((res) => {
+      console.log('res', res)
+      setIndexesStats(res)
+    })
+  }, [])
+
+  useEffect(() => {
+    const newNodes: IndexNode[] = []
     for (let i = 0; i < keysLanguage.length; i++) {
+      const indexStat = indexesStats.find(
+        (item) => item.index === nodes[i].index
+      )
+      indexStat
+        ? (nodes[i].title = `${numberFormat.format(indexStat['docs.count'])} `)
+        : ''
       // @ts-ignore
       nodes[i].label = t(keysLanguage[i])
       // @ts-ignore
@@ -141,14 +168,15 @@ function VisGraph() {
     }
 
     setGraph({ ...graph, nodes: newNodes })
-  }, [t])
+  }, [t, indexesStats])
 
   return (
     <div className="graph">
-      {/** 
-      // @ts-ignore */}
+      {/**
+             // @ts-ignore */}
       <Graph graph={graph} options={options} events={events} />
     </div>
   )
 }
+
 export default VisGraph

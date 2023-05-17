@@ -23,7 +23,6 @@ export default function App() {
   // const [config, setConfig] = useState(configDefault)
   const router = useRouter()
   const { t } = useTranslation('common')
-
   const partners = [
     {
       url: 'https://www.gov.br/ibict/pt-br',
