@@ -12,7 +12,7 @@ function Navbar() {
   const changeTo = router.locale === 'en' ? 'pt-BR' : 'en'
 
   return (
-    <nav className="navbar navbar-dark navbar-expand-lg bg-violet px-5 py-2">
+    <nav className="navbar navbar-dark navbar-expand-lg bg-violet px-5 py-3">
       <div className="container-fluid d-flex">
         <div className="flex-nowrap d-flex align-items-center flex-justify-content-between">
           <Link href="/">
