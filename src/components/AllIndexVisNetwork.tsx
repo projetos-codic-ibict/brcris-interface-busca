@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic'
 // @ts-ignore
 const Graph = dynamic(import('react-graph-vis'), { ssr: false })
 import 'vis-network/styles/vis-network.css'
-// import { Edge, Node, Options } from 'vis-network'
+// import { Edge, Node, Options } from 'vis-network'/
 import { useTranslation } from 'next-i18next'
 import { Node } from 'vis'
 import { useRouter } from 'next/router'
@@ -28,6 +28,7 @@ const nodes: IndexNode[] = [
     id: 1,
     label: 'Publications',
     title: '40.565 ',
+    widthConstraint: 100,
     index: 'ca-publication',
     level: 1,
     shape: 'circle',
@@ -40,6 +41,7 @@ const nodes: IndexNode[] = [
     id: 2,
     index: 'ca-person',
     label: 'People',
+    size: 200,
     title: '10.00 ',
     level: 2,
     shape: 'circle',
@@ -119,12 +121,24 @@ const options = {
   },
 }
 
+function getSizeOfNode(maxSize: number, sizeOfDocsOfNode: number) {
+  const originalSizeOfNode = (sizeOfDocsOfNode / maxSize) * 100
+  const minValue = 70
+  const maxValue = 100
+  const totalDifference = maxValue - minValue
+  const scaleFactor = originalSizeOfNode / maxValue
+  const adjustedValue = scaleFactor * totalDifference + minValue
+  console.log('adjustedValue', adjustedValue)
+  return adjustedValue
+}
+
 function VisGraph() {
   const router = useRouter()
   const [graph, setGraph] = useState({ nodes, edges })
   const [indexesStats, setIndexesStats] = useState<IndexStat[]>([])
   const { t } = useTranslation('common')
   const numberFormat = new Intl.NumberFormat('pt-BR')
+  const indexesNames = process.env.ELASTIC_INDEXES?.split(',')
 
   const pages = [
     `/${router.locale}/publications`,
@@ -143,20 +157,33 @@ function VisGraph() {
 
   useEffect(() => {
     ElasticSearchStatsService().then((res) => {
-      console.log('res', res)
-      setIndexesStats(res)
+      let indexesUsed = res
+      if (indexesNames) {
+        indexesUsed = res.filter((item: IndexStat) =>
+          indexesNames.includes(item.index)
+        )
+      }
+      console.log(indexesNames, indexesUsed)
+      setIndexesStats(indexesUsed)
     })
   }, [])
 
   useEffect(() => {
     const newNodes: IndexNode[] = []
+    const maxSizeOfNode = Math.max(
+      ...indexesStats.map((item) => item['docs.count'])
+    )
     for (let i = 0; i < keysLanguage.length; i++) {
       const indexStat = indexesStats.find(
         (item) => item.index === nodes[i].index
       )
-      indexStat
-        ? (nodes[i].title = `${numberFormat.format(indexStat['docs.count'])} `)
-        : ''
+      if (indexStat) {
+        nodes[i].title = `${numberFormat.format(indexStat['docs.count'])} `
+        nodes[i].widthConstraint = getSizeOfNode(
+          maxSizeOfNode,
+          indexStat['docs.count']
+        )
+      }
       // @ts-ignore
       nodes[i].label = t(keysLanguage[i])
       // @ts-ignore

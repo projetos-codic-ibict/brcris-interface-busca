@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { i18n } = require('./next-i18next.config.js')
 
 const nextConfig = {
@@ -7,6 +8,7 @@ const nextConfig = {
     VIVO_URL_BASE: process.env.VIVO_URL_BASE,
     LANGUAGES: process.env.LANGUAGES,
     VIVO_URL_HOME: process.env.VIVO_URL_HOME,
+    ELASTIC_INDEXES: process.env.ELASTIC_INDEXES,
   },
   i18n,
 }
