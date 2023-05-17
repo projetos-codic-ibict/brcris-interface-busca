@@ -9,12 +9,6 @@ const proxy = async (req: any, res: any) => {
   const PASSWORD = process.env.MAIL_PASSWORD
   const MAILRECIPIENT = process.env.MAIL_RECIPIENT
 
-  console.log('MAILPORT', MAILPORT)
-  console.log('MAILHOST', MAILHOST)
-  console.log('MAILSENDER', MAILSENDER)
-  console.log('PASSWORD', PASSWORD)
-  console.log('MAILRECIPIENT', MAILRECIPIENT)
-
   if (!MAILHOST || !MAILSENDER || !PASSWORD || !MAILRECIPIENT) {
     // Trate o caso em que as variáveis de ambiente estão faltando ou são undefined
     console.error('Variáveis de ambiente faltando ou indefinidas')
