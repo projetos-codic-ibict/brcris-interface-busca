@@ -5,6 +5,7 @@
   justify-content: center;
   bottom: 1rem;
   border-radius: 4px;
+  padding: 0 16px;
 }
 
 .cookieItems {
@@ -12,6 +13,8 @@
   align-items: stretch;
   background-color: #e5e6eb;
   padding: 16px;
+  max-width: 980px;
+  border-radius: 4px;
 }
 
 .cookieItems p {

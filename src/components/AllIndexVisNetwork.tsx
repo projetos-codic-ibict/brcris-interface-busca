@@ -141,8 +141,6 @@ function VisGraph() {
     }
 
     setGraph({ ...graph, nodes: newNodes })
-    console.log(graph)
-    // }
   }, [t])
 
   return (

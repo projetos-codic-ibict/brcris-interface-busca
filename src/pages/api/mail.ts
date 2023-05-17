@@ -34,7 +34,6 @@ const proxy = async (req: any, res: any) => {
   }
 
   const mailResponse = await transporter.sendMail(mailData)
-  console.log('Message sent: %s', mailResponse)
   res.json(mailResponse)
 }
 

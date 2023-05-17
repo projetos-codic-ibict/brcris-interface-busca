@@ -36,9 +36,10 @@ const CookieConsent = () => {
         <div className={style.cookieItems}>
           <div className="">
             <p className="">
-              This site uses services that uses cookies to deliver better
-              experience and analyze traffic. You can learn more about the
-              services we use at our{' '}
+              BrCris uses cookies to provide necessary website functionality,
+              improve your experience and analyze our traffic. By using our
+              website, you agree to our legal policies. You can learn more about
+              the services we use at our{' '}
               <Link href="/privacy-policy">
                 <a className="text-sm underline hover:text-lightAccent">
                   privacy policy
