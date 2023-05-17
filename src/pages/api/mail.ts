@@ -18,7 +18,7 @@ const proxy = async (req: any, res: any) => {
   if (!MAILHOST || !MAILSENDER || !PASSWORD || !MAILRECIPIENT) {
     // Trate o caso em que as variáveis de ambiente estão faltando ou são undefined
     console.error('Variáveis de ambiente faltando ou indefinidas')
-    res.send('error')
+    res.status(400).send('error')
     return
   }
 

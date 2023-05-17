@@ -8,7 +8,10 @@ on:
 env: 
   HOST_ELASTIC: ${{secrets.HOST_ELASTIC}}
   API_KEY: ${{secrets.API_KEY}}
+  MAIL_HOST:  ${{secrets.MAIL_HOST}}
+  MAIL_SENDER:  ${{secrets.MAIL_SENDER}}
   MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
+
 
 
 jobs:
