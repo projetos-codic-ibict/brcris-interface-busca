@@ -8,6 +8,7 @@ on:
 env: 
   HOST_ELASTIC: ${{secrets.HOST_ELASTIC}}
   API_KEY: ${{secrets.API_KEY}}
+  MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
 
 
 jobs:
