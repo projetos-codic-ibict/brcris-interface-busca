@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proxy = async (req: any, res: any) => {
+  console.log('enviando email', process.env.MAIL_PASSWORD)
   const MAILPORT = process.env.MAIL_PORT
   const MAILHOST = process.env.MAIL_HOST
   const MAILFROM = process.env.MAIL_FROM
