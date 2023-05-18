@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import type { NextPage } from 'next'
-import Layout from '../components/layouts/Layout'
 
 const PrivacyPolicy: NextPage = () => {
   return (
@@ -9,12 +8,11 @@ const PrivacyPolicy: NextPage = () => {
         <title>Our Privacy Policy</title>
         <meta name="description" content="Website privacy policy page" />
       </Head>
-
-      <Layout>
-        <h1 className="text-3xl font-bold font-open">
+      <div className="container">
+        <p className="text-3xl font-bold font-open py-4">
           Website privacy policy page content
-        </h1>
-      </Layout>
+        </p>
+      </div>
     </>
   )
 }
