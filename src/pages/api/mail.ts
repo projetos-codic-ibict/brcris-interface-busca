@@ -23,6 +23,8 @@ const proxy = async (req: any, res: any) => {
       user: MAILSENDER,
       pass: PASSWORD,
     },
+    logger: true,
+    debug: true,
     // secure: true,
   })
 
