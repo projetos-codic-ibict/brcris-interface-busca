@@ -5,18 +5,18 @@ on:
     branches:
       - main
 
-env: 
+env:
   HOST_ELASTIC: ${{secrets.HOST_ELASTIC}}
   API_KEY: ${{secrets.API_KEY}}
-  MAIL_HOST:  ${{secrets.MAIL_HOST}}
-  MAIL_SENDER:  ${{secrets.MAIL_SENDER}}
+  MAIL_HOST: ${{secrets.MAIL_HOST}}
+  MAIL_SENDER: ${{secrets.MAIL_SENDER}}
   MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
-
-
+  MAIL_PORT: ${{secrets.MAIL_PORT}}
+  MAIL_RECIPIENT: ${{secrets.MAIL_RECIPIENT}}
 
 jobs:
   test:
-    runs-on:  [self-hosted, Linux, x64, runner-iroxa ]
+    runs-on: [self-hosted, Linux, x64, runner-iroxa]
     environment:
       name: test
       url: 'http://172.16.16.79:3000'
@@ -26,14 +26,13 @@ jobs:
       - run: |
           sh scripts/deploy.sh
 
-          
   # prod:
   #   runs-on: [self-hosted, Linux, x64, runner-peroba]
   #   environment:
   #     name: prod
   #     url: 'https://api-oasisbr.ibict.br/api/v1/'
 
-    # steps:
-    #   - uses: actions/checkout@v3
-    #   - run: |
-    #       sh scripts/deploy.sh
+  # steps:
+  #   - uses: actions/checkout@v3
+  #   - run: |
+  #       sh scripts/deploy.sh
