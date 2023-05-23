@@ -2,7 +2,7 @@ import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connecto
 
 const connector = new ElasticsearchAPIConnector({
   host: process.env.HOST_ELASTIC,
-  index: 'pqseniors-pubs',
+  index: 'ca-publication',
   apiKey: process.env.API_KEY,
 })
 

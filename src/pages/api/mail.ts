@@ -23,7 +23,7 @@ const proxy = async (req: any, res: any) => {
       user: MAILSENDER,
       pass: PASSWORD,
     },
-    secure: true,
+    // secure: true,
   })
 
   const mailData = {
