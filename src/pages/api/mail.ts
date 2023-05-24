@@ -8,7 +8,6 @@ const proxy = async (req: any, res: any) => {
   const MAILSENDER = process.env.MAIL_SENDER
   const PASSWORD = process.env.MAIL_PASSWORD
   const MAILRECIPIENT = process.env.MAIL_RECIPIENT
-  const MAILHOSTIP = process.env.MAIL_HOST_IP
 
   if (!MAILPORT || !MAILHOST || !MAILSENDER || !PASSWORD || !MAILRECIPIENT) {
     // Trate o caso em que as variáveis de ambiente estão faltando ou são undefined
@@ -25,8 +24,7 @@ const proxy = async (req: any, res: any) => {
       pass: PASSWORD,
     },
     tls: {
-      rejectUnauthorized: false,
-      servername: MAILHOSTIP,
+      rejectUnauthorized: false, // quando resolver o problema de DNS remover esta configuração
     },
     logger: true,
     debug: true,
