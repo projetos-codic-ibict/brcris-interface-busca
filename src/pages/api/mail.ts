@@ -8,6 +8,7 @@ const proxy = async (req: any, res: any) => {
   const MAILSENDER = process.env.MAIL_SENDER
   const PASSWORD = process.env.MAIL_PASSWORD
   const MAILRECIPIENT = process.env.MAIL_RECIPIENT
+  const MAILHOSTIP = process.env.MAIL_HOST_IP
 
   if (!MAILPORT || !MAILHOST || !MAILSENDER || !PASSWORD || !MAILRECIPIENT) {
     // Trate o caso em que as variáveis de ambiente estão faltando ou são undefined
@@ -22,6 +23,10 @@ const proxy = async (req: any, res: any) => {
     auth: {
       user: MAILSENDER,
       pass: PASSWORD,
+    },
+    tls: {
+      rejectUnauthorized: false,
+      servername: MAILHOSTIP,
     },
     logger: true,
     debug: true,
