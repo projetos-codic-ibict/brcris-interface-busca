@@ -17,7 +17,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
               href={`${VIVO_URL_BASE}/journ_${result.id.raw}&lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.title.raw}
+              {result.title?.raw}
             </a>
           </h6>
         </div>
@@ -26,22 +26,37 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
           <ul className="sui-result__details">
             <li>
               <span className="sui-result__key">Id</span>
-              <span className="sui-result__value">{result.id.raw}</span>
+              <span className="sui-result__value">{result.id?.raw}</span>
             </li>
 
             <li>
-              <span className="sui-result__key">Issn</span>
-              <span className="sui-result__value">{result.issn.raw}</span>
+              {result.issn ? (
+                <span className="sui-result__key">Issn</span>
+              ) : (
+                ' '
+              )}
+
+              <span className="sui-result__value">{result.issn?.raw}</span>
             </li>
 
             <li>
-              <span className="sui-result__key">Issnl</span>
-              <span className="sui-result__value">{result.issnl.raw}</span>
+              {result.issnl ? (
+                <span className="sui-result__key">Issnl</span>
+              ) : (
+                ' '
+              )}
+
+              <span className="sui-result__value">{result.issnl?.raw}</span>
             </li>
 
             <li>
-              <span className="sui-result__key">Title</span>
-              <span className="sui-result__value">{result.title.raw}</span>
+              {result.title ? (
+                <span className="sui-result__key">Title</span>
+              ) : (
+                ' '
+              )}
+
+              <span className="sui-result__value">{result.title?.raw}</span>
             </li>
 
             <li>
