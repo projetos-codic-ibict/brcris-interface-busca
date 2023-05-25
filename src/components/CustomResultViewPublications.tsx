@@ -70,20 +70,30 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              {result.orgunit || result.service || result.journal ? (
+              <span className="sui-result__key">
+                {' '}
+                {result.type?.raw == 'doctoral thesis' ||
+                result.type?.raw == 'master thesis'
+                  ? 'Institution(s)'
+                  : result.type?.raw == 'conference proceedings'
+                  ? 'Organization(s)'
+                  : 'Journals(s)'}
+                {''}
+              </span>
+              {/* {result.orgunit || result.service || result.journal ? (
                 <span className="sui-result__key">
                   {' '}
                   {result.type?.raw == 'doctoral thesis' ||
                   result.type?.raw == 'master thesis'
-                    ? 'Institution'
+                    ? 'Institution(s)'
                     : result.type?.raw == 'conference proceedings'
-                    ? 'Organization'
-                    : 'Journal'}
+                    ? 'Organization(s)'
+                    : 'Journals(s)'}
                   {''}
                 </span>
               ) : (
                 ' '
-              )}
+              )} */}
 
               <span className="sui-result__value">
                 {result.orgunit?.raw.map((org: OrgUnit) => (
@@ -124,25 +134,27 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              {result.language ? (
-                <span className="sui-result__key">Language</span>
+              <span className="sui-result__key">Language(s)</span>
+              {/* {result.language ? (
+                <span className="sui-result__key">Language(s)</span>
               ) : (
                 ' '
-              )}
+              )} */}
 
               {result.language?.raw.map((language: string, index: any) => (
                 <span key={index} className="sui-result__value">
-                  {language} {}
+                  {language + ', '}
                 </span>
               ))}
             </li>
 
             <li>
-              {result.cnpqResearchArea ? (
+              <span className="sui-result__key">Cnpq Research Area(s)</span>
+              {/* {result.cnpqResearchArea ? (
                 <span className="sui-result__key">Cnpq Research Area(s)</span>
               ) : (
                 ' '
-              )}
+              )} */}
 
               {result.cnpqResearchArea?.raw.map(
                 (cnpqResearchArea: string, index: any) => (
@@ -154,11 +166,12 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              {result.keyword ? (
+              <span className="sui-result__key">Keyword</span>
+              {/* {result.keyword ? (
                 <span className="sui-result__key">Keyword</span>
               ) : (
                 ' '
-              )}
+              )} */}
 
               {result.keyword?.raw.map((keyword: string, index: any) => (
                 <span key={index} className="sui-result__value">

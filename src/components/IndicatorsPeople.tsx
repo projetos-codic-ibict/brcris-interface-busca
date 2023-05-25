@@ -86,12 +86,12 @@ const headersResearchArea = [
 
 const nationtalityQueryBase = {
   track_total_hits: true,
-  _source: ['nationality.keyword'],
+  _source: ['nationality'],
   size: 0,
   aggs: {
     aggregate: {
       terms: {
-        field: 'nationality.keyword',
+        field: 'nationality',
         size: 10,
         // order: {
         //   _key: 'desc',
@@ -113,12 +113,12 @@ const nationtalityQueryBase = {
 
 const keywordQueryBase = {
   track_total_hits: true,
-  _source: ['researchArea.keyword'],
+  _source: ['researchArea'],
   size: 0,
   aggs: {
     aggregate: {
       terms: {
-        field: 'researchArea.keyword',
+        field: 'researchArea',
         size: 10,
       },
     },
@@ -352,7 +352,7 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
 }
 // @ts-ignore
 export default withSearch(
-   // @ts-ignore
+  // @ts-ignore
   ({ filters, searchTerm, isLoading, indicatorsState }) => ({
     filters,
     searchTerm,

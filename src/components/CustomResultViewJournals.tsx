@@ -30,41 +30,45 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
 
             <li>
-              {result.issn ? (
+              <span className="sui-result__key">Issn</span>
+              {/* {result.issn ? (
                 <span className="sui-result__key">Issn</span>
               ) : (
                 ' '
-              )}
+              )} */}
 
               <span className="sui-result__value">{result.issn?.raw}</span>
             </li>
 
             <li>
-              {result.issnl ? (
+              <span className="sui-result__key">Issnl</span>
+              {/* {result.issnl ? (
                 <span className="sui-result__key">Issnl</span>
               ) : (
                 ' '
-              )}
+              )} */}
 
               <span className="sui-result__value">{result.issnl?.raw}</span>
             </li>
 
             <li>
-              {result.title ? (
+              <span className="sui-result__key">Title</span>
+              {/* {result.title ? (
                 <span className="sui-result__key">Title</span>
               ) : (
                 ' '
-              )}
+              )} */}
 
               <span className="sui-result__value">{result.title?.raw}</span>
             </li>
 
             <li>
-              {result.status ? (
+              <span className="sui-result__key">Status</span>
+              {/* {result.status ? (
                 <span className="sui-result__key">Status</span>
               ) : (
                 ''
-              )}
+              )} */}
 
               {result.status?.raw.map((status: any, index: any) => (
                 <span key={index} className="sui-result__value">
@@ -74,11 +78,12 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
 
             <li>
-              {result.publisher ? (
+              <span className="sui-result__key">Publisher</span>
+              {/* {result.publisher ? (
                 <span className="sui-result__key">Publisher</span>
               ) : (
                 ''
-              )}
+              )} */}
 
               {result.publisher?.raw.map((publisher: any, index: any) => (
                 <span key={index} className="sui-result__value">
