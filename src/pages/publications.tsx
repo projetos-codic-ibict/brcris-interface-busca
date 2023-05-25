@@ -48,7 +48,7 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'ca-publication',
+    index: 'pesqdf-publication',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -83,18 +83,14 @@ const config = {
         raw: {},
       },
     },
-    disjunctiveFacets: [
-      'author.name.keyword',
-      'keyword.keyword',
-      'publicationDate.keyword',
-    ],
+    disjunctiveFacets: ['author.name', 'keyword.type', 'publicationDate'],
     facets: {
       // 'publicationDate.keyword': { type: 'value', size: 100 },
-      'author.name.keyword': { type: 'value' },
-      'keyword.keyword': { type: 'value' },
-      'type.keyword': { type: 'value' },
-      'orgunit.name.keyword': { type: 'value' },
-      'publicationDate.keyword': {
+      'author.name': { type: 'value' },
+      keyword: { type: 'value' },
+      type: { type: 'value' },
+      'orgunit.name': { type: 'value' },
+      publicationDate: {
         type: 'range',
         ranges: [
           {
@@ -172,7 +168,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Ano ASC',
     value: [
       {
-        field: 'publicationDate.keyword',
+        field: 'publicationDate',
         direction: 'asc',
       },
     ],
@@ -181,7 +177,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Ano DESC',
     value: [
       {
-        field: 'publicationDate.keyword',
+        field: 'publicationDate',
         direction: 'desc',
       },
     ],
@@ -306,27 +302,23 @@ export default function App() {
                             {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
                             <Facet
                               key={'1'}
-                              field={'author.name.keyword'}
+                              field={'author.name'}
                               label={t('Authors')}
                             />
                             <Facet
                               key={'2'}
-                              field={'keyword.keyword'}
+                              field={'keyword'}
                               label={t('Keyword')}
                             />
                             <Facet
                               key={'3'}
-                              field={'orgunit.name.keyword'}
+                              field={'orgunit.name'}
                               label={t('Institution')}
                             />
-                            <Facet
-                              key={'4'}
-                              field={'type.keyword'}
-                              label={t('Type')}
-                            />
+                            <Facet key={'4'} field={'type'} label={t('Type')} />
                             <Facet
                               key={'5'}
-                              field={'publicationDate.keyword'}
+                              field={'publicationDate'}
                               filterType={'none'}
                               label={t('Year')}
                             />

@@ -29,7 +29,7 @@ const nodes: IndexNode[] = [
     label: 'Publications',
     title: '40.565 ',
     widthConstraint: 100,
-    index: 'ca-publication',
+    index: 'pesqdf-publication',
     level: 1,
     shape: 'circle',
     color: '#F7964D',
