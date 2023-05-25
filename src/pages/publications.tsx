@@ -82,14 +82,30 @@ const config = {
       vivo_link: {
         raw: {},
       },
+      language: {
+        raw: [],
+      },
+      cnpqResearchArea: {
+        raw: [],
+      },
     },
-    disjunctiveFacets: ['author.name', 'keyword.type', 'publicationDate'],
+    disjunctiveFacets: [
+      'language.type',
+      'author.name',
+      'keyword.type',
+      'cnpqResearchArea.type',
+      'publicationDate.type',
+    ],
+
     facets: {
       // 'publicationDate.keyword': { type: 'value', size: 100 },
+      language: { type: 'value' },
       'author.name': { type: 'value' },
       keyword: { type: 'value' },
-      type: { type: 'value' },
       'orgunit.name': { type: 'value' },
+      'journal.title': { type: 'value' },
+      type: { type: 'value' },
+      cnpqResearchArea: { type: 'value' },
       publicationDate: {
         type: 'range',
         ranges: [
@@ -302,22 +318,37 @@ export default function App() {
                             {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
                             <Facet
                               key={'1'}
+                              field={'language'}
+                              label={t('Language')}
+                            />
+                            <Facet
+                              key={'2'}
                               field={'author.name'}
                               label={t('Authors')}
                             />
                             <Facet
-                              key={'2'}
+                              key={'3'}
                               field={'keyword'}
                               label={t('Keyword')}
                             />
                             <Facet
-                              key={'3'}
+                              key={'4'}
                               field={'orgunit.name'}
                               label={t('Institution')}
                             />
-                            <Facet key={'4'} field={'type'} label={t('Type')} />
                             <Facet
                               key={'5'}
+                              field={'journal.title'}
+                              label={t('Journal Title')}
+                            />
+                            <Facet key={'6'} field={'type'} label={t('Type')} />
+                            <Facet
+                              key={'7'}
+                              field={'cnpqResearchArea'}
+                              label={t('Cnpq Research Area')}
+                            />
+                            <Facet
+                              key={'8'}
                               field={'publicationDate'}
                               filterType={'none'}
                               label={t('Year')}

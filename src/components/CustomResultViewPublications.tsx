@@ -118,6 +118,38 @@ const CustomResultViewPublications = ({
                 ))}
               </span>
             </li>
+
+            <li>
+              <span className="sui-result__key">Language</span>
+
+              {result.language?.raw.map((language: string, index: any) => (
+                <span key={index} className="sui-result__value">
+                  {language} {}
+                </span>
+              ))}
+            </li>
+
+            <li>
+              <span className="sui-result__key">Cnpq Research Area(s)</span>
+
+              {result.cnpqResearchArea?.raw.map(
+                (cnpqResearchArea: string, index: any) => (
+                  <span key={index} className="sui-result__value">
+                    {cnpqResearchArea + ', '}
+                  </span>
+                )
+              )}
+            </li>
+
+            <li>
+              <span className="sui-result__key">Keyword(s)</span>
+
+              {result.keyword?.raw.map((keyword: string, index: any) => (
+                <span key={index} className="sui-result__value">
+                  {keyword + ', '}
+                </span>
+              ))}
+            </li>
           </ul>
         </div>
       </div>
