@@ -70,16 +70,20 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              <span className="sui-result__key">
-                {' '}
-                {result.type?.raw == 'doctoral thesis' ||
-                result.type?.raw == 'master thesis'
-                  ? 'Institution'
-                  : result.type?.raw == 'conference proceedings'
-                  ? 'Organization'
-                  : 'Journal'}
-                {''}
-              </span>
+              {result.orgunit || result.service || result.journal ? (
+                <span className="sui-result__key">
+                  {' '}
+                  {result.type?.raw == 'doctoral thesis' ||
+                  result.type?.raw == 'master thesis'
+                    ? 'Institution'
+                    : result.type?.raw == 'conference proceedings'
+                    ? 'Organization'
+                    : 'Journal'}
+                  {''}
+                </span>
+              ) : (
+                ' '
+              )}
 
               <span className="sui-result__value">
                 {result.orgunit?.raw.map((org: OrgUnit) => (
@@ -120,7 +124,11 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              <span className="sui-result__key">Language</span>
+              {result.language ? (
+                <span className="sui-result__key">Language</span>
+              ) : (
+                ' '
+              )}
 
               {result.language?.raw.map((language: string, index: any) => (
                 <span key={index} className="sui-result__value">
@@ -130,7 +138,11 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              <span className="sui-result__key">Cnpq Research Area(s)</span>
+              {result.cnpqResearchArea ? (
+                <span className="sui-result__key">Cnpq Research Area(s)</span>
+              ) : (
+                ' '
+              )}
 
               {result.cnpqResearchArea?.raw.map(
                 (cnpqResearchArea: string, index: any) => (
@@ -142,7 +154,11 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              <span className="sui-result__key">Keyword(s)</span>
+              {result.keyword ? (
+                <span className="sui-result__key">Keyword</span>
+              ) : (
+                ' '
+              )}
 
               {result.keyword?.raw.map((keyword: string, index: any) => (
                 <span key={index} className="sui-result__value">

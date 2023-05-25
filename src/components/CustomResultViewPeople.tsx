@@ -55,13 +55,18 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">Nationality</span>
+              {result.nationality ? (
+                <span className="sui-result__key">Nationality</span>
+              ) : (
+                ' '
+              )}
+
               <span className="sui-result__value">
                 {result.nationality?.raw}
               </span>
             </li>
 
-            <li>
+            {/* <li>
               <span className="sui-result__key">Orcid</span>
               <span className="sui-result__value">
                 {result.orcid ? (
@@ -76,10 +81,15 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
                   ''
                 )}
               </span>
-            </li>
+            </li> */}
 
             <li>
-              <span className="sui-result__key">Research Area</span>
+              {result.researchArea ? (
+                <span className="sui-result__key">Research Area</span>
+              ) : (
+                ' '
+              )}
+
               <span className="sui-result__value">
                 {result.researchArea?.raw.map((area: string) => (
                   <span key={area}>{area}</span>
