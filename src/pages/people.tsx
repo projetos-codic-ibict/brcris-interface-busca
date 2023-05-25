@@ -46,7 +46,7 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'ca-person',
+    index: 'pesqdf-person',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -72,10 +72,10 @@ const config = {
         raw: {},
       },
     },
-    disjunctiveFacets: ['nationality.keyword', 'researchArea.keyword'],
+    disjunctiveFacets: ['nationality', 'researchArea'],
     facets: {
-      'nationality.keyword': { type: 'value' },
-      'researchArea.keyword': { type: 'value' },
+      nationality: { type: 'value' },
+      researchArea: { type: 'value' },
     },
   },
   // autocompleteQuery: {
@@ -119,7 +119,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Nome ASC',
     value: [
       {
-        field: 'name.keyword',
+        field: 'name',
         direction: 'asc',
       },
     ],
@@ -128,7 +128,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Nome DESC',
     value: [
       {
-        field: 'name.keyword',
+        field: 'name',
         direction: 'desc',
       },
     ],
@@ -252,12 +252,12 @@ export default function App() {
                             )}
                             <Facet
                               key={'1'}
-                              field={'nationality.keyword'}
+                              field={'nationality'}
                               label={t('Nationality')}
                             />
                             <Facet
                               key={'2'}
-                              field={'researchArea.keyword'}
+                              field={'researchArea'}
                               label={t('Research field')}
                             />
                           </div>

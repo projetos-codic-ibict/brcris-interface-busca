@@ -39,7 +39,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 2,
-    index: 'ca-person',
+    index: 'pesqdf-person',
     label: 'People',
     size: 200,
     title: '10.00 ',
