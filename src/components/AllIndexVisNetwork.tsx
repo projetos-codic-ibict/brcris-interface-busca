@@ -52,7 +52,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 3,
-    index: 'ca-orgunit',
+    index: 'pesqdf-orgunit',
     label: 'Institutions',
     title: '140 ',
     level: 3,
@@ -61,7 +61,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 4,
-    index: 'ca-journal',
+    index: 'pesqdf-journals',
     label: 'Journals',
     title: '253 ',
     level: 4,

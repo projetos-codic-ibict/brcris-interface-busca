@@ -47,7 +47,7 @@ const configDefault = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'ca-journal',
+    index: 'pesqdf-journals',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -79,7 +79,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Title ASC',
     value: [
       {
-        field: 'title.keyword',
+        field: 'title',
         direction: 'asc',
       },
     ],
@@ -88,7 +88,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Title DESC',
     value: [
       {
-        field: 'title.keyword',
+        field: 'title',
         direction: 'desc',
       },
     ],

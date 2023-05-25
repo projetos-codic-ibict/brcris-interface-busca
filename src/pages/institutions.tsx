@@ -47,7 +47,7 @@ const configDefault = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'ca-orgunit',
+    index: 'pesqdf-orgunit',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -76,7 +76,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Nome ASC',
     value: [
       {
-        field: 'name.keyword',
+        field: 'name',
         direction: 'asc',
       },
     ],
@@ -85,7 +85,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Nome DESC',
     value: [
       {
-        field: 'name.keyword',
+        field: 'name',
         direction: 'desc',
       },
     ],
