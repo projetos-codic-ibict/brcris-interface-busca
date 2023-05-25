@@ -32,5 +32,7 @@
   "Nacionality": "Nacionality",
   "Cnpq Research Area": "Cnpq Research Area",
   "Language": "Language",
-  "Journal Title": "Journal"
+  "Journal Title": "Journal",
+  "Status": "Status",
+  "Publisher": "Publisher"
 }

@@ -25,18 +25,51 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <li>
-              <span className="sui-result__key">id</span>
+              <span className="sui-result__key">Id</span>
               <span className="sui-result__value">{result.id.raw}</span>
             </li>
 
             <li>
-              <span className="sui-result__key">issn</span>
+              <span className="sui-result__key">Issn</span>
               <span className="sui-result__value">{result.issn.raw}</span>
             </li>
 
             <li>
-              <span className="sui-result__key">title</span>
+              <span className="sui-result__key">Issnl</span>
+              <span className="sui-result__value">{result.issnl.raw}</span>
+            </li>
+
+            <li>
+              <span className="sui-result__key">Title</span>
               <span className="sui-result__value">{result.title.raw}</span>
+            </li>
+
+            <li>
+              {result.status ? (
+                <span className="sui-result__key">Status</span>
+              ) : (
+                ''
+              )}
+
+              {result.status?.raw.map((status: any, index: any) => (
+                <span key={index} className="sui-result__value">
+                  {status + ', '}
+                </span>
+              ))}
+            </li>
+
+            <li>
+              {result.publisher ? (
+                <span className="sui-result__key">Publisher</span>
+              ) : (
+                ''
+              )}
+
+              {result.publisher?.raw.map((publisher: any, index: any) => (
+                <span key={index} className="sui-result__value">
+                  {publisher.name}
+                </span>
+              ))}
             </li>
           </ul>
         </div>

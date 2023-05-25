@@ -63,6 +63,22 @@ const configDefault = {
       issn: {
         raw: {},
       },
+      issnl: {
+        raw: {},
+      },
+      status: {
+        raw: {},
+      },
+      publisher: {
+        raw: [],
+      },
+    },
+    disjunctiveFacets: ['status', 'publisher.name'],
+
+    facets: {
+      // 'publicationDate.keyword': { type: 'value', size: 100 },
+      status: { type: 'value' },
+      'publisher.name': { type: 'value' },
     },
   },
 }
@@ -206,16 +222,16 @@ export default function App() {
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
-                            {/* <Facet
+                            <Facet
                               key={'1'}
-                              field={'nationality.keyword'}
-                              label={'nacionalidade'}
+                              field={'status'}
+                              label={t('Status')}
                             />
                             <Facet
                               key={'2'}
-                              field={'researchArea.keyword'}
-                              label={'Área de pesquisa'}
-                            /> */}
+                              field={'publisher.name'}
+                              label={t('Publisher')}
+                            />
                           </div>
                         }
                         bodyContent={

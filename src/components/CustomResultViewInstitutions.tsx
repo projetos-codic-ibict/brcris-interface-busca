@@ -32,7 +32,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
           </li> */}
 
             <li>
-              <span className="sui-result__key">name</span>
+              <span className="sui-result__key">Name</span>
               <span className="sui-result__value">{result.name.raw}</span>
             </li>
           </ul>
