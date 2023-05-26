@@ -95,6 +95,9 @@ const edges = [
 ]
 
 const options = {
+  // autoResize: true,
+  height: '500px',
+  width: '100%',
   edges: {
     color: '#fff',
     smooth: {
@@ -138,7 +141,6 @@ function VisGraph() {
   const [indexesStats, setIndexesStats] = useState<IndexStat[]>([])
   const { t } = useTranslation('common')
   const numberFormat = new Intl.NumberFormat('pt-BR')
-  const indexesNames = process.env.ELASTIC_INDEXES?.split(',')
 
   const pages = [
     `/${router.locale}/publications`,
@@ -156,16 +158,13 @@ function VisGraph() {
   }
 
   useEffect(() => {
-    ElasticSearchStatsService().then((res) => {
-      let indexesUsed = res
-      if (indexesNames) {
-        indexesUsed = res.filter((item: IndexStat) =>
-          indexesNames.includes(item.index)
-        )
-      }
-      console.log(indexesNames, indexesUsed)
-      setIndexesStats(indexesUsed)
-    })
+    ElasticSearchStatsService()
+      .then((res) => {
+        setIndexesStats(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }, [])
 
   useEffect(() => {
@@ -198,11 +197,11 @@ function VisGraph() {
   }, [t, indexesStats])
 
   return (
-    <div className="graph">
+    <section className="graph">
       {/**
              // @ts-ignore */}
       <Graph graph={graph} options={options} events={events} />
-    </div>
+    </section>
   )
 }
 
