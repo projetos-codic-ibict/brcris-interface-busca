@@ -9,6 +9,7 @@ const nextConfig = {
     LANGUAGES: process.env.LANGUAGES,
     VIVO_URL_HOME: process.env.VIVO_URL_HOME,
     ELASTIC_INDEXES: process.env.ELASTIC_INDEXES,
+    PUBLIC_RECAPTCHA_SITE_KEY: process.env.PUBLIC_RECAPTCHA_SITE_KEY,
   },
   i18n,
 }

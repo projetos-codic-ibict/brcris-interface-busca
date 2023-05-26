@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css' // Import bootstrap CSS
 /* import { useRouter } from 'next/router' */
@@ -8,6 +9,7 @@ import { useState } from 'react'
 import MailService from '../services/MailService'
 import { alertService } from '../services/AlertService'
 import Loader from './Loader'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 function ContactForm() {
   /* const router = useRouter() */
@@ -21,33 +23,48 @@ function ContactForm() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
-  // const [submitted, setSubmitted] = useState(false)
   const [isLoading, setLoading] = useState(false)
+  const [captchaCode, setCaptchaCode] = useState('')
+  const recaptchaRef = React.useRef(null)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault()
-
+    if (!captchaCode) {
+      return
+    }
     const data = {
       name,
       email,
       message,
+      captcha: captchaCode,
     }
 
-    setLoading(true)
-    const response = await MailService(JSON.stringify(data))
-    setLoading(false)
-
-    if (response.status === 200) {
-      setName('')
-      setEmail('')
-      setMessage('')
-      alertService.success(t('Mail sent success'), options)
-    } else {
-      alertService.error(t('Mail sent error'), options)
+    try {
+      setLoading(true)
+      const response = await MailService(JSON.stringify(data))
+      setLoading(false)
+      if (response.status === 200) {
+        setName('')
+        setEmail('')
+        setMessage('')
+        alertService.success(t('Mail sent success'), options)
+      } else {
+        alertService.error(t('Mail sent error'), options)
+      }
+    } finally {
+      setCaptchaCode('')
+      // @ts-ignore
+      recaptchaRef.current.reset()
+      setLoading(false)
     }
   }
 
+  const onReCAPTCHAChange = async (value: string) => {
+    setCaptchaCode(value)
+  }
+
+  const PUBLIC_RECAPTCHA_SITE_KEY = process.env.PUBLIC_RECAPTCHA_SITE_KEY || ''
   return (
     <div>
       {isLoading ? <Loader /> : ''}
@@ -100,7 +117,24 @@ function ContactForm() {
           </div>
 
           <div className="submit-btn col-sm-12 mt-2 d-flex justify-content-end">
-            <button className="btn btn-primary" type="submit">
+            <ReCAPTCHA
+              size="normal"
+              ref={recaptchaRef}
+              sitekey={PUBLIC_RECAPTCHA_SITE_KEY}
+              onChange={onReCAPTCHAChange}
+            />
+            <button
+              disabled={
+                !(
+                  captchaCode !== null &&
+                  name !== '' &&
+                  email !== '' &&
+                  message !== ''
+                )
+              }
+              className="btn btn-primary"
+              type="submit"
+            >
               {t('Submit')}
             </button>
           </div>

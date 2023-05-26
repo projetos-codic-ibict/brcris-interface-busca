@@ -1,7 +1,57 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import nodemailer from 'nodemailer'
+import fetch from 'node-fetch'
+
+type BodyType = {
+  name: string
+  email: string
+  message: string
+}
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proxy = async (req: any, res: any) => {
+  const { body } = req
+
+  if (body.name === '' || body.email === '' || body.message === '') {
+    res
+      .status(400)
+      .json({ message: 'os campos obrigatórios não foram preenchidos' })
+  }
+
+  // Extract the email and captcha code from the request body
+  const { captcha } = body
+
+  try {
+    // Ping the google recaptcha verify API to verify the captcha code you received
+    const response = await fetch(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${captcha}`,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+        },
+        method: 'POST',
+      }
+    )
+    const captchaValidation = await response.json()
+    console.log('captchaValidation', captchaValidation)
+    // @ts-ignore
+    if (captchaValidation.success) {
+      // Replace this with the API that will save the data received
+      await sendMail(req.body)
+      // Return 200 if everything is successful
+      return res.status(200).send('OK')
+    }
+
+    return res.status(422).json({
+      message: 'Unproccesable request, Invalid captcha code',
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(422).json({ message: 'Something went wrong' })
+  }
+}
+
+async function sendMail(body: BodyType) {
   console.log('enviando email')
   const MAILPORT = process.env.MAIL_PORT
   const MAILHOST = process.env.MAIL_HOST
@@ -10,10 +60,8 @@ const proxy = async (req: any, res: any) => {
   const MAILRECIPIENT = process.env.MAIL_RECIPIENT
 
   if (!MAILPORT || !MAILHOST || !MAILSENDER || !PASSWORD || !MAILRECIPIENT) {
-    // Trate o caso em que as variáveis de ambiente estão faltando ou são undefined
     console.error('Variáveis de ambiente faltando ou indefinidas')
-    res.status(400).send('error')
-    return
+    throw new Error('Variáveis de ambiente faltando ou indefinidas')
   }
 
   const transporter = nodemailer.createTransport({
@@ -34,13 +82,13 @@ const proxy = async (req: any, res: any) => {
   const mailData = {
     from: MAILSENDER,
     to: MAILRECIPIENT,
-    subject: `Message from ${req.body.name}`,
-    text: req.body.message + ' | Sent from: ' + req.body.email,
-    html: `<div>${req.body.message}</div> <p>Sent from: ${req.body.email}</p>`,
+    subject: `Message from ${body.name}`,
+    text: body.message + ' | Sent from: ' + body.email,
+    html: `<div>${body.message}</div> <p>Sent from: ${body.email}</p>`,
   }
 
   const mailResponse = await transporter.sendMail(mailData)
-  res.json(mailResponse)
+  return mailResponse
 }
 
 export default proxy

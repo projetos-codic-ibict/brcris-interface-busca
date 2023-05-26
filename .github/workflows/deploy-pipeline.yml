@@ -13,6 +13,7 @@ env:
   MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
   MAIL_PORT: ${{secrets.MAIL_PORT}}
   MAIL_RECIPIENT: ${{secrets.MAIL_RECIPIENT}}
+  RECAPTCHA_SECRET_KEY: ${{secrets.RECAPTCHA_SECRET_KEY}}
 
 jobs:
   test:
