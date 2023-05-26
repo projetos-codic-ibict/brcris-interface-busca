@@ -12,7 +12,12 @@ type BodyType = {
 const proxy = async (req: any, res: any) => {
   const { body } = req
 
-  if (body.name === '' || body.email === '' || body.message === '') {
+  if (
+    body.name === '' ||
+    body.email === '' ||
+    body.message === '' ||
+    body.captcha === ''
+  ) {
     res
       .status(400)
       .json({ message: 'os campos obrigatórios não foram preenchidos' })

@@ -123,10 +123,11 @@ function ContactForm() {
               sitekey={PUBLIC_RECAPTCHA_SITE_KEY}
               onChange={onReCAPTCHAChange}
             />
+
             <button
               disabled={
                 !(
-                  captchaCode !== null &&
+                  captchaCode !== '' &&
                   name !== '' &&
                   email !== '' &&
                   message !== ''
