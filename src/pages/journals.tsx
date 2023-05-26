@@ -47,7 +47,7 @@ const configDefault = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'ca-journal',
+    index: 'pesqdf-journals',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -63,6 +63,22 @@ const configDefault = {
       issn: {
         raw: {},
       },
+      issnl: {
+        raw: {},
+      },
+      status: {
+        raw: {},
+      },
+      publisher: {
+        raw: [],
+      },
+    },
+    disjunctiveFacets: ['status', 'publisher.name'],
+
+    facets: {
+      // 'publicationDate.keyword': { type: 'value', size: 100 },
+      status: { type: 'value' },
+      'publisher.name': { type: 'value' },
     },
   },
 }
@@ -79,7 +95,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Title ASC',
     value: [
       {
-        field: 'title.keyword',
+        field: 'title',
         direction: 'asc',
       },
     ],
@@ -88,7 +104,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Title DESC',
     value: [
       {
-        field: 'title.keyword',
+        field: 'title',
         direction: 'desc',
       },
     ],
@@ -206,16 +222,16 @@ export default function App() {
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
-                            {/* <Facet
+                            <Facet
                               key={'1'}
-                              field={'nationality.keyword'}
-                              label={'nacionalidade'}
+                              field={'status'}
+                              label={t('Status')}
                             />
                             <Facet
                               key={'2'}
-                              field={'researchArea.keyword'}
-                              label={'Área de pesquisa'}
-                            /> */}
+                              field={'publisher.name'}
+                              label={t('Publisher')}
+                            />
                           </div>
                         }
                         bodyContent={

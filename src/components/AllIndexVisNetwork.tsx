@@ -29,7 +29,7 @@ const nodes: IndexNode[] = [
     label: 'Publications',
     title: '40.565 ',
     widthConstraint: 100,
-    index: 'ca-publication',
+    index: 'pesqdf-publication',
     level: 1,
     shape: 'circle',
     color: '#F7964D',
@@ -39,7 +39,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 2,
-    index: 'ca-person',
+    index: 'pesqdf-person',
     label: 'People',
     size: 200,
     title: '10.00 ',
@@ -52,7 +52,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 3,
-    index: 'ca-orgunit',
+    index: 'pesqdf-orgunit',
     label: 'Institutions',
     title: '140 ',
     level: 3,
@@ -61,7 +61,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 4,
-    index: 'ca-journal',
+    index: 'pesqdf-journals',
     label: 'Journals',
     title: '253 ',
     level: 4,
@@ -95,6 +95,9 @@ const edges = [
 ]
 
 const options = {
+  // autoResize: true,
+  height: '500px',
+  width: '100%',
   edges: {
     color: '#fff',
     smooth: {
@@ -128,7 +131,6 @@ function getSizeOfNode(maxSize: number, sizeOfDocsOfNode: number) {
   const totalDifference = maxValue - minValue
   const scaleFactor = originalSizeOfNode / maxValue
   const adjustedValue = scaleFactor * totalDifference + minValue
-  console.log('adjustedValue', adjustedValue)
   return adjustedValue
 }
 
@@ -138,7 +140,6 @@ function VisGraph() {
   const [indexesStats, setIndexesStats] = useState<IndexStat[]>([])
   const { t } = useTranslation('common')
   const numberFormat = new Intl.NumberFormat('pt-BR')
-  const indexesNames = process.env.ELASTIC_INDEXES?.split(',')
 
   const pages = [
     `/${router.locale}/publications`,
@@ -156,16 +157,13 @@ function VisGraph() {
   }
 
   useEffect(() => {
-    ElasticSearchStatsService().then((res) => {
-      let indexesUsed = res
-      if (indexesNames) {
-        indexesUsed = res.filter((item: IndexStat) =>
-          indexesNames.includes(item.index)
-        )
-      }
-      console.log(indexesNames, indexesUsed)
-      setIndexesStats(indexesUsed)
-    })
+    ElasticSearchStatsService()
+      .then((res) => {
+        setIndexesStats(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }, [])
 
   useEffect(() => {
@@ -198,11 +196,11 @@ function VisGraph() {
   }, [t, indexesStats])
 
   return (
-    <div className="graph">
+    <section className="graph">
       {/**
              // @ts-ignore */}
       <Graph graph={graph} options={options} events={events} />
-    </div>
+    </section>
   )
 }
 

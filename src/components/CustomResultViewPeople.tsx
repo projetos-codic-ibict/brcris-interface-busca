@@ -30,7 +30,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
               href={`${VIVO_URL_BASE}/pers_${result.id.raw}&lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.name.raw}
+              {result.name?.raw}
             </a>
           </h6>
         </div>
@@ -56,6 +56,12 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
 
             <li>
               <span className="sui-result__key">Nationality</span>
+              {/* {result.nationality ? (
+                <span className="sui-result__key">Nationality</span>
+              ) : (
+                ' '
+              )} */}
+
               <span className="sui-result__value">
                 {result.nationality?.raw}
               </span>
@@ -80,6 +86,12 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
 
             <li>
               <span className="sui-result__key">Research Area</span>
+              {/* {result.researchArea ? (
+                <span className="sui-result__key">Research Area</span>
+              ) : (
+                ' '
+              )} */}
+
               <span className="sui-result__value">
                 {result.researchArea?.raw.map((area: string) => (
                   <span key={area}>{area}</span>

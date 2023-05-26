@@ -176,7 +176,7 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
             JSON.stringify(
               getKeywordQuery(
                 queryCommonBase,
-                'publicationDate.keyword',
+                'publicationDate',
                 filters,
                 searchTerm,
                 indicatorsState.config
@@ -185,7 +185,7 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
             JSON.stringify(
               getKeywordQuery(
                 queryCommonBase,
-                'type.keyword',
+                'type',
                 filters,
                 searchTerm,
                 indicatorsState.config

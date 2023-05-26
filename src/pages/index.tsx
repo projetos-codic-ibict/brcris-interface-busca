@@ -66,112 +66,107 @@ export default function App() {
       </Head>
       <div className={styles.home}>
         <div className={styles.textWhite}>
-          <div className="container page">
-            <div className="row">
-              <div className="col-md-6">
-                <AllIndexVisNetwork />
-              </div>
-
-              <div className="col-md-6">
-                <div className="card search-card">
-                  <div className="card-body">
-                    <ul className="nav nav-tabs" role="tablist">
-                      <li className="nav-item" role="presentation">
-                        <button
-                          className="nav-link active"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tabForm"
-                          type="button"
-                          role="tab"
-                          aria-controls="form"
-                          aria-selected="true"
-                          onClick={() => setSearchPage('publications')}
-                        >
-                          {t('Publications')}
-                        </button>
-                      </li>
-                      <li className="nav-item" role="presentation">
-                        <button
-                          className="nav-link"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tabForm"
-                          type="button"
-                          role="tab"
-                          aria-controls="form"
-                          aria-selected="false"
-                          onClick={() => setSearchPage('people')}
-                        >
-                          {t('People')}
-                        </button>
-                      </li>
-                      <li className="nav-item" role="presentation">
-                        <button
-                          className="nav-link"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tabForm"
-                          type="button"
-                          role="tab"
-                          aria-controls="form"
-                          aria-selected="false"
-                          onClick={() => setSearchPage('journals')}
-                        >
-                          {t('Journals')}
-                        </button>
-                      </li>
-                      <li className="nav-item" role="presentation">
-                        <button
-                          className="nav-link"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tabForm"
-                          type="button"
-                          role="tab"
-                          aria-controls="form"
-                          aria-selected="false"
-                          onClick={() => setSearchPage('institutions')}
-                        >
-                          {t('Institutions')}
-                        </button>
-                      </li>
-                    </ul>
-                    <div className="tab-content" id="tabContent">
-                      <div
-                        className="tab-pane fade active show"
-                        id="tabForm"
-                        role="tabpanel"
-                        aria-labelledby="form-tab"
+          <div className={`container pag ${styles.main}`}>
+            <AllIndexVisNetwork />
+            <section>
+              <div className="card search-card">
+                <div className="card-body">
+                  <ul className="nav nav-tabs" role="tablist">
+                    <li className="nav-item" role="presentation">
+                      <button
+                        className="nav-link active"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabForm"
+                        type="button"
+                        role="tab"
+                        aria-controls="form"
+                        aria-selected="true"
+                        onClick={() => setSearchPage('publications')}
                       >
-                        <form
-                          className="row g-3 mb-3"
-                          action={`/${router.locale}/${searchPage}`}
-                        >
-                          <div className="col">
-                            <input
-                              className="form-control seacrh-box"
-                              name="q"
-                              type="text"
-                              value={term}
-                              onChange={(e) => setTerm(e.target.value)}
-                              placeholder={`${t('Search')}...`}
-                            />
-                          </div>
-                          <div className="col-auto">
-                            <button
-                              className="btn btn-light search-btn"
-                              // disabled={!term || term.length < 3}
-                            >
-                              {t('Search')}
-                            </button>
-                          </div>
-                        </form>
-                      </div>
+                        {t('Publications')}
+                      </button>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                      <button
+                        className="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabForm"
+                        type="button"
+                        role="tab"
+                        aria-controls="form"
+                        aria-selected="false"
+                        onClick={() => setSearchPage('people')}
+                      >
+                        {t('People')}
+                      </button>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                      <button
+                        className="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabForm"
+                        type="button"
+                        role="tab"
+                        aria-controls="form"
+                        aria-selected="false"
+                        onClick={() => setSearchPage('journals')}
+                      >
+                        {t('Journals')}
+                      </button>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                      <button
+                        className="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabForm"
+                        type="button"
+                        role="tab"
+                        aria-controls="form"
+                        aria-selected="false"
+                        onClick={() => setSearchPage('institutions')}
+                      >
+                        {t('Institutions')}
+                      </button>
+                    </li>
+                  </ul>
+                  <div className="tab-content" id="tabContent">
+                    <div
+                      className="tab-pane fade active show"
+                      id="tabForm"
+                      role="tabpanel"
+                      aria-labelledby="form-tab"
+                    >
+                      <form
+                        className="g-3 mb-3 d-flex gap-2"
+                        action={`/${router.locale}/${searchPage}`}
+                      >
+                        <div className="col-full">
+                          <input
+                            className="form-control seacrh-box"
+                            name="q"
+                            type="text"
+                            value={term}
+                            onChange={(e) => setTerm(e.target.value)}
+                            placeholder={`${t('Search')}...`}
+                          />
+                        </div>
+                        <div className="col-auto">
+                          <button
+                            className="btn btn-light search-btn col-auto"
+                            // disabled={!term || term.length < 3}
+                          >
+                            {t('Search')}
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
-                <div className="col-md-12 mt-5">
-                  <p>{t('BrCrisText')}</p>
-                </div>
               </div>
-            </div>
+              <div className="mt-5">
+                <p>{t('BrCrisText')}</p>
+              </div>
+            </section>
           </div>
         </div>
 

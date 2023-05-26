@@ -29,5 +29,10 @@
   "Documents by type": "Documents by type",
   "Documents by year": "Documents by year",
   "BrCrisText": "BrCRIS (Current Research Information System) aims to establish a unique model for organizing scientific information across the entire Brazilian research ecosystem.",
-  "Nacionality": "Nacionality"
+  "Nacionality": "Nacionality",
+  "Cnpq Research Area": "Cnpq Research Area",
+  "Language": "Language",
+  "Journal Title": "Journal",
+  "Status": "Status",
+  "Publisher": "Publisher"
 }

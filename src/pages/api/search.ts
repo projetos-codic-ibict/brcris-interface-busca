@@ -6,7 +6,7 @@ function builConnector(index: string) {
   const connector = new ElasticsearchAPIConnector(
     {
       host: process.env.HOST_ELASTIC,
-      index: index || 'ca-publication',
+      index: index || '',
       apiKey: process.env.API_KEY,
     },
     (requestBody, requestState, queryConfig) => {

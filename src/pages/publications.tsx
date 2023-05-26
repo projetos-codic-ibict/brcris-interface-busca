@@ -48,7 +48,7 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'ca-publication',
+    index: 'pesqdf-publication',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -82,19 +82,31 @@ const config = {
       vivo_link: {
         raw: {},
       },
+      language: {
+        raw: [],
+      },
+      cnpqResearchArea: {
+        raw: [],
+      },
     },
     disjunctiveFacets: [
-      'author.name.keyword',
-      'keyword.keyword',
-      'publicationDate.keyword',
+      'language.type',
+      'author.name',
+      'keyword.type',
+      'cnpqResearchArea.type',
+      'publicationDate.type',
     ],
+
     facets: {
       // 'publicationDate.keyword': { type: 'value', size: 100 },
-      'author.name.keyword': { type: 'value' },
-      'keyword.keyword': { type: 'value' },
-      'type.keyword': { type: 'value' },
-      'orgunit.name.keyword': { type: 'value' },
-      'publicationDate.keyword': {
+      language: { type: 'value' },
+      'author.name': { type: 'value' },
+      keyword: { type: 'value' },
+      'orgunit.name': { type: 'value' },
+      'journal.title': { type: 'value' },
+      type: { type: 'value' },
+      cnpqResearchArea: { type: 'value' },
+      publicationDate: {
         type: 'range',
         ranges: [
           {
@@ -172,7 +184,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Ano ASC',
     value: [
       {
-        field: 'publicationDate.keyword',
+        field: 'publicationDate',
         direction: 'asc',
       },
     ],
@@ -181,7 +193,7 @@ const SORT_OPTIONS: SortOptionsType[] = [
     name: 'Ano DESC',
     value: [
       {
-        field: 'publicationDate.keyword',
+        field: 'publicationDate',
         direction: 'desc',
       },
     ],
@@ -306,27 +318,38 @@ export default function App() {
                             {/* <Facet key={'1'} field={'Ano'} label={'ano'} /> */}
                             <Facet
                               key={'1'}
-                              field={'author.name.keyword'}
-                              label={t('Authors')}
+                              field={'language'}
+                              label={t('Language')}
                             />
                             <Facet
                               key={'2'}
-                              field={'keyword.keyword'}
-                              label={t('Keyword')}
+                              field={'author.name'}
+                              label={t('Authors')}
                             />
                             <Facet
                               key={'3'}
-                              field={'orgunit.name.keyword'}
-                              label={t('Institution')}
+                              field={'keyword'}
+                              label={t('Keyword')}
                             />
                             <Facet
                               key={'4'}
-                              field={'type.keyword'}
-                              label={t('Type')}
+                              field={'orgunit.name'}
+                              label={t('Institution')}
                             />
                             <Facet
                               key={'5'}
-                              field={'publicationDate.keyword'}
+                              field={'journal.title'}
+                              label={t('Journal Title')}
+                            />
+                            <Facet key={'6'} field={'type'} label={t('Type')} />
+                            <Facet
+                              key={'7'}
+                              field={'cnpqResearchArea'}
+                              label={t('Cnpq Research Area')}
+                            />
+                            <Facet
+                              key={'8'}
+                              field={'publicationDate'}
                               filterType={'none'}
                               label={t('Year')}
                             />
