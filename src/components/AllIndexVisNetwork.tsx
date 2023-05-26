@@ -131,7 +131,6 @@ function getSizeOfNode(maxSize: number, sizeOfDocsOfNode: number) {
   const totalDifference = maxValue - minValue
   const scaleFactor = originalSizeOfNode / maxValue
   const adjustedValue = scaleFactor * totalDifference + minValue
-  console.log('adjustedValue', adjustedValue)
   return adjustedValue
 }
 

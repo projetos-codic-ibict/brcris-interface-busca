@@ -13,14 +13,11 @@ const client = new Client({
 
 const indexesNames = process.env.ELASTIC_INDEXES?.split(',')
 
-console.log('indexesNames: ', indexesNames)
-
 const proxy = async (req: any, res: any) => {
   const { body } = await client.cat.indices({
     format: 'json',
     index: indexesNames,
   })
-  console.log('body: ', body)
   res.json(body)
 }
 
