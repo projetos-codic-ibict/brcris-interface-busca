@@ -28,11 +28,13 @@
   "Export to csv": "Exportar para csv",
   "Documents by type": "Documentos por tipo",
   "Documents by year": "Documentos por ano",
-  "BrCrisText": "BrCRIS (Current Research Information System) tem como objetivo estabelecer um modelo único de organização da informação científica de todo o ecossistema da pesquisa brasileiro.",
+  "BrCrisText": "BrCris (Current Research Information System) tem como objetivo estabelecer um modelo único de organização da informação científica de todo o ecossistema da pesquisa brasileiro.",
   "Nacionality": "Nacionalidade",
   "Cnpq Research Area": "Área de pesquisa Cnpq",
   "Language": "Idioma",
   "Journal Title": "Periódico",
   "Status": "Status",
-  "Publisher": "Editora"
+  "Publisher": "Editora",
+  "privacy policy": "política de privacidade",
+  "privacy policy message": "BrCris usa cookies para fornecer as funcionalidades necessárias do site e melhorar sua experiência. Ao usar nosso site, você concorda com nossas políticas legais. Você pode saber mais sobre os serviços que utilizamos em nosso"
 }

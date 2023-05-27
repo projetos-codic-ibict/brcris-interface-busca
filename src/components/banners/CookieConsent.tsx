@@ -1,5 +1,7 @@
-import Link from 'next/link'
 import Cookies from 'js-cookie'
+import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { MouseEvent, useEffect, useState } from 'react'
 import style from '../../styles/Cookie.module.css'
 
@@ -9,6 +11,8 @@ const USER_CONSENT_COOKIE_EXPIRE_DATE =
 
 const CookieConsent = () => {
   const [cookieConsentIsTrue, setCookieConsentIsTrue] = useState(true)
+  const router = useRouter()
+  const { t } = useTranslation('common')
 
   useEffect(() => {
     const consentIsTrue = Cookies.get(USER_CONSENT_COOKIE_KEY) === 'true'
@@ -36,13 +40,12 @@ const CookieConsent = () => {
         <div className={style.cookieItems}>
           <div className="">
             <p className="">
-              BrCris uses cookies to provide necessary website functionality,
-              improve your experience and analyze our traffic. By using our
-              website, you agree to our legal policies. You can learn more about
-              the services we use at our{' '}
-              <Link href="/privacy-policy">
+              {t('privacy policy message')}{' '}
+              <Link
+                href={`${process.env.VIVO_URL_HOME}/about?lang=${router.locale}`}
+              >
                 <a className="text-sm underline hover:text-lightAccent">
-                  privacy policy
+                  {t('privacy policy')}
                 </a>
               </Link>
               .

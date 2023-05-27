@@ -1,24 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react'
 import { withSearch } from '@elastic/react-search-ui'
-import styles from '../styles/Indicators.module.css'
 import { Filter } from '@elastic/search-ui'
+import { useTranslation } from 'next-i18next'
+import { useEffect, useState } from 'react'
 import { CSVLink } from 'react-csv'
 import { IoCloudDownloadOutline } from 'react-icons/io5'
-import { useTranslation } from 'next-i18next'
+import styles from '../styles/Indicators.module.css'
 
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
+  ArcElement,
   BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  ChartOptions,
+  Legend,
+  LinearScale,
   Title,
   Tooltip,
-  Legend,
-  ArcElement,
-  ChartOptions,
 } from 'chart.js'
 import { Bar, Pie } from 'react-chartjs-2'
 import ElasticSearchService from '../services/ElasticSearchService'

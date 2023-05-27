@@ -1,28 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react'
 import { withSearch } from '@elastic/react-search-ui'
-import styles from '../styles/Indicators.module.css'
-
+import { useEffect, useState } from 'react'
 import { CSVLink } from 'react-csv'
 import { IoCloudDownloadOutline } from 'react-icons/io5'
+import styles from '../styles/Indicators.module.css'
 
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
+  ArcElement,
   BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
   Title,
   Tooltip,
-  Legend,
-  ArcElement,
 } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
 // @ts-ignore
+import { Filter } from '@elastic/search-ui'
 import { TagCloud } from 'react-tagcloud'
 import ElasticSearchService from '../services/ElasticSearchService'
-import { Filter } from '@elastic/search-ui'
 
 import { useTranslation } from 'next-i18next'
 
@@ -260,6 +259,7 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
           minSize={12}
           maxSize={35}
           tags={nationalitys}
+          // @ts-ignore
           style={{
             width: 300,
             textAlign: 'center',
@@ -267,40 +267,6 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
           randomSeed={42}
           onClick={(tag: any) => alert(`'${tag.value}' was selected!`)}
         />
-
-        {/* <Bar
-          hidden={nationalityIndicators == null}
-          options={optionsNat}
-          width="300"
-          data={{
-            labels: nationalityLabels,
-            datasets: [
-              {
-                data: nationalityValues,
-                label: 'Pessoas',
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
-                  'rgba(255, 205, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(201, 203, 207, 0.2)',
-                ],
-                borderColor: [
-                  'rgb(255, 99, 132)',
-                  'rgb(255, 159, 64)',
-                  'rgb(255, 205, 86)',
-                  'rgb(75, 192, 192)',
-                  'rgb(54, 162, 235)',
-                  'rgb(153, 102, 255)',
-                  'rgb(201, 203, 207)',
-                ],
-                borderWidth: 1,
-              },
-            ],
-          }}
-        /> */}
       </div>
 
       <div className="chart">

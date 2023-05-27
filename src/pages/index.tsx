@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useRouter } from 'next/router'
-import AllIndexVisNetwork from '../components/AllIndexVisNetwork'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import AllIndexVisNetwork from '../components/AllIndexVisNetwork'
+import styles from '../styles/Home.module.css'
 
 type Props = {
   // Add custom props here
@@ -38,6 +38,12 @@ export default function App() {
       url: 'https://www.fap.df.gov.br/',
       path: '/logos/Extensa_Branca1_FAPDF.png',
       description: 'Logo do fapdf',
+    },
+    {
+      url: 'https://portal.fiocruz.br/',
+      path: '/logos/logo-fiocruz-pb.png',
+      description: 'Logo da Fiocruz',
+      class: 'hilight',
     },
     {
       url: 'https://www.gov.br/cnpq/pt-br',

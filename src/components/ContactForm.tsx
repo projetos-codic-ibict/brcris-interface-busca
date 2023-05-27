@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css' // Import bootstrap CSS
-/* import { useRouter } from 'next/router' */
 import { useTranslation } from 'next-i18next'
-import style from '../styles/ContactForm.module.css'
-/* import Link from 'next/link' */
-import { useState } from 'react'
-import MailService from '../services/MailService'
-import { alertService } from '../services/AlertService'
-import Loader from './Loader'
+import React, { useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { alertService } from '../services/AlertService'
+import MailService from '../services/MailService'
+import style from '../styles/ContactForm.module.css'
+import Loader from './Loader'
 
 function ContactForm() {
   /* const router = useRouter() */
