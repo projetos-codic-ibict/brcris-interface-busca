@@ -22,6 +22,17 @@ export default function App() {
   // const [config, setConfig] = useState(configDefault)
   const router = useRouter()
   const { t } = useTranslation('common')
+
+  const indexes = [
+    { name: 'Publications', page: 'publications' },
+    { name: 'People', page: 'people' },
+    { name: 'Journals', page: 'journals' },
+    { name: 'Institutions', page: 'institutions' },
+    { name: 'Patents', page: 'patents' },
+    { name: 'Programs', page: 'programs' },
+    { name: 'Research Groups', page: 'groups' },
+    { name: 'Software', page: 'software' },
+  ]
   const partners = [
     {
       url: 'https://www.gov.br/ibict/pt-br',
@@ -78,62 +89,24 @@ export default function App() {
               <div className="card search-card">
                 <div className="card-body">
                   <ul className="nav nav-tabs" role="tablist">
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link active"
-                        data-bs-toggle="tab"
-                        data-bs-target="#tabForm"
-                        type="button"
-                        role="tab"
-                        aria-controls="form"
-                        aria-selected="true"
-                        onClick={() => setSearchPage('publications')}
-                      >
-                        {t('Publications')}
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        data-bs-toggle="tab"
-                        data-bs-target="#tabForm"
-                        type="button"
-                        role="tab"
-                        aria-controls="form"
-                        aria-selected="false"
-                        onClick={() => setSearchPage('people')}
-                      >
-                        {t('People')}
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        data-bs-toggle="tab"
-                        data-bs-target="#tabForm"
-                        type="button"
-                        role="tab"
-                        aria-controls="form"
-                        aria-selected="false"
-                        onClick={() => setSearchPage('journals')}
-                      >
-                        {t('Journals')}
-                      </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        data-bs-toggle="tab"
-                        data-bs-target="#tabForm"
-                        type="button"
-                        role="tab"
-                        aria-controls="form"
-                        aria-selected="false"
-                        onClick={() => setSearchPage('institutions')}
-                      >
-                        {t('Institutions')}
-                      </button>
-                    </li>
+                    {indexes.map((indice, index) => (
+                      <li key={index} className="nav-item" role="presentation">
+                        <button
+                          className={
+                            index === 0 ? 'nav-link active' : 'nav-link'
+                          }
+                          data-bs-toggle="tab"
+                          data-bs-target="#tabForm"
+                          type="button"
+                          role="tab"
+                          aria-controls="form"
+                          aria-selected="true"
+                          onClick={() => setSearchPage(indice.page)}
+                        >
+                          {t(indice.name)}
+                        </button>
+                      </li>
+                    ))}
                   </ul>
                   <div className="tab-content" id="tabContent">
                     <div

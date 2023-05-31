@@ -26,10 +26,10 @@ interface IndexNode extends Node {
 const nodes: IndexNode[] = [
   {
     id: 1,
+    index: 'pesqdf-publication',
     label: 'Publications',
     title: '40.565 ',
     widthConstraint: 100,
-    index: 'pesqdf-publication',
     level: 1,
     shape: 'circle',
     color: '#F7964D',
@@ -52,28 +52,85 @@ const nodes: IndexNode[] = [
   },
   {
     id: 3,
-    index: 'pesqdf-orgunit',
-    label: 'Institutions',
-    title: '140 ',
-    level: 3,
-    shape: 'circle',
-    color: '#00dafc',
-  },
-  {
-    id: 4,
     index: 'pesqdf-journals',
     label: 'Journals',
     title: '253 ',
-    level: 4,
+    level: 3,
     shape: 'circle',
     color: '#FF5757',
     font: {
       color: '#ffffff',
     },
   },
+  {
+    id: 4,
+    index: 'pesqdf-orgunit',
+    label: 'Institutions',
+    title: '140 ',
+    level: 4,
+    shape: 'circle',
+    color: '#00dafc',
+  },
+  {
+    id: 5,
+    index: 'pesqdf-patents',
+    label: 'Patentes',
+    title: '253 ',
+    level: 5,
+    shape: 'circle',
+    color: '#960080',
+    font: {
+      color: '#ffffff',
+    },
+  },
+  {
+    id: 6,
+    index: 'pesqdf-programs',
+    label: 'Programas de Pós',
+    title: '253 ',
+    level: 6,
+    shape: 'circle',
+    color: '#20c997',
+    font: {
+      color: '#000',
+    },
+  },
+  {
+    id: 7,
+    index: '',
+    label: 'Grupos de pesquisas',
+    title: '253 ',
+    level: 7,
+    shape: 'circle',
+    color: '#6610f2',
+    font: {
+      color: '#ffffff',
+    },
+  },
+  {
+    id: 8,
+    index: '',
+    label: 'Software',
+    title: '253 ',
+    level: 8,
+    shape: 'circle',
+    color: '#6f42c1',
+    font: {
+      color: '#ffffff',
+    },
+  },
 ]
 
-const keysLanguage = ['Publications', 'People', 'Institutions', 'Journals']
+const keysLanguage = [
+  'Publications',
+  'People',
+  'Journals',
+  'Institutions',
+  'Patents',
+  'Programs',
+  'Research Groups',
+  'Software',
+]
 
 const edges = [
   { from: 1, to: 2, id: 1 },
@@ -91,7 +148,9 @@ const edges = [
 
   { from: 7, to: 8, id: 9 },
   { from: 1, to: 7, id: 10 },
-  { from: 8, to: 8, id: 11 },
+  { from: 8, to: 5, id: 11 },
+  { from: 6, to: 5, id: 15 },
+  { from: 6, to: 1, id: 16 },
 ]
 
 const options = {
@@ -144,8 +203,12 @@ function VisGraph() {
   const pages = [
     `/${router.locale}/publications`,
     `/${router.locale}/people`,
-    `/${router.locale}/institutions`,
     `/${router.locale}/journals`,
+    `/${router.locale}/institutions`,
+    `/${router.locale}/patents`,
+    `/${router.locale}/programs`,
+    `/${router.locale}/groups`,
+    `/${router.locale}/software`,
   ]
 
   const events = {
