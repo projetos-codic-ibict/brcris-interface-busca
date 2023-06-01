@@ -2,15 +2,15 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
+import 'vis-network/styles/vis-network.css'
 // @ts-ignore
 const Graph = dynamic(import('react-graph-vis'), { ssr: false })
-import 'vis-network/styles/vis-network.css'
 // import { Edge, Node, Options } from 'vis-network'/
 import { useTranslation } from 'next-i18next'
-import { Node } from 'vis'
 import { useRouter } from 'next/router'
+import { Node } from 'vis'
 import ElasticSearchStatsService from '../services/ElasticSearchStatsService'
 
 type IndexStat = {
@@ -73,7 +73,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 5,
-    index: 'pesqdf-patents',
+    index: 'pesqdf-patent',
     label: 'Patentes',
     title: '253 ',
     level: 5,
@@ -85,8 +85,8 @@ const nodes: IndexNode[] = [
   },
   {
     id: 6,
-    index: 'pesqdf-programs',
-    label: 'Programas de Pós',
+    index: 'pesqdf-program',
+    label: 'Programs',
     title: '253 ',
     level: 6,
     shape: 'circle',
@@ -95,30 +95,30 @@ const nodes: IndexNode[] = [
       color: '#000',
     },
   },
-  {
-    id: 7,
-    index: '',
-    label: 'Grupos de pesquisas',
-    title: '253 ',
-    level: 7,
-    shape: 'circle',
-    color: '#6610f2',
-    font: {
-      color: '#ffffff',
-    },
-  },
-  {
-    id: 8,
-    index: '',
-    label: 'Software',
-    title: '253 ',
-    level: 8,
-    shape: 'circle',
-    color: '#6f42c1',
-    font: {
-      color: '#ffffff',
-    },
-  },
+  // {
+  //   id: 7,
+  //   index: '',
+  //   label: 'Research Groups',
+  //   title: '253 ',
+  //   level: 7,
+  //   shape: 'circle',
+  //   color: '#6610f2',
+  //   font: {
+  //     color: '#ffffff',
+  //   },
+  // },
+  // {
+  //   id: 8,
+  //   index: '',
+  //   label: 'Software',
+  //   title: '253 ',
+  //   level: 8,
+  //   shape: 'circle',
+  //   color: '#6f42c1',
+  //   font: {
+  //     color: '#ffffff',
+  //   },
+  // },
 ]
 
 const keysLanguage = [
@@ -128,29 +128,25 @@ const keysLanguage = [
   'Institutions',
   'Patents',
   'Programs',
-  'Research Groups',
-  'Software',
+  // 'Research Groups',
+  // 'Software',
 ]
 
 const edges = [
   { from: 1, to: 2, id: 1 },
-  { from: 1, to: 4, id: 3 },
-  // { from: 2, to: 3, id: 2 },
-  // { from: 2, to: 4, id: 14 },
-  // { from: 1, to: 4, id: 3 },
-  { from: 3, to: 4, id: 12 },
-
-  // { from: 4, to: 5, id: 6 },
-  { from: 4, to: 2, id: 13 },
-  { from: 1, to: 3, id: 2 },
-  { from: 3, to: 2, id: 7 },
-  { from: 1, to: 5, id: 8 },
-
-  { from: 7, to: 8, id: 9 },
-  { from: 1, to: 7, id: 10 },
-  { from: 8, to: 5, id: 11 },
-  { from: 6, to: 5, id: 15 },
-  { from: 6, to: 1, id: 16 },
+  { from: 1, to: 4, id: 2 },
+  { from: 3, to: 4, id: 3 },
+  { from: 4, to: 2, id: 4 },
+  { from: 1, to: 3, id: 5 },
+  { from: 3, to: 2, id: 6 },
+  { from: 6, to: 1, id: 7 },
+  { from: 6, to: 2, id: 8 },
+  { from: 6, to: 4, id: 9 },
+  { from: 5, to: 2, id: 10 },
+  { from: 5, to: 4, id: 11 },
+  // { from: 7, to: 8, id: 8 },
+  // { from: 1, to: 7, id: 9 },
+  // { from: 8, to: 5, id: 10 },
 ]
 
 const options = {
@@ -222,6 +218,7 @@ function VisGraph() {
   useEffect(() => {
     ElasticSearchStatsService()
       .then((res) => {
+        console.log(res)
         setIndexesStats(res)
       })
       .catch((err) => {
@@ -239,6 +236,7 @@ function VisGraph() {
         (item) => item.index === nodes[i].index
       )
       if (indexStat) {
+        console.log(nodes[i].label, indexStat.index, indexStat['docs.count'])
         nodes[i].title = `${numberFormat.format(indexStat['docs.count'])} `
         nodes[i].widthConstraint = getSizeOfNode(
           maxSizeOfNode,

@@ -1,20 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
 import { useRouter } from 'next/router'
-
-type Author = {
-  id: string
-  name: string
-}
-type OrgUnit = {
-  id: string
-  name: string
-}
-
-type Service = {
-  id: string
-  title: string[]
-}
+import { Author, OrgUnit, Service } from '../types/Entities'
 
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
@@ -80,21 +67,6 @@ const CustomResultViewPublications = ({
                   : 'Journals(s)'}
                 {''}
               </span>
-              {/* {result.orgunit || result.service || result.journal ? (
-                <span className="sui-result__key">
-                  {' '}
-                  {result.type?.raw == 'doctoral thesis' ||
-                  result.type?.raw == 'master thesis'
-                    ? 'Institution(s)'
-                    : result.type?.raw == 'conference proceedings'
-                    ? 'Organization(s)'
-                    : 'Journals(s)'}
-                  {''}
-                </span>
-              ) : (
-                ' '
-              )} */}
-
               <span className="sui-result__value">
                 {result.orgunit?.raw.map((org: OrgUnit) => (
                   <a

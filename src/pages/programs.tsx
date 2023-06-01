@@ -1,32 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react'
-import Connector from '../services/APIConnector'
-import styles from '../styles/Home.module.css'
 import {
   ErrorBoundary,
   Facet,
-  SearchProvider,
-  SearchBox,
-  Results,
-  PagingInfo,
-  ResultsPerPage,
   Paging,
+  PagingInfo,
+  Results,
+  ResultsPerPage,
+  SearchBox,
+  SearchProvider,
   Sorting,
   WithSearch,
 } from '@elastic/react-search-ui'
-import { SearchDriverOptions } from '@elastic/search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
-import IndicatorsPeople from '../components/IndicatorsPeople'
-import ClearFilters from '../components/ClearFilters'
-import CustomResultViewPeople from '../components/CustomResultViewPeople'
-import ButtonFieldSelect from '../components/ButtonFieldSelect'
-import OperatorSelect from '../components/OperatorSelect'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import React from 'react'
+import ButtonFieldSelect from '../components/ButtonFieldSelect'
+import ClearFilters from '../components/ClearFilters'
+import CustomResultViewPrograms from '../components/CustomResultViewPrograms'
+import Connector from '../services/APIConnector'
+import styles from '../styles/Home.module.css'
 type Props = {
   // Add custom props here
 }
@@ -53,29 +50,29 @@ const config = {
       name: {},
     },
     result_fields: {
-      id: {
-        raw: {},
-      },
-      capesResearchArea: {
-        raw: {},
-      },
-      lattesId: {
+      name: {
         raw: {},
       },
       orgunit: {
         raw: [],
       },
-      orcid: {
+      capesResearchArea: {
         raw: {},
       },
-      researchArea: {
+      cnpqResearchArea: {
+        raw: {},
+      },
+      evaluationArea: {
         raw: {},
       },
     },
-    disjunctiveFacets: ['nationality', 'researchArea'],
+    disjunctiveFacets: ['name', 'capesResearchArea'],
     facets: {
-      nationality: { type: 'value' },
-      researchArea: { type: 'value' },
+      name: { type: 'value' },
+      capesResearchArea: { type: 'value' },
+      cnpqResearchArea: { type: 'value' },
+      'orgunit.name': { type: 'value' },
+      evaluationArea: { type: 'value' },
     },
   },
   // autocompleteQuery: {
@@ -242,7 +239,7 @@ export default function App() {
                     <div className={styles.content}>
                       <Layout
                         // header={}
-                        /*  sideContent={
+                        sideContent={
                           <div>
                             {wasSearched && (
                               <Sorting
@@ -250,21 +247,32 @@ export default function App() {
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
-                            <Facet
-                              key={'1'}
-                              field={'nationality'}
-                              label={t('Nationality')}
-                            />
+                            <Facet key={'1'} field={'name'} label={t('Name')} />
                             <Facet
                               key={'2'}
-                              field={'researchArea'}
-                              label={t('Research field')}
+                              field={'orgunit.name'}
+                              label={t('Institution')}
+                            />
+                            <Facet
+                              key={'3'}
+                              field={'capesResearchArea'}
+                              label={t('Capes research area')}
+                            />
+                            <Facet
+                              key={'4'}
+                              field={'cnpqResearchArea'}
+                              label={t('CNPq research area')}
+                            />
+                            <Facet
+                              key={'5'}
+                              field={'evaluationArea'}
+                              label={t('Evaluation area')}
                             />
                           </div>
-                        } */
-                        /* bodyContent={
-                          <Results titleField="asd" result={config} />
-                        } */
+                        }
+                        bodyContent={
+                          <Results resultView={CustomResultViewPrograms} />
+                        }
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}

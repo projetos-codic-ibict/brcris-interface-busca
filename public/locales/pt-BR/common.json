@@ -6,7 +6,7 @@
   "Journals": "Revistas",
   "Institutions": "Organizações",
   "Patents": "Patentes",
-  "Programs": "Programas de Pós",
+  "Programs": "Programas de Pós-graduação",
   "Research Groups": "Grupos de pesquisa",
   "Software": "Software",
   "Search": "Busca",
@@ -40,5 +40,8 @@
   "Status": "Status",
   "Publisher": "Editora",
   "privacy policy": "política de privacidade",
-  "privacy policy message": "BrCris usa cookies para fornecer as funcionalidades necessárias do site e melhorar sua experiência. Ao usar nosso site, você concorda com nossas políticas legais. Você pode saber mais sobre os serviços que utilizamos em nosso"
+  "privacy policy message": "BrCris usa cookies para fornecer as funcionalidades necessárias do site e melhorar sua experiência. Ao usar nosso site, você concorda com nossas políticas legais. Você pode saber mais sobre os serviços que utilizamos em nosso",
+  "Capes research area": "Área de pesquisa Capes",
+  "CNPq research area": "Área de pesquisa CNPq",
+  "Evaluation area": "Área de avaliação"
 }

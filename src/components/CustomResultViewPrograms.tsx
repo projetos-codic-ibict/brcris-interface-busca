@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+import { OrgUnit } from '../types/Entities'
 
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
 const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
   const router = useRouter()
+  const { t } = useTranslation('common')
   return (
     <li className="sui-result">
       <div>
@@ -14,7 +17,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_BASE}/pers_${result.id.raw}&lang=${router.locale}`}
+              href={`${VIVO_URL_BASE}/org_${result.id.raw}&lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.name?.raw}
@@ -25,54 +28,38 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <li>
-              <span className="sui-result__key">Lattes</span>
+              <span className="sui-result__key">{t('Institution')}</span>
               <span className="sui-result__value">
-                {result.lattesId ? (
+                {result.orgunit?.raw.map((org: OrgUnit) => (
                   <a
+                    key={org.id}
                     target="_blank"
                     rel="noreferrer"
-                    href={`http://lattes.cnpq.br/${result.lattesId.raw}`}
+                    href={`${VIVO_URL_BASE}/org_${org.id}&lang=${router.locale}`}
                   >
-                    http://lattes.cnpq.br/{result.lattesId.raw}
+                    {org.name}
                   </a>
-                ) : (
-                  ''
-                )}
-              </span>
-            </li>
-
-            <li>
-              <span className="sui-result__key">Nationality</span>
-
-              <span className="sui-result__value">
-                {result.nationality?.raw}
-              </span>
-            </li>
-
-            <li>
-              <span className="sui-result__key">Orcid</span>
-              <span className="sui-result__value">
-                {result.orcid ? (
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`https://orcid.org/${result.orcid?.raw}`}
-                  >
-                    https://orcid.org/{result.orcid?.raw}
-                  </a>
-                ) : (
-                  ''
-                )}
-              </span>
-            </li>
-
-            <li>
-              <span className="sui-result__key">Research Area</span>
-
-              <span className="sui-result__value">
-                {result.researchArea?.raw.map((area: string) => (
-                  <span key={area}>{area}</span>
                 ))}
+              </span>
+            </li>
+            <li>
+              <span className="sui-result__key">
+                {t('Capes research area')}
+              </span>
+              <span className="sui-result__value">
+                {result.capesResearchArea?.raw}
+              </span>
+            </li>
+            <li>
+              <span className="sui-result__key">{t('CNPq research area')}</span>
+              <span className="sui-result__value">
+                {result.cnpqResearchArea?.raw}
+              </span>
+            </li>
+            <li>
+              <span className="sui-result__key">{t('Evaluation area')}</span>
+              <span className="sui-result__value">
+                {result.evaluationArea?.raw}
               </span>
             </li>
           </ul>

@@ -6,7 +6,7 @@
   "Journals": "Journals",
   "Institutions": "Institutions",
   "Patents": "Patents",
-  "Programs": "Programs",
+  "Programs": "Graduate Programs",
   "Research Groups": "Research Groups",
   "Software": "Software",
   "Search": "Search",
@@ -40,5 +40,8 @@
   "Status": "Status",
   "Publisher": "Publisher",
   "privacy policy": "privacy policy",
-  "privacy policy message": "BrCris uses cookies to provide necessary website functionality and improve your experience. By using our website, you agree to our legal policies. You can learn more about the services we use at our"
+  "privacy policy message": "BrCris uses cookies to provide necessary website functionality and improve your experience. By using our website, you agree to our legal policies. You can learn more about the services we use at our",
+  "Capes research area": "Capes research area",
+  "CNPq research area": "CNPq research area",
+  "Evaluation area": "Evaluation area"
 }
