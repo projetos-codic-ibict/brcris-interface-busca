@@ -46,7 +46,7 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'pesqdf-person',
+    index: 'pesqdf-patent',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -56,19 +56,28 @@ const config = {
       id: {
         raw: {},
       },
-      name: {
+      applicant: {
         raw: {},
       },
-      lattesId: {
+      espacenetTitle: {
         raw: {},
       },
-      nationality: {
+      depositDate: {
         raw: {},
       },
-      orcid: {
+      kindCode: {
         raw: {},
       },
-      researchArea: {
+      countryCode: {
+        raw: {},
+      },
+      lattesTitle: {
+        raw: {},
+      },
+      publicationDate: {
+        raw: {},
+      },
+      inventor: {
         raw: {},
       },
     },
@@ -148,7 +157,7 @@ export default function App() {
   return (
     <div>
       <Head>
-        <title>{`BrCris - ${t('People')}`}</title>
+        <title>{`BrCris - ${t('Patents')}`}</title>
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>
@@ -163,7 +172,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>{t('People')}</h2>
+                            <h2>{t('Patents')}</h2>
                           </div>
                         </div>
 
@@ -242,7 +251,7 @@ export default function App() {
                     <div className={styles.content}>
                       <Layout
                         // header={}
-                        sideContent={
+                        /* sideContent={
                           <div>
                             {wasSearched && (
                               <Sorting
@@ -261,10 +270,11 @@ export default function App() {
                               label={t('Research field')}
                             />
                           </div>
-                        }
-                        bodyContent={
-                          <Results resultView={CustomResultViewPeople} />
-                        }
+                        } */
+                        /* bodyContent={
+                          
+                          <Results titleField={config.searchQuery.result_fields.espacenetTitle} result={config} />
+                        } */
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}
@@ -279,7 +289,7 @@ export default function App() {
                         </div>
                         {/** 
                         // @ts-ignore */}
-                        <IndicatorsPeople indicatorsState={indicatorsState} />
+                        {/* <IndicatorsPatents indicatorsState={indicatorsState} /> */}
                       </div>
                     </div>
                   </ErrorBoundary>

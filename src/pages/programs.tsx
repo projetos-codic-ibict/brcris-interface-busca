@@ -46,7 +46,7 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'pesqdf-person',
+    index: 'pesqdf-program',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -56,14 +56,14 @@ const config = {
       id: {
         raw: {},
       },
-      name: {
+      capesResearchArea: {
         raw: {},
       },
       lattesId: {
         raw: {},
       },
-      nationality: {
-        raw: {},
+      orgunit: {
+        raw: [],
       },
       orcid: {
         raw: {},
@@ -148,7 +148,7 @@ export default function App() {
   return (
     <div>
       <Head>
-        <title>{`BrCris - ${t('People')}`}</title>
+        <title>{`BrCris - ${t('Programs')}`}</title>
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>
@@ -163,7 +163,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>{t('People')}</h2>
+                            <h2>{t('Programs')}</h2>
                           </div>
                         </div>
 
@@ -242,7 +242,7 @@ export default function App() {
                     <div className={styles.content}>
                       <Layout
                         // header={}
-                        sideContent={
+                        /*  sideContent={
                           <div>
                             {wasSearched && (
                               <Sorting
@@ -261,10 +261,10 @@ export default function App() {
                               label={t('Research field')}
                             />
                           </div>
-                        }
-                        bodyContent={
-                          <Results resultView={CustomResultViewPeople} />
-                        }
+                        } */
+                        /* bodyContent={
+                          <Results titleField="asd" result={config} />
+                        } */
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}
@@ -279,7 +279,7 @@ export default function App() {
                         </div>
                         {/** 
                         // @ts-ignore */}
-                        <IndicatorsPeople indicatorsState={indicatorsState} />
+                        {/* <IndicatorsPeople indicatorsState={indicatorsState} /> */}
                       </div>
                     </div>
                   </ErrorBoundary>
