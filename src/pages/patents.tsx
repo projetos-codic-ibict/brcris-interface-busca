@@ -18,9 +18,9 @@ import {
 import { SearchDriverOptions } from '@elastic/search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
-import IndicatorsPeople from '../components/IndicatorsPeople'
+/* import IndicatorsPeople from '../components/IndicatorsPeople' */
 import ClearFilters from '../components/ClearFilters'
-import CustomResultViewPeople from '../components/CustomResultViewPeople'
+import CustomResultViewPatents from '../components/CustomResultViewPatents'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import OperatorSelect from '../components/OperatorSelect'
 import { useTranslation } from 'next-i18next'
@@ -56,11 +56,11 @@ const config = {
       id: {
         raw: {},
       },
-      applicant: {
-        raw: {},
-      },
       espacenetTitle: {
         raw: {},
+      },
+      applicant: {
+        raw: [],
       },
       depositDate: {
         raw: {},
@@ -72,19 +72,26 @@ const config = {
         raw: {},
       },
       lattesTitle: {
-        raw: {},
+        raw: [],
       },
       publicationDate: {
-        raw: {},
+        raw: [],
       },
       inventor: {
-        raw: {},
+        raw: [],
       },
     },
-    disjunctiveFacets: ['nationality', 'researchArea'],
+    disjunctiveFacets: [
+      'countryCode',
+      'publicationDate',
+      'depositDate',
+      'inventor',
+    ],
     facets: {
-      nationality: { type: 'value' },
-      researchArea: { type: 'value' },
+      countryCode: { type: 'value' },
+      publicationDate: { type: 'value' },
+      depositDate: { type: 'value' },
+      'inventor.name': { type: 'value' },
     },
   },
   // autocompleteQuery: {
@@ -251,7 +258,7 @@ export default function App() {
                     <div className={styles.content}>
                       <Layout
                         // header={}
-                        /* sideContent={
+                        sideContent={
                           <div>
                             {wasSearched && (
                               <Sorting
@@ -261,20 +268,33 @@ export default function App() {
                             )}
                             <Facet
                               key={'1'}
-                              field={'nationality'}
-                              label={t('Nationality')}
+                              field={'inventor.name'}
+                              /* label={t('Inventor')} */
+                              label={'Inventor'}
                             />
+
                             <Facet
                               key={'2'}
-                              field={'researchArea'}
-                              label={t('Research field')}
+                              field={'countryCode'}
+                              label={t('Country Code')}
+                            />
+
+                            <Facet
+                              key={'2'}
+                              field={'publicationDate'}
+                              label={t('Publication Date')}
+                            />
+
+                            <Facet
+                              key={'3'}
+                              field={'depositDate'}
+                              label={t('Deposit Date')}
                             />
                           </div>
-                        } */
-                        /* bodyContent={
-                          
-                          <Results titleField={config.searchQuery.result_fields.espacenetTitle} result={config} />
-                        } */
+                        }
+                        bodyContent={
+                          <Results resultView={CustomResultViewPatents} />
+                        }
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}
