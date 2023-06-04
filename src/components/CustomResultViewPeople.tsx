@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
 const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
   const router = useRouter()
+  const { t } = useTranslation('common')
   return (
     <li className="sui-result">
       <div>
@@ -25,7 +27,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <li>
-              <span className="sui-result__key">Lattes</span>
+              <span className="sui-result__key">{t('Lattes')}</span>
               <span className="sui-result__value">
                 {result.lattesId ? (
                   <a
@@ -42,7 +44,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">Nationality</span>
+              <span className="sui-result__key">{t('Nationality')}</span>
 
               <span className="sui-result__value">
                 {result.nationality?.raw}
@@ -50,7 +52,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">Orcid</span>
+              <span className="sui-result__key">{t('Orcid')}</span>
               <span className="sui-result__value">
                 {result.orcid ? (
                   <a
@@ -67,7 +69,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">Research Area</span>
+              <span className="sui-result__key">{t('Research Area')}</span>
 
               <span className="sui-result__value">
                 {result.researchArea?.raw.map((area: string) => (

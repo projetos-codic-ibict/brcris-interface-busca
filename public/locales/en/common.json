@@ -12,7 +12,7 @@
   "Search": "Search",
   "Sort by": "Sort by",
   "Authors": "Authors",
-  "Author": "Author",
+  "Author": "Author(s)",
   "Keyword": "Keyword",
   "Institution": "Institution",
   "Type": "Type",
@@ -51,5 +51,9 @@
   "Country Code": "Country Code",
   "Lattes Title": "Lattes Title",
   "Publication Date": "Publication Date",
-  "Inventor": "Inventor(s)"
+  "Inventor": "Inventor(s)",
+  "Organization": "Organization(s)",
+  "Research Area": "Research Area(s)",
+  "Lattes": "Lattes",
+  "Orcid": "Orcid"
 }

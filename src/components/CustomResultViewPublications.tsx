@@ -2,6 +2,7 @@
 import { ResultViewProps } from '@elastic/react-search-ui-views'
 import { useRouter } from 'next/router'
 import { Author, OrgUnit, Service } from '../types/Entities'
+import { useTranslation } from 'next-i18next'
 
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
@@ -10,6 +11,7 @@ const CustomResultViewPublications = ({
   onClickLink,
 }: ResultViewProps) => {
   const router = useRouter()
+  const { t } = useTranslation('common')
   return (
     <li className="sui-result">
       <div>
@@ -29,14 +31,14 @@ const CustomResultViewPublications = ({
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <li>
-              <span className="sui-result__key">Year</span>
+              <span className="sui-result__key">{t('Year')}</span>
               <span className="sui-result__value">
                 {result.publicationDate?.raw}
               </span>
             </li>
 
             <li>
-              <span className="sui-result__key">Author(s)</span>
+              <span className="sui-result__key">{t('Author')}</span>
               <span className="sui-result__value">
                 {result.author?.raw.map((author: Author) => (
                   <a
@@ -52,7 +54,7 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              <span className="sui-result__key">Type</span>
+              <span className="sui-result__key">{t('Type')}</span>
               <span className="sui-result__value">{result.type?.raw}</span>
             </li>
 
@@ -61,10 +63,10 @@ const CustomResultViewPublications = ({
                 {' '}
                 {result.type?.raw == 'doctoral thesis' ||
                 result.type?.raw == 'master thesis'
-                  ? 'Institution(s)'
+                  ? `${t('Institution')}(s)`
                   : result.type?.raw == 'conference proceedings'
-                  ? 'Organization(s)'
-                  : 'Journals(s)'}
+                  ? `${t('Organization')}(s)`
+                  : `${t('Journals')}`}
                 {''}
               </span>
               <span className="sui-result__value">
@@ -106,7 +108,7 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              <span className="sui-result__key">Language(s)</span>
+              <span className="sui-result__key">{t('Language')}</span>
               {/* {result.language ? (
                 <span className="sui-result__key">Language(s)</span>
               ) : (
@@ -121,7 +123,7 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              <span className="sui-result__key">Cnpq Research Area(s)</span>
+              <span className="sui-result__key">{t('Research Area')}</span>
               {/* {result.cnpqResearchArea ? (
                 <span className="sui-result__key">Cnpq Research Area(s)</span>
               ) : (
@@ -138,7 +140,7 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              <span className="sui-result__key">Keyword</span>
+              <span className="sui-result__key">{t('Keyword')}</span>
               {/* {result.keyword ? (
                 <span className="sui-result__key">Keyword</span>
               ) : (

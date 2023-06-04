@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
 const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
   const router = useRouter()
+  const { t } = useTranslation('common')
   return (
     <li className="sui-result">
       <div>
@@ -52,7 +54,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">Title</span>
+              <span className="sui-result__key">{t('Title')}</span>
               {/* {result.title ? (
                 <span className="sui-result__key">Title</span>
               ) : (
@@ -63,7 +65,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">Status</span>
+              <span className="sui-result__key">{t('Status')}</span>
               {/* {result.status ? (
                 <span className="sui-result__key">Status</span>
               ) : (
@@ -78,7 +80,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">Publisher</span>
+              <span className="sui-result__key">{t('Publisher')}</span>
               {/* {result.publisher ? (
                 <span className="sui-result__key">Publisher</span>
               ) : (
