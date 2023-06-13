@@ -109,11 +109,17 @@ a {
 }
 
 .graph {
-  min-height: 400px;
-  height: 100%;
+  position: absolute;
+  left: -50%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: 999;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 150%;
 }
 
 .btn-picti {
@@ -211,9 +217,9 @@ li .sui-result__key:after {
   padding-top: 2rem;
 }
 
-.lattes-icon{
+.lattes-icon {
   max-height: 19px;
-  margin-top: -8px
+  margin-top: -8px;
 }
 
 .page .nav-tabs .nav-item.show .nav-link,
@@ -438,6 +444,13 @@ footer {
   }
 
   .navbar .flex-nowrap {
+    width: 100%;
+  }
+
+  .graph {
+    position: static;
+    height: 50vh;
+    left: 0;
     width: 100%;
   }
 }

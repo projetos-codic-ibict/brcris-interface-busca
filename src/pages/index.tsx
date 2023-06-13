@@ -84,7 +84,9 @@ export default function App() {
       <div className={styles.home}>
         <div className={styles.textWhite}>
           <div className={`container pag ${styles.main}`}>
-            <AllIndexVisNetwork />
+            <section>
+              <AllIndexVisNetwork />
+            </section>
             <section>
               <div className="card search-card">
                 <div className="card-body">

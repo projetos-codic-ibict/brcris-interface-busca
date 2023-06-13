@@ -75,7 +75,7 @@ const nodes: IndexNode[] = [
     color: '#00dafc',
     font: {
       color: '#210d41',
-      size: 13,
+      size: 11,
     },
   },
   {
@@ -101,7 +101,7 @@ const nodes: IndexNode[] = [
     color: '#20c997',
     font: {
       color: '#210d41',
-      size: 12,
+      size: 11,
     },
   },
   // {
@@ -160,7 +160,7 @@ const edges = [
 
 const options = {
   // autoResize: true,
-  height: '500px',
+  height: '100%',
   width: '100%',
   edges: {
     color: '#fff',
@@ -266,11 +266,11 @@ function VisGraph() {
   }, [t, indexesStats])
 
   return (
-    <section className="graph">
+    <div className="graph">
       {/**
              // @ts-ignore */}
       <Graph graph={graph} options={options} events={events} />
-    </section>
+    </div>
   )
 }
 
