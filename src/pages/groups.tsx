@@ -20,13 +20,12 @@ import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
 import IndicatorsPeople from '../components/IndicatorsPeople'
 import ClearFilters from '../components/ClearFilters'
-import CustomResultViewPeople from '../components/CustomResultViewPeople'
-import ButtonFieldSelect from '../components/ButtonFieldSelect'
-import OperatorSelect from '../components/OperatorSelect'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import ButtonFieldSelect from '../components/ButtonFieldSelect'
+import CustomResultViewPeople from '../components/customResultView/CustomResultViewInstitutions'
 type Props = {
   // Add custom props here
 }

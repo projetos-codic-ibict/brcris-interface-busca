@@ -21,7 +21,7 @@ import Head from 'next/head'
 import React from 'react'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import ClearFilters from '../components/ClearFilters'
-import CustomResultViewPrograms from '../components/CustomResultViewPrograms'
+import CustomResultViewPrograms from '../components/customResultView/CustomResultViewPrograms'
 import Connector from '../services/APIConnector'
 import styles from '../styles/Home.module.css'
 type Props = {

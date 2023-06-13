@@ -170,15 +170,15 @@ a {
   padding-left: 0;
 }
 
-.sui-result__value a {
+.sui-result__value a.lattes-link {
   margin-right: 0.5rem;
 }
 
-.sui-result__value a:after {
+.sui-result__value a.lattes-link:after {
   content: ',';
 }
 
-.sui-result__value a:last-child:after {
+.sui-result__value a.lattes-link:last-child:after {
   content: '';
 }
 
@@ -209,6 +209,11 @@ li .sui-result__key:after {
 
 .page {
   padding-top: 2rem;
+}
+
+.lattes-icon{
+  max-height: 19px;
+  margin-top: -8px
 }
 
 .page .nav-tabs .nav-item.show .nav-link,

@@ -2,7 +2,7 @@
 import { ResultViewProps } from '@elastic/react-search-ui-views'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { OrgUnit } from '../types/Entities'
+import { OrgUnit } from '../../types/Entities'
 
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 

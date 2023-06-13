@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
 import { useRouter } from 'next/router'
-import { Author, OrgUnit, Service } from '../types/Entities'
+import { Author, OrgUnit, Service } from '../../types/Entities'
+import AuthorLink from '../externalLinks/AuthorLink'
 
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
@@ -39,14 +40,12 @@ const CustomResultViewPublications = ({
               <span className="sui-result__key">Author(s)</span>
               <span className="sui-result__value">
                 {result.author?.raw.map((author: Author) => (
-                  <a
+                  <AuthorLink
                     key={author.id}
-                    target="_blank"
-                    href={`${VIVO_URL_BASE}/pers_${author.id}&lang=${router.locale}`}
-                    rel="noreferrer"
-                  >
-                    {author.name}
-                  </a>
+                    id={author.id}
+                    name={author.name}
+                    idLattes={author.idLattes}
+                  />
                 ))}
               </span>
             </li>

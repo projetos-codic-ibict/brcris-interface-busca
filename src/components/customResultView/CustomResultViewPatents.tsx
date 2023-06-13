@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
 import { useTranslation } from 'next-i18next'
+import AuthorLink from '../externalLinks/AuthorLink'
 /* import { useRouter } from 'next/router' */
 /* import { OrgUnit } from '../types/Entities'
 
@@ -69,29 +70,13 @@ const CustomResultViewPatents = ({ result }: ResultViewProps) => {
               <span className="sui-result__key">{t('Inventor')}</span>
               {result.inventor?.raw.map((inventor: any, index: number) => (
                 <span key={index} className="sui-result__value">
-                  {inventor?.name + ' - '}
-
-                  {inventor.nationality ? (
-                    <span>{inventor.nationality}</span>
-                  ) : (
-                    ''
-                  )}
-
-                  {inventor.idLattes ? (
-                    <span>
-                      <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={`http://lattes.cnpq.br/${inventor.idLattes}`}
-                      >
-                        http://lattes.cnpq.br/{inventor.idLattes}
-                        {', '}
-                        <br />
-                      </a>
-                    </span>
-                  ) : (
-                    ''
-                  )}
+                  <AuthorLink
+                    key={inventor.id}
+                    id={inventor.id}
+                    nationality={inventor.nationality}
+                    name={inventor.name}
+                    idLattes={inventor.idLattes}
+                  />
                 </span>
               ))}
             </li>

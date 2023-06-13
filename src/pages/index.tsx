@@ -58,7 +58,7 @@ export default function App() {
     },
     {
       url: 'https://www.gov.br/cnpq/pt-br',
-      path: '/logos/CNPq_v2017_rgb_neg.png',
+      path: '/logos/cnpq-logo.png',
       description: 'Logo do CNPq',
     },
     {

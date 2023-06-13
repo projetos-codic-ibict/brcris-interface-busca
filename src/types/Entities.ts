@@ -1,6 +1,8 @@
 export type Author = {
   id: string
   name: string
+  idLattes?: string
+  nationality?: string
 }
 export type OrgUnit = {
   id: string

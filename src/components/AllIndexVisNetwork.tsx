@@ -34,7 +34,8 @@ const nodes: IndexNode[] = [
     shape: 'circle',
     color: '#F7964D',
     font: {
-      color: '#ffffff',
+      color: '#210d41',
+      size: 13,
     },
   },
   {
@@ -47,7 +48,8 @@ const nodes: IndexNode[] = [
     shape: 'circle',
     color: '#CB6CE6',
     font: {
-      color: '#ffffff',
+      color: '#210d41',
+      size: 13,
     },
   },
   {
@@ -59,7 +61,8 @@ const nodes: IndexNode[] = [
     shape: 'circle',
     color: '#FF5757',
     font: {
-      color: '#ffffff',
+      color: '#210d41',
+      size: 13,
     },
   },
   {
@@ -70,6 +73,10 @@ const nodes: IndexNode[] = [
     level: 4,
     shape: 'circle',
     color: '#00dafc',
+    font: {
+      color: '#210d41',
+      size: 13,
+    },
   },
   {
     id: 5,
@@ -80,7 +87,8 @@ const nodes: IndexNode[] = [
     shape: 'circle',
     color: '#960080',
     font: {
-      color: '#ffffff',
+      color: '#210d41',
+      size: 13,
     },
   },
   {
@@ -92,7 +100,8 @@ const nodes: IndexNode[] = [
     shape: 'circle',
     color: '#20c997',
     font: {
-      color: '#000',
+      color: '#210d41',
+      size: 12,
     },
   },
   // {
@@ -163,7 +172,7 @@ const options = {
   },
   nodes: {
     shape: 'dot',
-    size: 64,
+    size: 32,
   },
   interaction: {
     // dragNodes: false,

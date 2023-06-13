@@ -1,46 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
-import { useRouter } from 'next/router'
+import AuthorLink from '../externalLinks/AuthorLink'
 
-const VIVO_URL_BASE = process.env.VIVO_URL_BASE
-
-const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
-  const router = useRouter()
+const CustomResultViewPeople = ({ result }: ResultViewProps) => {
   return (
     <li className="sui-result">
       <div>
         <div className="sui-result__header">
           <h6>
-            <a
-              onClick={onClickLink}
-              target="_blank"
-              href={`${VIVO_URL_BASE}/pers_${result.id.raw}&lang=${router.locale}`}
-              rel="noreferrer"
-            >
-              {result.name?.raw}
-            </a>
+            <AuthorLink
+              key={result.id.raw}
+              id={result.id.raw}
+              name={result.name?.raw}
+              idLattes={result.lattesId.raw!}
+            />
           </h6>
         </div>
 
         <div className="sui-result__body">
           <ul className="sui-result__details">
-            <li>
-              <span className="sui-result__key">Lattes</span>
-              <span className="sui-result__value">
-                {result.lattesId ? (
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`http://lattes.cnpq.br/${result.lattesId.raw}`}
-                  >
-                    http://lattes.cnpq.br/{result.lattesId.raw}
-                  </a>
-                ) : (
-                  ''
-                )}
-              </span>
-            </li>
-
             <li>
               <span className="sui-result__key">Nationality</span>
 
