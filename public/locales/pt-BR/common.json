@@ -12,7 +12,7 @@
   "Search": "Busca",
   "Sort by": "Ordenar por",
   "Authors": "Autores",
-  "Author": "Autor",
+  "Author": "Autor(es)",
   "Keyword": "Palavra-chave",
   "Institution": "Instituição",
   "Type": "Tipo",
@@ -51,5 +51,9 @@
   "Country Code": "Código do País",
   "Lattes Title": "Título do Lattes",
   "Publication Date": "Data de Publicação",
-  "Inventor": "Inventor(es)"
+  "Inventor": "Inventor(es)",
+  "Organization": "Organização(oes)",
+  "Research Area": "Área(s) de Pesquisa",
+  "Lattes": "Lattes",
+  "Orcid": "Orcid"
 }

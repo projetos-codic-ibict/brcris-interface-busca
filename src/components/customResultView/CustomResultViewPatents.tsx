@@ -68,8 +68,8 @@ const CustomResultViewPatents = ({ result }: ResultViewProps) => {
 
             <li>
               <span className="sui-result__key">{t('Inventor')}</span>
-              {result.inventor?.raw.map((inventor: any, index: number) => (
-                <span key={index} className="sui-result__value">
+              <span className="sui-result__value">
+                {result.inventor?.raw.map((inventor: any) => (
                   <AuthorLink
                     key={inventor.id}
                     id={inventor.id}
@@ -77,8 +77,8 @@ const CustomResultViewPatents = ({ result }: ResultViewProps) => {
                     name={inventor.name}
                     idLattes={inventor.idLattes}
                   />
-                </span>
-              ))}
+                ))}
+              </span>
             </li>
           </ul>
         </div>

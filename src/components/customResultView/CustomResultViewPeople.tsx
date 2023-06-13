@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
+import { useTranslation } from 'next-i18next'
 import AuthorLink from '../externalLinks/AuthorLink'
 
 const CustomResultViewPeople = ({ result }: ResultViewProps) => {
+  const { t } = useTranslation('common')
   return (
     <li className="sui-result">
       <div>
@@ -20,7 +22,7 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <li>
-              <span className="sui-result__key">Nationality</span>
+              <span className="sui-result__key">{t('Nationality')}</span>
 
               <span className="sui-result__value">
                 {result.nationality?.raw}
@@ -28,7 +30,7 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">Orcid</span>
+              <span className="sui-result__key">{t('Orcid')}</span>
               <span className="sui-result__value">
                 {result.orcid ? (
                   <a
@@ -45,7 +47,7 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">Research Area</span>
+              <span className="sui-result__key">{t('Research Area')}</span>
 
               <span className="sui-result__value">
                 {result.researchArea?.raw.map((area: string) => (
