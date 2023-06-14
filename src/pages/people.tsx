@@ -248,6 +248,11 @@ export default function App() {
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
+                            <div className="filters">
+                              <span className="sui-sorting__label">
+                                Filters
+                              </span>
+                            </div>
                             <Facet
                               key={'1'}
                               field={'nationality'}

@@ -226,9 +226,9 @@ function PublicationsIndicators({
 
   return (
     <div className={styles.charts}>
-      <div className="chart">
+      <div className={styles.chart}>
         <CSVLink
-          className="icon-download"
+          className={styles.download}
           title="Export to csv"
           data={yearIndicators ? yearIndicators : []}
           filename={'arquivo.csv'}
@@ -273,9 +273,9 @@ function PublicationsIndicators({
         />
       </div>
 
-      <div className="chart">
+      <div className={styles.chart}>
         <CSVLink
-          className="icon-download "
+          className={styles.download}
           title={t('Export to csv') || ''}
           data={typeIndicators ? typeIndicators : []}
           filename={'arquivo.csv'}

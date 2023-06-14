@@ -188,33 +188,33 @@ function PublicationsIndicators({
     indicatorsState.config.searchQuery.operator,
   ])
 
-  const yearIndicators: IndicatorType[] = indicators ? indicators[0] : []
-  const yearLabels =
-    yearIndicators != null ? yearIndicators.map((d) => d.key) : []
+  const orgUnitIndicators: IndicatorType[] = indicators ? indicators[0] : []
+  const orgUnitLabels =
+    orgUnitIndicators != null ? orgUnitIndicators.map((d) => d.key) : []
 
   return (
     <div className={styles.charts}>
-      <div className="chart">
+      <div className={styles.chart}>
         <CSVLink
-          className="icon-download"
+          className={styles.download}
           title="Export to csv"
-          data={yearIndicators ? yearIndicators : []}
+          data={orgUnitIndicators ? orgUnitIndicators : []}
           filename={'arquivo.csv'}
           headers={headersOrgUnit}
         >
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          hidden={yearIndicators == null}
+          hidden={orgUnitIndicators == null}
           /** 
       // @ts-ignore */
           options={options}
           width="500"
           data={{
-            labels: yearLabels,
+            labels: orgUnitLabels,
             datasets: [
               {
-                data: yearIndicators,
+                data: orgUnitIndicators,
                 label: t('Programs') || '',
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',

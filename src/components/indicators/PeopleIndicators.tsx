@@ -210,9 +210,9 @@ function PeopleIndicators({
 
   return (
     <div className={styles.charts}>
-      <div className="chart">
+      <div className={styles.chart}>
         <CSVLink
-          className="icon-download d-block"
+          className={styles.download}
           title="Export to csv"
           data={researchArea ? researchArea : []}
           filename={'arquivo.csv'}
@@ -254,7 +254,7 @@ function PeopleIndicators({
         />
       </div>
 
-      <div className="chart">
+      <div className={styles.chart}>
         <p
           style={{
             display:
@@ -265,7 +265,7 @@ function PeopleIndicators({
           {t('Nationalities')}
         </p>
         <CSVLink
-          className="icon-download d-block"
+          className={styles.download}
           title="Exportar para csv"
           data={nationalities ? nationalities : []}
           filename={'arquivo.csv'}

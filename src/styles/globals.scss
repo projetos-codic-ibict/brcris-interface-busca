@@ -109,17 +109,10 @@ a {
 }
 
 .graph {
-  position: absolute;
-  left: -50%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  height: 100vh;
-  z-index: 99;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150%;
+  height: calc(100vh - 250px);
 }
 
 .btn-picti {
@@ -147,7 +140,7 @@ a {
 
 .search-card .nav-tabs .nav-item.show .nav-link,
 .search-card .nav-tabs .nav-link.active {
-  border-bottom: 2px solid #960080;
+  border-bottom: 2px solid var(--accent-color);
 }
 
 .search-card .sui-search-box__text-input {
@@ -244,9 +237,22 @@ li .sui-result__key:after {
 .page-title {
   display: flex;
   align-items: center;
-  /* border: 1px solid var(--dark-color); */
+  justify-content: center;
   border-radius: 4px;
   height: 100%;
+}
+
+.page-title h2 {
+  position: relative;
+}
+
+.page-title h2::after {
+  content: '';
+  width: 50%;
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  border-bottom: 2px solid var(--accent-color);
 }
 
 .search-btn {
@@ -281,6 +287,17 @@ li .sui-result__key:after {
 .page-search,
 .page-search .sui-multi-checkbox-facet {
   color: #210d41;
+}
+
+.filters {
+  margin: 16px 0 8px 0;
+}
+
+.page-search .sui-facet {
+  border: 1px solid var(--dark-color);
+  border-radius: 5px;
+  margin-bottom: 16px;
+  padding: 8px;
 }
 
 .page-search .sui-facet__title,
@@ -328,9 +345,8 @@ li .sui-result__key:after {
 }
 
 .page-search .sui-layout-sidebar {
-  border: 1px solid var(--dark-color);
   border-radius: 5px;
-  padding: 1rem 0.5rem;
+  padding: 0;
 }
 
 .page-search .sui-layout-body__inner {
@@ -343,22 +359,6 @@ li .sui-result__key:after {
 
 .page-search .sui-layout-header {
   border-bottom: none;
-}
-
-.chart {
-  position: relative;
-
-  &:not(:last-child) {
-    margin-bottom: 16px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 16px;
-  }
-}
-
-.icon-download {
-  position: absolute;
-  top: 0;
-  right: 0;
 }
 
 .collapse.show {
@@ -423,7 +423,7 @@ footer {
 }
 
 .contact-us {
-  border-bottom: 2px solid #960080;
+  border-bottom: 2px solid var(--accent-color);
 }
 
 .col-full {
@@ -448,9 +448,7 @@ footer {
   }
 
   .graph {
-    position: static;
     height: 50vh;
-    left: 0;
     width: 100%;
   }
 }

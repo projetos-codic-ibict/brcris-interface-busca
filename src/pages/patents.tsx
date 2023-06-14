@@ -1,32 +1,32 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react'
-import Connector from '../services/APIConnector'
-import styles from '../styles/Home.module.css'
 import {
   ErrorBoundary,
   Facet,
-  SearchProvider,
-  SearchBox,
-  Results,
-  PagingInfo,
-  ResultsPerPage,
   Paging,
+  PagingInfo,
+  Results,
+  ResultsPerPage,
+  SearchBox,
+  SearchProvider,
   Sorting,
   WithSearch,
 } from '@elastic/react-search-ui'
-import { SearchDriverOptions } from '@elastic/search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
+import React from 'react'
+import Connector from '../services/APIConnector'
+import styles from '../styles/Home.module.css'
 /* import IndicatorsPeople from '../components/IndicatorsPeople' */
-import ClearFilters from '../components/ClearFilters'
-import CustomResultViewPatents from '../components/customResultView/CustomResultViewPatents'
-import ButtonFieldSelect from '../components/ButtonFieldSelect'
-import OperatorSelect from '../components/OperatorSelect'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import ButtonFieldSelect from '../components/ButtonFieldSelect'
+import ClearFilters from '../components/ClearFilters'
+import CustomResultViewPatents from '../components/customResultView/CustomResultViewPatents'
+import PatentsIndicators from '../components/indicators/PatentsIndicators'
 type Props = {
   // Add custom props here
 }
@@ -266,6 +266,11 @@ export default function App() {
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
+                            <div className="filters">
+                              <span className="sui-sorting__label">
+                                Filters
+                              </span>
+                            </div>
                             <Facet
                               key={'1'}
                               field={'inventor.name'}
@@ -307,9 +312,9 @@ export default function App() {
                         <div className="sui-layout-header">
                           <div className="sui-layout-header__inner"></div>
                         </div>
-                        {/** 
-                        // @ts-ignore */}
-                        {/* <IndicatorsPatents indicatorsState={indicatorsState} /> */}
+                        {/* 
+                        // @ts-ignore  */}
+                        <PatentsIndicators indicatorsState={indicatorsState} />
                       </div>
                     </div>
                   </ErrorBoundary>

@@ -59,5 +59,7 @@
   "Orcid": "Orcid",
   "Program by OrgUnit": "Programa de Pós-Graduação por instituição",
   "Journals by status": "Revistas por situação",
-  "Journals by publishers": "Revistas por editora"
+  "Journals by publishers": "Revistas por editora",
+  "Address": "Endereço",
+  "OrgUnits by address": "Instituições por localização"
 }

@@ -1,31 +1,30 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react'
-import Connector from '../services/APIConnector'
-import styles from '../styles/Home.module.css'
 import {
   ErrorBoundary,
   Facet,
-  SearchProvider,
-  SearchBox,
-  Results,
-  PagingInfo,
-  ResultsPerPage,
   Paging,
+  PagingInfo,
+  Results,
+  ResultsPerPage,
+  SearchBox,
+  SearchProvider,
   Sorting,
   WithSearch,
 } from '@elastic/react-search-ui'
-import { SearchDriverOptions } from '@elastic/search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
-import IndicatorsPeople from '../components/indicators/PeopleIndicators'
-import ClearFilters from '../components/ClearFilters'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import React from 'react'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
+import ClearFilters from '../components/ClearFilters'
 import CustomResultViewPeople from '../components/customResultView/CustomResultViewInstitutions'
+import IndicatorsPeople from '../components/indicators/PeopleIndicators'
+import Connector from '../services/APIConnector'
+import styles from '../styles/Home.module.css'
 type Props = {
   // Add custom props here
 }
@@ -249,6 +248,11 @@ export default function App() {
                                 sortOptions={SORT_OPTIONS}
                               />
                             )}
+                            <div className="filters">
+                              <span className="sui-sorting__label">
+                                Filters
+                              </span>
+                            </div>
                             <Facet
                               key={'1'}
                               field={'nationality'}

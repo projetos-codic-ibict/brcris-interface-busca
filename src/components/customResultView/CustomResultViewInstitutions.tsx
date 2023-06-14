@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
-import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
@@ -27,8 +27,8 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <li>
-              <span className="sui-result__key">{t('Name')}</span>
-              <span className="sui-result__value">{result.name.raw}</span>
+              <span className="sui-result__key">{t('Address')}</span>
+              <span className="sui-result__value">{result.address?.raw}</span>
             </li>
           </ul>
         </div>

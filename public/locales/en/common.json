@@ -59,5 +59,7 @@
   "Orcid": "Orcid",
   "Program by OrgUnit": "Graduate Programs by institution",
   "Journals by status": "Journals by status",
-  "Journals by publishers": "Journals by publishers"
+  "Journals by publishers": "Journals by publishers",
+  "Address": "Address",
+  "OrgUnits by address": "Institutions by address"
 }

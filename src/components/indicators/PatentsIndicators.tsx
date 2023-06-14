@@ -34,7 +34,7 @@ ChartJS.register(
   ArcElement
 )
 
-export const optionsStatus = {
+export const optCountryCode = {
   responsive: true,
   plugins: {
     legend: {
@@ -43,12 +43,25 @@ export const optionsStatus = {
     },
     title: {
       display: true,
-      text: 'Journals by status',
+      text: 'Patents by country code',
+    },
+  },
+}
+export const optKindCode = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom',
+      display: true,
+    },
+    title: {
+      display: true,
+      text: 'Patents by kind code',
     },
   },
 }
 
-export const optPublishers: ChartOptions = {
+export const optDepositDate: ChartOptions = {
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -62,14 +75,26 @@ export const optPublishers: ChartOptions = {
     },
     title: {
       display: true,
-      text: 'Journals by publishers',
+      text: 'Patents by deposit year',
     },
   },
-  scales: {
-    x: {
-      ticks: {
-        display: false,
-      },
+}
+
+export const optPubDate: ChartOptions = {
+  parsing: {
+    xAxisKey: 'key',
+    yAxisKey: 'doc_count',
+  },
+  responsive: true,
+  aspectRatio: 1,
+  plugins: {
+    legend: {
+      position: 'bottom',
+      display: false,
+    },
+    title: {
+      display: true,
+      text: 'Patents by publication year',
     },
   },
 }
@@ -79,13 +104,22 @@ type IndicatorType = {
   doc_count: number
 }
 
-const headersPublishers = [
-  { label: 'Publisher', key: 'key' },
+const headersByDepositDate = [
+  { label: 'Deposit year', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
 ]
 
-const headersStatus = [
-  { label: 'Status', key: 'key' },
+const headersBypublicationDate = [
+  { label: 'Publication year', key: 'key' },
+  { label: 'Quantity', key: 'doc_count' },
+]
+
+const headersCountryCode = [
+  { label: 'Country code', key: 'key' },
+  { label: 'Quantity', key: 'doc_count' },
+]
+const headersKindCode = [
+  { label: 'Kind code', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
 ]
 
@@ -97,9 +131,9 @@ const queryCommonBase = {
     aggregate: {
       terms: {
         field: '',
-        size: 10,
+        size: 100,
         order: {
-          _count: 'desc',
+          _key: 'desc',
         },
       },
     },
@@ -115,6 +149,10 @@ const queryCommonBase = {
     },
   },
 }
+
+const queryPie = JSON.parse(JSON.stringify(queryCommonBase))
+// queryPie.aggs.aggregate.terms.size = 10
+queryPie.aggs.aggregate.terms.order = { _count: 'desc' }
 
 function getKeywordQuery(
   queryBase: any,
@@ -168,7 +206,7 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } }
 }
 
-function JornalsIndicators({
+function PatentsIndicators({
   filters,
   searchTerm,
   isLoading,
@@ -180,15 +218,17 @@ function JornalsIndicators({
   useEffect(() => {
     // tradução
     // @ts-ignore
-    optPublishers.plugins.title.text = t(optPublishers.plugins?.title?.text)
-    optionsStatus.plugins.title.text = t(optionsStatus.plugins?.title?.text)
+    optDepositDate.plugins.title.text = t(optDepositDate.plugins?.title?.text)
+    // @ts-ignore
+    optPubDate.plugins.title.text = t(optPubDate.plugins?.title?.text)
+    optCountryCode.plugins.title.text = t(optCountryCode.plugins?.title?.text)
     isLoading
       ? ElasticSearchService(
           [
             JSON.stringify(
               getKeywordQuery(
                 queryCommonBase,
-                'publisher.name',
+                'depositDate',
                 filters,
                 searchTerm,
                 indicatorsState.config
@@ -197,7 +237,25 @@ function JornalsIndicators({
             JSON.stringify(
               getKeywordQuery(
                 queryCommonBase,
-                'status',
+                'publicationDate',
+                filters,
+                searchTerm,
+                indicatorsState.config
+              )
+            ),
+            JSON.stringify(
+              getKeywordQuery(
+                queryPie,
+                'countryCode',
+                filters,
+                searchTerm,
+                indicatorsState.config
+              )
+            ),
+            JSON.stringify(
+              getKeywordQuery(
+                queryPie,
+                'kindCode',
                 filters,
                 searchTerm,
                 indicatorsState.config
@@ -218,18 +276,38 @@ function JornalsIndicators({
     indicatorsState.config.searchQuery.operator,
   ])
 
-  const publisherIndicators: IndicatorType[] = indicators ? indicators[0] : []
+  // deposite date
+  const depositeDateIndicators: IndicatorType[] = indicators
+    ? indicators[0]
+    : []
+  const depositeDateLabels =
+    depositeDateIndicators != null
+      ? depositeDateIndicators.map((d) => d.key)
+      : []
+  //  publication date
+  const publicationDateIndicators: IndicatorType[] = indicators
+    ? indicators[1]
+    : []
+  const publicationDateLabels =
+    publicationDateIndicators != null
+      ? publicationDateIndicators.map((d) => d.key)
+      : []
 
-  const publisherLabels =
-    publisherIndicators != null ? publisherIndicators.map((d) => d.key) : []
+  // country Code
+  const countryCodeIndicators: IndicatorType[] = indicators ? indicators[2] : []
+  const countryCodeLabels =
+    countryCodeIndicators != null ? countryCodeIndicators.map((d) => d.key) : []
+  const countryCodeCount =
+    countryCodeIndicators != null
+      ? countryCodeIndicators.map((d) => d.doc_count)
+      : []
 
-  const statusIndicators: IndicatorType[] = indicators ? indicators[1] : []
-
-  const statusLabels =
-    statusIndicators != null ? statusIndicators.map((d) => d.key) : []
-
-  const statusCount =
-    statusIndicators != null ? statusIndicators.map((d) => d.doc_count) : []
+  // kind Code
+  const kindCodeIndicators: IndicatorType[] = indicators ? indicators[3] : []
+  const kindCodeLabels =
+    kindCodeIndicators != null ? kindCodeIndicators.map((d) => d.key) : []
+  const kindCodeCount =
+    kindCodeIndicators != null ? kindCodeIndicators.map((d) => d.doc_count) : []
 
   return (
     <div className={styles.charts}>
@@ -237,23 +315,70 @@ function JornalsIndicators({
         <CSVLink
           className={styles.download}
           title="Export to csv"
-          data={publisherIndicators ? publisherIndicators : []}
+          data={depositeDateIndicators ? depositeDateIndicators : []}
           filename={'arquivo.csv'}
-          headers={headersPublishers}
+          headers={headersByDepositDate}
         >
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          hidden={publisherIndicators == null}
+          hidden={depositeDateIndicators == null}
           /** 
       // @ts-ignore */
-          options={optPublishers}
+          options={optDepositDate}
           width="500"
           data={{
-            labels: publisherLabels,
+            labels: depositeDateLabels,
             datasets: [
               {
-                data: publisherIndicators,
+                data: depositeDateIndicators,
+                label: 'Articles per Year',
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 205, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(201, 203, 207, 0.2)',
+                ],
+                borderColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(255, 159, 64)',
+                  'rgb(255, 205, 86)',
+                  'rgb(75, 192, 192)',
+                  'rgb(54, 162, 235)',
+                  'rgb(153, 102, 255)',
+                  'rgb(201, 203, 207)',
+                ],
+                borderWidth: 1,
+              },
+            ],
+          }}
+        />
+      </div>
+
+      <div className={styles.chart}>
+        <CSVLink
+          className={styles.download}
+          title="Export to csv"
+          data={publicationDateIndicators ? publicationDateIndicators : []}
+          filename={'arquivo.csv'}
+          headers={headersByDepositDate}
+        >
+          <IoCloudDownloadOutline />
+        </CSVLink>
+        <Bar
+          hidden={headersBypublicationDate == null}
+          /** 
+      // @ts-ignore */
+          options={optPubDate}
+          width="500"
+          data={{
+            labels: publicationDateLabels,
+            datasets: [
+              {
+                data: publicationDateIndicators,
                 label: 'Articles per Year',
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
@@ -284,24 +409,69 @@ function JornalsIndicators({
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
-          data={statusIndicators ? statusIndicators : []}
+          data={countryCodeIndicators ? countryCodeIndicators : []}
           filename={'arquivo.csv'}
-          headers={headersStatus}
+          headers={headersCountryCode}
         >
           <IoCloudDownloadOutline />
         </CSVLink>
         <Pie
           /** 
       // @ts-ignore */
-          options={optionsStatus}
-          hidden={statusIndicators == null}
+          options={optCountryCode}
+          hidden={countryCodeIndicators == null}
           width="500"
           data={{
-            labels: statusLabels.map((label) => label.split('#')[1] || label),
+            labels: countryCodeLabels,
             datasets: [
               {
-                data: statusCount,
+                data: countryCodeCount,
                 label: '# of Votes',
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                ],
+                borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)',
+                ],
+                borderWidth: 1,
+              },
+            ],
+          }}
+        />
+      </div>
+
+      <div className={styles.chart}>
+        <CSVLink
+          className={styles.download}
+          title={t('Export to csv') || ''}
+          data={kindCodeIndicators ? kindCodeIndicators : []}
+          filename={'arquivo.csv'}
+          headers={headersKindCode}
+        >
+          <IoCloudDownloadOutline />
+        </CSVLink>
+        <Pie
+          /** 
+      // @ts-ignore */
+          options={optKindCode}
+          hidden={kindCodeIndicators == null}
+          width="500"
+          data={{
+            labels: kindCodeLabels,
+            datasets: [
+              {
+                data: kindCodeCount,
+                label: '# of codes',
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
@@ -335,4 +505,4 @@ export default withSearch(
     isLoading,
     indicatorsState,
   })
-)(JornalsIndicators)
+)(PatentsIndicators)

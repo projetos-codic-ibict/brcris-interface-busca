@@ -1,9 +1,16 @@
 .charts {
-  border: 1px solid var(--dark-color);
-  border-radius: 5px;
-  padding: 1rem 0.5rem;
+  padding: 0;
   margin-right: 24px;
   min-width: 340px;
+  max-width: 25%;
+}
+
+.chart {
+  position: relative;
+  border: 1px solid var(--dark-color);
+  border-radius: 5px;
+  margin-bottom: 16px;
+  padding: 8px;
 }
 
 .title {
@@ -13,9 +20,16 @@
   text-align: center;
 }
 
+.download {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
 @media (max-width: 760px) {
   .charts {
     margin-right: 0;
     margin-bottom: 32px;
+    max-width: 100%;
   }
 }
