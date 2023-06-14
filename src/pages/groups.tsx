@@ -18,7 +18,7 @@ import {
 import { SearchDriverOptions } from '@elastic/search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
-import IndicatorsPeople from '../components/IndicatorsPeople'
+import IndicatorsPeople from '../components/indicators/PeopleIndicators'
 import ClearFilters from '../components/ClearFilters'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'

@@ -47,7 +47,7 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">{t('Research Area')}</span>
+              <span className="sui-result__key">{t('Research area(s)')}</span>
 
               <span className="sui-result__value">
                 {result.researchArea?.raw.map((area: string) => (

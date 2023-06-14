@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
@@ -18,7 +19,7 @@ import React from 'react'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import ClearFilters from '../components/ClearFilters'
 import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications'
-import Indicators from '../components/Indicators'
+import Indicators from '../components/indicators/PublicationsIndicators'
 import Connector from '../services/APIConnector'
 import styles from '../styles/Home.module.css'
 // import OperatorSelect from '../components/OperatorSelect'
@@ -398,8 +399,8 @@ export default function App() {
                             </h3>
                           </div>
                         </div>
-                        {/** 
-                        // @ts-ignore */}
+                        {/* 
+                        // @ts-ignore  */}
                         <Indicators indicatorsState={indicatorsState} />
                       </div>
                     </div>

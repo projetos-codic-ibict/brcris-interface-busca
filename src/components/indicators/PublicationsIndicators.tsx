@@ -7,7 +7,7 @@ import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 import { CSVLink } from 'react-csv'
 import { IoCloudDownloadOutline } from 'react-icons/io5'
-import styles from '../styles/Indicators.module.css'
+import styles from '../../styles/Indicators.module.css'
 
 import {
   ArcElement,
@@ -21,7 +21,8 @@ import {
   Tooltip,
 } from 'chart.js'
 import { Bar, Pie } from 'react-chartjs-2'
-import ElasticSearchService from '../services/ElasticSearchService'
+import ElasticSearchService from '../../services/ElasticSearchService'
+import { IndicatorsProps } from '../../types/Propos'
 
 ChartJS.register(
   CategoryScale,
@@ -160,8 +161,12 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } }
 }
 
-// @ts-ignore
-function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
+function PublicationsIndicators({
+  filters,
+  searchTerm,
+  isLoading,
+  indicatorsState,
+}: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data)
   const { t } = useTranslation('common')
 
@@ -323,4 +328,4 @@ export default withSearch(
     isLoading,
     indicatorsState,
   })
-)(Indicators)
+)(PublicationsIndicators)

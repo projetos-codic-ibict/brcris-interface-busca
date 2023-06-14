@@ -5,7 +5,7 @@ import { withSearch } from '@elastic/react-search-ui'
 import { useEffect, useState } from 'react'
 import { CSVLink } from 'react-csv'
 import { IoCloudDownloadOutline } from 'react-icons/io5'
-import styles from '../styles/Indicators.module.css'
+import styles from '../../styles/Indicators.module.css'
 
 import {
   ArcElement,
@@ -21,9 +21,10 @@ import { Pie } from 'react-chartjs-2'
 // @ts-ignore
 import { Filter } from '@elastic/search-ui'
 import { TagCloud } from 'react-tagcloud'
-import ElasticSearchService from '../services/ElasticSearchService'
+import ElasticSearchService from '../../services/ElasticSearchService'
 
 import { useTranslation } from 'next-i18next'
+import { IndicatorsProps } from '../../types/Propos'
 
 ChartJS.register(
   CategoryScale,
@@ -35,7 +36,7 @@ ChartJS.register(
   ArcElement
 )
 
-export const optionsKey = {
+export const optionsResearchArea = {
   responsive: true,
   plugins: {
     legend: {
@@ -44,26 +45,7 @@ export const optionsKey = {
     },
     title: {
       display: true,
-      text: 'Search area - Top 10',
-    },
-  },
-}
-
-export const optionsNat = {
-  parsing: {
-    xAxisKey: 'key',
-    yAxisKey: 'doc_count',
-  },
-  responsive: true,
-  aspectRatio: 1,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: true,
-    },
-    title: {
-      display: true,
-      text: 'Nacionality - Top 10',
+      text: 'Research area(s)',
     },
   },
 }
@@ -163,13 +145,20 @@ function getKeywordQuery(
   return queryBase
 }
 
-// @ts-ignore
-function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
+function PeopleIndicators({
+  filters,
+  searchTerm,
+  isLoading,
+  indicatorsState,
+}: IndicatorsProps) {
   const { t } = useTranslation('common')
 
   const [indicators, setIndicators] = useState(indicatorsState.data)
 
   useEffect(() => {
+    optionsResearchArea.plugins.title.text = t(
+      optionsResearchArea.plugins?.title?.text
+    )
     isLoading
       ? ElasticSearchService(
           [
@@ -204,76 +193,28 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
     indicatorsState.config.searchQuery.operator,
   ])
 
-  const nationalityIndicators: IndicatorType[] = indicators ? indicators[0] : []
+  const nationalities: IndicatorType[] = indicators ? indicators[0] : []
 
-  const nationalitys =
-    nationalityIndicators != null
-      ? nationalityIndicators.map((d) => ({ value: d.key, count: d.doc_count }))
+  const nationalitiesTagsCloud =
+    nationalities != null
+      ? nationalities.map((d) => ({ value: d.key, count: d.doc_count }))
       : []
 
-  const researchAreaIndicators: IndicatorType[] = indicators
-    ? indicators[0]
-    : []
+  const researchArea: IndicatorType[] = indicators ? indicators[1] : []
 
-  // const nationalityLabels =
-  //   nationalityIndicators != null ? nationalityIndicators.map((d) => d.key) : []
+  const researchAreaLabels =
+    researchArea != null ? researchArea.map((d) => d.key) : []
 
-  // const nationalityValues =
-  //   nationalityIndicators != null
-  //     ? nationalityIndicators.map((d) => d.doc_count)
-  //     : []
-
-  const keywordIndicators: IndicatorType[] = indicators ? indicators[1] : []
-  // const keywords =
-  //   keywordIndicators != null
-  //     ? keywordIndicators.map((d) => ({ value: d.key, count: d.doc_count }))
-  //     : []
-
-  const keywordLabels =
-    keywordIndicators != null ? keywordIndicators.map((d) => d.key) : []
-
-  const keywordValues =
-    keywordIndicators != null ? keywordIndicators.map((d) => d.doc_count) : []
+  const researchAreaValues =
+    researchArea != null ? researchArea.map((d) => d.doc_count) : []
 
   return (
     <div className={styles.charts}>
       <div className="chart">
         <CSVLink
           className="icon-download d-block"
-          title="Exportar para csv"
-          data={nationalityIndicators ? nationalityIndicators : []}
-          filename={'arquivo.csv'}
-          headers={headersNacionality}
-        >
-          <IoCloudDownloadOutline />
-        </CSVLink>
-        <p
-          style={{
-            display: nationalitys && nationalitys.length > 0 ? 'block' : 'none',
-          }}
-          className="text-center"
-        >
-          {t('Nacionality')} - Top 10
-        </p>
-        <TagCloud
-          minSize={12}
-          maxSize={35}
-          tags={nationalitys}
-          // @ts-ignore
-          style={{
-            width: 300,
-            textAlign: 'center',
-          }}
-          randomSeed={42}
-          onClick={(tag: any) => alert(`'${tag.value}' was selected!`)}
-        />
-      </div>
-
-      <div className="chart">
-        <CSVLink
-          className="icon-download d-block"
           title="Export to csv"
-          data={researchAreaIndicators ? researchAreaIndicators : []}
+          data={researchArea ? researchArea : []}
           filename={'arquivo.csv'}
           headers={headersResearchArea}
         >
@@ -282,14 +223,13 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
         <Pie
           /** 
         // @ts-ignore */
-          options={optionsKey}
-          hidden={keywordIndicators == null || keywordIndicators.length == 0}
-          width="300"
+          options={optionsResearchArea}
+          hidden={researchArea == null || researchArea.length == 0}
           data={{
-            labels: keywordLabels,
+            labels: researchAreaLabels,
             datasets: [
               {
-                data: keywordValues,
+                data: researchAreaValues,
                 label: '# People',
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
@@ -313,6 +253,41 @@ function Indicators({ filters, searchTerm, isLoading, indicatorsState }) {
           }}
         />
       </div>
+
+      <div className="chart">
+        <p
+          style={{
+            display:
+              nationalities && nationalities.length > 0 ? 'block' : 'none',
+          }}
+          className={styles.title}
+        >
+          {t('Nationalities')}
+        </p>
+        <CSVLink
+          className="icon-download d-block"
+          title="Exportar para csv"
+          data={nationalities ? nationalities : []}
+          filename={'arquivo.csv'}
+          headers={headersNacionality}
+        >
+          <IoCloudDownloadOutline />
+        </CSVLink>
+        <TagCloud
+          minSize={12}
+          maxSize={35}
+          tags={nationalitiesTagsCloud}
+          // @ts-ignore
+          style={{
+            width: 300,
+            textAlign: 'center',
+          }}
+          randomSeed={42}
+          // onClick={(tag: any) =>
+          //   alert(`'${JSON.stringify(tag)}' was selected!`)
+          // }
+        />
+      </div>
     </div>
   )
 }
@@ -325,4 +300,4 @@ export default withSearch(
     isLoading,
     indicatorsState,
   })
-)(Indicators)
+)(PeopleIndicators)

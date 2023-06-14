@@ -1,32 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react'
-import Connector from '../services/APIConnector'
-import { useRouter } from 'next/router'
-import styles from '../styles/Home.module.css'
 import {
   ErrorBoundary,
   Facet,
-  SearchProvider,
-  SearchBox,
-  Results,
-  PagingInfo,
-  ResultsPerPage,
   Paging,
+  PagingInfo,
+  Results,
+  ResultsPerPage,
+  SearchBox,
+  SearchProvider,
   Sorting,
   WithSearch,
 } from '@elastic/react-search-ui'
-import { SearchDriverOptions } from '@elastic/search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
-import Indicators from '../components/Indicators'
+import React, { useState } from 'react'
+import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import ClearFilters from '../components/ClearFilters'
 import CustomResultViewJournals from '../components/customResultView/CustomResultViewJournals'
-import ButtonFieldSelect from '../components/ButtonFieldSelect'
+import Connector from '../services/APIConnector'
+import styles from '../styles/Home.module.css'
 // import OperatorSelect from '../components/OperatorSelect'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 import Head from 'next/head'
 type Props = {
   // Add custom props here

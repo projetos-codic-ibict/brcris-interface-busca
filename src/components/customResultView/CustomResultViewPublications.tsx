@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { Author, OrgUnit, Service } from '../../types/Entities'
 import AuthorLink from '../externalLinks/AuthorLink'
-import { useTranslation } from 'next-i18next'
 
 const VIVO_URL_BASE = process.env.VIVO_URL_BASE
 
@@ -122,7 +122,7 @@ const CustomResultViewPublications = ({
             </li>
 
             <li>
-              <span className="sui-result__key">{t('Research Area')}</span>
+              <span className="sui-result__key">{t('Research area(s)')}</span>
               {/* {result.cnpqResearchArea ? (
                 <span className="sui-result__key">Cnpq Research Area(s)</span>
               ) : (

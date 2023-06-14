@@ -22,6 +22,7 @@ import React from 'react'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import ClearFilters from '../components/ClearFilters'
 import CustomResultViewPrograms from '../components/customResultView/CustomResultViewPrograms'
+import ProgramsIndicators from '../components/indicators/ProgramsIndicators'
 import Connector from '../services/APIConnector'
 import styles from '../styles/Home.module.css'
 type Props = {
@@ -287,7 +288,7 @@ export default function App() {
                         </div>
                         {/** 
                         // @ts-ignore */}
-                        {/* <IndicatorsPeople indicatorsState={indicatorsState} /> */}
+                        <ProgramsIndicators indicatorsState={indicatorsState} />
                       </div>
                     </div>
                   </ErrorBoundary>

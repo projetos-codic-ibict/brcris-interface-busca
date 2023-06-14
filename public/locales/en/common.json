@@ -26,6 +26,7 @@
   "Name": "Name",
   "Research field": "Research field",
   "Nationality": "Nationality",
+  "Nationalities": "Nationalities",
   "Title ASC": "Title ASC",
   "Title DESC": "Title DESC",
   "Clear filters": "Clear filters",
@@ -53,7 +54,8 @@
   "Publication Date": "Publication Date",
   "Inventor": "Inventor(s)",
   "Organization": "Organization(s)",
-  "Research Area": "Research Area(s)",
+  "Research area(s)": "Research area(s)",
   "Lattes": "Lattes",
-  "Orcid": "Orcid"
+  "Orcid": "Orcid",
+  "Program by OrgUnit": "Graduate Programs by institution"
 }

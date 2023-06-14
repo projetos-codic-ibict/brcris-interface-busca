@@ -6,6 +6,7 @@
   bottom: 1rem;
   border-radius: 4px;
   padding: 0 16px;
+  z-index: 999;
 }
 
 .cookieItems {
