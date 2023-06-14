@@ -339,7 +339,7 @@ export default function App() {
                             <Facet
                               key={'5'}
                               field={'journal.title'}
-                              label={t('Journal Title')}
+                              label={t('Journal')}
                             />
                             <Facet key={'6'} field={'type'} label={t('Type')} />
                             <Facet

@@ -14,7 +14,7 @@ import {
 } from '@elastic/react-search-ui'
 import { Layout } from '@elastic/react-search-ui-views'
 import '@elastic/react-search-ui-views/lib/styles/styles.css'
-import React, { useState } from 'react'
+import React from 'react'
 import ButtonFieldSelect from '../components/ButtonFieldSelect'
 import ClearFilters from '../components/ClearFilters'
 import CustomResultViewJournals from '../components/customResultView/CustomResultViewJournals'
@@ -25,6 +25,7 @@ import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
+import JornalsIndicators from '../components/indicators/JornalsIndicators'
 type Props = {
   // Add custom props here
 }
@@ -37,7 +38,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 
 const connector = new Connector()
 
-const configDefault = {
+const config = {
   debug: true,
   urlPushDebounceLength: 500,
   alwaysSearchOnInitialLoad: true,
@@ -108,8 +109,13 @@ const SORT_OPTIONS: SortOptionsType[] = [
   },
 ]
 
+const indicatorsState = {
+  config,
+  data: [],
+}
+
 export default function App() {
-  const [config, setConfig] = useState(configDefault)
+  // const [config, setConfig] = useState(configDefault)
   const { t } = useTranslation('common')
   // tradução
   SORT_OPTIONS.forEach((option) => (option.name = t(option.name)))
@@ -246,7 +252,9 @@ export default function App() {
                         <div className="sui-layout-header">
                           <div className="sui-layout-header__inner"></div>
                         </div>
-                        {/* <Indicators config={config} /> */}
+                        {/** 
+                        // @ts-ignore */}
+                        <JornalsIndicators indicatorsState={indicatorsState} />
                       </div>
                     </div>
                   </ErrorBoundary>

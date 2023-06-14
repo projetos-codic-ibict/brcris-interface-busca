@@ -37,7 +37,7 @@
   "Nacionality": "Nacionality",
   "Cnpq Research Area": "Cnpq Research Area",
   "Language": "Language",
-  "Journal Title": "Journal",
+  "Journal": "Journal",
   "Status": "Status",
   "Publisher": "Publisher",
   "privacy policy": "privacy policy",
@@ -57,5 +57,7 @@
   "Research area(s)": "Research area(s)",
   "Lattes": "Lattes",
   "Orcid": "Orcid",
-  "Program by OrgUnit": "Graduate Programs by institution"
+  "Program by OrgUnit": "Graduate Programs by institution",
+  "Journals by status": "Journals by status",
+  "Journals by publishers": "Journals by publishers"
 }

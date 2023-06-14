@@ -37,7 +37,7 @@
   "Nacionality": "Nacionalidade",
   "Cnpq Research Area": "Área de pesquisa Cnpq",
   "Language": "Idioma",
-  "Journal Title": "Periódico",
+  "Journal": "Revista",
   "Status": "Status",
   "Publisher": "Editora",
   "privacy policy": "política de privacidade",
@@ -57,5 +57,7 @@
   "Research area(s)": "Área(s) de pesquisa",
   "Lattes": "Lattes",
   "Orcid": "Orcid",
-  "Program by OrgUnit": "Programa de Pós-Graduação por instituição"
+  "Program by OrgUnit": "Programa de Pós-Graduação por instituição",
+  "Journals by status": "Revistas por situação",
+  "Journals by publishers": "Revistas por editora"
 }
