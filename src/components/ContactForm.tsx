@@ -76,7 +76,7 @@ function ContactForm() {
         >
           <div className="col-sm-12">
             <input
-              className="form-control seacrh-box"
+              className="form-control search-box"
               type="text"
               placeholder={`${t('Name')}`}
               required
@@ -89,7 +89,7 @@ function ContactForm() {
 
           <div className="col-sm-12 my-3">
             <input
-              className="form-control seacrh-box"
+              className="form-control search-box"
               type="email"
               placeholder={`${t('Email')}`}
               required
@@ -102,7 +102,7 @@ function ContactForm() {
 
           <div className="col-sm-12">
             <textarea
-              className="form-control seacrh-box"
+              className="form-control search-box"
               rows={6}
               placeholder={`${t('Message')}`}
               required

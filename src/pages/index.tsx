@@ -88,7 +88,7 @@ export default function App() {
               <AllIndexVisNetwork />
             </section>
             <section>
-              <div className="card search-card">
+              <div className={`card search-card ${styles.cardHome}`}>
                 <div className="card-body">
                   <ul className="nav nav-tabs" role="tablist">
                     {indexes.map((indice, index) => (
@@ -123,7 +123,7 @@ export default function App() {
                       >
                         <div className="col-full">
                           <input
-                            className="form-control seacrh-box"
+                            className="form-control search-box"
                             name="q"
                             type="text"
                             value={term}
@@ -132,10 +132,7 @@ export default function App() {
                           />
                         </div>
                         <div className="col-auto">
-                          <button
-                            className="btn btn-light search-btn col-auto"
-                            // disabled={!term || term.length < 3}
-                          >
+                          <button className="btn btn-light search-btn col-auto">
                             {t('Search')}
                           </button>
                         </div>

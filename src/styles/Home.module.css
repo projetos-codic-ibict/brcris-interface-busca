@@ -2,6 +2,14 @@
   padding: 0 2rem;
 }
 
+.cardHome {
+  background-color: #2a2163;
+}
+
+.cardHome li button {
+  color: #fff !important;
+}
+
 .home {
   min-height: calc(100vh - 100px);
   /* background: #210d41; */

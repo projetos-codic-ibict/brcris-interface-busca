@@ -182,7 +182,7 @@ export default function App() {
                                       >
                                         <div className="col">
                                           <input
-                                            className="form-control seacrh-box"
+                                            className="form-control search-box"
                                             type="text"
                                             value={value}
                                             onChange={(e) =>
@@ -192,7 +192,7 @@ export default function App() {
                                         </div>
                                         <div className="col-auto">
                                           <input
-                                            className="btn btn-light search-btn"
+                                            className="btn btn-primary search-btn"
                                             type="submit"
                                             value={t('Search') || ''}
                                             disabled={
