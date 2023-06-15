@@ -1,67 +1,67 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import 'bootstrap/dist/css/bootstrap.min.css' // Import bootstrap CSS
-import { useTranslation } from 'next-i18next'
-import React, { useState } from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
-import { alertService } from '../services/AlertService'
-import MailService from '../services/MailService'
-import style from '../styles/ContactForm.module.css'
-import Loader from './Loader'
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import bootstrap CSS
+import { useTranslation } from 'next-i18next';
+import React, { useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { alertService } from '../services/AlertService';
+import MailService from '../services/MailService';
+import style from '../styles/ContactForm.module.css';
+import Loader from './Loader';
 
 function ContactForm() {
   /* const router = useRouter() */
-  const { t } = useTranslation('contact')
+  const { t } = useTranslation('contact');
 
   const options = {
     autoClose: true,
     keepAfterRouteChange: false,
-  }
+  };
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-  const [isLoading, setLoading] = useState(false)
-  const [captchaCode, setCaptchaCode] = useState('')
-  const recaptchaRef = React.useRef(null)
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [isLoading, setLoading] = useState(false);
+  const [captchaCode, setCaptchaCode] = useState('');
+  const recaptchaRef = React.useRef(null);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
-    event.preventDefault()
+    event.preventDefault();
     if (!captchaCode) {
-      return
+      return;
     }
     const data = {
       name,
       email,
       message,
       captcha: captchaCode,
-    }
+    };
 
     try {
-      setLoading(true)
-      const response = await MailService(JSON.stringify(data))
-      setLoading(false)
+      setLoading(true);
+      const response = await MailService(JSON.stringify(data));
+      setLoading(false);
       if (response.status === 200) {
-        setName('')
-        setEmail('')
-        setMessage('')
-        alertService.success(t('Mail sent success'), options)
+        setName('');
+        setEmail('');
+        setMessage('');
+        alertService.success(t('Mail sent success'), options);
       } else {
-        alertService.error(t('Mail sent error'), options)
+        alertService.error(t('Mail sent error'), options);
       }
     } finally {
-      setCaptchaCode('')
+      setCaptchaCode('');
       // @ts-ignore
-      recaptchaRef.current.reset()
-      setLoading(false)
+      recaptchaRef.current.reset();
+      setLoading(false);
     }
-  }
+  };
 
   const onReCAPTCHAChange = async (value: string) => {
-    setCaptchaCode(value)
-  }
+    setCaptchaCode(value);
+  };
 
-  const PUBLIC_RECAPTCHA_SITE_KEY = process.env.PUBLIC_RECAPTCHA_SITE_KEY || ''
+  const PUBLIC_RECAPTCHA_SITE_KEY = process.env.PUBLIC_RECAPTCHA_SITE_KEY || '';
   return (
     <div>
       {isLoading ? <Loader /> : ''}
@@ -71,7 +71,7 @@ function ContactForm() {
         </div>
         <form
           onSubmit={(event) => {
-            handleSubmit(event)
+            handleSubmit(event);
           }}
         >
           <div className="col-sm-12">
@@ -82,7 +82,7 @@ function ContactForm() {
               required
               value={name}
               onChange={(event) => {
-                setName(event.target.value)
+                setName(event.target.value);
               }}
             />
           </div>
@@ -95,7 +95,7 @@ function ContactForm() {
               required
               value={email}
               onChange={(event) => {
-                setEmail(event.target.value)
+                setEmail(event.target.value);
               }}
             />
           </div>
@@ -108,12 +108,12 @@ function ContactForm() {
               required
               value={message}
               onChange={(event) => {
-                setMessage(event.target.value)
+                setMessage(event.target.value);
               }}
             />
           </div>
 
-          <div className="submit-btn col-sm-12 mt-2 d-flex justify-content-end">
+          <div className="submit-btn col-sm-12 mt-2 d-flex justify-content-between align-items-center">
             <ReCAPTCHA
               size="normal"
               ref={recaptchaRef}
@@ -130,7 +130,7 @@ function ContactForm() {
                   message !== ''
                 )
               }
-              className="btn btn-primary"
+              className="btn btn-primary px-4 py-2"
               type="submit"
             >
               {t('Submit')}
@@ -139,7 +139,7 @@ function ContactForm() {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default ContactForm
+export default ContactForm;

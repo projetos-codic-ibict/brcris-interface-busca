@@ -11,31 +11,31 @@ import {
   SearchProvider,
   Sorting,
   WithSearch,
-} from '@elastic/react-search-ui'
-import { Layout } from '@elastic/react-search-ui-views'
-import '@elastic/react-search-ui-views/lib/styles/styles.css'
-import { GetStaticProps } from 'next'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
-import React from 'react'
-import ButtonFieldSelect from '../components/ButtonFieldSelect'
-import ClearFilters from '../components/ClearFilters'
-import CustomResultViewInstitutions from '../components/customResultView/CustomResultViewInstitutions'
-import OrgUnitIndicators from '../components/indicators/OrgUnitIndicators'
-import Connector from '../services/APIConnector'
-import styles from '../styles/Home.module.css'
+} from '@elastic/react-search-ui';
+import { Layout } from '@elastic/react-search-ui-views';
+import '@elastic/react-search-ui-views/lib/styles/styles.css';
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Head from 'next/head';
+import React from 'react';
+import ButtonFieldSelect from '../components/ButtonFieldSelect';
+import ClearFilters from '../components/ClearFilters';
+import CustomResultViewInstitutions from '../components/customResultView/CustomResultViewInstitutions';
+import OrgUnitIndicators from '../components/indicators/OrgUnitIndicators';
+import Connector from '../services/APIConnector';
+import styles from '../styles/Home.module.css';
 type Props = {
   // Add custom props here
-}
+};
 // or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
   },
-})
+});
 
-const connector = new Connector()
+const connector = new Connector();
 
 const config = {
   debug: true,
@@ -65,11 +65,11 @@ const config = {
       address: { type: 'value' },
     },
   },
-}
+};
 type SortOptionsType = {
-  name: string
-  value: any[]
-}
+  name: string;
+  value: any[];
+};
 const SORT_OPTIONS: SortOptionsType[] = [
   {
     name: 'Relevance',
@@ -93,18 +93,18 @@ const SORT_OPTIONS: SortOptionsType[] = [
       },
     ],
   },
-]
+];
 
 const indicatorsState = {
   config,
   data: [],
-}
+};
 
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('common');
   // tradução
-  SORT_OPTIONS.forEach((option) => (option.name = t(option.name)))
+  SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
 
   return (
     <div>
@@ -213,7 +213,7 @@ export default function App() {
                             )}
                             <div className="filters">
                               <span className="sui-sorting__label">
-                                Filters
+                                {t('Filters')}
                               </span>
                             </div>
                             <Facet
@@ -245,11 +245,11 @@ export default function App() {
                     </div>
                   </ErrorBoundary>
                 </div>
-              )
+              );
             }}
           </WithSearch>
         </SearchProvider>
       </div>
     </div>
-  )
+  );
 }
