@@ -61,5 +61,10 @@
   "Journals by status": "Journals by status",
   "Journals by publishers": "Journals by publishers",
   "Address": "Address",
-  "OrgUnits by address": "Institutions by address"
+  "OrgUnits by address": "Institutions by address",
+  "Filters": "Filters",
+  "Patents by country code": "Patents by Country",
+  "Patents by kind code": "Patents by code",
+  "Patents by deposit year": "Patents by deposit year",
+  "Patents by publication year": "Patents by publication year"
 }

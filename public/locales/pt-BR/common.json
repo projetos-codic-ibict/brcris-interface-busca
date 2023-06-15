@@ -61,5 +61,10 @@
   "Journals by status": "Revistas por situação",
   "Journals by publishers": "Revistas por editora",
   "Address": "Endereço",
-  "OrgUnits by address": "Instituições por localização"
+  "OrgUnits by address": "Instituições por localização",
+  "Filters": "Filtros",
+  "Patents by country code": "Patentes por País",
+  "Patents by kind code": "Patentes por código",
+  "Patents by deposit year": "Patentes por ano de depósito",
+  "Patents by publication year": "Patentes por ano de publicação"
 }

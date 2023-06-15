@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { withSearch } from '@elastic/react-search-ui'
-import { Filter } from '@elastic/search-ui'
-import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
-import { CSVLink } from 'react-csv'
-import { IoCloudDownloadOutline } from 'react-icons/io5'
-import styles from '../../styles/Indicators.module.css'
+import { withSearch } from '@elastic/react-search-ui';
+import { Filter } from '@elastic/search-ui';
+import { useTranslation } from 'next-i18next';
+import { useEffect, useState } from 'react';
+import { CSVLink } from 'react-csv';
+import { IoCloudDownloadOutline } from 'react-icons/io5';
+import styles from '../../styles/Indicators.module.css';
 
 import {
   ArcElement,
@@ -19,10 +19,10 @@ import {
   LinearScale,
   Title,
   Tooltip,
-} from 'chart.js'
-import { Bar, Pie } from 'react-chartjs-2'
-import ElasticSearchService from '../../services/ElasticSearchService'
-import { IndicatorsProps } from '../../types/Propos'
+} from 'chart.js';
+import { Bar, Pie } from 'react-chartjs-2';
+import ElasticSearchService from '../../services/ElasticSearchService';
+import { IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(
   CategoryScale,
@@ -32,7 +32,7 @@ ChartJS.register(
   Tooltip,
   Legend,
   ArcElement
-)
+);
 
 export const optCountryCode = {
   responsive: true,
@@ -46,7 +46,7 @@ export const optCountryCode = {
       text: 'Patents by country code',
     },
   },
-}
+};
 export const optKindCode = {
   responsive: true,
   plugins: {
@@ -59,7 +59,7 @@ export const optKindCode = {
       text: 'Patents by kind code',
     },
   },
-}
+};
 
 export const optDepositDate: ChartOptions = {
   parsing: {
@@ -78,7 +78,7 @@ export const optDepositDate: ChartOptions = {
       text: 'Patents by deposit year',
     },
   },
-}
+};
 
 export const optPubDate: ChartOptions = {
   parsing: {
@@ -97,31 +97,31 @@ export const optPubDate: ChartOptions = {
       text: 'Patents by publication year',
     },
   },
-}
+};
 
 type IndicatorType = {
-  key: string
-  doc_count: number
-}
+  key: string;
+  doc_count: number;
+};
 
 const headersByDepositDate = [
   { label: 'Deposit year', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
-]
+];
 
 const headersBypublicationDate = [
   { label: 'Publication year', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
-]
+];
 
 const headersCountryCode = [
   { label: 'Country code', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
-]
+];
 const headersKindCode = [
   { label: 'Kind code', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
-]
+];
 
 const queryCommonBase = {
   track_total_hits: true,
@@ -148,11 +148,11 @@ const queryCommonBase = {
       filter: [],
     },
   },
-}
+};
 
-const queryPie = JSON.parse(JSON.stringify(queryCommonBase))
+const queryPie = JSON.parse(JSON.stringify(queryCommonBase));
 // queryPie.aggs.aggregate.terms.size = 10
-queryPie.aggs.aggregate.terms.order = { _count: 'desc' }
+queryPie.aggs.aggregate.terms.order = { _count: 'desc' };
 
 function getKeywordQuery(
   queryBase: any,
@@ -161,38 +161,38 @@ function getKeywordQuery(
   searchTerm: any,
   config: any
 ) {
-  const field = Object.keys(config.searchQuery.search_fields)[0]
+  const field = Object.keys(config.searchQuery.search_fields)[0];
   if (indicador) {
-    queryBase._source = [indicador]
-    queryBase.aggs.aggregate.terms.field = indicador
+    queryBase._source = [indicador];
+    queryBase.aggs.aggregate.terms.field = indicador;
   }
 
   if (searchTerm) {
-    queryBase.query.bool.must.query_string.default_field = field
+    queryBase.query.bool.must.query_string.default_field = field;
     queryBase.query.bool.must.query_string.default_operator =
-      config.searchQuery.operator
-    queryBase.query.bool.must.query_string.query = searchTerm
+      config.searchQuery.operator;
+    queryBase.query.bool.must.query_string.query = searchTerm;
   } else {
-    queryBase.query.bool.must.query_string.query = '*'
+    queryBase.query.bool.must.query_string.query = '*';
   }
   if (filters && filters.length > 0) {
-    queryBase.query.bool.filter = []
+    queryBase.query.bool.filter = [];
     filters.forEach((filter: Filter) => {
-      queryBase.query.bool.filter.push(getFilterFormated(filter))
-    })
+      queryBase.query.bool.filter.push(getFilterFormated(filter));
+    });
   } else {
-    queryBase.query.bool.filter = []
+    queryBase.query.bool.filter = [];
   }
-  return queryBase
+  return queryBase;
 }
 
 function getFilterFormated(filter: Filter): any {
   if (filter.type === 'none') {
-    const matrix = filter.values.map((val: any) => val.split(' - '))
-    const values = [].concat(...matrix)
-    values.sort()
-    const from = values[0]
-    const to = values[values.length - 1]
+    const matrix = filter.values.map((val: any) => val.split(' - '));
+    const values = [].concat(...matrix);
+    values.sort();
+    const from = values[0];
+    const to = values[values.length - 1];
 
     return {
       range: {
@@ -201,9 +201,9 @@ function getFilterFormated(filter: Filter): any {
           lte: to,
         },
       },
-    }
+    };
   }
-  return { terms: { [filter.field]: filter.values } }
+  return { terms: { [filter.field]: filter.values } };
 }
 
 function PatentsIndicators({
@@ -212,16 +212,17 @@ function PatentsIndicators({
   isLoading,
   indicatorsState,
 }: IndicatorsProps) {
-  const [indicators, setIndicators] = useState(indicatorsState.data)
-  const { t } = useTranslation('common')
+  const [indicators, setIndicators] = useState(indicatorsState.data);
+  const { t } = useTranslation('common');
 
   useEffect(() => {
     // tradução
     // @ts-ignore
-    optDepositDate.plugins.title.text = t(optDepositDate.plugins?.title?.text)
+    optDepositDate.plugins.title.text = t(optDepositDate.plugins?.title?.text);
     // @ts-ignore
-    optPubDate.plugins.title.text = t(optPubDate.plugins?.title?.text)
-    optCountryCode.plugins.title.text = t(optCountryCode.plugins?.title?.text)
+    optPubDate.plugins.title.text = t(optPubDate.plugins?.title?.text);
+    optCountryCode.plugins.title.text = t(optCountryCode.plugins?.title?.text);
+    optKindCode.plugins.title.text = t(optKindCode.plugins?.title?.text);
     isLoading
       ? ElasticSearchService(
           [
@@ -264,50 +265,56 @@ function PatentsIndicators({
           ],
           indicatorsState.config.searchQuery.index
         ).then((data) => {
-          setIndicators(data)
-          indicatorsState.data = data
+          setIndicators(data);
+          indicatorsState.data = data;
         })
-      : null
+      : null;
   }, [
     filters,
     searchTerm,
     isLoading,
     indicatorsState.config.searchQuery.search_fields,
     indicatorsState.config.searchQuery.operator,
-  ])
+  ]);
 
   // deposite date
   const depositeDateIndicators: IndicatorType[] = indicators
     ? indicators[0]
-    : []
+    : [];
   const depositeDateLabels =
     depositeDateIndicators != null
       ? depositeDateIndicators.map((d) => d.key)
-      : []
+      : [];
   //  publication date
   const publicationDateIndicators: IndicatorType[] = indicators
     ? indicators[1]
-    : []
+    : [];
   const publicationDateLabels =
     publicationDateIndicators != null
       ? publicationDateIndicators.map((d) => d.key)
-      : []
+      : [];
 
   // country Code
-  const countryCodeIndicators: IndicatorType[] = indicators ? indicators[2] : []
+  const countryCodeIndicators: IndicatorType[] = indicators
+    ? indicators[2]
+    : [];
   const countryCodeLabels =
-    countryCodeIndicators != null ? countryCodeIndicators.map((d) => d.key) : []
+    countryCodeIndicators != null
+      ? countryCodeIndicators.map((d) => d.key)
+      : [];
   const countryCodeCount =
     countryCodeIndicators != null
       ? countryCodeIndicators.map((d) => d.doc_count)
-      : []
+      : [];
 
   // kind Code
-  const kindCodeIndicators: IndicatorType[] = indicators ? indicators[3] : []
+  const kindCodeIndicators: IndicatorType[] = indicators ? indicators[3] : [];
   const kindCodeLabels =
-    kindCodeIndicators != null ? kindCodeIndicators.map((d) => d.key) : []
+    kindCodeIndicators != null ? kindCodeIndicators.map((d) => d.key) : [];
   const kindCodeCount =
-    kindCodeIndicators != null ? kindCodeIndicators.map((d) => d.doc_count) : []
+    kindCodeIndicators != null
+      ? kindCodeIndicators.map((d) => d.doc_count)
+      : [];
 
   return (
     <div className={styles.charts}>
@@ -495,7 +502,7 @@ function PatentsIndicators({
         />
       </div>
     </div>
-  )
+  );
 }
 export default withSearch(
   // @ts-ignore
@@ -505,4 +512,4 @@ export default withSearch(
     isLoading,
     indicatorsState,
   })
-)(PatentsIndicators)
+)(PatentsIndicators);
