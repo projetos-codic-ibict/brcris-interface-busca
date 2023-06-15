@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ErrorBoundary,
-  Facet,
   Paging,
   PagingInfo,
   Results,
@@ -21,7 +20,6 @@ import Head from 'next/head';
 import React from 'react';
 import ButtonFieldSelect from '../components/ButtonFieldSelect';
 import ClearFilters from '../components/ClearFilters';
-import CustomResultViewPeople from '../components/customResultView/CustomResultViewInstitutions';
 import IndicatorsPeople from '../components/indicators/PeopleIndicators';
 import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
@@ -44,37 +42,64 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'pesqdf-person',
+    index: 'researchgroups',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
       name: {},
     },
     result_fields: {
-      id: {
-        raw: {},
-      },
       name: {
         raw: {},
       },
-      lattesId: {
+      creationYear: {
         raw: {},
       },
-      nationality: {
+      researchLine: {
         raw: {},
       },
-      orcid: {
+      knowledgeArea: {
         raw: {},
       },
-      researchArea: {
+      description: {
+        raw: {},
+      },
+      applicationSector: {
+        raw: {},
+      },
+      keyword: {
+        raw: [],
+      },
+      URL: {
+        raw: {},
+      },
+      status: {
+        raw: {},
+      },
+      leader: {
+        raw: {},
+      },
+      partner: {
+        raw: {},
+      },
+      member: {
+        raw: {},
+      },
+      orgunit: {
+        raw: {},
+      },
+      software: {
+        raw: {},
+      },
+      equipment: {
         raw: {},
       },
     },
-    disjunctiveFacets: ['nationality', 'researchArea'],
-    facets: {
-      nationality: { type: 'value' },
-      researchArea: { type: 'value' },
-    },
+    // disjunctiveFacets: ['nationality', 'researchArea'],
+    // facets: {
+    //   nationality: { type: 'value' },
+    //   researchArea: { type: 'value' },
+    // },
   },
   // autocompleteQuery: {
   //   results: {
@@ -146,7 +171,7 @@ export default function App() {
   return (
     <div>
       <Head>
-        <title>{`BrCris - ${t('People')}`}</title>
+        <title>{`BrCris - ${t('Research groups')}`}</title>
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>
@@ -253,7 +278,7 @@ export default function App() {
                                 {t('Filters')}
                               </span>
                             </div>
-                            <Facet
+                            {/* <Facet
                               key={'1'}
                               field={'nationality'}
                               label={t('Nationality')}
@@ -262,12 +287,10 @@ export default function App() {
                               key={'2'}
                               field={'researchArea'}
                               label={t('Research field')}
-                            />
+                            /> */}
                           </div>
                         }
-                        bodyContent={
-                          <Results resultView={CustomResultViewPeople} />
-                        }
+                        bodyContent={<Results titleField="name" />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}

@@ -2,24 +2,24 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
-import 'vis-network/styles/vis-network.css'
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import 'vis-network/styles/vis-network.css';
 // @ts-ignore
-const Graph = dynamic(import('react-graph-vis'), { ssr: false })
+const Graph = dynamic(import('react-graph-vis'), { ssr: false });
 // import { Edge, Node, Options } from 'vis-network'/
-import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
-import { Node } from 'vis'
-import ElasticSearchStatsService from '../services/ElasticSearchStatsService'
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import { Node } from 'vis';
+import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
 
 type IndexStat = {
-  index: string
-  'docs.count': number
-}
+  index: string;
+  'docs.count': number;
+};
 
 interface IndexNode extends Node {
-  index: string
+  index: string;
 }
 
 // Exemplo https://codesandbox.io/s/vis-test-fhir-test-2-forked-0m1l1x?file=/src/index.js:1774-1820
@@ -104,18 +104,18 @@ const nodes: IndexNode[] = [
       size: 11,
     },
   },
-  // {
-  //   id: 7,
-  //   index: '',
-  //   label: 'Research Groups',
-  //   title: '253 ',
-  //   level: 7,
-  //   shape: 'circle',
-  //   color: '#6610f2',
-  //   font: {
-  //     color: '#ffffff',
-  //   },
-  // },
+  {
+    id: 7,
+    index: 'researchgroups',
+    label: 'Research Groups',
+    title: '70',
+    level: 7,
+    shape: 'circle',
+    color: '#6610f2',
+    font: {
+      color: '#ffffff',
+    },
+  },
   // {
   //   id: 8,
   //   index: '',
@@ -128,7 +128,7 @@ const nodes: IndexNode[] = [
   //     color: '#ffffff',
   //   },
   // },
-]
+];
 
 const keysLanguage = [
   'Publications',
@@ -137,9 +137,9 @@ const keysLanguage = [
   'Institutions',
   'Patents',
   'Programs',
-  // 'Research Groups',
+  'Research Groups',
   // 'Software',
-]
+];
 
 const edges = [
   { from: 1, to: 2, id: 1 },
@@ -153,10 +153,12 @@ const edges = [
   { from: 6, to: 4, id: 9 },
   { from: 5, to: 2, id: 10 },
   { from: 5, to: 4, id: 11 },
-  // { from: 7, to: 8, id: 8 },
+  { from: 7, to: 1, id: 12 },
+  { from: 7, to: 2, id: 13 },
+  { from: 7, to: 4, id: 14 },
   // { from: 1, to: 7, id: 9 },
   // { from: 8, to: 5, id: 10 },
-]
+];
 
 const options = {
   // autoResize: true,
@@ -186,24 +188,24 @@ const options = {
       nodeSpacing: 100,
     },
   },
-}
+};
 
 function getSizeOfNode(maxSize: number, sizeOfDocsOfNode: number) {
-  const originalSizeOfNode = (sizeOfDocsOfNode / maxSize) * 100
-  const minValue = 70
-  const maxValue = 100
-  const totalDifference = maxValue - minValue
-  const scaleFactor = originalSizeOfNode / maxValue
-  const adjustedValue = scaleFactor * totalDifference + minValue
-  return adjustedValue
+  const originalSizeOfNode = (sizeOfDocsOfNode / maxSize) * 100;
+  const minValue = 70;
+  const maxValue = 100;
+  const totalDifference = maxValue - minValue;
+  const scaleFactor = originalSizeOfNode / maxValue;
+  const adjustedValue = scaleFactor * totalDifference + minValue;
+  return adjustedValue;
 }
 
 function VisGraph() {
-  const router = useRouter()
-  const [graph, setGraph] = useState({ nodes, edges })
-  const [indexesStats, setIndexesStats] = useState<IndexStat[]>([])
-  const { t } = useTranslation('common')
-  const numberFormat = new Intl.NumberFormat('pt-BR')
+  const router = useRouter();
+  const [graph, setGraph] = useState({ nodes, edges });
+  const [indexesStats, setIndexesStats] = useState<IndexStat[]>([]);
+  const { t } = useTranslation('common');
+  const numberFormat = new Intl.NumberFormat('pt-BR');
 
   const pages = [
     `/${router.locale}/publications`,
@@ -214,56 +216,56 @@ function VisGraph() {
     `/${router.locale}/programs`,
     `/${router.locale}/groups`,
     `/${router.locale}/software`,
-  ]
+  ];
 
   const events = {
     click: function (event: any) {
       if (event.nodes[0] && pages[event.nodes[0] - 1]) {
-        window.location.href = pages[event.nodes[0] - 1]
+        window.location.href = pages[event.nodes[0] - 1];
       }
     },
-  }
+  };
 
   useEffect(() => {
     ElasticSearchStatsService()
       .then((res) => {
-        console.log(res)
-        setIndexesStats(res)
+        console.log(res);
+        setIndexesStats(res);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }, [])
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
-    const newNodes: IndexNode[] = []
+    const newNodes: IndexNode[] = [];
     const maxSizeOfNode = Math.max(
       ...indexesStats.map((item) => item['docs.count'])
-    )
+    );
     for (let i = 0; i < keysLanguage.length; i++) {
       const indexStat = indexesStats.find(
         (item) => item.index === nodes[i].index
-      )
+      );
       if (indexStat) {
-        console.log(nodes[i].label, indexStat.index, indexStat['docs.count'])
-        nodes[i].title = `${numberFormat.format(indexStat['docs.count'])} `
+        console.log(nodes[i].label, indexStat.index, indexStat['docs.count']);
+        nodes[i].title = `${numberFormat.format(indexStat['docs.count'])} `;
         nodes[i].widthConstraint = getSizeOfNode(
           maxSizeOfNode,
           indexStat['docs.count']
-        )
+        );
       }
       // @ts-ignore
-      nodes[i].label = t(keysLanguage[i])
+      nodes[i].label = t(keysLanguage[i]);
       // @ts-ignore
       if (!nodes[i].title?.includes(nodes[i].label)) {
         // @ts-ignore
-        nodes[i].title += nodes[i].label
+        nodes[i].title += nodes[i].label;
       }
-      newNodes.push({ ...nodes[i] })
+      newNodes.push({ ...nodes[i] });
     }
 
-    setGraph({ ...graph, nodes: newNodes })
-  }, [t, indexesStats])
+    setGraph({ ...graph, nodes: newNodes });
+  }, [t, indexesStats]);
 
   return (
     <div className="graph">
@@ -271,7 +273,7 @@ function VisGraph() {
              // @ts-ignore */}
       <Graph graph={graph} options={options} events={events} />
     </div>
-  )
+  );
 }
 
-export default VisGraph
+export default VisGraph;
