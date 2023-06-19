@@ -66,5 +66,14 @@
   "Patents by country code": "Patentes por País",
   "Patents by kind code": "Patentes por código",
   "Patents by deposit year": "Patentes por ano de depósito",
-  "Patents by publication year": "Patentes por ano de publicação"
+  "Patents by publication year": "Patentes por ano de publicação",
+  "Creation Year": "Ano de Criação",
+  "Research Line": "Linha de Pesquisa",
+  "Knowledge Area": "Área de Conhecimento",
+  "Description": "Descrição",
+  "Application Sector": "Setor de Aplicação",
+  "Leader": "Líder",
+  "Member": "Membro",
+  "Partner": "Parceiro",
+  "Equipment": "Equipmento"
 }

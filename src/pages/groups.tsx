@@ -10,6 +10,7 @@ import {
   SearchProvider,
   Sorting,
   WithSearch,
+  Facet,
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
@@ -23,6 +24,8 @@ import ClearFilters from '../components/ClearFilters';
 import IndicatorsPeople from '../components/indicators/PeopleIndicators';
 import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
+
+import CustomResultViewGroups from '../components/customResultView/CustomResultViewGroups';
 type Props = {
   // Add custom props here
 };
@@ -95,11 +98,30 @@ const config = {
         raw: {},
       },
     },
-    // disjunctiveFacets: ['nationality', 'researchArea'],
-    // facets: {
-    //   nationality: { type: 'value' },
-    //   researchArea: { type: 'value' },
-    // },
+    disjunctiveFacets: [
+      'creationYear',
+      'researchLine',
+      'knowledgeArea',
+      'applicationSector',
+      'keyword',
+      'status',
+      'leader',
+      'partner',
+      'member',
+      'orgunit',
+    ],
+    facets: {
+      creationYear: { type: 'value' },
+      researchLine: { type: 'value' },
+      knowledgeArea: { type: 'value' },
+      applicationSector: { type: 'value' },
+      keyword: { type: 'value' },
+      status: { type: 'value' },
+      leader: { type: 'value' },
+      partner: { type: 'value' },
+      member: { type: 'value' },
+      orgunit: { type: 'value' },
+    },
   },
   // autocompleteQuery: {
   //   results: {
@@ -186,7 +208,7 @@ export default function App() {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="page-title">
-                            <h2>{t('People')}</h2>
+                            <h2>{t('Research Groups')}</h2>
                           </div>
                         </div>
 
@@ -278,19 +300,70 @@ export default function App() {
                                 {t('Filters')}
                               </span>
                             </div>
-                            {/* <Facet
+                            <Facet
                               key={'1'}
-                              field={'nationality'}
-                              label={t('Nationality')}
+                              field={'creationYear'}
+                              label={t('Creation Year')}
                             />
+
                             <Facet
                               key={'2'}
-                              field={'researchArea'}
-                              label={t('Research field')}
-                            /> */}
+                              field={'researchLine'}
+                              label={t('Research Line')}
+                            />
+
+                            <Facet
+                              key={'3'}
+                              field={'knowledgeArea'}
+                              label={t('Knowledge Area')}
+                            />
+
+                            <Facet
+                              key={'4'}
+                              field={'applicationSector'}
+                              label={t('Application Sector')}
+                            />
+
+                            <Facet
+                              key={'5'}
+                              field={'keyword'}
+                              label={t('Keyword')}
+                            />
+
+                            <Facet
+                              key={'6'}
+                              field={'status'}
+                              label={t('Status')}
+                            />
+
+                            <Facet
+                              key={'7'}
+                              field={'leader'}
+                              label={t('Leader')}
+                            />
+
+                            <Facet
+                              key={'8'}
+                              field={'partner'}
+                              label={t('Partner')}
+                            />
+
+                            <Facet
+                              key={'9'}
+                              field={'member'}
+                              label={t('Member')}
+                            />
+
+                            <Facet
+                              key={'10'}
+                              field={'orgunit'}
+                              label={t('Organization')}
+                            />
                           </div>
                         }
-                        bodyContent={<Results titleField="name" />}
+                        bodyContent={
+                          <Results resultView={CustomResultViewGroups} />
+                        }
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}
