@@ -1,15 +1,14 @@
-import 'bootstrap/dist/css/bootstrap.min.css' // Import bootstrap CSS
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import dropdownStyle from '../styles/Dropdown.module.css'
-import Link from 'next/link'
+import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import dropdownStyle from '../styles/Dropdown.module.css';
 
 function Navbar() {
-  const LANGUAGES = process.env.LANGUAGES?.split(',')
-  const router = useRouter()
-  const { t } = useTranslation('navbar')
+  const LANGUAGES = process.env.LANGUAGES?.split(',');
+  const router = useRouter();
+  const { t } = useTranslation('navbar');
 
-  const changeTo = router.locale === 'en' ? 'pt-BR' : 'en'
+  const changeTo = router.locale === 'en' ? 'pt-BR' : 'en';
 
   return (
     <nav className="navbar navbar-dark navbar-expand-lg bg-violet px-5 py-3">
@@ -123,7 +122,7 @@ function Navbar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

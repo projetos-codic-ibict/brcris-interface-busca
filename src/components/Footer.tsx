@@ -1,5 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css' // Import bootstrap CSS
-
 function Footer() {
   return (
     <footer role="contentinfo">
@@ -71,7 +69,7 @@ function Footer() {
         </p>
       </div>
     </footer>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

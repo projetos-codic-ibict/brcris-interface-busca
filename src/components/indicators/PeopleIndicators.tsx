@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { withSearch } from '@elastic/react-search-ui'
-import { useEffect, useState } from 'react'
-import { CSVLink } from 'react-csv'
-import { IoCloudDownloadOutline } from 'react-icons/io5'
-import styles from '../../styles/Indicators.module.css'
+import { withSearch } from '@elastic/react-search-ui';
+import { useEffect, useState } from 'react';
+import { CSVLink } from 'react-csv';
+import { IoCloudDownloadOutline } from 'react-icons/io5';
+import styles from '../../styles/Indicators.module.css';
 
 import {
   ArcElement,
@@ -16,15 +16,19 @@ import {
   LinearScale,
   Title,
   Tooltip,
-} from 'chart.js'
-import { Pie } from 'react-chartjs-2'
+} from 'chart.js';
+import { Pie } from 'react-chartjs-2';
 // @ts-ignore
-import { Filter } from '@elastic/search-ui'
-import { TagCloud } from 'react-tagcloud'
-import ElasticSearchService from '../../services/ElasticSearchService'
+import { Filter } from '@elastic/search-ui';
+import { TagCloud } from 'react-tagcloud';
+import ElasticSearchService from '../../services/ElasticSearchService';
 
-import { useTranslation } from 'next-i18next'
-import { IndicatorsProps } from '../../types/Propos'
+import { useTranslation } from 'next-i18next';
+import { IndicatorsProps } from '../../types/Propos';
+import {
+  CHART_BACKGROUD_COLORS,
+  CHART_BORDER_COLORS,
+} from '../../../utils/Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -34,7 +38,7 @@ ChartJS.register(
   Tooltip,
   Legend,
   ArcElement
-)
+);
 
 export const optionsResearchArea = {
   responsive: true,
@@ -48,22 +52,22 @@ export const optionsResearchArea = {
       text: 'Research area(s)',
     },
   },
-}
+};
 
 type IndicatorType = {
-  key: string
-  doc_count: number
-}
+  key: string;
+  doc_count: number;
+};
 
 const headersNacionality = [
   { label: 'Nacionality', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
-]
+];
 
 const headersResearchArea = [
   { label: 'Search area', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
-]
+];
 
 const nationtalityQueryBase = {
   track_total_hits: true,
@@ -90,7 +94,7 @@ const nationtalityQueryBase = {
       filter: [],
     },
   },
-}
+};
 
 const keywordQueryBase = {
   track_total_hits: true,
@@ -114,7 +118,7 @@ const keywordQueryBase = {
       filter: [],
     },
   },
-}
+};
 
 function getKeywordQuery(
   queryBase: any,
@@ -125,24 +129,24 @@ function getKeywordQuery(
   if (searchTerm) {
     queryBase.query.bool.must.query_string.default_field = Object.keys(
       config.searchQuery.search_fields
-    )[0]
+    )[0];
     queryBase.query.bool.must.query_string.default_operator =
-      config.searchQuery.operator
-    queryBase.query.bool.must.query_string.query = searchTerm
+      config.searchQuery.operator;
+    queryBase.query.bool.must.query_string.query = searchTerm;
   } else {
-    queryBase.query.bool.must.query_string.query = '*'
+    queryBase.query.bool.must.query_string.query = '*';
   }
   if (filters && filters.length > 0) {
-    queryBase.query.bool.filter = []
+    queryBase.query.bool.filter = [];
     filters.forEach((filter: Filter) => {
       queryBase.query.bool.filter.push({
         terms: { [filter.field]: filter.values },
-      })
-    })
+      });
+    });
   } else {
-    queryBase.query.bool.filter = []
+    queryBase.query.bool.filter = [];
   }
-  return queryBase
+  return queryBase;
 }
 
 function PeopleIndicators({
@@ -151,14 +155,14 @@ function PeopleIndicators({
   isLoading,
   indicatorsState,
 }: IndicatorsProps) {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('common');
 
-  const [indicators, setIndicators] = useState(indicatorsState.data)
+  const [indicators, setIndicators] = useState(indicatorsState.data);
 
   useEffect(() => {
     optionsResearchArea.plugins.title.text = t(
       optionsResearchArea.plugins?.title?.text
-    )
+    );
     isLoading
       ? ElasticSearchService(
           [
@@ -181,32 +185,32 @@ function PeopleIndicators({
           ],
           indicatorsState.config.searchQuery.index
         ).then((data) => {
-          setIndicators(data)
-          indicatorsState.data = data
+          setIndicators(data);
+          indicatorsState.data = data;
         })
-      : null
+      : null;
   }, [
     filters,
     searchTerm,
     isLoading,
     indicatorsState.config.searchQuery.search_fields,
     indicatorsState.config.searchQuery.operator,
-  ])
+  ]);
 
-  const nationalities: IndicatorType[] = indicators ? indicators[0] : []
+  const nationalities: IndicatorType[] = indicators ? indicators[0] : [];
 
   const nationalitiesTagsCloud =
     nationalities != null
       ? nationalities.map((d) => ({ value: d.key, count: d.doc_count }))
-      : []
+      : [];
 
-  const researchArea: IndicatorType[] = indicators ? indicators[1] : []
+  const researchArea: IndicatorType[] = indicators ? indicators[1] : [];
 
   const researchAreaLabels =
-    researchArea != null ? researchArea.map((d) => d.key) : []
+    researchArea != null ? researchArea.map((d) => d.key) : [];
 
   const researchAreaValues =
-    researchArea != null ? researchArea.map((d) => d.doc_count) : []
+    researchArea != null ? researchArea.map((d) => d.doc_count) : [];
 
   return (
     <div className={styles.charts}>
@@ -231,22 +235,8 @@ function PeopleIndicators({
               {
                 data: researchAreaValues,
                 label: '# People',
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
-                ],
-                borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)',
-                ],
+                backgroundColor: CHART_BACKGROUD_COLORS,
+                borderColor: CHART_BORDER_COLORS,
                 borderWidth: 1,
               },
             ],
@@ -289,7 +279,7 @@ function PeopleIndicators({
         />
       </div>
     </div>
-  )
+  );
 }
 // @ts-ignore
 export default withSearch(
@@ -300,4 +290,4 @@ export default withSearch(
     isLoading,
     indicatorsState,
   })
-)(PeopleIndicators)
+)(PeopleIndicators);

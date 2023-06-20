@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import bootstrap CSS
 import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';

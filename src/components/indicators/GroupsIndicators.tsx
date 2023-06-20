@@ -38,7 +38,7 @@ ChartJS.register(
   ArcElement
 );
 
-export const optionsStatus = {
+export const optResearchLine = {
   responsive: true,
   plugins: {
     legend: {
@@ -47,12 +47,39 @@ export const optionsStatus = {
     },
     title: {
       display: true,
-      text: 'Journals by status',
+      text: 'Research groups by Research line',
+    },
+  },
+};
+const optKnowledgeArea = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom',
+      display: true,
+    },
+    title: {
+      display: true,
+      text: 'Research groups by knowledge area',
     },
   },
 };
 
-export const optPublishers: ChartOptions = {
+const optStatus = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom',
+      display: true,
+    },
+    title: {
+      display: true,
+      text: 'Research groups by status',
+    },
+  },
+};
+
+const optCreatYear: ChartOptions = {
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -66,14 +93,7 @@ export const optPublishers: ChartOptions = {
     },
     title: {
       display: true,
-      text: 'Journals by publishers',
-    },
-  },
-  scales: {
-    x: {
-      ticks: {
-        display: false,
-      },
+      text: 'Research groups by creation year',
     },
   },
 };
@@ -83,11 +103,19 @@ type IndicatorType = {
   doc_count: number;
 };
 
-const headersPublishers = [
-  { label: 'Publisher', key: 'key' },
+const headersByCreationYear = [
+  { label: 'Creation year', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
 ];
 
+const headersResearchLine = [
+  { label: 'Research line', key: 'key' },
+  { label: 'Quantity', key: 'doc_count' },
+];
+const headersKnowledgeArea = [
+  { label: 'Knowledge Area', key: 'key' },
+  { label: 'Quantity', key: 'doc_count' },
+];
 const headersStatus = [
   { label: 'Status', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
@@ -103,7 +131,7 @@ const queryCommonBase = {
         field: '',
         size: 10,
         order: {
-          _count: 'desc',
+          _key: 'desc',
         },
       },
     },
@@ -119,6 +147,10 @@ const queryCommonBase = {
     },
   },
 };
+
+const queryPie = JSON.parse(JSON.stringify(queryCommonBase));
+// queryPie.aggs.aggregate.terms.size = 10
+queryPie.aggs.aggregate.terms.order = { _count: 'desc' };
 
 function getKeywordQuery(
   queryBase: any,
@@ -172,7 +204,7 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } };
 }
 
-function JornalsIndicators({
+function GroupsIndicators({
   filters,
   searchTerm,
   isLoading,
@@ -184,15 +216,22 @@ function JornalsIndicators({
   useEffect(() => {
     // tradução
     // @ts-ignore
-    optPublishers.plugins.title.text = t(optPublishers.plugins?.title?.text);
-    optionsStatus.plugins.title.text = t(optionsStatus.plugins?.title?.text);
+    optCreatYear.plugins.title.text = t(optCreatYear.plugins?.title?.text);
+    // @ts-ignore
+    optStatus.plugins.title.text = t(optStatus.plugins?.title?.text);
+    optResearchLine.plugins.title.text = t(
+      optResearchLine.plugins?.title?.text
+    );
+    optKnowledgeArea.plugins.title.text = t(
+      optKnowledgeArea.plugins?.title?.text
+    );
     isLoading
       ? ElasticSearchService(
           [
             JSON.stringify(
               getKeywordQuery(
                 queryCommonBase,
-                'publisher.name',
+                'creationYear',
                 filters,
                 searchTerm,
                 indicatorsState.config
@@ -200,7 +239,25 @@ function JornalsIndicators({
             ),
             JSON.stringify(
               getKeywordQuery(
-                queryCommonBase,
+                queryPie,
+                'researchLine',
+                filters,
+                searchTerm,
+                indicatorsState.config
+              )
+            ),
+            JSON.stringify(
+              getKeywordQuery(
+                queryPie,
+                'knowledgeArea',
+                filters,
+                searchTerm,
+                indicatorsState.config
+              )
+            ),
+            JSON.stringify(
+              getKeywordQuery(
+                queryPie,
                 'status',
                 filters,
                 searchTerm,
@@ -222,16 +279,45 @@ function JornalsIndicators({
     indicatorsState.config.searchQuery.operator,
   ]);
 
-  const publisherIndicators: IndicatorType[] = indicators ? indicators[0] : [];
+  // creation year
+  const creationYearIndicators: IndicatorType[] = indicators
+    ? indicators[0]
+    : [];
+  const creationYearLabels =
+    creationYearIndicators != null
+      ? creationYearIndicators.map((d) => d.key)
+      : [];
 
-  const publisherLabels =
-    publisherIndicators != null ? publisherIndicators.map((d) => d.key) : [];
+  // research line
+  const researchLineIndicators: IndicatorType[] = indicators
+    ? indicators[1]
+    : [];
+  const researchLineLabels =
+    researchLineIndicators != null
+      ? researchLineIndicators.map((d) => d.key)
+      : [];
+  const researchLineCount =
+    researchLineIndicators != null
+      ? researchLineIndicators.map((d) => d.doc_count)
+      : [];
 
-  const statusIndicators: IndicatorType[] = indicators ? indicators[1] : [];
+  // knowledge area
+  const knowledgeAreaIndicators: IndicatorType[] = indicators
+    ? indicators[2]
+    : [];
+  const knowledgeAreaLabels =
+    knowledgeAreaIndicators != null
+      ? knowledgeAreaIndicators.map((d) => d.key)
+      : [];
+  const knowledgeAreaCount =
+    knowledgeAreaIndicators != null
+      ? knowledgeAreaIndicators.map((d) => d.doc_count)
+      : [];
 
+  // status
+  const statusIndicators: IndicatorType[] = indicators ? indicators[3] : [];
   const statusLabels =
     statusIndicators != null ? statusIndicators.map((d) => d.key) : [];
-
   const statusCount =
     statusIndicators != null ? statusIndicators.map((d) => d.doc_count) : [];
 
@@ -241,24 +327,24 @@ function JornalsIndicators({
         <CSVLink
           className={styles.download}
           title="Export to csv"
-          data={publisherIndicators ? publisherIndicators : []}
+          data={creationYearIndicators ? creationYearIndicators : []}
           filename={'arquivo.csv'}
-          headers={headersPublishers}
+          headers={headersByCreationYear}
         >
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          hidden={publisherIndicators == null}
+          hidden={creationYearIndicators == null}
           /** 
       // @ts-ignore */
-          options={optPublishers}
+          options={optCreatYear}
           width="500"
           data={{
-            labels: publisherLabels,
+            labels: creationYearLabels,
             datasets: [
               {
-                data: publisherIndicators,
-                label: 'Articles per Year',
+                data: creationYearIndicators,
+                label: 'Groups by Year',
                 backgroundColor: CHART_BACKGROUD_COLORS,
                 borderColor: CHART_BORDER_COLORS,
                 borderWidth: 1,
@@ -272,7 +358,69 @@ function JornalsIndicators({
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
-          data={statusIndicators ? statusIndicators : []}
+          data={researchLineIndicators ? researchLineIndicators : []}
+          filename={'arquivo.csv'}
+          headers={headersResearchLine}
+        >
+          <IoCloudDownloadOutline />
+        </CSVLink>
+        <Pie
+          /** 
+      // @ts-ignore */
+          options={optResearchLine}
+          hidden={researchLineIndicators == null}
+          width="500"
+          data={{
+            labels: researchLineLabels,
+            datasets: [
+              {
+                data: researchLineCount,
+                label: '# of Votes',
+                backgroundColor: CHART_BACKGROUD_COLORS,
+                borderColor: CHART_BORDER_COLORS,
+                borderWidth: 1,
+              },
+            ],
+          }}
+        />
+      </div>
+
+      <div className={styles.chart}>
+        <CSVLink
+          className={styles.download}
+          title={t('Export to csv') || ''}
+          data={knowledgeAreaIndicators ? knowledgeAreaIndicators : []}
+          filename={'arquivo.csv'}
+          headers={headersKnowledgeArea}
+        >
+          <IoCloudDownloadOutline />
+        </CSVLink>
+        <Pie
+          /** 
+      // @ts-ignore */
+          options={optKnowledgeArea}
+          hidden={knowledgeAreaIndicators == null}
+          width="500"
+          data={{
+            labels: knowledgeAreaLabels,
+            datasets: [
+              {
+                data: knowledgeAreaCount,
+                label: '# of codes',
+                backgroundColor: CHART_BACKGROUD_COLORS,
+                borderColor: CHART_BORDER_COLORS,
+                borderWidth: 1,
+              },
+            ],
+          }}
+        />
+      </div>
+
+      <div className={styles.chart}>
+        <CSVLink
+          className={styles.download}
+          title={t('Export to csv') || ''}
+          data={knowledgeAreaIndicators ? knowledgeAreaIndicators : []}
           filename={'arquivo.csv'}
           headers={headersStatus}
         >
@@ -281,15 +429,15 @@ function JornalsIndicators({
         <Pie
           /** 
       // @ts-ignore */
-          options={optionsStatus}
+          options={optStatus}
           hidden={statusIndicators == null}
           width="500"
           data={{
-            labels: statusLabels.map((label) => label.split('#')[1] || label),
+            labels: statusLabels,
             datasets: [
               {
                 data: statusCount,
-                label: '# of Votes',
+                label: '# of codes',
                 backgroundColor: CHART_BACKGROUD_COLORS,
                 borderColor: CHART_BORDER_COLORS,
                 borderWidth: 1,
@@ -309,4 +457,4 @@ export default withSearch(
     isLoading,
     indicatorsState,
   })
-)(JornalsIndicators);
+)(GroupsIndicators);

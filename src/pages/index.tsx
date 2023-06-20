@@ -1,27 +1,26 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { GetStaticProps } from 'next'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import AllIndexVisNetwork from '../components/AllIndexVisNetwork'
-import styles from '../styles/Home.module.css'
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import AllIndexVisNetwork from '../components/AllIndexVisNetwork';
+import styles from '../styles/Home.module.css';
 
 type Props = {
   // Add custom props here
-}
+};
 // or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
   },
-})
+});
 
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
-  const router = useRouter()
-  const { t } = useTranslation('common')
+  const router = useRouter();
+  const { t } = useTranslation('common');
 
   const indexes = [
     { name: 'Publications', page: 'publications' },
@@ -32,7 +31,7 @@ export default function App() {
     { name: 'Programs', page: 'programs' },
     { name: 'Research Groups', page: 'groups' },
     { name: 'Software', page: 'software' },
-  ]
+  ];
   const partners = [
     {
       url: 'https://www.gov.br/ibict/pt-br',
@@ -72,9 +71,9 @@ export default function App() {
       description: ' Logo do LA Referencia',
       class: 'hilight',
     },
-  ]
-  const [term, setTerm] = useState('')
-  const [searchPage, setSearchPage] = useState('publications')
+  ];
+  const [term, setTerm] = useState('');
+  const [searchPage, setSearchPage] = useState('publications');
 
   return (
     <>
@@ -163,5 +162,5 @@ export default function App() {
         </div>
       </div>
     </>
-  )
+  );
 }

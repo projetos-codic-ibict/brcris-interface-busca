@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ErrorBoundary,
+  Facet,
   Paging,
   PagingInfo,
   Results,
@@ -10,7 +11,6 @@ import {
   SearchProvider,
   Sorting,
   WithSearch,
-  Facet,
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
@@ -21,11 +21,11 @@ import Head from 'next/head';
 import React from 'react';
 import ButtonFieldSelect from '../components/ButtonFieldSelect';
 import ClearFilters from '../components/ClearFilters';
-import IndicatorsPeople from '../components/indicators/PeopleIndicators';
 import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 
 import CustomResultViewGroups from '../components/customResultView/CustomResultViewGroups';
+import GroupsIndicators from '../components/indicators/GroupsIndicators';
 type Props = {
   // Add custom props here
 };
@@ -378,7 +378,7 @@ export default function App() {
                         </div>
                         {/** 
                         // @ts-ignore */}
-                        <IndicatorsPeople indicatorsState={indicatorsState} />
+                        <GroupsIndicators indicatorsState={indicatorsState} />
                       </div>
                     </div>
                   </ErrorBoundary>
