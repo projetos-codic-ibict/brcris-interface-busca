@@ -183,10 +183,18 @@ export default function App() {
                                 </li>
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title={t('Research field')}
+                                    title={t('Institution')}
                                     active={false}
                                     config={config}
-                                    searchField="researchArea"
+                                    searchField="orgunit.name"
+                                  />
+                                </li>
+                                <li className="nav-item" role="presentation">
+                                  <ButtonFieldSelect
+                                    title={t('CNPq research area')}
+                                    active={false}
+                                    config={config}
+                                    searchField="cnpqResearchArea"
                                   />
                                 </li>
                               </ul>

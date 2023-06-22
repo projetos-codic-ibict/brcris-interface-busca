@@ -86,6 +86,8 @@ const config = {
       'publicationDate',
       'depositDate',
       'inventor',
+      'espacenetTitle',
+      'inventor.name',
     ],
     facets: {
       countryCode: { type: 'value' },
@@ -193,18 +195,26 @@ export default function App() {
                               >
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title={t('Nome')}
+                                    title={t('Title')}
                                     active={true}
                                     config={config}
-                                    searchField="name"
+                                    searchField="espacenetTitle"
                                   />
                                 </li>
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title={t('Research field')}
+                                    title={t('Inventor')}
                                     active={false}
                                     config={config}
-                                    searchField="researchArea"
+                                    searchField="inventor.name"
+                                  />
+                                </li>
+                                <li className="nav-item" role="presentation">
+                                  <ButtonFieldSelect
+                                    title={t('Publication Date')}
+                                    active={false}
+                                    config={config}
+                                    searchField="publicationDate"
                                   />
                                 </li>
                               </ul>
