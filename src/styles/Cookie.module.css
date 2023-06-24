@@ -16,6 +16,7 @@
   padding: 16px;
   max-width: 980px;
   border-radius: 4px;
+  border: 1px solid var(--dark-color);
 }
 
 .cookieItems p {

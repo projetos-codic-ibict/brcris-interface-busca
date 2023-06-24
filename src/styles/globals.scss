@@ -14,8 +14,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
   color: var(--dark-color);
 }
 
@@ -63,17 +63,6 @@ a {
 
 .navbar-expand-lg {
   padding: 0.1em 1.5rem 0.7em;
-}
-
-@media (prefers-color-scheme: light) {
-  html {
-    color-scheme: dark;
-  }
-
-  body {
-    color: white;
-    background: var(--dark-color);
-  }
 }
 
 .nav {
@@ -294,6 +283,11 @@ li .sui-result__key:after {
 }
 
 /* sobrescrevendo o css do componente do search-ui  */
+
+.page-search .sui-layout {
+  width: auto;
+}
+
 .page-search,
 .page-search .sui-multi-checkbox-facet {
   color: #210d41;
@@ -350,17 +344,27 @@ li .sui-result__key:after {
   overflow: visible;
 }
 
+.page-search .sui-layout-main {
+  padding: 16px;
+}
+
 .page-search .sui-layout-main-header {
   margin-bottom: 1.5rem;
+}
+
+.page-search .sui-layout-body__inner {
+  padding: 0 0 0 16px;
 }
 
 .page-search .sui-layout-sidebar {
   border-radius: 5px;
   padding: 0;
+  width: 25%;
 }
 
 .page-search .sui-layout-body__inner {
   align-items: flex-start;
+  max-width: 1500px;
 }
 
 .page-search .sui-select__control--is-focused {
@@ -471,7 +475,7 @@ footer {
   width: 100%;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 800px) {
   .sui-result__value {
     word-break: break-all;
   }
@@ -491,5 +495,17 @@ footer {
   .graph {
     height: 50vh;
     width: 100%;
+  }
+  .sui-layout-sidebar-toggle {
+    display: block !important;
+  }
+
+  .page-search .sui-layout-body__inner {
+    padding: 0 16px 0 16px;
+  }
+
+  .page-search .sui-layout-sidebar {
+    width: 100%;
+    padding: 16px;
   }
 }

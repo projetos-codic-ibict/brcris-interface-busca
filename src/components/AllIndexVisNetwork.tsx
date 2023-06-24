@@ -32,9 +32,9 @@ const nodes: IndexNode[] = [
     widthConstraint: 100,
     level: 1,
     shape: 'circle',
-    color: '#F7964D',
+    color: '#cc7c06',
     font: {
-      color: '#210d41',
+      color: '#ffffff',
       size: 13,
     },
   },
@@ -48,7 +48,7 @@ const nodes: IndexNode[] = [
     shape: 'circle',
     color: '#CB6CE6',
     font: {
-      color: '#210d41',
+      color: '#ffffff',
       size: 13,
     },
   },
@@ -61,7 +61,7 @@ const nodes: IndexNode[] = [
     shape: 'circle',
     color: '#FF5757',
     font: {
-      color: '#210d41',
+      color: '#ffffff',
       size: 13,
     },
   },
@@ -72,9 +72,9 @@ const nodes: IndexNode[] = [
     title: '140 ',
     level: 4,
     shape: 'circle',
-    color: '#00dafc',
+    color: '#03a9f4',
     font: {
-      color: '#210d41',
+      color: '#ffffff',
       size: 11,
     },
   },
@@ -87,20 +87,20 @@ const nodes: IndexNode[] = [
     shape: 'circle',
     color: '#960080',
     font: {
-      color: '#210d41',
+      color: '#ffffff',
       size: 13,
     },
   },
   {
     id: 6,
     index: 'pesqdf-program',
-    label: 'Programs',
+    label: 'PPGs',
     title: '253 ',
     level: 6,
     shape: 'circle',
-    color: '#20c997',
+    color: '#009688',
     font: {
-      color: '#210d41',
+      color: '#ffffff',
       size: 11,
     },
   },
@@ -136,19 +136,17 @@ const keysLanguage = [
   'Journals',
   'Institutions',
   'Patents',
-  'Programs',
+  'PPGs',
   'Research Groups',
   // 'Software',
 ];
 
 const edges = [
   { from: 1, to: 2, id: 1 },
-  { from: 1, to: 4, id: 2 },
   { from: 3, to: 4, id: 3 },
   { from: 4, to: 2, id: 4 },
   { from: 1, to: 3, id: 5 },
   { from: 3, to: 2, id: 6 },
-  { from: 6, to: 1, id: 7 },
   { from: 6, to: 2, id: 8 },
   { from: 6, to: 4, id: 9 },
   { from: 5, to: 2, id: 10 },
@@ -156,8 +154,6 @@ const edges = [
   { from: 7, to: 1, id: 12 },
   { from: 7, to: 2, id: 13 },
   { from: 7, to: 4, id: 14 },
-  // { from: 1, to: 7, id: 9 },
-  // { from: 8, to: 5, id: 10 },
 ];
 
 const options = {
@@ -239,20 +235,13 @@ function VisGraph() {
 
   useEffect(() => {
     const newNodes: IndexNode[] = [];
-    const maxSizeOfNode = Math.max(
-      ...indexesStats.map((item) => item['docs.count'])
-    );
+    const maxSizeOfNode = Math.max(...indexesStats.map((item) => item['docs.count']));
     for (let i = 0; i < keysLanguage.length; i++) {
-      const indexStat = indexesStats.find(
-        (item) => item.index === nodes[i].index
-      );
+      const indexStat = indexesStats.find((item) => item.index === nodes[i].index);
       if (indexStat) {
         console.log(nodes[i].label, indexStat.index, indexStat['docs.count']);
         nodes[i].title = `${numberFormat.format(indexStat['docs.count'])} `;
-        nodes[i].widthConstraint = getSizeOfNode(
-          maxSizeOfNode,
-          indexStat['docs.count']
-        );
+        nodes[i].widthConstraint = getSizeOfNode(maxSizeOfNode, indexStat['docs.count']);
       }
       // @ts-ignore
       nodes[i].label = t(keysLanguage[i]);

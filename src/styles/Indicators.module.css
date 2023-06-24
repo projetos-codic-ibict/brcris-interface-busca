@@ -2,7 +2,7 @@
   padding: 0;
   margin-right: 24px;
   min-width: 340px;
-  max-width: 25%;
+  /* max-width: 25%; */
 }
 
 .chart {
@@ -26,7 +26,7 @@
   right: 8px;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 800px) {
   .charts {
     margin-right: 0;
     margin-bottom: 32px;
