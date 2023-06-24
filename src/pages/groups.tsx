@@ -230,10 +230,18 @@ export default function App() {
                                 </li>
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title={t('Research field')}
+                                    title={t('Research Line')}
                                     active={false}
                                     config={config}
-                                    searchField="researchArea"
+                                    searchField="researchLine"
+                                  />
+                                </li>
+                                <li className="nav-item" role="presentation">
+                                  <ButtonFieldSelect
+                                    title={t('Knowledge Area')}
+                                    active={false}
+                                    config={config}
+                                    searchField="knowledgeArea"
                                   />
                                 </li>
                               </ul>

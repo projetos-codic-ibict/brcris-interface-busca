@@ -256,6 +256,14 @@ export default function App() {
                                     searchField="author.name"
                                   />
                                 </li>
+                                <li className="nav-item" role="presentation">
+                                  <ButtonFieldSelect
+                                    title={t('Type')}
+                                    active={false}
+                                    config={config}
+                                    searchField="type"
+                                  />
+                                </li>
                               </ul>
                               <div className="tab-content" id="myTabContent">
                                 <div

@@ -160,10 +160,18 @@ export default function App() {
                                 </li>
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
-                                    title={t('Research field')}
+                                    title={t('Status')}
                                     active={false}
                                     config={config}
-                                    searchField="researchArea"
+                                    searchField="status"
+                                  />
+                                </li>
+                                <li className="nav-item" role="presentation">
+                                  <ButtonFieldSelect
+                                    title={t('Publisher')}
+                                    active={false}
+                                    config={config}
+                                    searchField="publisher.name"
                                   />
                                 </li>
                               </ul>
