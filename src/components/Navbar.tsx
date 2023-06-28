@@ -17,26 +17,13 @@ function Navbar() {
           <Link href="/">
             <a className="navbar-brand">
               <picture className="navbar-logo">
-                <img
-                  className="img-fluid brcris"
-                  src="/logos/logo-brcris-pb.png"
-                  alt="logo do brcris"
-                />
+                <img className="img-fluid brcris" src="/logos/logo-brcris-pb.png" alt="logo do brcris" />
               </picture>
             </a>
           </Link>
-          <a
-            className="navbar-brand"
-            href="https://www.gov.br/ibict/pt-br"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="navbar-brand" href="https://www.gov.br/ibict/pt-br" target="_blank" rel="noreferrer">
             <picture className="navbar-logo">
-              <img
-                className="img-fluid ibict"
-                src="/logos/logo-ibict-pb-st.png"
-                alt="logo do ibict"
-              />
+              <img className="img-fluid ibict" src="/logos/logo-ibict-pb-st.png" alt="logo do ibict" />
             </picture>
           </a>
 
@@ -55,7 +42,7 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="navbar-nav me-auto mb-2 mb-lg-0"></div>
 
-          <ul className="navbar-nav nav nav-tabs me-2" role="tablist">
+          <ul className="navbar-nav nav nav-tabs" role="tablist">
             <li className="nav-item me-5" role="presentation">
               <Link href="/">
                 <a className="nav-link">{t('Home')}</a>
@@ -63,24 +50,18 @@ function Navbar() {
             </li>
 
             <li className="nav-item me-5" role="presentation">
-              <Link
-                href={`${process.env.VIVO_URL_HOME}/dashboards?lang=${router.locale}`}
-              >
+              <Link href={`${process.env.VIVO_URL_HOME}/dashboards?lang=${router.locale}`}>
                 <a className="nav-link">{t('Dashboards')}</a>
               </Link>
             </li>
 
             <li className="nav-item me-5" role="presentation">
-              <Link
-                href={`${process.env.VIVO_URL_HOME}/team?lang=${router.locale}`}
-              >
+              <Link href={`${process.env.VIVO_URL_HOME}/team?lang=${router.locale}`}>
                 <a className="nav-link">{t('Team')}</a>
               </Link>
             </li>
             <li className="nav-item me-5" role="presentation">
-              <Link
-                href={`${process.env.VIVO_URL_HOME}/about?lang=${router.locale}`}
-              >
+              <Link href={`${process.env.VIVO_URL_HOME}/about?lang=${router.locale}`}>
                 <a className="nav-link">{t('About')}</a>
               </Link>
             </li>
