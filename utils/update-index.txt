@@ -1,0 +1,73 @@
+PUT pesqdf-publication/_mapping
+{
+  "properties": {
+    "title_suggest":  { "type": "search_as_you_type"}
+  }
+}
+
+
+PUT pesqdf-publication/_mapping
+{
+  "properties": {
+    "title_completion":  { "type": "completion"}
+  }
+}
+
+
+POST pesqdf-publication/_update_by_query
+{
+  "query": {
+        "constant_score" : {
+            "filter" : {
+                "exists" : { "field" : "title-text" }
+            }
+        }
+
+  },
+  "script" : {
+      "source": "ctx._source.title_suggest = ctx._source.title-text;",
+      "lang": "painless"
+  }
+}
+
+POST pesqdf-publication/_update_by_query
+{
+  "query": {
+        "constant_score" : {
+            "filter" : {
+                "exists" : { "field" : "title_suggest" }
+            }
+        }
+
+  },
+  "script" : {
+      "source": "ctx._source.title_completion = ctx._source.title_suggest;",
+      "lang": "painless"
+  }
+}
+
+
+PUT pesqdf-publication/_mapping
+{
+  "properties": {
+    "vivo_link":  { "type": "keyword"}
+  }
+}
+
+
+
+POST pesqdf-publication/_update_by_query
+{
+  "query": {
+        "constant_score" : {
+            "filter" : {
+                "exists" : { "field" : "id" }
+            }
+        }
+
+  },
+  "script" : {
+      "source": "ctx._source.vivo_link = 'http://codich1.ibict.br:8081/vivo/individual?uri=https://brcris.ibict.br/individual/publ_'+ctx._source.id;",
+      "lang": "painless"
+  }
+}

@@ -16,7 +16,6 @@ import {
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import React from 'react';
-import ButtonFieldSelect from '../components/ButtonFieldSelect';
 import ClearFilters from '../components/ClearFilters';
 import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
 import Indicators from '../components/indicators/PublicationsIndicators';
@@ -50,7 +49,10 @@ const config = {
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
-      'title-text': {},
+      'title-text': {
+        weight: 3,
+      },
+      'keyword-text': {},
     },
     result_fields: {
       title: {
@@ -141,33 +143,33 @@ const config = {
       },
     },
   },
-  // autocompleteQuery: {
-  //   results: {
-  //     search_fields: {
-  //       'titlesuggest.suggest': {},
-  //     },
-  //     resultsPerPage: 5,
-  //     result_fields: {
-  //       title: {
-  //         snippet: {
-  //           size: 100,
-  //           fallback: true,
-  //         },
-  //       },
-  //       vivo_link: {
-  //         raw: {},
-  //       },
-  //     },
-  //   },
-  //   suggestions: {
-  //     types: {
-  //       documents: {
-  //         fields: ['suggest'],
-  //       },
-  //     },
-  //     size: 4,
-  //   },
-  // },
+  autocompleteQuery: {
+    results: {
+      resultsPerPage: 5,
+      search_fields: {
+        title_suggest: {
+          weight: 3,
+        },
+      },
+      result_fields: {
+        title: {
+          snippet: {
+            size: 100,
+            fallback: true,
+          },
+        },
+        vivo_link: {
+          raw: {},
+        },
+      },
+    },
+    suggestions: {
+      types: {
+        results: { fields: ['title_completion'] },
+      },
+      size: 4,
+    },
+  },
 };
 type SortOptionsType = {
   name: string;
@@ -227,78 +229,25 @@ export default function App() {
                             <h2>{t('Publications')}</h2>
                           </div>
                         </div>
-
-                        <div className="col-md-6">
-                          <div className="card search-card">
-                            <div className="card-body">
-                              <ul className="nav nav-tabs" id="myTab" role="tablist">
-                                <li className="nav-item" role="presentation">
-                                  <ButtonFieldSelect
-                                    title={t('Title')}
-                                    active={true}
-                                    config={config}
-                                    searchField="title"
-                                  />
-                                </li>
-                                {/* <li className="nav-item" role="presentation">
-                                  <ButtonFieldSelect
-                                    title={t('Author')}
-                                    active={false}
-                                    config={config}
-                                    searchField="author.name"
-                                  />
-                                </li> */}
-                                {/* <li className="nav-item" role="presentation">
-                                  <ButtonFieldSelect
-                                    title={t('Type')}
-                                    active={false}
-                                    config={config}
-                                    searchField="type"
-                                  />
-                                </li> */}
-                              </ul>
-                              <div className="tab-content" id="myTabContent">
-                                <div
-                                  className="tab-pane fade show active"
-                                  id="home"
-                                  role="tabpanel"
-                                  aria-labelledby="home-tab"
-                                >
-                                  <SearchBox
-                                    view={({ value, onChange, onSubmit }) => (
-                                      <form onSubmit={onSubmit} className="row g-3 mb-3">
-                                        <div className="col">
-                                          <input
-                                            className="form-control search-box"
-                                            type="text"
-                                            value={value}
-                                            onChange={(e) => onChange(e.target.value)}
-                                            placeholder={`${t('Search')}...`}
-                                          />
-                                        </div>
-                                        <div className="col-auto">
-                                          <input
-                                            className="btn btn-primary search-btn"
-                                            type="submit"
-                                            value={t('Search') || ''}
-                                          />
-                                        </div>
-                                      </form>
-                                    )}
-                                  />
-                                </div>
-
-                                {/* <OperatorSelect config={config} /> */}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
 
                     <div className={styles.content}>
                       <Layout
-                        // header={}
+                        header={
+                          <SearchBox
+                            autocompleteMinimumCharacters={3}
+                            autocompleteResults={{
+                              linkTarget: '_blank',
+                              sectionTitle: 'Open link',
+                              titleField: 'title',
+                              urlField: 'vivo_link',
+                              shouldTrackClickThrough: true,
+                            }}
+                            autocompleteSuggestions={true}
+                            debounceLength={0}
+                          />
+                        }
                         sideContent={
                           <div>
                             {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}

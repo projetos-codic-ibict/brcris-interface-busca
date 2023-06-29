@@ -26,7 +26,7 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #4f0063 !important;
+  background-color: var(--secondary-color) !important;
   border-color: #290043 !important;
 }
 
@@ -185,6 +185,14 @@ a.nav-link {
 
 .page-search .indicators-header {
   padding-left: 0;
+}
+
+.page-search .sui-search-box__submit {
+  background: var(--dark-color);
+  border-color: var(--dark-color);
+}
+.page-search .sui-search-box__submit:hover {
+  background: var(--secondary-color);
 }
 
 .sui-result__value a.lattes-link {
