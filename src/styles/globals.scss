@@ -74,6 +74,19 @@ a {
   margin-right: 0.3rem !important;
 }
 
+.btn-clear {
+  color: var(--bs-link-color);
+  border: none;
+  margin-left: 8px;
+  padding: 4px;
+  font-size: 0.9rem;
+}
+
+.btn-clear:hover {
+  color: var(--bs-link-hover-color);
+  border: none;
+}
+
 .navbar {
   margin: 0;
 }

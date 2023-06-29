@@ -197,9 +197,7 @@ export default function App() {
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>
-          <WithSearch
-            mapContextToProps={({ wasSearched }) => ({ wasSearched })}
-          >
+          <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
             {({ wasSearched }) => {
               return (
                 <div className="App">
@@ -215,11 +213,7 @@ export default function App() {
                         <div className="col-md-6">
                           <div className="card search-card">
                             <div className="card-body">
-                              <ul
-                                className="nav nav-tabs"
-                                id="myTab"
-                                role="tablist"
-                              >
+                              <ul className="nav nav-tabs" id="myTab" role="tablist">
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title={t('Nome')}
@@ -228,22 +222,22 @@ export default function App() {
                                     searchField="name"
                                   />
                                 </li>
-                                <li className="nav-item" role="presentation">
+                                {/* <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title={t('Research Line')}
                                     active={false}
                                     config={config}
                                     searchField="researchLine"
                                   />
-                                </li>
-                                <li className="nav-item" role="presentation">
+                                </li> */}
+                                {/* <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title={t('Knowledge Area')}
                                     active={false}
                                     config={config}
                                     searchField="knowledgeArea"
                                   />
-                                </li>
+                                </li> */}
                               </ul>
                               <div className="tab-content" id="myTabContent">
                                 <div
@@ -254,18 +248,13 @@ export default function App() {
                                 >
                                   <SearchBox
                                     view={({ value, onChange, onSubmit }) => (
-                                      <form
-                                        onSubmit={onSubmit}
-                                        className="row g-3 mb-3"
-                                      >
+                                      <form onSubmit={onSubmit} className="row g-3 mb-3">
                                         <div className="col">
                                           <input
                                             className="form-control search-box"
                                             type="text"
                                             value={value}
-                                            onChange={(e) =>
-                                              onChange(e.target.value)
-                                            }
+                                            onChange={(e) => onChange(e.target.value)}
                                           />
                                         </div>
                                         <div className="col-auto">
@@ -273,9 +262,6 @@ export default function App() {
                                             className="btn btn-primary search-btn"
                                             type="submit"
                                             value={t('Search') || ''}
-                                            disabled={
-                                              !value || value.length < 3
-                                            }
                                           />
                                         </div>
                                       </form>
@@ -297,81 +283,32 @@ export default function App() {
                         // header={}
                         sideContent={
                           <div>
-                            {wasSearched && (
-                              <Sorting
-                                label={t('Sort by') || ''}
-                                sortOptions={SORT_OPTIONS}
-                              />
-                            )}
+                            {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
-                              <span className="sui-sorting__label">
-                                {t('Filters')}
-                              </span>
+                              <span className="sui-sorting__label">{t('Filters')}</span>
                             </div>
-                            <Facet
-                              key={'1'}
-                              field={'creationYear'}
-                              label={t('Creation Year')}
-                            />
+                            <Facet key={'1'} field={'creationYear'} label={t('Creation Year')} />
 
-                            <Facet
-                              key={'2'}
-                              field={'researchLine'}
-                              label={t('Research Line')}
-                            />
+                            <Facet key={'2'} field={'researchLine'} label={t('Research Line')} />
 
-                            <Facet
-                              key={'3'}
-                              field={'knowledgeArea'}
-                              label={t('Knowledge Area')}
-                            />
+                            <Facet key={'3'} field={'knowledgeArea'} label={t('Knowledge Area')} />
 
-                            <Facet
-                              key={'4'}
-                              field={'applicationSector'}
-                              label={t('Application Sector')}
-                            />
+                            <Facet key={'4'} field={'applicationSector'} label={t('Application Sector')} />
 
-                            <Facet
-                              key={'5'}
-                              field={'keyword'}
-                              label={t('Keyword')}
-                            />
+                            <Facet key={'5'} field={'keyword'} label={t('Keyword')} />
 
-                            <Facet
-                              key={'6'}
-                              field={'status'}
-                              label={t('Status')}
-                            />
+                            <Facet key={'6'} field={'status'} label={t('Status')} />
 
-                            <Facet
-                              key={'7'}
-                              field={'leader'}
-                              label={t('Leader')}
-                            />
+                            <Facet key={'7'} field={'leader'} label={t('Leader')} />
 
-                            <Facet
-                              key={'8'}
-                              field={'partner'}
-                              label={t('Partner')}
-                            />
+                            <Facet key={'8'} field={'partner'} label={t('Partner')} />
 
-                            <Facet
-                              key={'9'}
-                              field={'member'}
-                              label={t('Member')}
-                            />
+                            <Facet key={'9'} field={'member'} label={t('Member')} />
 
-                            <Facet
-                              key={'10'}
-                              field={'orgunit'}
-                              label={t('Organization')}
-                            />
+                            <Facet key={'10'} field={'orgunit'} label={t('Organization')} />
                           </div>
                         }
-                        bodyContent={
-                          <Results resultView={CustomResultViewGroups} />
-                        }
+                        bodyContent={<Results resultView={CustomResultViewGroups} />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}

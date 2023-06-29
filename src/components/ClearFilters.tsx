@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { withSearch } from '@elastic/react-search-ui';
 import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch';
 import { useTranslation } from 'next-i18next';
 
 function ClearFilters({ filters, searchTerm, setSearchTerm, clearFilters }: SearchContextState) {
   const { t } = useTranslation('common');
-  return searchTerm || (filters && filters.length > 0) ? (
+  return (
     <div>
       <button
-        className="btn btn-secondary"
+        className="btn btn-clear"
         onClick={() => {
           clearFilters();
           setSearchTerm('');
@@ -16,8 +17,6 @@ function ClearFilters({ filters, searchTerm, setSearchTerm, clearFilters }: Sear
         {t('Clear filters')}
       </button>
     </div>
-  ) : (
-    <></>
   );
 }
 

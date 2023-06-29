@@ -30,9 +30,7 @@ import Head from 'next/head';
 type Props = {
   // Add custom props here
 };
-export const getServerSideProps: GetServerSideProps<Props> = async ({
-  locale,
-}) => ({
+export const getServerSideProps: GetServerSideProps<Props> = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
   },
@@ -52,7 +50,7 @@ const config = {
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
-      title: {},
+      'title-text': {},
     },
     result_fields: {
       title: {
@@ -217,9 +215,7 @@ export default function App() {
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>
-          <WithSearch
-            mapContextToProps={({ wasSearched }) => ({ wasSearched })}
-          >
+          <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
             {({ wasSearched }) => {
               return (
                 <div className="App">
@@ -235,11 +231,7 @@ export default function App() {
                         <div className="col-md-6">
                           <div className="card search-card">
                             <div className="card-body">
-                              <ul
-                                className="nav nav-tabs"
-                                id="myTab"
-                                role="tablist"
-                              >
+                              <ul className="nav nav-tabs" id="myTab" role="tablist">
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title={t('Title')}
@@ -248,22 +240,22 @@ export default function App() {
                                     searchField="title"
                                   />
                                 </li>
-                                <li className="nav-item" role="presentation">
+                                {/* <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title={t('Author')}
                                     active={false}
                                     config={config}
                                     searchField="author.name"
                                   />
-                                </li>
-                                <li className="nav-item" role="presentation">
+                                </li> */}
+                                {/* <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title={t('Type')}
                                     active={false}
                                     config={config}
                                     searchField="type"
                                   />
-                                </li>
+                                </li> */}
                               </ul>
                               <div className="tab-content" id="myTabContent">
                                 <div
@@ -274,18 +266,13 @@ export default function App() {
                                 >
                                   <SearchBox
                                     view={({ value, onChange, onSubmit }) => (
-                                      <form
-                                        onSubmit={onSubmit}
-                                        className="row g-3 mb-3"
-                                      >
+                                      <form onSubmit={onSubmit} className="row g-3 mb-3">
                                         <div className="col">
                                           <input
                                             className="form-control search-box"
                                             type="text"
                                             value={value}
-                                            onChange={(e) =>
-                                              onChange(e.target.value)
-                                            }
+                                            onChange={(e) => onChange(e.target.value)}
                                             placeholder={`${t('Search')}...`}
                                           />
                                         </div>
@@ -294,15 +281,11 @@ export default function App() {
                                             className="btn btn-primary search-btn"
                                             type="submit"
                                             value={t('Search') || ''}
-                                            disabled={
-                                              !value || value.length < 3
-                                            }
                                           />
                                         </div>
                                       </form>
                                     )}
                                   />
-                                  <ClearFilters />
                                 </div>
 
                                 {/* <OperatorSelect config={config} /> */}
@@ -318,54 +301,18 @@ export default function App() {
                         // header={}
                         sideContent={
                           <div>
-                            {wasSearched && (
-                              <Sorting
-                                label={t('Sort by') || ''}
-                                sortOptions={SORT_OPTIONS}
-                              />
-                            )}
+                            {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
-                              <span className="sui-sorting__label">
-                                {t('Filters')}
-                              </span>
+                              <span className="sui-sorting__label">{t('Filters')}</span>
                             </div>
-                            <Facet
-                              key={'1'}
-                              field={'language'}
-                              label={t('Language')}
-                            />
-                            <Facet
-                              key={'2'}
-                              field={'author.name'}
-                              label={t('Authors')}
-                            />
-                            <Facet
-                              key={'3'}
-                              field={'keyword'}
-                              label={t('Keyword')}
-                            />
-                            <Facet
-                              key={'4'}
-                              field={'orgunit.name'}
-                              label={t('Institution')}
-                            />
-                            <Facet
-                              key={'5'}
-                              field={'journal.title'}
-                              label={t('Journal')}
-                            />
+                            <Facet key={'1'} field={'language'} label={t('Language')} />
+                            <Facet key={'2'} field={'author.name'} label={t('Authors')} />
+                            <Facet key={'3'} field={'keyword'} label={t('Keyword')} />
+                            <Facet key={'4'} field={'orgunit.name'} label={t('Institution')} />
+                            <Facet key={'5'} field={'journal.title'} label={t('Journal')} />
                             <Facet key={'6'} field={'type'} label={t('Type')} />
-                            <Facet
-                              key={'7'}
-                              field={'cnpqResearchArea'}
-                              label={t('Cnpq Research Area')}
-                            />
-                            <Facet
-                              key={'8'}
-                              field={'publicationDate'}
-                              filterType={'none'}
-                              label={t('Year')}
-                            />
+                            <Facet key={'7'} field={'cnpqResearchArea'} label={t('Cnpq Research Area')} />
+                            <Facet key={'8'} field={'publicationDate'} filterType={'none'} label={t('Year')} />
                             {/* <Facet
                             mapContextToProps={(context) => {
                               if (!context.facets['publicationDate.keyword'])
@@ -393,12 +340,15 @@ export default function App() {
                           /> */}
                           </div>
                         }
-                        bodyContent={
-                          <Results resultView={CustomResultViewPublications} />
-                        }
+                        bodyContent={<Results resultView={CustomResultViewPublications} />}
                         bodyHeader={
                           <React.Fragment>
-                            {wasSearched && <PagingInfo />}
+                            {wasSearched && (
+                              <div className="d-flex align-items-center">
+                                <PagingInfo />
+                                <ClearFilters />
+                              </div>
+                            )}
                             {wasSearched && <ResultsPerPage />}
                           </React.Fragment>
                         }
@@ -407,9 +357,7 @@ export default function App() {
                       <div className={styles.indicators}>
                         <div className="sui-layout-header indicators-header">
                           <div className="sui-layout-header__inner">
-                            <h3 className={styles.indicatorsTitle}>
-                              {t('Indicators')}
-                            </h3>
+                            <h3 className={styles.indicatorsTitle}>{t('Indicators')}</h3>
                           </div>
                         </div>
                         {/* 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connector'
+import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connector';
 // https://docs.elastic.co/search-ui/api/connectors/elasticsearch#customise-the-elasticsearch-request-body
 function builConnector(index: string) {
   const connector = new ElasticsearchAPIConnector(
@@ -10,11 +10,11 @@ function builConnector(index: string) {
       apiKey: process.env.API_KEY,
     },
     (requestBody, requestState, queryConfig) => {
-      requestBody.track_total_hits = true
-      if (!requestState.searchTerm) return requestBody
+      requestBody.track_total_hits = true;
+      if (!requestState.searchTerm) return requestBody;
 
       // transforming the query before sending to Elasticsearch using the requestState and queryConfig
-      const searchFields: any = queryConfig.search_fields
+      const searchFields: any = queryConfig.search_fields;
       requestBody.query = {
         multi_match: {
           query: requestState.searchTerm,
@@ -22,22 +22,23 @@ function builConnector(index: string) {
           // @ts-ignore
           operator: queryConfig.operator,
           fields: Object.keys(searchFields).map((fieldName) => {
-            const weight = searchFields[fieldName].weight || 1
-            return `${fieldName}^${weight}`
+            const weight = searchFields[fieldName].weight || 1;
+            return `${fieldName}^${weight}`;
           }),
         },
-      }
+      };
 
-      return requestBody
+      return requestBody;
     }
-  )
-  return connector
+  );
+  return connector;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function handler(req: any, res: any) {
-  const { requestState, queryConfig } = req.body
-  const connector = builConnector(queryConfig.index)
-  const response = await connector.onSearch(requestState, queryConfig)
-  res.json(response)
+  const { requestState, queryConfig } = req.body;
+  const connector = builConnector(queryConfig.index);
+  console.log(JSON.stringify(queryConfig));
+  const response = await connector.onSearch(requestState, queryConfig);
+  res.json(response);
 }

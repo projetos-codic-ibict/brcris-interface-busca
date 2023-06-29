@@ -49,7 +49,7 @@ const config = {
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
-      title: {},
+      'title-text': {},
     },
     result_fields: {
       id: {
@@ -127,9 +127,7 @@ export default function App() {
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>
-          <WithSearch
-            mapContextToProps={({ wasSearched }) => ({ wasSearched })}
-          >
+          <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
             {({ wasSearched }) => {
               return (
                 <div className="App">
@@ -145,11 +143,7 @@ export default function App() {
                         <div className="col-md-6">
                           <div className="card search-card">
                             <div className="card-body">
-                              <ul
-                                className="nav nav-tabs"
-                                id="myTab"
-                                role="tablist"
-                              >
+                              <ul className="nav nav-tabs" id="myTab" role="tablist">
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title={t('Title')}
@@ -158,22 +152,22 @@ export default function App() {
                                     searchField="name"
                                   />
                                 </li>
-                                <li className="nav-item" role="presentation">
+                                {/* <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title={t('Status')}
                                     active={false}
                                     config={config}
                                     searchField="status"
                                   />
-                                </li>
-                                <li className="nav-item" role="presentation">
+                                </li> */}
+                                {/* <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title={t('Publisher')}
                                     active={false}
                                     config={config}
                                     searchField="publisher.name"
                                   />
-                                </li>
+                                </li> */}
                               </ul>
                               <div className="tab-content" id="myTabContent">
                                 <div
@@ -184,18 +178,13 @@ export default function App() {
                                 >
                                   <SearchBox
                                     view={({ value, onChange, onSubmit }) => (
-                                      <form
-                                        onSubmit={onSubmit}
-                                        className="row g-3 mb-3"
-                                      >
+                                      <form onSubmit={onSubmit} className="row g-3 mb-3">
                                         <div className="col">
                                           <input
                                             className="form-control search-box"
                                             type="text"
                                             value={value}
-                                            onChange={(e) =>
-                                              onChange(e.target.value)
-                                            }
+                                            onChange={(e) => onChange(e.target.value)}
                                           />
                                         </div>
                                         <div className="col-auto">
@@ -203,9 +192,6 @@ export default function App() {
                                             className="btn btn-primary search-btn"
                                             type="submit"
                                             value={t('Search') || ''}
-                                            disabled={
-                                              !value || value.length < 3
-                                            }
                                           />
                                         </div>
                                       </form>
@@ -227,32 +213,15 @@ export default function App() {
                         // header={}
                         sideContent={
                           <div>
-                            {wasSearched && (
-                              <Sorting
-                                label={t('Sort by') || ''}
-                                sortOptions={SORT_OPTIONS}
-                              />
-                            )}
+                            {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
-                              <span className="sui-sorting__label">
-                                {t('Filters')}
-                              </span>
+                              <span className="sui-sorting__label">{t('Filters')}</span>
                             </div>
-                            <Facet
-                              key={'1'}
-                              field={'status'}
-                              label={t('Status')}
-                            />
-                            <Facet
-                              key={'2'}
-                              field={'publisher.name'}
-                              label={t('Publisher')}
-                            />
+                            <Facet key={'1'} field={'status'} label={t('Status')} />
+                            <Facet key={'2'} field={'publisher.name'} label={t('Publisher')} />
                           </div>
                         }
-                        bodyContent={
-                          <Results resultView={CustomResultViewJournals} />
-                        }
+                        bodyContent={<Results resultView={CustomResultViewJournals} />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}
