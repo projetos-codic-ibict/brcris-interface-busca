@@ -223,12 +223,8 @@ export default function App() {
                 <div className="App">
                   <ErrorBoundary>
                     <div className="container page">
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="page-title">
-                            <h2>{t('Publications')}</h2>
-                          </div>
-                        </div>
+                      <div className="page-title">
+                        <h2>{t('Publications')}</h2>
                       </div>
                     </div>
 
