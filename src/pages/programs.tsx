@@ -220,7 +220,6 @@ export default function App() {
                                       </form>
                                     )}
                                   />
-                                  <ClearFilters />
                                 </div>
 
                                 {/* <OperatorSelect config={config} /> */}
@@ -250,7 +249,12 @@ export default function App() {
                         bodyContent={<Results resultView={CustomResultViewPrograms} />}
                         bodyHeader={
                           <React.Fragment>
-                            {wasSearched && <PagingInfo />}
+                            {wasSearched && (
+                              <div className="d-flex align-items-center">
+                                <PagingInfo />
+                                <ClearFilters />
+                              </div>
+                            )}
                             {wasSearched && <ResultsPerPage />}
                           </React.Fragment>
                         }
