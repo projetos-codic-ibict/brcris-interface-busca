@@ -10,7 +10,7 @@ const Graph = dynamic(import('react-graph-vis'), { ssr: false });
 // import { Edge, Node, Options } from 'vis-network'/
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { Node } from 'vis';
+import { Edge, Node, Options } from 'vis';
 import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
 
 type IndexStat = {
@@ -141,7 +141,7 @@ const keysLanguage = [
   // 'Software',
 ];
 
-const edges = [
+const edges: Edge = [
   { from: 1, to: 2, id: 1 },
   { from: 3, to: 4, id: 3 },
   { from: 4, to: 2, id: 4 },
@@ -156,8 +156,7 @@ const edges = [
   { from: 7, to: 4, id: 14 },
 ];
 
-const options = {
-  // autoResize: true,
+const options: Options = {
   height: '100%',
   width: '100%',
   edges: {
@@ -167,16 +166,18 @@ const options = {
       type: 'continuous',
       roundness: 0,
     },
+    arrows: {
+      to: { enabled: false },
+      from: { enabled: false },
+      middle: { enabled: false },
+    },
   },
   nodes: {
     shape: 'dot',
     size: 32,
   },
   interaction: {
-    // dragNodes: false,
-    // dragView: false,
     hover: true,
-    // zoomView: false,
   },
   layout: {
     hierarchical: {
