@@ -27,13 +27,13 @@ jobs:
       - run: |
           sh scripts/deploy.sh
 
-  # prod:
-  #   runs-on: [self-hosted, Linux, x64, runner-peroba]
-  #   environment:
-  #     name: prod
-  #     url: 'https://api-oasisbr.ibict.br/api/v1/'
+  prod:
+    runs-on: [self-hosted, Linux, x64, runner-pacova]
+    environment:
+      name: prod
+      url: 'https://brcris.ibict.br'
 
-  # steps:
-  #   - uses: actions/checkout@v3
-  #   - run: |
-  #       sh scripts/deploy.sh
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          sh scripts/deploy.sh
