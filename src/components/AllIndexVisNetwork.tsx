@@ -226,11 +226,10 @@ function VisGraph() {
   useEffect(() => {
     ElasticSearchStatsService()
       .then((res) => {
-        console.log(res);
         setIndexesStats(res);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, []);
 
@@ -240,7 +239,6 @@ function VisGraph() {
     for (let i = 0; i < keysLanguage.length; i++) {
       const indexStat = indexesStats.find((item) => item.index === nodes[i].index);
       if (indexStat) {
-        console.log(nodes[i].label, indexStat.index, indexStat['docs.count']);
         nodes[i].title = `${numberFormat.format(indexStat['docs.count'])} `;
         nodes[i].widthConstraint = getSizeOfNode(maxSizeOfNode, indexStat['docs.count']);
       }

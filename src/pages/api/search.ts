@@ -38,7 +38,6 @@ function builConnector(index: string) {
 export default async function handler(req: any, res: any) {
   const { requestState, queryConfig } = req.body;
   const connector = builConnector(queryConfig.index);
-  console.log(JSON.stringify(queryConfig));
   const response = await connector.onSearch(requestState, queryConfig);
   res.json(response);
 }

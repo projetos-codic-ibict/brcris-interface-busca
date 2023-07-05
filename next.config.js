@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { i18n } = require('./next-i18next.config.js')
+const { i18n } = require('./next-i18next.config.js');
 
 const nextConfig = {
   reactStrictMode: true,
@@ -12,6 +12,14 @@ const nextConfig = {
     PUBLIC_RECAPTCHA_SITE_KEY: process.env.PUBLIC_RECAPTCHA_SITE_KEY,
   },
   i18n,
-}
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:8000/:path*', // Proxy to Backend
+      },
+    ];
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

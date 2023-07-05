@@ -1,30 +1,23 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import nodemailer from 'nodemailer'
-import fetch from 'node-fetch'
+import fetch from 'node-fetch';
+import nodemailer from 'nodemailer';
 
 type BodyType = {
-  name: string
-  email: string
-  message: string
-}
+  name: string;
+  email: string;
+  message: string;
+};
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proxy = async (req: any, res: any) => {
-  const { body } = req
+  const { body } = req;
 
-  if (
-    body.name === '' ||
-    body.email === '' ||
-    body.message === '' ||
-    body.captcha === ''
-  ) {
-    res
-      .status(400)
-      .json({ message: 'os campos obrigatórios não foram preenchidos' })
+  if (body.name === '' || body.email === '' || body.message === '' || body.captcha === '') {
+    res.status(400).json({ message: 'os campos obrigatórios não foram preenchidos' });
   }
 
   // Extract the email and captcha code from the request body
-  const { captcha } = body
+  const { captcha } = body;
 
   try {
     // Ping the google recaptcha verify API to verify the captcha code you received
@@ -36,37 +29,36 @@ const proxy = async (req: any, res: any) => {
         },
         method: 'POST',
       }
-    )
-    const captchaValidation = await response.json()
-    console.log('captchaValidation', captchaValidation)
+    );
+    const captchaValidation = await response.json();
     // @ts-ignore
     if (captchaValidation.success) {
       // Replace this with the API that will save the data received
-      await sendMail(req.body)
+      await sendMail(req.body);
       // Return 200 if everything is successful
-      return res.status(200).send('OK')
+      return res.status(200).send('OK');
     }
 
     return res.status(422).json({
       message: 'Unproccesable request, Invalid captcha code',
-    })
+    });
   } catch (error) {
-    console.log(error)
-    return res.status(422).json({ message: 'Something went wrong' })
+    console.error(error);
+    return res.status(422).json({ message: 'Something went wrong' });
   }
-}
+};
 
 async function sendMail(body: BodyType) {
-  console.log('enviando email')
-  const MAILPORT = process.env.MAIL_PORT
-  const MAILHOST = process.env.MAIL_HOST
-  const MAILSENDER = process.env.MAIL_SENDER
-  const PASSWORD = process.env.MAIL_PASSWORD
-  const MAILRECIPIENT = process.env.MAIL_RECIPIENT
+  console.log('enviando email');
+  const MAILPORT = process.env.MAIL_PORT;
+  const MAILHOST = process.env.MAIL_HOST;
+  const MAILSENDER = process.env.MAIL_SENDER;
+  const PASSWORD = process.env.MAIL_PASSWORD;
+  const MAILRECIPIENT = process.env.MAIL_RECIPIENT;
 
   if (!MAILPORT || !MAILHOST || !MAILSENDER || !PASSWORD || !MAILRECIPIENT) {
-    console.error('Variáveis de ambiente faltando ou indefinidas')
-    throw new Error('Variáveis de ambiente faltando ou indefinidas')
+    console.error('Variáveis de ambiente faltando ou indefinidas');
+    throw new Error('Variáveis de ambiente faltando ou indefinidas');
   }
 
   const transporter = nodemailer.createTransport({
@@ -82,7 +74,7 @@ async function sendMail(body: BodyType) {
     logger: true,
     debug: true,
     // secure: true,
-  })
+  });
 
   const mailData = {
     from: MAILSENDER,
@@ -90,10 +82,10 @@ async function sendMail(body: BodyType) {
     subject: `Message from ${body.name}`,
     text: body.message + ' | Sent from: ' + body.email,
     html: `<div>${body.message}</div> <p>Sent from: ${body.email}</p>`,
-  }
+  };
 
-  const mailResponse = await transporter.sendMail(mailData)
-  return mailResponse
+  const mailResponse = await transporter.sendMail(mailData);
+  return mailResponse;
 }
 
-export default proxy
+export default proxy;
