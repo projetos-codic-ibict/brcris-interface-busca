@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 set -e
+echo "config nvm"
+export NVM_DIR=~/.nvm
+source ~/.nvm/nvm.sh
 echo "Installing yarn and pm2"
 npm install -g yarn
 npm install -g pm2
