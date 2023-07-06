@@ -35,8 +35,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ locale }) 
   },
 });
 
-const connector = new Connector();
-
+const INDEX_NAME = 'pesqdf-publication';
+const connector = new Connector(INDEX_NAME);
 const config = {
   debug: true,
   indicators: [],
@@ -45,7 +45,6 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'pesqdf-publication',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -98,7 +97,6 @@ const config = {
     ],
 
     facets: {
-      // 'publicationDate.keyword': { type: 'value', size: 100 },
       language: { type: 'value' },
       'author.name': { type: 'value' },
       keyword: { type: 'value' },
@@ -235,12 +233,12 @@ export default function App() {
                             autocompleteMinimumCharacters={3}
                             autocompleteResults={{
                               linkTarget: '_blank',
-                              sectionTitle: 'Open link',
+                              sectionTitle: t('Open link') || '',
                               titleField: 'title',
                               urlField: 'vivo_link',
                               shouldTrackClickThrough: true,
                             }}
-                            autocompleteSuggestions={true}
+                            autocompleteSuggestions={false}
                             debounceLength={0}
                           />
                         }
@@ -300,11 +298,6 @@ export default function App() {
                         bodyFooter={<Paging />}
                       />
                       <div className={styles.indicators}>
-                        <div className="sui-layout-header indicators-header">
-                          <div className="sui-layout-header__inner">
-                            <h3 className={styles.indicatorsTitle}>{t('Indicators')}</h3>
-                          </div>
-                        </div>
                         {/* 
                         // @ts-ignore  */}
                         <Indicators indicatorsState={indicatorsState} />

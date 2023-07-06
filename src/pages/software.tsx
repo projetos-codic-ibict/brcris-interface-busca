@@ -35,7 +35,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   },
 });
 
-const connector = new Connector();
+const INDEX_NAME = 'pesqdf-person';
+const connector = new Connector(INDEX_NAME);
 
 const config = {
   debug: true,
@@ -44,7 +45,6 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'pesqdf-person',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -150,9 +150,7 @@ export default function App() {
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>
-          <WithSearch
-            mapContextToProps={({ wasSearched }) => ({ wasSearched })}
-          >
+          <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
             {({ wasSearched }) => {
               return (
                 <div className="App">
@@ -168,11 +166,7 @@ export default function App() {
                         <div className="col-md-6">
                           <div className="card search-card">
                             <div className="card-body">
-                              <ul
-                                className="nav nav-tabs"
-                                id="myTab"
-                                role="tablist"
-                              >
+                              <ul className="nav nav-tabs" id="myTab" role="tablist">
                                 <li className="nav-item" role="presentation">
                                   <ButtonFieldSelect
                                     title={t('Nome')}
@@ -199,18 +193,13 @@ export default function App() {
                                 >
                                   <SearchBox
                                     view={({ value, onChange, onSubmit }) => (
-                                      <form
-                                        onSubmit={onSubmit}
-                                        className="row g-3 mb-3"
-                                      >
+                                      <form onSubmit={onSubmit} className="row g-3 mb-3">
                                         <div className="col">
                                           <input
                                             className="form-control search-box"
                                             type="text"
                                             value={value}
-                                            onChange={(e) =>
-                                              onChange(e.target.value)
-                                            }
+                                            onChange={(e) => onChange(e.target.value)}
                                           />
                                         </div>
                                         <div className="col-auto">
@@ -218,9 +207,7 @@ export default function App() {
                                             className="btn btn-primary search-btn"
                                             type="submit"
                                             value={t('Search') || ''}
-                                            disabled={
-                                              !value || value.length < 3
-                                            }
+                                            disabled={!value || value.length < 3}
                                           />
                                         </div>
                                       </form>
@@ -242,32 +229,15 @@ export default function App() {
                         // header={}
                         sideContent={
                           <div>
-                            {wasSearched && (
-                              <Sorting
-                                label={t('Sort by') || ''}
-                                sortOptions={SORT_OPTIONS}
-                              />
-                            )}
+                            {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
-                              <span className="sui-sorting__label">
-                                {t('Filters')}
-                              </span>
+                              <span className="sui-sorting__label">{t('Filters')}</span>
                             </div>
-                            <Facet
-                              key={'1'}
-                              field={'nationality'}
-                              label={t('Nationality')}
-                            />
-                            <Facet
-                              key={'2'}
-                              field={'researchArea'}
-                              label={t('Research field')}
-                            />
+                            <Facet key={'1'} field={'nationality'} label={t('Nationality')} />
+                            <Facet key={'2'} field={'researchArea'} label={t('Research field')} />
                           </div>
                         }
-                        bodyContent={
-                          <Results resultView={CustomResultViewPeople} />
-                        }
+                        bodyContent={<Results resultView={CustomResultViewPeople} />}
                         bodyHeader={
                           <React.Fragment>
                             {wasSearched && <PagingInfo />}
@@ -277,9 +247,6 @@ export default function App() {
                         bodyFooter={<Paging />}
                       />
                       <div className={styles.Indicators}>
-                        <div className="sui-layout-header">
-                          <div className="sui-layout-header__inner"></div>
-                        </div>
                         {/** 
                         // @ts-ignore */}
                         <IndicatorsPeople indicatorsState={indicatorsState} />

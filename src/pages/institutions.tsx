@@ -19,7 +19,6 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import React from 'react';
-import ButtonFieldSelect from '../components/ButtonFieldSelect';
 import ClearFilters from '../components/ClearFilters';
 import CustomResultViewInstitutions from '../components/customResultView/CustomResultViewInstitutions';
 import OrgUnitIndicators from '../components/indicators/OrgUnitIndicators';
@@ -35,8 +34,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   },
 });
 
-const connector = new Connector();
-
+const INDEX_NAME = 'pesqdf-orgunit';
+const connector = new Connector(INDEX_NAME);
 const config = {
   debug: true,
   urlPushDebounceLength: 500,
@@ -44,11 +43,10 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'pesqdf-orgunit',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
-      'name-text': {},
+      name_text: {},
     },
     result_fields: {
       id: {
@@ -57,12 +55,47 @@ const config = {
       name: {
         raw: {},
       },
-      address: {
+      country: {
+        raw: {},
+      },
+      state: {
+        raw: {},
+      },
+      city: {
         raw: {},
       },
     },
     facets: {
-      address: { type: 'value' },
+      country: { type: 'value' },
+      state: { type: 'value' },
+      city: { type: 'value' },
+    },
+  },
+  autocompleteQuery: {
+    results: {
+      resultsPerPage: 5,
+      search_fields: {
+        name_suggest: {
+          weight: 3,
+        },
+      },
+      result_fields: {
+        name: {
+          snippet: {
+            size: 100,
+            fallback: true,
+          },
+        },
+        vivo_link: {
+          raw: {},
+        },
+      },
+    },
+    suggestions: {
+      types: {
+        results: { fields: ['name_completion'] },
+      },
+      size: 5,
     },
   },
 };
@@ -119,82 +152,36 @@ export default function App() {
                 <div className="App">
                   <ErrorBoundary>
                     <div className="container page">
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="page-title">
-                            <h2>{t('Institutions')}</h2>
-                          </div>
-                        </div>
-
-                        <div className="col-md-6">
-                          <div className="card search-card">
-                            <div className="card-body">
-                              <ul className="nav nav-tabs" id="myTab" role="tablist">
-                                <li className="nav-item" role="presentation">
-                                  <ButtonFieldSelect
-                                    title={t('Title')}
-                                    active={true}
-                                    config={config}
-                                    searchField="name"
-                                  />
-                                </li>
-                                {/* <li className="nav-item" role="presentation">
-                                  <ButtonFieldSelect
-                                    title={t('Address')}
-                                    active={false}
-                                    config={config}
-                                    searchField="address"
-                                  />
-                                </li> */}
-                              </ul>
-                              <div className="tab-content" id="myTabContent">
-                                <div
-                                  className="tab-pane fade show active"
-                                  id="home"
-                                  role="tabpanel"
-                                  aria-labelledby="home-tab"
-                                >
-                                  <SearchBox
-                                    view={({ value, onChange, onSubmit }) => (
-                                      <form onSubmit={onSubmit} className="row g-3 mb-3">
-                                        <div className="col">
-                                          <input
-                                            className="form-control search-box"
-                                            type="text"
-                                            value={value}
-                                            onChange={(e) => onChange(e.target.value)}
-                                          />
-                                        </div>
-                                        <div className="col-auto">
-                                          <input
-                                            className="btn btn-primary search-btn"
-                                            type="submit"
-                                            value={t('Search') || ''}
-                                          />
-                                        </div>
-                                      </form>
-                                    )}
-                                  />
-                                </div>
-
-                                {/* <OperatorSelect config={config} /> */}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                      <div className="page-title">
+                        <h2>{t('Institutions')}</h2>
                       </div>
                     </div>
 
                     <div className={styles.content}>
                       <Layout
-                        // header={}
+                        header={
+                          <SearchBox
+                            autocompleteMinimumCharacters={3}
+                            autocompleteResults={{
+                              linkTarget: '_blank',
+                              sectionTitle: t('Open link') || '',
+                              titleField: 'name',
+                              urlField: 'vivo_link',
+                              shouldTrackClickThrough: true,
+                            }}
+                            autocompleteSuggestions={true}
+                            debounceLength={0}
+                          />
+                        }
                         sideContent={
                           <div>
                             {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
                               <span className="sui-sorting__label">{t('Filters')}</span>
                             </div>
-                            <Facet key={'1'} field={'address'} label={t('Address')} />
+                            <Facet key={'1'} field={'country'} label={t('Country')} />
+                            <Facet key={'2'} field={'state'} label={t('State')} />
+                            <Facet key={'3'} field={'city'} label={t('City')} />
                           </div>
                         }
                         bodyContent={<Results resultView={CustomResultViewInstitutions} />}
@@ -212,9 +199,6 @@ export default function App() {
                         bodyFooter={<Paging />}
                       />
                       <div className={styles.indicators}>
-                        <div className="sui-layout-header">
-                          <div className="sui-layout-header__inner"></div>
-                        </div>
                         {/** 
                         // @ts-ignore */}
                         <OrgUnitIndicators indicatorsState={indicatorsState} />

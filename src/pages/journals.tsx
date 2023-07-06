@@ -15,7 +15,6 @@ import {
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import React from 'react';
-import ButtonFieldSelect from '../components/ButtonFieldSelect';
 import ClearFilters from '../components/ClearFilters';
 import CustomResultViewJournals from '../components/customResultView/CustomResultViewJournals';
 import Connector from '../services/APIConnector';
@@ -36,7 +35,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   },
 });
 
-const connector = new Connector();
+const INDEX_NAME = 'pesqdf-journals';
+const connector = new Connector(INDEX_NAME);
 
 const config = {
   debug: true,
@@ -45,7 +45,6 @@ const config = {
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
-    index: 'pesqdf-journals',
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
@@ -133,83 +132,27 @@ export default function App() {
                 <div className="App">
                   <ErrorBoundary>
                     <div className="container page">
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="page-title">
-                            <h2>{t('Journals')}</h2>
-                          </div>
-                        </div>
-
-                        <div className="col-md-6">
-                          <div className="card search-card">
-                            <div className="card-body">
-                              <ul className="nav nav-tabs" id="myTab" role="tablist">
-                                <li className="nav-item" role="presentation">
-                                  <ButtonFieldSelect
-                                    title={t('Title')}
-                                    active={true}
-                                    config={config}
-                                    searchField="name"
-                                  />
-                                </li>
-                                {/* <li className="nav-item" role="presentation">
-                                  <ButtonFieldSelect
-                                    title={t('Status')}
-                                    active={false}
-                                    config={config}
-                                    searchField="status"
-                                  />
-                                </li> */}
-                                {/* <li className="nav-item" role="presentation">
-                                  <ButtonFieldSelect
-                                    title={t('Publisher')}
-                                    active={false}
-                                    config={config}
-                                    searchField="publisher.name"
-                                  />
-                                </li> */}
-                              </ul>
-                              <div className="tab-content" id="myTabContent">
-                                <div
-                                  className="tab-pane fade show active"
-                                  id="home"
-                                  role="tabpanel"
-                                  aria-labelledby="home-tab"
-                                >
-                                  <SearchBox
-                                    view={({ value, onChange, onSubmit }) => (
-                                      <form onSubmit={onSubmit} className="row g-3 mb-3">
-                                        <div className="col">
-                                          <input
-                                            className="form-control search-box"
-                                            type="text"
-                                            value={value}
-                                            onChange={(e) => onChange(e.target.value)}
-                                          />
-                                        </div>
-                                        <div className="col-auto">
-                                          <input
-                                            className="btn btn-primary search-btn"
-                                            type="submit"
-                                            value={t('Search') || ''}
-                                          />
-                                        </div>
-                                      </form>
-                                    )}
-                                  />
-                                </div>
-
-                                {/* <OperatorSelect config={config} /> */}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                      <div className="page-title">
+                        <h2>{t('Journals')}</h2>
                       </div>
                     </div>
 
                     <div className={styles.content}>
                       <Layout
-                        // header={}
+                        header={
+                          <SearchBox
+                            autocompleteMinimumCharacters={3}
+                            autocompleteResults={{
+                              linkTarget: '_blank',
+                              sectionTitle: t('Open link') || '',
+                              titleField: 'title',
+                              urlField: 'vivo_link',
+                              shouldTrackClickThrough: true,
+                            }}
+                            autocompleteSuggestions={false}
+                            debounceLength={0}
+                          />
+                        }
                         sideContent={
                           <div>
                             {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
@@ -235,9 +178,6 @@ export default function App() {
                         bodyFooter={<Paging />}
                       />
                       <div className={styles.indicators}>
-                        <div className="sui-layout-header">
-                          <div className="sui-layout-header__inner"></div>
-                        </div>
                         {/** 
                         // @ts-ignore */}
                         <JornalsIndicators indicatorsState={indicatorsState} />

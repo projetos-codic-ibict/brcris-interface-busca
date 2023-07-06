@@ -12,14 +12,6 @@ const nextConfig = {
     PUBLIC_RECAPTCHA_SITE_KEY: process.env.PUBLIC_RECAPTCHA_SITE_KEY,
   },
   i18n,
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://localhost:3000/:path*', // Proxy to Backend
-      },
-    ];
-  },
 };
 
 module.exports = nextConfig;
