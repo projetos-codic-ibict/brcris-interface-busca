@@ -64,6 +64,9 @@ const config = {
       city: {
         raw: {},
       },
+      vivo_link: {
+        raw: {},
+      },
     },
     facets: {
       country: { type: 'value' },
@@ -169,7 +172,7 @@ export default function App() {
                               urlField: 'vivo_link',
                               shouldTrackClickThrough: true,
                             }}
-                            autocompleteSuggestions={true}
+                            autocompleteSuggestions={false}
                             debounceLength={0}
                           />
                         }

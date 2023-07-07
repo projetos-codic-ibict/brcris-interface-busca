@@ -5,11 +5,11 @@ class APIConnector {
   }
   onResultClick() {
     // optional. Called when a result has been clicked
-    console.log('onResultClick');
+    // console.log('onResultClick');
   }
   onAutocompleteResultClick() {
     // optional. Called when an autocomplete result has been clicked
-    console.log('onAutocompleteResultClick');
+    // console.log('onAutocompleteResultClick');
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

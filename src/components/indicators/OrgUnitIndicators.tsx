@@ -21,22 +21,11 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
 import { IndicatorsProps } from '../../types/Propos';
-import {
-  CHART_BACKGROUD_COLORS,
-  CHART_BORDER_COLORS,
-} from '../../../utils/Utils';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
 export const options: ChartOptions = {
   parsing: {
@@ -100,13 +89,7 @@ const queryCommonBase = {
   },
 };
 
-function getKeywordQuery(
-  queryBase: any,
-  indicador: string,
-  filters: any,
-  searchTerm: any,
-  config: any
-) {
+function getKeywordQuery(queryBase: any, indicador: string, filters: any, searchTerm: any, config: any) {
   const field = Object.keys(config.searchQuery.search_fields)[0];
   if (indicador) {
     queryBase._source = [indicador];
@@ -115,8 +98,7 @@ function getKeywordQuery(
 
   if (searchTerm) {
     queryBase.query.bool.must.query_string.default_field = field;
-    queryBase.query.bool.must.query_string.default_operator =
-      config.searchQuery.operator;
+    queryBase.query.bool.must.query_string.default_operator = config.searchQuery.operator;
     queryBase.query.bool.must.query_string.query = searchTerm;
   } else {
     queryBase.query.bool.must.query_string.query = '*';
@@ -152,12 +134,7 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } };
 }
 
-function OrgUnitIndicators({
-  filters,
-  searchTerm,
-  isLoading,
-  indicatorsState,
-}: IndicatorsProps) {
+function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
 
@@ -167,17 +144,7 @@ function OrgUnitIndicators({
     options.plugins.title.text = t(options.plugins?.title?.text);
     isLoading
       ? ElasticSearchService(
-          [
-            JSON.stringify(
-              getKeywordQuery(
-                queryCommonBase,
-                'address',
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
-            ),
-          ],
+          [JSON.stringify(getKeywordQuery(queryCommonBase, 'address', filters, searchTerm, indicatorsState.config))],
           indicatorsState.config.searchQuery.index
         ).then((data) => {
           setIndicators(data);
@@ -193,8 +160,7 @@ function OrgUnitIndicators({
   ]);
 
   const adressIndicators: IndicatorType[] = indicators ? indicators[0] : [];
-  const adressLabels =
-    adressIndicators != null ? adressIndicators.map((d) => d.key) : [];
+  const adressLabels = adressIndicators != null ? adressIndicators.map((d) => d.key) : [];
 
   return (
     <div className={styles.charts}>
@@ -219,7 +185,7 @@ function OrgUnitIndicators({
             datasets: [
               {
                 data: adressIndicators,
-                label: t('Programs') || '',
+                label: t('Institutions') || '',
                 backgroundColor: CHART_BACKGROUD_COLORS,
                 borderColor: CHART_BORDER_COLORS,
                 borderWidth: 1,
