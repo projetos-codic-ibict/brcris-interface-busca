@@ -6,8 +6,6 @@ import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
 import AuthorLink from '../externalLinks/AuthorLink';
 
-/* const VIVO_URL_BASE = process.env.VIVO_URL_BASE; */
-
 function getId(id: string) {
   const cleanId = id.replaceAll('-', '');
   return 'a' + cleanId;
@@ -17,9 +15,7 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
   const [buttonReadText, setButtonReadText] = useState('Read more...');
 
   function handleClick() {
-    setButtonReadText(
-      buttonReadText == 'Read more...' ? 'Read less' : 'Read more...'
-    );
+    setButtonReadText(buttonReadText == 'Read more...' ? 'Read less' : 'Read more...');
   }
 
   /* const router = useRouter(); */
@@ -35,9 +31,7 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
           <ul className="sui-result__details">
             <li>
               <span className="sui-result__key">{t('Creation Year')}</span>
-              <span className="sui-result__value">
-                {result.creationYear?.raw}
-              </span>
+              <span className="sui-result__value">{result.creationYear?.raw}</span>
             </li>
 
             <li>
@@ -53,12 +47,7 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
               <span className="sui-result__key">{t('Leader')}</span>
               {result.leader?.raw.map((leader: any, index: any) => (
                 <span key={index} className="sui-result__value">
-                  <AuthorLink
-                    key={leader.id}
-                    id={leader.id}
-                    name={leader.name}
-                    idLattes={leader.idLattes!}
-                  />
+                  <AuthorLink key={leader.id} id={leader.id} name={leader.name} idLattes={leader.idLattes!} />
                 </span>
               ))}
             </li>
@@ -90,15 +79,11 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
             <span className="collapse" id={`${getId(result.id?.raw)}`}>
               <li>
                 <span className="sui-result__key">{t('Description')}</span>
-                <span className="sui-result__value">
-                  {result.description?.raw}
-                </span>
+                <span className="sui-result__value">{result.description?.raw}</span>
               </li>
 
               <li>
-                <span className="sui-result__key">
-                  {t('Knowledge Area')}(s)
-                </span>
+                <span className="sui-result__key">{t('Knowledge Area')}(s)</span>
                 {result.knowledgeArea?.raw.map((area: string, index: any) => (
                   <span key={index} className="sui-result__value">
                     {area + ', '}
@@ -107,16 +92,12 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
               </li>
 
               <li>
-                <span className="sui-result__key">
-                  {t('Application Sector')}
-                </span>
-                {result.applicationSector?.raw.map(
-                  (sector: string, index: any) => (
-                    <span key={index} className="sui-result__value">
-                      {sector + ', '}
-                    </span>
-                  )
-                )}
+                <span className="sui-result__key">{t('Application Sector')}</span>
+                {result.applicationSector?.raw.map((sector: string, index: any) => (
+                  <span key={index} className="sui-result__value">
+                    {sector + ', '}
+                  </span>
+                ))}
               </li>
 
               <li>
@@ -156,12 +137,7 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
                 <span className="sui-result__key">{t('Member')}(s)</span>
                 {result.member?.raw.map((member: any, index: any) => (
                   <span key={index} className="sui-result__value">
-                    <AuthorLink
-                      key={member.id}
-                      id={member.id}
-                      name={member.name}
-                      idLattes={member.idLattes!}
-                    />
+                    <AuthorLink key={member.id} id={member.id} name={member.name} idLattes={member.idLattes!} />
                     {', '}
                   </span>
                 ))}
@@ -178,9 +154,7 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
 
               <li>
                 <span className="sui-result__key">{t('Equipment')}</span>
-                <span className="sui-result__value">
-                  {result.equipment?.raw}
-                </span>
+                <span className="sui-result__value">{result.equipment?.raw}</span>
               </li>
             </span>
           </ul>

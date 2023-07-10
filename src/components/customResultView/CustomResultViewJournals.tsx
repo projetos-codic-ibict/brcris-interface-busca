@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ResultViewProps } from '@elastic/react-search-ui-views'
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { ResultViewProps } from '@elastic/react-search-ui-views';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
-const VIVO_URL_BASE = process.env.VIVO_URL_BASE
+const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
 const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
-  const router = useRouter()
-  const { t } = useTranslation('common')
+  const router = useRouter();
+  const { t } = useTranslation('common');
   return (
     <li className="sui-result">
       <div>
@@ -16,7 +16,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_BASE}/journ_${result.id.raw}&lang=${router.locale}`}
+              href={`${VIVO_URL_ITEM_BASE}/journ_${result.id.raw}&lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.title?.raw}
@@ -97,7 +97,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
         </div>
       </div>
     </li>
-  )
-}
+  );
+};
 
-export default CustomResultViewPeople
+export default CustomResultViewPeople;

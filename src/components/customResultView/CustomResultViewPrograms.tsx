@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ResultViewProps } from '@elastic/react-search-ui-views'
-import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
-import { OrgUnit } from '../../types/Entities'
+import { ResultViewProps } from '@elastic/react-search-ui-views';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import { OrgUnit } from '../../types/Entities';
 
-const VIVO_URL_BASE = process.env.VIVO_URL_BASE
+const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
 const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
-  const router = useRouter()
-  const { t } = useTranslation('common')
+  const router = useRouter();
+  const { t } = useTranslation('common');
   return (
     <li className="sui-result">
       <div>
@@ -17,7 +17,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_BASE}/org_${result.id.raw}&lang=${router.locale}`}
+              href={`${VIVO_URL_ITEM_BASE}/org_${result.id.raw}&lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.name?.raw}
@@ -35,7 +35,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
                     key={org.id}
                     target="_blank"
                     rel="noreferrer"
-                    href={`${VIVO_URL_BASE}/org_${org.id}&lang=${router.locale}`}
+                    href={`${VIVO_URL_ITEM_BASE}/org_${org.id}&lang=${router.locale}`}
                   >
                     {org.name}
                   </a>
@@ -43,30 +43,22 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
               </span>
             </li>
             <li>
-              <span className="sui-result__key">
-                {t('Capes research area')}
-              </span>
-              <span className="sui-result__value">
-                {result.capesResearchArea?.raw}
-              </span>
+              <span className="sui-result__key">{t('Capes research area')}</span>
+              <span className="sui-result__value">{result.capesResearchArea?.raw}</span>
             </li>
             <li>
               <span className="sui-result__key">{t('CNPq research area')}</span>
-              <span className="sui-result__value">
-                {result.cnpqResearchArea?.raw}
-              </span>
+              <span className="sui-result__value">{result.cnpqResearchArea?.raw}</span>
             </li>
             <li>
               <span className="sui-result__key">{t('Evaluation area')}</span>
-              <span className="sui-result__value">
-                {result.evaluationArea?.raw}
-              </span>
+              <span className="sui-result__value">{result.evaluationArea?.raw}</span>
             </li>
           </ul>
         </div>
       </div>
     </li>
-  )
-}
+  );
+};
 
-export default CustomResultViewPeople
+export default CustomResultViewPeople;

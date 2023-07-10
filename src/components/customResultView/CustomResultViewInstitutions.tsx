@@ -3,7 +3,7 @@ import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 
-const VIVO_URL_BASE = process.env.VIVO_URL_BASE;
+const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
 const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
   const router = useRouter();
@@ -16,7 +16,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_BASE}/org_${result.id.raw}&lang=${router.locale}`}
+              href={`${VIVO_URL_ITEM_BASE}/org_${result.id.raw}&lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.name.raw}

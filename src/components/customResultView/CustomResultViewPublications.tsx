@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ResultViewProps } from '@elastic/react-search-ui-views'
-import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
-import { Author, OrgUnit, Service } from '../../types/Entities'
-import AuthorLink from '../externalLinks/AuthorLink'
+import { ResultViewProps } from '@elastic/react-search-ui-views';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import { Author, OrgUnit, Service } from '../../types/Entities';
+import AuthorLink from '../externalLinks/AuthorLink';
 
-const VIVO_URL_BASE = process.env.VIVO_URL_BASE
+const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
-const CustomResultViewPublications = ({
-  result,
-  onClickLink,
-}: ResultViewProps) => {
-  const router = useRouter()
-  const { t } = useTranslation('common')
+const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) => {
+  const router = useRouter();
+  const { t } = useTranslation('common');
   return (
     <li className="sui-result">
       <div>
@@ -21,7 +18,7 @@ const CustomResultViewPublications = ({
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_BASE}/publ_${result.id.raw}&lang=${router.locale}`}
+              href={`${VIVO_URL_ITEM_BASE}/publ_${result.id.raw}&lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.title.raw}
@@ -33,21 +30,14 @@ const CustomResultViewPublications = ({
           <ul className="sui-result__details">
             <li>
               <span className="sui-result__key">{t('Year')}</span>
-              <span className="sui-result__value">
-                {result.publicationDate?.raw}
-              </span>
+              <span className="sui-result__value">{result.publicationDate?.raw}</span>
             </li>
 
             <li>
               <span className="sui-result__key">{t('Author')}</span>
               <span className="sui-result__value">
                 {result.author?.raw.map((author: Author) => (
-                  <AuthorLink
-                    key={author.id}
-                    id={author.id}
-                    name={author.name}
-                    idLattes={author.idLattes}
-                  />
+                  <AuthorLink key={author.id} id={author.id} name={author.name} idLattes={author.idLattes} />
                 ))}
               </span>
             </li>
@@ -60,8 +50,7 @@ const CustomResultViewPublications = ({
             <li>
               <span className="sui-result__key">
                 {' '}
-                {result.type?.raw == 'doctoral thesis' ||
-                result.type?.raw == 'master thesis'
+                {result.type?.raw == 'doctoral thesis' || result.type?.raw == 'master thesis'
                   ? `${t('Institution')}(s)`
                   : result.type?.raw == 'conference proceedings'
                   ? `${t('Organization')}(s)`
@@ -74,7 +63,7 @@ const CustomResultViewPublications = ({
                     key={org.id}
                     target="_blank"
                     rel="noreferrer"
-                    href={`${VIVO_URL_BASE}/org_${org.id}&lang=${router.locale}`}
+                    href={`${VIVO_URL_ITEM_BASE}/org_${org.id}&lang=${router.locale}`}
                   >
                     {org.name}
                   </a>
@@ -86,7 +75,7 @@ const CustomResultViewPublications = ({
                       key={title}
                       target="_blank"
                       rel="noreferrer"
-                      href={`${VIVO_URL_BASE}/serv_${service.id}&lang=${router.locale}`}
+                      href={`${VIVO_URL_ITEM_BASE}/serv_${service.id}&lang=${router.locale}`}
                     >
                       {title}
                     </a>
@@ -98,7 +87,7 @@ const CustomResultViewPublications = ({
                     key={index}
                     target="_blank"
                     rel="noreferrer"
-                    href={`${VIVO_URL_BASE}/journ_${journal.id}&lang=${router.locale}`}
+                    href={`${VIVO_URL_ITEM_BASE}/journ_${journal.id}&lang=${router.locale}`}
                   >
                     {journal.title ? journal.title : journal}
                   </a>
@@ -129,13 +118,11 @@ const CustomResultViewPublications = ({
                 ' '
               )} */}
 
-              {result.cnpqResearchArea?.raw.map(
-                (cnpqResearchArea: string, index: any) => (
-                  <span key={index} className="sui-result__value">
-                    {cnpqResearchArea + ', '}
-                  </span>
-                )
-              )}
+              {result.cnpqResearchArea?.raw.map((cnpqResearchArea: string, index: any) => (
+                <span key={index} className="sui-result__value">
+                  {cnpqResearchArea + ', '}
+                </span>
+              ))}
             </li>
 
             <li>
@@ -156,7 +143,7 @@ const CustomResultViewPublications = ({
         </div>
       </div>
     </li>
-  )
-}
+  );
+};
 
-export default CustomResultViewPublications
+export default CustomResultViewPublications;

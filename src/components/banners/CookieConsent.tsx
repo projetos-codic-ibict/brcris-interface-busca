@@ -1,37 +1,36 @@
-import Cookies from 'js-cookie'
-import { useTranslation } from 'next-i18next'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { MouseEvent, useEffect, useState } from 'react'
-import style from '../../styles/Cookie.module.css'
+import Cookies from 'js-cookie';
+import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { MouseEvent, useEffect, useState } from 'react';
+import style from '../../styles/Cookie.module.css';
 
-const USER_CONSENT_COOKIE_KEY = 'cookie_consent_is_true'
-const USER_CONSENT_COOKIE_EXPIRE_DATE =
-  new Date().getTime() + 365 * 24 * 60 * 60
+const USER_CONSENT_COOKIE_KEY = 'cookie_consent_is_true';
+const USER_CONSENT_COOKIE_EXPIRE_DATE = new Date().getTime() + 365 * 24 * 60 * 60;
 
 const CookieConsent = () => {
-  const [cookieConsentIsTrue, setCookieConsentIsTrue] = useState(true)
-  const router = useRouter()
-  const { t } = useTranslation('common')
+  const [cookieConsentIsTrue, setCookieConsentIsTrue] = useState(true);
+  const router = useRouter();
+  const { t } = useTranslation('common');
 
   useEffect(() => {
-    const consentIsTrue = Cookies.get(USER_CONSENT_COOKIE_KEY) === 'true'
-    setCookieConsentIsTrue(consentIsTrue)
-  }, [])
+    const consentIsTrue = Cookies.get(USER_CONSENT_COOKIE_KEY) === 'true';
+    setCookieConsentIsTrue(consentIsTrue);
+  }, []);
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!cookieConsentIsTrue) {
       Cookies.set(USER_CONSENT_COOKIE_KEY, 'true', {
         expires: USER_CONSENT_COOKIE_EXPIRE_DATE,
-      })
-      setCookieConsentIsTrue(true)
+      });
+      setCookieConsentIsTrue(true);
     }
-  }
+  };
 
   if (cookieConsentIsTrue) {
-    return null
+    return null;
   }
 
   return (
@@ -41,12 +40,8 @@ const CookieConsent = () => {
           <div className="">
             <p className="">
               {t('privacy policy message')}{' '}
-              <Link
-                href={`${process.env.VIVO_URL_HOME}/about?lang=${router.locale}`}
-              >
-                <a className="text-sm underline hover:text-lightAccent">
-                  {t('privacy policy')}
-                </a>
+              <Link href={`${process.env.VIVO_URL_BASE}/about?lang=${router.locale}`}>
+                <a className="text-sm underline hover:text-lightAccent">{t('privacy policy')}</a>
               </Link>
               .
             </p>
@@ -62,7 +57,7 @@ const CookieConsent = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default CookieConsent
+export default CookieConsent;

@@ -6,8 +6,8 @@ const nextConfig = {
   swcMinify: false,
   env: {
     VIVO_URL_BASE: process.env.VIVO_URL_BASE,
+    VIVO_URL_ITEM_BASE: process.env.VIVO_URL_ITEM_BASE,
     LANGUAGES: process.env.LANGUAGES,
-    VIVO_URL_HOME: process.env.VIVO_URL_HOME,
     ELASTIC_INDEXES: process.env.ELASTIC_INDEXES,
     PUBLIC_RECAPTCHA_SITE_KEY: process.env.PUBLIC_RECAPTCHA_SITE_KEY,
   },

@@ -50,18 +50,18 @@ function Navbar() {
             </li>
 
             <li className="nav-item me-5" role="presentation">
-              <Link href={`${process.env.VIVO_URL_HOME}/dashboards?lang=${router.locale}`}>
+              <Link href={`${process.env.VIVO_URL_BASE}/dashboards?lang=${router.locale}`}>
                 <a className="nav-link">{t('Dashboards')}</a>
               </Link>
             </li>
 
             <li className="nav-item me-5" role="presentation">
-              <Link href={`${process.env.VIVO_URL_HOME}/team?lang=${router.locale}`}>
+              <Link href={`${process.env.VIVO_URL_BASE}/team?lang=${router.locale}`}>
                 <a className="nav-link">{t('Team')}</a>
               </Link>
             </li>
             <li className="nav-item me-5" role="presentation">
-              <Link href={`${process.env.VIVO_URL_HOME}/about?lang=${router.locale}`}>
+              <Link href={`${process.env.VIVO_URL_BASE}/about?lang=${router.locale}`}>
                 <a className="nav-link">{t('About')}</a>
               </Link>
             </li>
