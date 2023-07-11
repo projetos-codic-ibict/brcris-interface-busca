@@ -27,7 +27,7 @@ import { IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
-export const optCountryCode = {
+export const optknowledgeAreas = {
   responsive: true,
   plugins: {
     legend: {
@@ -36,39 +36,7 @@ export const optCountryCode = {
     },
     title: {
       display: true,
-      text: 'Patents by country code',
-    },
-  },
-};
-export const optKindCode = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: true,
-    },
-    title: {
-      display: true,
-      text: 'Patents by kind code',
-    },
-  },
-};
-
-export const optDepositDate: ChartOptions = {
-  parsing: {
-    xAxisKey: 'key',
-    yAxisKey: 'doc_count',
-  },
-  responsive: true,
-  aspectRatio: 1,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: false,
-    },
-    title: {
-      display: true,
-      text: 'Patents by deposit year',
+      text: 'Softwares by knowledge areas',
     },
   },
 };
@@ -87,7 +55,7 @@ export const optPubDate: ChartOptions = {
     },
     title: {
       display: true,
-      text: 'Patents by publication year',
+      text: 'Softwares by release year',
     },
   },
 };
@@ -97,22 +65,13 @@ type IndicatorType = {
   doc_count: number;
 };
 
-const headersByDepositDate = [
-  { label: 'Deposit year', key: 'key' },
+const headersByReleaseYear = [
+  { label: 'Release year', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-const headersBypublicationDate = [
-  { label: 'Publication year', key: 'key' },
-  { label: 'Quantity', key: 'doc_count' },
-];
-
-const headersCountryCode = [
-  { label: 'Country code', key: 'key' },
-  { label: 'Quantity', key: 'doc_count' },
-];
-const headersKindCode = [
-  { label: 'Kind code', key: 'key' },
+const headersKnowledgeAreas = [
+  { label: 'Knowledge areas', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
 ];
 
@@ -144,7 +103,7 @@ const queryCommonBase = {
 };
 
 const queryPie = JSON.parse(JSON.stringify(queryCommonBase));
-// queryPie.aggs.aggregate.terms.size = 10
+queryPie.aggs.aggregate.terms.size = 10;
 queryPie.aggs.aggregate.terms.order = { _count: 'desc' };
 
 function getKeywordQuery(queryBase: any, indicador: string, filters: any, searchTerm: any, config: any) {
@@ -192,29 +151,22 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } };
 }
 
-function PatentsIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
+function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
 
   useEffect(() => {
     // tradução
     // @ts-ignore
-    optDepositDate.plugins.title.text = t(optDepositDate.plugins?.title?.text);
-    // @ts-ignore
     optPubDate.plugins.title.text = t(optPubDate.plugins?.title?.text);
-    optCountryCode.plugins.title.text = t(optCountryCode.plugins?.title?.text);
-    optKindCode.plugins.title.text = t(optKindCode.plugins?.title?.text);
+    optknowledgeAreas.plugins.title.text = t(optknowledgeAreas.plugins?.title?.text);
     isLoading
       ? ElasticSearchService(
           [
             JSON.stringify(
-              getKeywordQuery(queryCommonBase, 'depositDate', filters, searchTerm, indicatorsState.config)
+              getKeywordQuery(queryCommonBase, 'releaseYear', filters, searchTerm, indicatorsState.config)
             ),
-            JSON.stringify(
-              getKeywordQuery(queryCommonBase, 'publicationDate', filters, searchTerm, indicatorsState.config)
-            ),
-            JSON.stringify(getKeywordQuery(queryPie, 'countryCode', filters, searchTerm, indicatorsState.config)),
-            JSON.stringify(getKeywordQuery(queryPie, 'kindCode', filters, searchTerm, indicatorsState.config)),
+            JSON.stringify(getKeywordQuery(queryPie, 'knowledgeAreas', filters, searchTerm, indicatorsState.config)),
           ],
           indicatorsState.config.searchQuery.index
         ).then((data) => {
@@ -230,22 +182,14 @@ function PatentsIndicators({ filters, searchTerm, isLoading, indicatorsState }: 
     indicatorsState.config.searchQuery.operator,
   ]);
 
-  // deposite date
-  const depositeDateIndicators: IndicatorType[] = indicators ? indicators[0] : [];
-  const depositeDateLabels = depositeDateIndicators != null ? depositeDateIndicators.map((d) => d.key) : [];
-  //  publication date
-  const publicationDateIndicators: IndicatorType[] = indicators ? indicators[1] : [];
-  const publicationDateLabels = publicationDateIndicators != null ? publicationDateIndicators.map((d) => d.key) : [];
+  //  release date
+  const releaseYearIndicators: IndicatorType[] = indicators ? indicators[0] : [];
+  const releaseYearLabels = releaseYearIndicators != null ? releaseYearIndicators.map((d) => d.key) : [];
 
   // country Code
-  const countryCodeIndicators: IndicatorType[] = indicators ? indicators[2] : [];
-  const countryCodeLabels = countryCodeIndicators != null ? countryCodeIndicators.map((d) => d.key) : [];
-  const countryCodeCount = countryCodeIndicators != null ? countryCodeIndicators.map((d) => d.doc_count) : [];
-
-  // kind Code
-  const kindCodeIndicators: IndicatorType[] = indicators ? indicators[3] : [];
-  const kindCodeLabels = kindCodeIndicators != null ? kindCodeIndicators.map((d) => d.key) : [];
-  const kindCodeCount = kindCodeIndicators != null ? kindCodeIndicators.map((d) => d.doc_count) : [];
+  const knowledgeAreasIndicators: IndicatorType[] = indicators ? indicators[1] : [];
+  const knowledgeAreasLabels = knowledgeAreasIndicators != null ? knowledgeAreasIndicators.map((d) => d.key) : [];
+  const knowledgeAreasCount = knowledgeAreasIndicators != null ? knowledgeAreasIndicators.map((d) => d.doc_count) : [];
 
   return (
     <div className={styles.charts}>
@@ -253,54 +197,23 @@ function PatentsIndicators({ filters, searchTerm, isLoading, indicatorsState }: 
         <CSVLink
           className={styles.download}
           title="Export to csv"
-          data={depositeDateIndicators ? depositeDateIndicators : []}
+          data={releaseYearIndicators ? releaseYearIndicators : []}
           filename={'arquivo.csv'}
-          headers={headersByDepositDate}
+          headers={headersByReleaseYear}
         >
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          hidden={depositeDateIndicators == null}
-          /** 
-      // @ts-ignore */
-          options={optDepositDate}
-          width="500"
-          data={{
-            labels: depositeDateLabels,
-            datasets: [
-              {
-                data: depositeDateIndicators,
-                label: 'Articles per Year',
-                backgroundColor: CHART_BACKGROUD_COLORS,
-                borderColor: CHART_BORDER_COLORS,
-                borderWidth: 1,
-              },
-            ],
-          }}
-        />
-      </div>
-
-      <div className={styles.chart}>
-        <CSVLink
-          className={styles.download}
-          title="Export to csv"
-          data={publicationDateIndicators ? publicationDateIndicators : []}
-          filename={'arquivo.csv'}
-          headers={headersByDepositDate}
-        >
-          <IoCloudDownloadOutline />
-        </CSVLink>
-        <Bar
-          hidden={headersBypublicationDate == null}
+          hidden={headersByReleaseYear == null}
           /** 
       // @ts-ignore */
           options={optPubDate}
           width="500"
           data={{
-            labels: publicationDateLabels,
+            labels: releaseYearLabels,
             datasets: [
               {
-                data: publicationDateIndicators,
+                data: releaseYearIndicators,
                 label: 'Articles per Year',
                 backgroundColor: CHART_BACKGROUD_COLORS,
                 borderColor: CHART_BORDER_COLORS,
@@ -315,55 +228,24 @@ function PatentsIndicators({ filters, searchTerm, isLoading, indicatorsState }: 
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
-          data={countryCodeIndicators ? countryCodeIndicators : []}
+          data={knowledgeAreasIndicators ? knowledgeAreasIndicators : []}
           filename={'arquivo.csv'}
-          headers={headersCountryCode}
+          headers={headersKnowledgeAreas}
         >
           <IoCloudDownloadOutline />
         </CSVLink>
         <Pie
           /** 
       // @ts-ignore */
-          options={optCountryCode}
-          hidden={countryCodeIndicators == null}
+          options={optknowledgeAreas}
+          hidden={knowledgeAreasIndicators == null}
           width="500"
           data={{
-            labels: countryCodeLabels,
+            labels: knowledgeAreasLabels,
             datasets: [
               {
-                data: countryCodeCount,
+                data: knowledgeAreasCount,
                 label: '# of Votes',
-                backgroundColor: CHART_BACKGROUD_COLORS,
-                borderColor: CHART_BORDER_COLORS,
-                borderWidth: 1,
-              },
-            ],
-          }}
-        />
-      </div>
-
-      <div className={styles.chart}>
-        <CSVLink
-          className={styles.download}
-          title={t('Export to csv') || ''}
-          data={kindCodeIndicators ? kindCodeIndicators : []}
-          filename={'arquivo.csv'}
-          headers={headersKindCode}
-        >
-          <IoCloudDownloadOutline />
-        </CSVLink>
-        <Pie
-          /** 
-      // @ts-ignore */
-          options={optKindCode}
-          hidden={kindCodeIndicators == null}
-          width="500"
-          data={{
-            labels: kindCodeLabels,
-            datasets: [
-              {
-                data: kindCodeCount,
-                label: '# of codes',
                 backgroundColor: CHART_BACKGROUD_COLORS,
                 borderColor: CHART_BORDER_COLORS,
                 borderWidth: 1,
@@ -383,4 +265,4 @@ export default withSearch(
     isLoading,
     indicatorsState,
   })
-)(PatentsIndicators);
+)(SoftwaresIndicators);

@@ -19,10 +19,9 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import React from 'react';
-import ButtonFieldSelect from '../components/ButtonFieldSelect';
 import ClearFilters from '../components/ClearFilters';
-import CustomResultViewPeople from '../components/customResultView/CustomResultViewPeople';
-import IndicatorsPeople from '../components/indicators/PeopleIndicators';
+import CustomResultViewSoftwares from '../components/customResultView/CustomResultViewSoftwares';
+import SoftwaresIndicators from '../components/indicators/SoftwaresIndicators';
 import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 type Props = {
@@ -35,7 +34,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   },
 });
 
-const INDEX_NAME = 'pesqdf-person';
+const INDEX_NAME = 'pesqdf-software';
 const connector = new Connector(INDEX_NAME);
 
 const config = {
@@ -57,23 +56,62 @@ const config = {
       name: {
         raw: {},
       },
-      lattesId: {
+      description: {
         raw: {},
       },
-      nationality: {
+      creator: {
         raw: {},
       },
-      orcid: {
+      availability: {
         raw: {},
       },
-      researchArea: {
+      registrationInstitution: {
+        raw: {},
+      },
+      depositDate: {
+        raw: {},
+      },
+      releaseYear: {
+        raw: {},
+      },
+
+      fundingInstiplatformtution: {
+        raw: {},
+      },
+      registrationCountry: {
+        raw: {},
+      },
+      activitySector: {
+        raw: {},
+      },
+      environment: {
+        raw: {},
+      },
+      inpiRegistrationCode: {
+        raw: {},
+      },
+
+      knowledgeAreas: {
+        raw: {},
+      },
+      keyword: {
+        raw: {},
+      },
+      language: {
+        raw: {},
+      },
+      additionalInformation: {
         raw: {},
       },
     },
-    disjunctiveFacets: ['nationality', 'researchArea'],
+    disjunctiveFacets: ['depositDate', 'releaseYear'],
     facets: {
-      nationality: { type: 'value' },
-      researchArea: { type: 'value' },
+      creator: { type: 'value' },
+      registrationCountry: { type: 'value' },
+      registrationInstitution: { type: 'value' },
+      releaseYear: { type: 'value' },
+      knowledgeAreas: { type: 'value' },
+      language: { type: 'value' },
     },
   },
   // autocompleteQuery: {
@@ -146,7 +184,7 @@ export default function App() {
   return (
     <div>
       <Head>
-        <title>{`BrCris - ${t('People')}`}</title>
+        <title>{`BrCris - ${t('Softwares')}`}</title>
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>
@@ -156,91 +194,50 @@ export default function App() {
                 <div className="App">
                   <ErrorBoundary>
                     <div className="container page">
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="page-title">
-                            <h2>{t('People')}</h2>
-                          </div>
-                        </div>
-
-                        <div className="col-md-6">
-                          <div className="card search-card">
-                            <div className="card-body">
-                              <ul className="nav nav-tabs" id="myTab" role="tablist">
-                                <li className="nav-item" role="presentation">
-                                  <ButtonFieldSelect
-                                    title={t('Nome')}
-                                    active={true}
-                                    config={config}
-                                    searchField="name"
-                                  />
-                                </li>
-                                <li className="nav-item" role="presentation">
-                                  <ButtonFieldSelect
-                                    title={t('Research field')}
-                                    active={false}
-                                    config={config}
-                                    searchField="researchArea"
-                                  />
-                                </li>
-                              </ul>
-                              <div className="tab-content" id="myTabContent">
-                                <div
-                                  className="tab-pane fade show active"
-                                  id="home"
-                                  role="tabpanel"
-                                  aria-labelledby="home-tab"
-                                >
-                                  <SearchBox
-                                    view={({ value, onChange, onSubmit }) => (
-                                      <form onSubmit={onSubmit} className="row g-3 mb-3">
-                                        <div className="col">
-                                          <input
-                                            className="form-control search-box"
-                                            type="text"
-                                            value={value}
-                                            onChange={(e) => onChange(e.target.value)}
-                                          />
-                                        </div>
-                                        <div className="col-auto">
-                                          <input
-                                            className="btn btn-primary search-btn"
-                                            type="submit"
-                                            value={t('Search') || ''}
-                                            disabled={!value || value.length < 3}
-                                          />
-                                        </div>
-                                      </form>
-                                    )}
-                                  />
-                                  <ClearFilters />
-                                </div>
-
-                                {/* <OperatorSelect config={config} /> */}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                      <div className="page-title">
+                        <h2>{t('Softwares')}</h2>
                       </div>
                     </div>
 
                     <div className={styles.content}>
                       <Layout
-                        // header={}
+                        header={
+                          <SearchBox
+                            autocompleteMinimumCharacters={3}
+                            autocompleteResults={{
+                              linkTarget: '_blank',
+                              sectionTitle: t('Open link') || '',
+                              titleField: 'name',
+                              urlField: 'vivo_link',
+                              shouldTrackClickThrough: true,
+                            }}
+                            autocompleteSuggestions={true}
+                            debounceLength={0}
+                          />
+                        }
                         sideContent={
                           <div>
                             {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
                               <span className="sui-sorting__label">{t('Filters')}</span>
                             </div>
-                            <Facet key={'1'} field={'nationality'} label={t('Nationality')} />
-                            <Facet key={'2'} field={'researchArea'} label={t('Research field')} />
+                            <Facet key={'1'} field={'creator'} label={t('Author')} />
+                            <Facet key={'2'} field={'registrationCountry'} label={t('Country')} />
+                            <Facet key={'3'} field={'registrationInstitution'} label={t('Registration institution')} />
+                            <Facet key={'4'} field={'releaseYear'} label={t('Release year')} />
+                            <Facet key={'5'} field={'knowledgeAreas'} label={t('Knowledge areas')} />
+                            <Facet key={'6'} field={'language'} label={t('Language')} />
                           </div>
                         }
-                        bodyContent={<Results resultView={CustomResultViewPeople} />}
+                        bodyContent={<Results resultView={CustomResultViewSoftwares} />}
                         bodyHeader={
                           <React.Fragment>
-                            {wasSearched && <PagingInfo />}
+                            {wasSearched && (
+                              <div className="d-flex align-items-center">
+                                <PagingInfo />
+                                <ClearFilters />
+                              </div>
+                            )}
                             {wasSearched && <ResultsPerPage />}
                           </React.Fragment>
                         }
@@ -249,7 +246,7 @@ export default function App() {
                       <div className={styles.Indicators}>
                         {/** 
                         // @ts-ignore */}
-                        <IndicatorsPeople indicatorsState={indicatorsState} />
+                        <SoftwaresIndicators indicatorsState={indicatorsState} />
                       </div>
                     </div>
                   </ErrorBoundary>

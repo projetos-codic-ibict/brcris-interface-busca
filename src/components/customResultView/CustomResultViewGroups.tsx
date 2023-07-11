@@ -3,20 +3,15 @@ import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 /* import { useRouter } from 'next/router'; */
 /* import { Author, OrgUnit, Service } from '../../types/Entities'; */
-import { useState } from 'react';
 import AuthorLink from '../externalLinks/AuthorLink';
-
-function getId(id: string) {
-  const cleanId = id.replaceAll('-', '');
-  return 'a' + cleanId;
-}
+import ReadMoreCollapse from '../ReadMoreCollapse';
 
 const CustomResultViewGroups = ({ result }: ResultViewProps) => {
-  const [buttonReadText, setButtonReadText] = useState('Read more...');
+  // const [buttonReadText, setButtonReadText] = useState('Read more...');
 
-  function handleClick() {
-    setButtonReadText(buttonReadText == 'Read more...' ? 'Read less' : 'Read more...');
-  }
+  // function handleClick() {
+  //   setButtonReadText(buttonReadText == 'Read more...' ? 'Read less' : 'Read more...');
+  // }
 
   /* const router = useRouter(); */
   const { t } = useTranslation('common');
@@ -65,18 +60,7 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
               <span className="sui-result__key">{t('Status')}</span>
               <span className="sui-result__value">{result.status?.raw}</span>
             </li>
-            <button
-              className="btn read-more"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target={`#${getId(result.id?.raw)}`}
-              aria-expanded="false"
-              aria-controls={getId(result.id?.raw)}
-              onClick={handleClick}
-            >
-              {t(buttonReadText)}
-            </button>
-            <span className="collapse" id={`${getId(result.id?.raw)}`}>
+            <ReadMoreCollapse id={result.id?.raw}>
               <li>
                 <span className="sui-result__key">{t('Description')}</span>
                 <span className="sui-result__value">{result.description?.raw}</span>
@@ -156,7 +140,7 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
                 <span className="sui-result__key">{t('Equipment')}</span>
                 <span className="sui-result__value">{result.equipment?.raw}</span>
               </li>
-            </span>
+            </ReadMoreCollapse>
           </ul>
         </div>
       </div>

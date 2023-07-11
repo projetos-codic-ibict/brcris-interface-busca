@@ -16,6 +16,20 @@ const CustomResultViewPatents = ({ result }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <li>
+              <span className="sui-result__key">{t('Inventor')}</span>
+              <span className="sui-result__value">
+                {result.inventor?.raw.map((inventor: any) => (
+                  <AuthorLink
+                    key={inventor.id}
+                    id={inventor.id}
+                    nationality={inventor.nationality}
+                    name={inventor.name}
+                    idLattes={inventor.idLattes}
+                  />
+                ))}
+              </span>
+            </li>
+            <li>
               <span className="sui-result__key">{t('Applicant')}</span>
               {result.applicant?.raw.map((applicant: any, index: number) => (
                 <span key={index} className="sui-result__value">
@@ -25,7 +39,7 @@ const CustomResultViewPatents = ({ result }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">{t('Deposit Date')}</span>
+              <span className="sui-result__key">{t('Deposit date')}</span>
               <span className="sui-result__value">{result.depositDate?.raw}</span>
             </li>
 
@@ -45,23 +59,8 @@ const CustomResultViewPatents = ({ result }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">{t('Publication Date')}</span>
+              <span className="sui-result__key">{t('Publication date')}</span>
               <span className="sui-result__value">{result.publicationDate?.raw}</span>
-            </li>
-
-            <li>
-              <span className="sui-result__key">{t('Inventor')}</span>
-              <span className="sui-result__value">
-                {result.inventor?.raw.map((inventor: any) => (
-                  <AuthorLink
-                    key={inventor.id}
-                    id={inventor.id}
-                    nationality={inventor.nationality}
-                    name={inventor.name}
-                    idLattes={inventor.idLattes}
-                  />
-                ))}
-              </span>
             </li>
           </ul>
         </div>

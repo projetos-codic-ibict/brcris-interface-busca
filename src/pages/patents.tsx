@@ -204,9 +204,9 @@ export default function App() {
 
                             <Facet key={'2'} field={'countryCode'} label={t('Country Code')} />
 
-                            <Facet key={'2'} field={'publicationDate'} label={t('Publication Date')} />
+                            <Facet key={'2'} field={'publicationDate'} label={t('Publication date')} />
 
-                            <Facet key={'3'} field={'depositDate'} label={t('Deposit Date')} />
+                            <Facet key={'3'} field={'depositDate'} label={t('Deposit date')} />
                           </div>
                         }
                         bodyContent={<Results resultView={CustomResultViewPatents} />}
