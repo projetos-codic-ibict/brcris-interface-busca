@@ -7,16 +7,7 @@ import { CSVLink } from 'react-csv';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
-import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from 'chart.js';
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 // @ts-ignore
 import { Filter } from '@elastic/search-ui';
@@ -24,21 +15,11 @@ import { TagCloud } from 'react-tagcloud';
 import ElasticSearchService from '../../services/ElasticSearchService';
 
 import { useTranslation } from 'next-i18next';
+import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import { IndicatorsProps } from '../../types/Propos';
-import {
-  CHART_BACKGROUD_COLORS,
-  CHART_BORDER_COLORS,
-} from '../../../utils/Utils';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+const INDEX_NAME = 'pesqdf-person';
 
 export const optionsResearchArea = {
   responsive: true,
@@ -120,18 +101,10 @@ const keywordQueryBase = {
   },
 };
 
-function getKeywordQuery(
-  queryBase: any,
-  filters: any,
-  searchTerm: any,
-  config: any
-) {
+function getKeywordQuery(queryBase: any, filters: any, searchTerm: any, config: any) {
   if (searchTerm) {
-    queryBase.query.bool.must.query_string.default_field = Object.keys(
-      config.searchQuery.search_fields
-    )[0];
-    queryBase.query.bool.must.query_string.default_operator =
-      config.searchQuery.operator;
+    queryBase.query.bool.must.query_string.default_field = Object.keys(config.searchQuery.search_fields)[0];
+    queryBase.query.bool.must.query_string.default_operator = config.searchQuery.operator;
     queryBase.query.bool.must.query_string.query = searchTerm;
   } else {
     queryBase.query.bool.must.query_string.query = '*';
@@ -149,41 +122,20 @@ function getKeywordQuery(
   return queryBase;
 }
 
-function PeopleIndicators({
-  filters,
-  searchTerm,
-  isLoading,
-  indicatorsState,
-}: IndicatorsProps) {
+function PeopleIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
   const { t } = useTranslation('common');
 
   const [indicators, setIndicators] = useState(indicatorsState.data);
 
   useEffect(() => {
-    optionsResearchArea.plugins.title.text = t(
-      optionsResearchArea.plugins?.title?.text
-    );
+    optionsResearchArea.plugins.title.text = t(optionsResearchArea.plugins?.title?.text);
     isLoading
       ? ElasticSearchService(
           [
-            JSON.stringify(
-              getKeywordQuery(
-                nationtalityQueryBase,
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
-            ),
-            JSON.stringify(
-              getKeywordQuery(
-                keywordQueryBase,
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
-            ),
+            JSON.stringify(getKeywordQuery(nationtalityQueryBase, filters, searchTerm, indicatorsState.config)),
+            JSON.stringify(getKeywordQuery(keywordQueryBase, filters, searchTerm, indicatorsState.config)),
           ],
-          indicatorsState.config.searchQuery.index
+          INDEX_NAME
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
@@ -200,21 +152,17 @@ function PeopleIndicators({
   const nationalities: IndicatorType[] = indicators ? indicators[0] : [];
 
   const nationalitiesTagsCloud =
-    nationalities != null
-      ? nationalities.map((d) => ({ value: d.key, count: d.doc_count }))
-      : [];
+    nationalities != null ? nationalities.map((d) => ({ value: d.key, count: d.doc_count })) : [];
 
   const researchArea: IndicatorType[] = indicators ? indicators[1] : [];
 
-  const researchAreaLabels =
-    researchArea != null ? researchArea.map((d) => d.key) : [];
+  const researchAreaLabels = researchArea != null ? researchArea.map((d) => d.key) : [];
 
-  const researchAreaValues =
-    researchArea != null ? researchArea.map((d) => d.doc_count) : [];
+  const researchAreaValues = researchArea != null ? researchArea.map((d) => d.doc_count) : [];
 
   return (
     <div className={styles.charts}>
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={researchArea == null || researchArea.length == 0}>
         <CSVLink
           className={styles.download}
           title="Export to csv"
@@ -228,7 +176,6 @@ function PeopleIndicators({
           /** 
         // @ts-ignore */
           options={optionsResearchArea}
-          hidden={researchArea == null || researchArea.length == 0}
           data={{
             labels: researchAreaLabels,
             datasets: [
@@ -244,11 +191,10 @@ function PeopleIndicators({
         />
       </div>
 
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={nationalities == null || nationalities.length == 0}>
         <p
           style={{
-            display:
-              nationalities && nationalities.length > 0 ? 'block' : 'none',
+            display: nationalities && nationalities.length > 0 ? 'block' : 'none',
           }}
           className={styles.title}
         >

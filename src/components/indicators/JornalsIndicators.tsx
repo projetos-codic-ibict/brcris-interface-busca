@@ -21,22 +21,12 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
-import {
-  CHART_BACKGROUD_COLORS,
-  CHART_BORDER_COLORS,
-} from '../../../utils/Utils';
+import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
 import { IndicatorsProps } from '../../types/Propos';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+const INDEX_NAME = 'pesqdf-journals';
 
 export const optionsStatus = {
   responsive: true,
@@ -120,13 +110,7 @@ const queryCommonBase = {
   },
 };
 
-function getKeywordQuery(
-  queryBase: any,
-  indicador: string,
-  filters: any,
-  searchTerm: any,
-  config: any
-) {
+function getKeywordQuery(queryBase: any, indicador: string, filters: any, searchTerm: any, config: any) {
   const field = Object.keys(config.searchQuery.search_fields)[0];
   if (indicador) {
     queryBase._source = [indicador];
@@ -135,8 +119,7 @@ function getKeywordQuery(
 
   if (searchTerm) {
     queryBase.query.bool.must.query_string.default_field = field;
-    queryBase.query.bool.must.query_string.default_operator =
-      config.searchQuery.operator;
+    queryBase.query.bool.must.query_string.default_operator = config.searchQuery.operator;
     queryBase.query.bool.must.query_string.query = searchTerm;
   } else {
     queryBase.query.bool.must.query_string.query = '*';
@@ -172,12 +155,7 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } };
 }
 
-function JornalsIndicators({
-  filters,
-  searchTerm,
-  isLoading,
-  indicatorsState,
-}: IndicatorsProps) {
+function JornalsIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
 
@@ -190,25 +168,11 @@ function JornalsIndicators({
       ? ElasticSearchService(
           [
             JSON.stringify(
-              getKeywordQuery(
-                queryCommonBase,
-                'publisher.name',
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
+              getKeywordQuery(queryCommonBase, 'publisher.name', filters, searchTerm, indicatorsState.config)
             ),
-            JSON.stringify(
-              getKeywordQuery(
-                queryCommonBase,
-                'status',
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
-            ),
+            JSON.stringify(getKeywordQuery(queryCommonBase, 'status', filters, searchTerm, indicatorsState.config)),
           ],
-          indicatorsState.config.searchQuery.index
+          INDEX_NAME
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
@@ -224,20 +188,17 @@ function JornalsIndicators({
 
   const publisherIndicators: IndicatorType[] = indicators ? indicators[0] : [];
 
-  const publisherLabels =
-    publisherIndicators != null ? publisherIndicators.map((d) => d.key) : [];
+  const publisherLabels = publisherIndicators != null ? publisherIndicators.map((d) => d.key) : [];
 
   const statusIndicators: IndicatorType[] = indicators ? indicators[1] : [];
 
-  const statusLabels =
-    statusIndicators != null ? statusIndicators.map((d) => d.key) : [];
+  const statusLabels = statusIndicators != null ? statusIndicators.map((d) => d.key) : [];
 
-  const statusCount =
-    statusIndicators != null ? statusIndicators.map((d) => d.doc_count) : [];
+  const statusCount = statusIndicators != null ? statusIndicators.map((d) => d.doc_count) : [];
 
   return (
     <div className={styles.charts}>
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={publisherIndicators == null}>
         <CSVLink
           className={styles.download}
           title="Export to csv"
@@ -248,7 +209,6 @@ function JornalsIndicators({
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          hidden={publisherIndicators == null}
           /** 
       // @ts-ignore */
           options={optPublishers}
@@ -268,7 +228,7 @@ function JornalsIndicators({
         />
       </div>
 
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={statusIndicators == null}>
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
@@ -282,7 +242,6 @@ function JornalsIndicators({
           /** 
       // @ts-ignore */
           options={optionsStatus}
-          hidden={statusIndicators == null}
           width="500"
           data={{
             labels: statusLabels.map((label) => label.split('#')[1] || label),

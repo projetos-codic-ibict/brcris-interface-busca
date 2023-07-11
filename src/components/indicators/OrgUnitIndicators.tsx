@@ -26,6 +26,7 @@ import ElasticSearchService from '../../services/ElasticSearchService';
 import { IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+const INDEX_NAME = 'pesqdf-orgunit';
 
 export const options: ChartOptions = {
   parsing: {
@@ -41,25 +42,34 @@ export const options: ChartOptions = {
     },
     title: {
       display: true,
-      text: 'OrgUnits by address',
+      text: 'Institutions by country',
     },
   },
   scales: {
     x: {
       ticks: {
-        display: false,
+        display: true,
       },
     },
   },
 };
 
+const optionsState: ChartOptions = {
+  ...options,
+  plugins: { title: { text: 'Institutions by state', display: true }, legend: { display: false } },
+};
+console.log(JSON.stringify(optionsState));
 type IndicatorType = {
   key: string;
   doc_count: number;
 };
 
 const headersOrgUnit = [
-  { label: 'Address', key: 'key' },
+  { label: 'Country', key: 'key' },
+  { label: 'Quantity', key: 'doc_count' },
+];
+const headersOrgUnitState = [
+  { label: 'State', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
 ];
 const queryCommonBase = {
@@ -142,10 +152,15 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState }: 
     // tradução
     // @ts-ignore
     options.plugins.title.text = t(options.plugins?.title?.text);
+    // @ts-ignore
+    optionsState.plugins.title.text = t(optionsState.plugins?.title?.text);
     isLoading
       ? ElasticSearchService(
-          [JSON.stringify(getKeywordQuery(queryCommonBase, 'address', filters, searchTerm, indicatorsState.config))],
-          indicatorsState.config.searchQuery.index
+          [
+            JSON.stringify(getKeywordQuery(queryCommonBase, 'country', filters, searchTerm, indicatorsState.config)),
+            JSON.stringify(getKeywordQuery(queryCommonBase, 'state', filters, searchTerm, indicatorsState.config)),
+          ],
+          INDEX_NAME
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
@@ -159,32 +174,64 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState }: 
     indicatorsState.config.searchQuery.operator,
   ]);
 
-  const adressIndicators: IndicatorType[] = indicators ? indicators[0] : [];
-  const adressLabels = adressIndicators != null ? adressIndicators.map((d) => d.key) : [];
+  const countryIndicators: IndicatorType[] = indicators ? indicators[0] : [];
+  const countryLabels = countryIndicators != null ? countryIndicators.map((d) => d.key) : [];
+
+  const stateIndicators: IndicatorType[] = indicators ? indicators[1] : [];
+  const stateLabels = stateIndicators != null ? stateIndicators.map((d) => d.key) : [];
 
   return (
     <div className={styles.charts}>
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={countryIndicators == null}>
         <CSVLink
           className={styles.download}
           title="Export to csv"
-          data={adressIndicators ? adressIndicators : []}
+          data={countryIndicators ? countryIndicators : []}
           filename={'arquivo.csv'}
           headers={headersOrgUnit}
         >
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          hidden={adressIndicators == null}
           /** 
       // @ts-ignore */
           options={options}
           width="500"
           data={{
-            labels: adressLabels,
+            labels: countryLabels,
             datasets: [
               {
-                data: adressIndicators,
+                data: countryIndicators,
+                label: t('Institutions') || '',
+                backgroundColor: CHART_BACKGROUD_COLORS,
+                borderColor: CHART_BORDER_COLORS,
+                borderWidth: 1,
+              },
+            ],
+          }}
+        />
+      </div>
+
+      <div className={styles.chart} hidden={stateIndicators == null}>
+        <CSVLink
+          className={styles.download}
+          title="Export to csv"
+          data={stateIndicators ? stateIndicators : []}
+          filename={'arquivo.csv'}
+          headers={headersOrgUnitState}
+        >
+          <IoCloudDownloadOutline />
+        </CSVLink>
+        <Bar
+          /** 
+      // @ts-ignore */
+          options={optionsState}
+          width="500"
+          data={{
+            labels: stateLabels,
+            datasets: [
+              {
+                data: stateIndicators,
                 label: t('Institutions') || '',
                 backgroundColor: CHART_BACKGROUD_COLORS,
                 borderColor: CHART_BORDER_COLORS,

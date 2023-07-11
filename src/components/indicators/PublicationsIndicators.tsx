@@ -21,23 +21,12 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
-import {
-  CHART_BACKGROUD_COLORS,
-  CHART_BORDER_COLORS,
-} from '../../../utils/Utils';
+import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
 import { IndicatorsProps } from '../../types/Propos';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement
-);
-
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+const INDEX_NAME = 'pesqdf-publication';
 export const optionsType = {
   responsive: true,
   plugins: {
@@ -113,13 +102,7 @@ const queryCommonBase = {
   },
 };
 
-function getKeywordQuery(
-  queryBase: any,
-  indicador: string,
-  filters: any,
-  searchTerm: any,
-  config: any
-) {
+function getKeywordQuery(queryBase: any, indicador: string, filters: any, searchTerm: any, config: any) {
   const field = Object.keys(config.searchQuery.search_fields)[0];
   if (indicador) {
     queryBase._source = [indicador];
@@ -128,8 +111,7 @@ function getKeywordQuery(
 
   if (searchTerm) {
     queryBase.query.bool.must.query_string.default_field = field;
-    queryBase.query.bool.must.query_string.default_operator =
-      config.searchQuery.operator;
+    queryBase.query.bool.must.query_string.default_operator = config.searchQuery.operator;
     queryBase.query.bool.must.query_string.query = searchTerm;
   } else {
     queryBase.query.bool.must.query_string.query = '*';
@@ -165,15 +147,11 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } };
 }
 
-function PublicationsIndicators({
-  filters,
-  searchTerm,
-  isLoading,
-  indicatorsState,
-}: IndicatorsProps) {
+function PublicationsIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
 
+  console.log('indicatorsState.config.searchQuery.index', indicatorsState.config.searchQuery.index);
   useEffect(() => {
     // tradução
     // @ts-ignore
@@ -183,25 +161,11 @@ function PublicationsIndicators({
       ? ElasticSearchService(
           [
             JSON.stringify(
-              getKeywordQuery(
-                queryCommonBase,
-                'publicationDate',
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
+              getKeywordQuery(queryCommonBase, 'publicationDate', filters, searchTerm, indicatorsState.config)
             ),
-            JSON.stringify(
-              getKeywordQuery(
-                queryCommonBase,
-                'type',
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
-            ),
+            JSON.stringify(getKeywordQuery(queryCommonBase, 'type', filters, searchTerm, indicatorsState.config)),
           ],
-          indicatorsState.config.searchQuery.index
+          INDEX_NAME
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
@@ -217,20 +181,17 @@ function PublicationsIndicators({
 
   const yearIndicators: IndicatorType[] = indicators ? indicators[0] : [];
 
-  const yearLabels =
-    yearIndicators != null ? yearIndicators.map((d) => d.key) : [];
+  const yearLabels = yearIndicators != null ? yearIndicators.map((d) => d.key) : [];
 
   const typeIndicators: IndicatorType[] = indicators ? indicators[1] : [];
 
-  const typeLabels =
-    typeIndicators != null ? typeIndicators.map((d) => d.key) : [];
+  const typeLabels = typeIndicators != null ? typeIndicators.map((d) => d.key) : [];
 
-  const typeDoc_count =
-    typeIndicators != null ? typeIndicators.map((d) => d.doc_count) : [];
+  const typeDoc_count = typeIndicators != null ? typeIndicators.map((d) => d.doc_count) : [];
 
   return (
     <div className={styles.charts}>
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={yearIndicators == null}>
         <CSVLink
           className={styles.download}
           title="Export to csv"
@@ -241,7 +202,6 @@ function PublicationsIndicators({
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          hidden={yearIndicators == null}
           /** 
       // @ts-ignore */
           options={options}
@@ -261,7 +221,7 @@ function PublicationsIndicators({
         />
       </div>
 
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={typeIndicators == null}>
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
@@ -275,7 +235,6 @@ function PublicationsIndicators({
           /** 
       // @ts-ignore */
           options={optionsType}
-          hidden={typeIndicators == null}
           width="500"
           data={{
             labels: typeLabels,

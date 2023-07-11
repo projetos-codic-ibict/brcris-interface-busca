@@ -26,6 +26,7 @@ import ElasticSearchService from '../../services/ElasticSearchService';
 import { IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+const INDEX_NAME = 'pesqdf-software';
 
 export const optknowledgeAreas = {
   responsive: true,
@@ -168,7 +169,7 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState }
             ),
             JSON.stringify(getKeywordQuery(queryPie, 'knowledgeAreas', filters, searchTerm, indicatorsState.config)),
           ],
-          indicatorsState.config.searchQuery.index
+          INDEX_NAME
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
@@ -193,7 +194,7 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState }
 
   return (
     <div className={styles.charts}>
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={headersByReleaseYear == null}>
         <CSVLink
           className={styles.download}
           title="Export to csv"
@@ -204,7 +205,6 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState }
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          hidden={headersByReleaseYear == null}
           /** 
       // @ts-ignore */
           options={optPubDate}
@@ -224,7 +224,7 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState }
         />
       </div>
 
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={knowledgeAreasIndicators == null}>
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
@@ -238,7 +238,6 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState }
           /** 
       // @ts-ignore */
           options={optknowledgeAreas}
-          hidden={knowledgeAreasIndicators == null}
           width="500"
           data={{
             labels: knowledgeAreasLabels,

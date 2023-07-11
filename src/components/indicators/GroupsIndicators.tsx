@@ -21,22 +21,12 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
-import {
-  CHART_BACKGROUD_COLORS,
-  CHART_BORDER_COLORS,
-} from '../../../utils/Utils';
+import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
 import { IndicatorsProps } from '../../types/Propos';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+const INDEX_NAME = 'researchgroups';
 
 export const optResearchLine = {
   responsive: true,
@@ -152,13 +142,7 @@ const queryPie = JSON.parse(JSON.stringify(queryCommonBase));
 // queryPie.aggs.aggregate.terms.size = 10
 queryPie.aggs.aggregate.terms.order = { _count: 'desc' };
 
-function getKeywordQuery(
-  queryBase: any,
-  indicador: string,
-  filters: any,
-  searchTerm: any,
-  config: any
-) {
+function getKeywordQuery(queryBase: any, indicador: string, filters: any, searchTerm: any, config: any) {
   const field = Object.keys(config.searchQuery.search_fields)[0];
   if (indicador) {
     queryBase._source = [indicador];
@@ -167,8 +151,7 @@ function getKeywordQuery(
 
   if (searchTerm) {
     queryBase.query.bool.must.query_string.default_field = field;
-    queryBase.query.bool.must.query_string.default_operator =
-      config.searchQuery.operator;
+    queryBase.query.bool.must.query_string.default_operator = config.searchQuery.operator;
     queryBase.query.bool.must.query_string.query = searchTerm;
   } else {
     queryBase.query.bool.must.query_string.query = '*';
@@ -204,12 +187,7 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } };
 }
 
-function GroupsIndicators({
-  filters,
-  searchTerm,
-  isLoading,
-  indicatorsState,
-}: IndicatorsProps) {
+function GroupsIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
 
@@ -219,53 +197,19 @@ function GroupsIndicators({
     optCreatYear.plugins.title.text = t(optCreatYear.plugins?.title?.text);
     // @ts-ignore
     optStatus.plugins.title.text = t(optStatus.plugins?.title?.text);
-    optResearchLine.plugins.title.text = t(
-      optResearchLine.plugins?.title?.text
-    );
-    optKnowledgeArea.plugins.title.text = t(
-      optKnowledgeArea.plugins?.title?.text
-    );
+    optResearchLine.plugins.title.text = t(optResearchLine.plugins?.title?.text);
+    optKnowledgeArea.plugins.title.text = t(optKnowledgeArea.plugins?.title?.text);
     isLoading
       ? ElasticSearchService(
           [
             JSON.stringify(
-              getKeywordQuery(
-                queryCommonBase,
-                'creationYear',
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
+              getKeywordQuery(queryCommonBase, 'creationYear', filters, searchTerm, indicatorsState.config)
             ),
-            JSON.stringify(
-              getKeywordQuery(
-                queryPie,
-                'researchLine',
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
-            ),
-            JSON.stringify(
-              getKeywordQuery(
-                queryPie,
-                'knowledgeArea',
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
-            ),
-            JSON.stringify(
-              getKeywordQuery(
-                queryPie,
-                'status',
-                filters,
-                searchTerm,
-                indicatorsState.config
-              )
-            ),
+            JSON.stringify(getKeywordQuery(queryPie, 'researchLine', filters, searchTerm, indicatorsState.config)),
+            JSON.stringify(getKeywordQuery(queryPie, 'knowledgeArea', filters, searchTerm, indicatorsState.config)),
+            JSON.stringify(getKeywordQuery(queryPie, 'status', filters, searchTerm, indicatorsState.config)),
           ],
-          indicatorsState.config.searchQuery.index
+          INDEX_NAME
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
@@ -280,50 +224,27 @@ function GroupsIndicators({
   ]);
 
   // creation year
-  const creationYearIndicators: IndicatorType[] = indicators
-    ? indicators[0]
-    : [];
-  const creationYearLabels =
-    creationYearIndicators != null
-      ? creationYearIndicators.map((d) => d.key)
-      : [];
+  const creationYearIndicators: IndicatorType[] = indicators ? indicators[0] : [];
+  const creationYearLabels = creationYearIndicators != null ? creationYearIndicators.map((d) => d.key) : [];
 
   // research line
-  const researchLineIndicators: IndicatorType[] = indicators
-    ? indicators[1]
-    : [];
-  const researchLineLabels =
-    researchLineIndicators != null
-      ? researchLineIndicators.map((d) => d.key)
-      : [];
-  const researchLineCount =
-    researchLineIndicators != null
-      ? researchLineIndicators.map((d) => d.doc_count)
-      : [];
+  const researchLineIndicators: IndicatorType[] = indicators ? indicators[1] : [];
+  const researchLineLabels = researchLineIndicators != null ? researchLineIndicators.map((d) => d.key) : [];
+  const researchLineCount = researchLineIndicators != null ? researchLineIndicators.map((d) => d.doc_count) : [];
 
   // knowledge area
-  const knowledgeAreaIndicators: IndicatorType[] = indicators
-    ? indicators[2]
-    : [];
-  const knowledgeAreaLabels =
-    knowledgeAreaIndicators != null
-      ? knowledgeAreaIndicators.map((d) => d.key)
-      : [];
-  const knowledgeAreaCount =
-    knowledgeAreaIndicators != null
-      ? knowledgeAreaIndicators.map((d) => d.doc_count)
-      : [];
+  const knowledgeAreaIndicators: IndicatorType[] = indicators ? indicators[2] : [];
+  const knowledgeAreaLabels = knowledgeAreaIndicators != null ? knowledgeAreaIndicators.map((d) => d.key) : [];
+  const knowledgeAreaCount = knowledgeAreaIndicators != null ? knowledgeAreaIndicators.map((d) => d.doc_count) : [];
 
   // status
   const statusIndicators: IndicatorType[] = indicators ? indicators[3] : [];
-  const statusLabels =
-    statusIndicators != null ? statusIndicators.map((d) => d.key) : [];
-  const statusCount =
-    statusIndicators != null ? statusIndicators.map((d) => d.doc_count) : [];
+  const statusLabels = statusIndicators != null ? statusIndicators.map((d) => d.key) : [];
+  const statusCount = statusIndicators != null ? statusIndicators.map((d) => d.doc_count) : [];
 
   return (
     <div className={styles.charts}>
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={creationYearIndicators == null}>
         <CSVLink
           className={styles.download}
           title="Export to csv"
@@ -334,7 +255,6 @@ function GroupsIndicators({
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          hidden={creationYearIndicators == null}
           /** 
       // @ts-ignore */
           options={optCreatYear}
@@ -354,7 +274,7 @@ function GroupsIndicators({
         />
       </div>
 
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={researchLineIndicators == null}>
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
@@ -368,7 +288,6 @@ function GroupsIndicators({
           /** 
       // @ts-ignore */
           options={optResearchLine}
-          hidden={researchLineIndicators == null}
           width="500"
           data={{
             labels: researchLineLabels,
@@ -385,7 +304,7 @@ function GroupsIndicators({
         />
       </div>
 
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={knowledgeAreaIndicators == null}>
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
@@ -399,7 +318,6 @@ function GroupsIndicators({
           /** 
       // @ts-ignore */
           options={optKnowledgeArea}
-          hidden={knowledgeAreaIndicators == null}
           width="500"
           data={{
             labels: knowledgeAreaLabels,
@@ -416,7 +334,7 @@ function GroupsIndicators({
         />
       </div>
 
-      <div className={styles.chart}>
+      <div className={styles.chart} hidden={statusIndicators == null}>
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
@@ -430,7 +348,6 @@ function GroupsIndicators({
           /** 
       // @ts-ignore */
           options={optStatus}
-          hidden={statusIndicators == null}
           width="500"
           data={{
             labels: statusLabels,
