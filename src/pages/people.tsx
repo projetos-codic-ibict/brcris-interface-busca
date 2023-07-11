@@ -47,7 +47,7 @@ const config = {
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
-      'name-text': {},
+      name_text: {},
     },
     result_fields: {
       id: {
