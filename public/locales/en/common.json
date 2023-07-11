@@ -53,7 +53,7 @@
   "Country Code": "Country Code",
   "Lattes Title": "Lattes Title",
   "Publication date": "Publication date",
-  "Inventor": "Inventor(s)",
+  "Inventor(s)": "Inventor(s)",
   "Organization": "Organization(s)",
   "Research area(s)": "Research area(s)",
   "Lattes": "Lattes",
@@ -86,5 +86,18 @@
   "Open link": "Open link",
   "Country": "Country",
   "State": "State",
-  "City": "City"
+  "City": "City",
+  "Release year": "Release year",
+  "Registration institution": "Registration institution",
+  "Funding institution": "Funding institution",
+  "Registration country": "Registration country",
+  "Activity sector": "Activity sector",
+  "Environment": "Environment",
+  "INPI registration code": "INPI registration code",
+  "Knowledge areas": "Knowledge areas",
+  "Availability": "Availability",
+  "Additional information": "Additional information",
+  "Softwares by release year": "Softwares by release year",
+  "Softwares by knowledge area": "Softwares by knowledge area",
+  "Creator(s)": "Creator(s)"
 }

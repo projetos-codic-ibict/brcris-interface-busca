@@ -21,7 +21,7 @@ const CustomResultViewSoftwares = ({ result }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">{t('Inventor')}</span>
+              <span className="sui-result__key">{t('Creator(s)')}</span>
               <span className="sui-result__value">
                 {result.creator?.raw.map((creator: any) => (
                   <AuthorLink key={creator.id} id={creator.id} name={creator.name} idLattes={creator.idLattes} />
@@ -75,11 +75,11 @@ const CustomResultViewSoftwares = ({ result }: ResultViewProps) => {
                 ))}
               </li>
               <li>
-                <span className="sui-result__key">{t('keyword')}</span>
+                <span className="sui-result__key">{t('Keyword')}</span>
                 <span className="sui-result__value">{result.keyword?.raw}</span>
               </li>
               <li>
-                <span className="sui-result__key">{t('language')}</span>
+                <span className="sui-result__key">{t('Language')}</span>
                 <span className="sui-result__value">{result.language?.raw}</span>
               </li>
               <li>

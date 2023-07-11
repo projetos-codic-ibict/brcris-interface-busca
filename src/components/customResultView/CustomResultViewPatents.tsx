@@ -16,7 +16,7 @@ const CustomResultViewPatents = ({ result }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <li>
-              <span className="sui-result__key">{t('Inventor')}</span>
+              <span className="sui-result__key">{t('Inventor(s)')}</span>
               <span className="sui-result__value">
                 {result.inventor?.raw.map((inventor: any) => (
                   <AuthorLink

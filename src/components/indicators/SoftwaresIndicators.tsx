@@ -36,7 +36,7 @@ export const optknowledgeAreas = {
     },
     title: {
       display: true,
-      text: 'Softwares by knowledge areas',
+      text: 'Softwares by knowledge area',
     },
   },
 };
@@ -71,7 +71,7 @@ const headersByReleaseYear = [
 ];
 
 const headersKnowledgeAreas = [
-  { label: 'Knowledge areas', key: 'key' },
+  { label: 'Knowledge area', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
 ];
 
