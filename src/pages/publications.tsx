@@ -51,7 +51,7 @@ const config = {
       title_text: {
         weight: 3,
       },
-      'keyword-text': {},
+      keyword_text: {},
     },
     result_fields: {
       title: {
