@@ -48,7 +48,7 @@ const config = {
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
-      'title-text': {
+      title_text: {
         weight: 3,
       },
       'keyword-text': {},
