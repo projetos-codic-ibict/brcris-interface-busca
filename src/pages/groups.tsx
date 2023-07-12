@@ -229,13 +229,13 @@ export default function App() {
                             <div className="filters">
                               <span className="sui-sorting__label">{t('Filters')}</span>
                             </div>
-                            <Facet key={'1'} field={'creationYear'} label={t('Creation Year')} />
+                            <Facet key={'1'} field={'creationYear'} label={t('Creation year')} />
 
-                            <Facet key={'2'} field={'researchLine'} label={t('Research Line')} />
+                            <Facet key={'2'} field={'researchLine'} label={t('Research line')} />
 
-                            <Facet key={'3'} field={'knowledgeArea'} label={t('Knowledge Area')} />
+                            <Facet key={'3'} field={'knowledgeArea'} label={t('Knowledge area')} />
 
-                            <Facet key={'4'} field={'applicationSector'} label={t('Application Sector')} />
+                            <Facet key={'4'} field={'applicationSector'} label={t('Application sector')} />
 
                             <Facet key={'5'} field={'keyword'} label={t('Keyword')} />
 

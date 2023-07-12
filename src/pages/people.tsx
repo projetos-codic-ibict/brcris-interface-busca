@@ -7,7 +7,6 @@ import {
   PagingInfo,
   Results,
   ResultsPerPage,
-  SearchBox,
   SearchProvider,
   Sorting,
   WithSearch,
@@ -18,8 +17,9 @@ import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import React from 'react';
+import React, { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
+import CustomSearchBox from '../components/CustomSearchBox';
 import CustomResultViewPeople from '../components/customResultView/CustomResultViewPeople';
 import IndicatorsPeople from '../components/indicators/PeopleIndicators';
 import Connector from '../services/APIConnector';
@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 const INDEX_NAME = 'pesqdf-person';
 const connector = new Connector(INDEX_NAME);
 
-const config = {
+const configDefault = {
   debug: true,
   urlPushDebounceLength: 500,
   alwaysSearchOnInitialLoad: true,
@@ -75,33 +75,33 @@ const config = {
       researchArea: { type: 'value' },
     },
   },
-  // autocompleteQuery: {
-  //   results: {
-  //     search_fields: {
-  //       'titlesuggest.suggest': {},
-  //     },
-  //     resultsPerPage: 5,
-  //     result_fields: {
-  //       title: {
-  //         snippet: {
-  //           size: 100,
-  //           fallback: true,
-  //         },
-  //       },
-  //       vivo_link: {
-  //         raw: {},
-  //       },
-  //     },
-  //   },
-  //   suggestions: {
-  //     types: {
-  //       documents: {
-  //         fields: ['suggest'],
-  //       },
-  //     },
-  //     size: 4,
-  //   },
-  // },
+  autocompleteQuery: {
+    results: {
+      resultsPerPage: 5,
+      search_fields: {
+        name_suggest: {
+          weight: 3,
+        },
+      },
+      result_fields: {
+        name: {
+          snippet: {
+            size: 100,
+            fallback: true,
+          },
+        },
+        vivo_link: {
+          raw: {},
+        },
+      },
+    },
+    suggestions: {
+      types: {
+        results: { fields: ['name_completion'] },
+      },
+      size: 5,
+    },
+  },
 };
 type SortOptionsType = {
   name: string;
@@ -132,16 +132,22 @@ const SORT_OPTIONS: SortOptionsType[] = [
   },
 ];
 
-const indicatorsState = {
-  config,
-  data: [],
-};
-
 export default function App() {
-  // const [config, setConfig] = useState(configDefault)
   const { t } = useTranslation('common');
   // tradução
   SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
+
+  const [config, setConfig] = useState(configDefault);
+
+  function updateOpetatorConfig(op: string) {
+    setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
+  }
+
+  const indicatorsState = {
+    config,
+    data: [],
+  };
+
   return (
     <div>
       <Head>
@@ -163,17 +169,10 @@ export default function App() {
                     <div className={styles.content}>
                       <Layout
                         header={
-                          <SearchBox
-                            autocompleteMinimumCharacters={3}
-                            autocompleteResults={{
-                              linkTarget: '_blank',
-                              sectionTitle: t('Open link') || '',
-                              titleField: 'name',
-                              urlField: 'vivo_link',
-                              shouldTrackClickThrough: true,
-                            }}
-                            autocompleteSuggestions={true}
-                            debounceLength={0}
+                          <CustomSearchBox
+                            titleFieldName="name"
+                            itemLinkPrefix="pers_"
+                            updateOpetatorConfig={updateOpetatorConfig}
                           />
                         }
                         sideContent={

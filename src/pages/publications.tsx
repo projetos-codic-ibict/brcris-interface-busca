@@ -8,14 +8,13 @@ import {
   PagingInfo,
   Results,
   ResultsPerPage,
-  SearchBox,
   SearchProvider,
   Sorting,
   WithSearch,
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-import React from 'react';
+import React, { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
 import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
 import Indicators from '../components/indicators/PublicationsIndicators';
@@ -26,6 +25,7 @@ import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
+import CustomSearchBox from '../components/CustomSearchBox';
 type Props = {
   // Add custom props here
 };
@@ -37,8 +37,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ locale }) 
 
 const INDEX_NAME = 'pesqdf-publication';
 const connector = new Connector(INDEX_NAME);
-const config = {
-  debug: true,
+const configDefault = {
+  debug: false,
   indicators: [],
   urlPushDebounceLength: 500,
   alwaysSearchOnInitialLoad: true,
@@ -165,7 +165,7 @@ const config = {
       types: {
         results: { fields: ['title_completion'] },
       },
-      size: 4,
+      size: 5,
     },
   },
 };
@@ -197,17 +197,23 @@ const SORT_OPTIONS: SortOptionsType[] = [
     ],
   },
 ];
-
-const indicatorsState = {
-  config,
-  data: [],
-};
-
+const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 export default function App() {
-  // const [config, setConfig] = useState(configDefault)
   const { t } = useTranslation('common');
   // tradução
   SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
+
+  const [config, setConfig] = useState(configDefault);
+
+  function updateOpetatorConfig(op: string) {
+    setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
+  }
+
+  const indicatorsState = {
+    config,
+    data: [],
+  };
+
   return (
     <div>
       <Head>
@@ -229,17 +235,10 @@ export default function App() {
                     <div className={styles.content}>
                       <Layout
                         header={
-                          <SearchBox
-                            autocompleteMinimumCharacters={3}
-                            autocompleteResults={{
-                              linkTarget: '_blank',
-                              sectionTitle: t('Open link') || '',
-                              titleField: 'title',
-                              urlField: 'vivo_link',
-                              shouldTrackClickThrough: true,
-                            }}
-                            autocompleteSuggestions={false}
-                            debounceLength={0}
+                          <CustomSearchBox
+                            titleFieldName="title"
+                            itemLinkPrefix="publ_"
+                            updateOpetatorConfig={updateOpetatorConfig}
                           />
                         }
                         sideContent={

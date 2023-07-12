@@ -7,7 +7,6 @@ import {
   PagingInfo,
   Results,
   ResultsPerPage,
-  SearchBox,
   SearchProvider,
   Sorting,
   WithSearch,
@@ -18,8 +17,9 @@ import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import React from 'react';
+import React, { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
+import CustomSearchBox from '../components/CustomSearchBox';
 import CustomResultViewPrograms from '../components/customResultView/CustomResultViewPrograms';
 import ProgramsIndicators from '../components/indicators/ProgramsIndicators';
 import Connector from '../services/APIConnector';
@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 const INDEX_NAME = 'pesqdf-program';
 const connector = new Connector(INDEX_NAME);
 
-const config = {
+const configDefault = {
   debug: true,
   urlPushDebounceLength: 500,
   alwaysSearchOnInitialLoad: true,
@@ -132,16 +132,23 @@ const SORT_OPTIONS: SortOptionsType[] = [
   },
 ];
 
-const indicatorsState = {
-  config,
-  data: [],
-};
-
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
   const { t } = useTranslation('common');
   // tradução
   SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
+
+  const [config, setConfig] = useState(configDefault);
+
+  function updateOpetatorConfig(op: string) {
+    setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
+  }
+
+  const indicatorsState = {
+    config,
+    data: [],
+  };
+
   return (
     <div>
       <Head>
@@ -163,17 +170,10 @@ export default function App() {
                     <div className={styles.content}>
                       <Layout
                         header={
-                          <SearchBox
-                            autocompleteMinimumCharacters={3}
-                            autocompleteResults={{
-                              linkTarget: '_blank',
-                              sectionTitle: t('Open link') || '',
-                              titleField: 'name',
-                              urlField: 'vivo_link',
-                              shouldTrackClickThrough: true,
-                            }}
-                            autocompleteSuggestions={false}
-                            debounceLength={0}
+                          <CustomSearchBox
+                            titleFieldName="name"
+                            itemLinkPrefix="prog_"
+                            updateOpetatorConfig={updateOpetatorConfig}
                           />
                         }
                         sideContent={

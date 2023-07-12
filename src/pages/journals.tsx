@@ -7,14 +7,13 @@ import {
   PagingInfo,
   Results,
   ResultsPerPage,
-  SearchBox,
   SearchProvider,
   Sorting,
   WithSearch,
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-import React from 'react';
+import React, { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
 import CustomResultViewJournals from '../components/customResultView/CustomResultViewJournals';
 import Connector from '../services/APIConnector';
@@ -24,6 +23,7 @@ import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
+import CustomSearchBox from '../components/CustomSearchBox';
 import JornalsIndicators from '../components/indicators/JornalsIndicators';
 type Props = {
   // Add custom props here
@@ -38,7 +38,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 const INDEX_NAME = 'pesqdf-journals';
 const connector = new Connector(INDEX_NAME);
 
-const config = {
+const configDefault = {
   debug: true,
   urlPushDebounceLength: 500,
   alwaysSearchOnInitialLoad: true,
@@ -48,7 +48,7 @@ const config = {
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
-      'title-text': {},
+      title_text: {},
     },
     result_fields: {
       id: {
@@ -57,13 +57,28 @@ const config = {
       title: {
         raw: {},
       },
+      accessType: {
+        raw: {},
+      },
       issn: {
         raw: {},
       },
       issnl: {
         raw: {},
       },
+      keywords: {
+        raw: {},
+      },
       status: {
+        raw: {},
+      },
+      qualis: {
+        raw: {},
+      },
+      type: {
+        raw: {},
+      },
+      H5index: {
         raw: {},
       },
       publisher: {
@@ -73,9 +88,37 @@ const config = {
     disjunctiveFacets: ['status', 'publisher.name'],
 
     facets: {
-      // 'publicationDate.keyword': { type: 'value', size: 100 },
+      qualis: { type: 'value' },
       status: { type: 'value' },
+      type: { type: 'value' },
       'publisher.name': { type: 'value' },
+    },
+  },
+  autocompleteQuery: {
+    results: {
+      resultsPerPage: 5,
+      search_fields: {
+        title_suggest: {
+          weight: 3,
+        },
+      },
+      result_fields: {
+        title: {
+          snippet: {
+            size: 100,
+            fallback: true,
+          },
+        },
+        vivo_link: {
+          raw: {},
+        },
+      },
+    },
+    suggestions: {
+      types: {
+        results: { fields: ['title_completion'] },
+      },
+      size: 5,
     },
   },
 };
@@ -108,16 +151,22 @@ const SORT_OPTIONS: SortOptionsType[] = [
   },
 ];
 
-const indicatorsState = {
-  config,
-  data: [],
-};
-
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
   const { t } = useTranslation('common');
   // tradução
   SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
+
+  const [config, setConfig] = useState(configDefault);
+
+  function updateOpetatorConfig(op: string) {
+    setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
+  }
+
+  const indicatorsState = {
+    config,
+    data: [],
+  };
 
   return (
     <div>
@@ -140,17 +189,10 @@ export default function App() {
                     <div className={styles.content}>
                       <Layout
                         header={
-                          <SearchBox
-                            autocompleteMinimumCharacters={3}
-                            autocompleteResults={{
-                              linkTarget: '_blank',
-                              sectionTitle: t('Open link') || '',
-                              titleField: 'title',
-                              urlField: 'vivo_link',
-                              shouldTrackClickThrough: true,
-                            }}
-                            autocompleteSuggestions={false}
-                            debounceLength={0}
+                          <CustomSearchBox
+                            titleFieldName="title"
+                            itemLinkPrefix="journ_"
+                            updateOpetatorConfig={updateOpetatorConfig}
                           />
                         }
                         sideContent={
@@ -159,8 +201,10 @@ export default function App() {
                             <div className="filters">
                               <span className="sui-sorting__label">{t('Filters')}</span>
                             </div>
-                            <Facet key={'1'} field={'status'} label={t('Status')} />
-                            <Facet key={'2'} field={'publisher.name'} label={t('Publisher')} />
+                            <Facet key={'1'} field={'qualis'} label={t('Qualis')} />
+                            <Facet key={'2'} field={'status'} label={t('Status')} />
+                            <Facet key={'3'} field={'type'} label={t('Type')} />
+                            <Facet key={'4'} field={'publisher.name'} label={t('Publisher')} />
                           </div>
                         }
                         bodyContent={<Results resultView={CustomResultViewJournals} />}

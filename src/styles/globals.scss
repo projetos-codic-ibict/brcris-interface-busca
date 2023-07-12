@@ -323,6 +323,10 @@ li .sui-result__key:after {
   color: #210d41;
 }
 
+.sui-search-box__autocomplete-container li[aria-selected='true'] {
+  background: var(--secondary-color) !important;
+}
+
 .filters {
   margin: 16px 0 8px 0;
 }

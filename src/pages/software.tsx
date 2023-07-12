@@ -7,7 +7,6 @@ import {
   PagingInfo,
   Results,
   ResultsPerPage,
-  SearchBox,
   SearchProvider,
   Sorting,
   WithSearch,
@@ -18,8 +17,9 @@ import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import React from 'react';
+import React, { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
+import CustomSearchBox from '../components/CustomSearchBox';
 import CustomResultViewSoftwares from '../components/customResultView/CustomResultViewSoftwares';
 import SoftwaresIndicators from '../components/indicators/SoftwaresIndicators';
 import Connector from '../services/APIConnector';
@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 const INDEX_NAME = 'pesqdf-software';
 const connector = new Connector(INDEX_NAME);
 
-const config = {
+const configDefault = {
   debug: true,
   urlPushDebounceLength: 500,
   alwaysSearchOnInitialLoad: true,
@@ -47,7 +47,10 @@ const config = {
     track_total_hits: true,
     operator: 'OR',
     search_fields: {
-      name: {},
+      name_text: {
+        weight: 3,
+      },
+      keyword_text: {},
     },
     result_fields: {
       id: {
@@ -62,12 +65,7 @@ const config = {
       creator: {
         raw: {},
       },
-      availability: {
-        raw: {},
-      },
-      registrationInstitution: {
-        raw: {},
-      },
+
       depositDate: {
         raw: {},
       },
@@ -75,7 +73,7 @@ const config = {
         raw: {},
       },
 
-      fundingInstiplatformtution: {
+      platform: {
         raw: {},
       },
       registrationCountry: {
@@ -84,13 +82,6 @@ const config = {
       activitySector: {
         raw: {},
       },
-      environment: {
-        raw: {},
-      },
-      inpiRegistrationCode: {
-        raw: {},
-      },
-
       knowledgeAreas: {
         raw: {},
       },
@@ -100,47 +91,43 @@ const config = {
       language: {
         raw: {},
       },
-      additionalInformation: {
-        raw: {},
-      },
     },
     disjunctiveFacets: ['depositDate', 'releaseYear'],
     facets: {
       creator: { type: 'value' },
       registrationCountry: { type: 'value' },
-      registrationInstitution: { type: 'value' },
       releaseYear: { type: 'value' },
       knowledgeAreas: { type: 'value' },
       language: { type: 'value' },
     },
   },
-  // autocompleteQuery: {
-  //   results: {
-  //     search_fields: {
-  //       'titlesuggest.suggest': {},
-  //     },
-  //     resultsPerPage: 5,
-  //     result_fields: {
-  //       title: {
-  //         snippet: {
-  //           size: 100,
-  //           fallback: true,
-  //         },
-  //       },
-  //       vivo_link: {
-  //         raw: {},
-  //       },
-  //     },
-  //   },
-  //   suggestions: {
-  //     types: {
-  //       documents: {
-  //         fields: ['suggest'],
-  //       },
-  //     },
-  //     size: 4,
-  //   },
-  // },
+  autocompleteQuery: {
+    results: {
+      resultsPerPage: 5,
+      search_fields: {
+        name_suggest: {
+          weight: 3,
+        },
+      },
+      result_fields: {
+        name: {
+          snippet: {
+            size: 100,
+            fallback: true,
+          },
+        },
+        vivo_link: {
+          raw: {},
+        },
+      },
+    },
+    suggestions: {
+      types: {
+        results: { fields: ['name_completion'] },
+      },
+      size: 5,
+    },
+  },
 };
 type SortOptionsType = {
   name: string;
@@ -171,16 +158,21 @@ const SORT_OPTIONS: SortOptionsType[] = [
   },
 ];
 
-const indicatorsState = {
-  config,
-  data: [],
-};
-
 export default function App() {
-  // const [config, setConfig] = useState(configDefault)
   const { t } = useTranslation('common');
   // tradução
   SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
+
+  const [config, setConfig] = useState(configDefault);
+
+  function updateOpetatorConfig(op: string) {
+    setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
+  }
+
+  const indicatorsState = {
+    config,
+    data: [],
+  };
   return (
     <div>
       <Head>
@@ -202,17 +194,10 @@ export default function App() {
                     <div className={styles.content}>
                       <Layout
                         header={
-                          <SearchBox
-                            autocompleteMinimumCharacters={3}
-                            autocompleteResults={{
-                              linkTarget: '_blank',
-                              sectionTitle: t('Open link') || '',
-                              titleField: 'name',
-                              urlField: 'vivo_link',
-                              shouldTrackClickThrough: true,
-                            }}
-                            autocompleteSuggestions={true}
-                            debounceLength={0}
+                          <CustomSearchBox
+                            titleFieldName="name"
+                            itemLinkPrefix="soft_"
+                            updateOpetatorConfig={updateOpetatorConfig}
                           />
                         }
                         sideContent={
@@ -223,7 +208,6 @@ export default function App() {
                             </div>
                             <Facet key={'1'} field={'creator'} label={t('Author')} />
                             <Facet key={'2'} field={'registrationCountry'} label={t('Country')} />
-                            <Facet key={'3'} field={'registrationInstitution'} label={t('Registration institution')} />
                             <Facet key={'4'} field={'releaseYear'} label={t('Release year')} />
                             <Facet key={'5'} field={'knowledgeAreas'} label={t('Knowledge areas')} />
                             <Facet key={'6'} field={'language'} label={t('Language')} />

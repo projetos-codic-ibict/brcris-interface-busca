@@ -25,12 +25,12 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <li>
-              <span className="sui-result__key">{t('Creation Year')}</span>
+              <span className="sui-result__key">{t('Creation year')}</span>
               <span className="sui-result__value">{result.creationYear?.raw}</span>
             </li>
 
             <li>
-              <span className="sui-result__key">{t('Research Line')}</span>
+              <span className="sui-result__key">{t('Research line')}</span>
               {result.researchLine?.raw.map((line: string, index: any) => (
                 <span key={index} className="sui-result__value">
                   {line + ', '}
@@ -67,7 +67,7 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
               </li>
 
               <li>
-                <span className="sui-result__key">{t('Knowledge Area')}(s)</span>
+                <span className="sui-result__key">{t('Knowledge area')}(s)</span>
                 {result.knowledgeArea?.raw.map((area: string, index: any) => (
                   <span key={index} className="sui-result__value">
                     {area + ', '}
@@ -76,7 +76,7 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
               </li>
 
               <li>
-                <span className="sui-result__key">{t('Application Sector')}</span>
+                <span className="sui-result__key">{t('Application sector')}</span>
                 {result.applicationSector?.raw.map((sector: string, index: any) => (
                   <span key={index} className="sui-result__value">
                     {sector + ', '}

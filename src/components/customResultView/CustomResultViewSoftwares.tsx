@@ -33,14 +33,10 @@ const CustomResultViewSoftwares = ({ result }: ResultViewProps) => {
               <span className="sui-result__value">{result.releaseYear?.raw}</span>
             </li>
             <li>
-              <span className="sui-result__key">{t('Registration institution')}</span>
-              <span className="sui-result__value">{result.registrationInstitution?.raw}</span>
-            </li>
-            <li>
-              <span className="sui-result__key">{t('Funding institution')}</span>
-              {result.fundingInstiplatformtution?.raw.map((institution: any, index: number) => (
+              <span className="sui-result__key">{t('Platform')}</span>
+              {result.platform?.raw.map((platform: any, index: number) => (
                 <span key={index} className="sui-result__value">
-                  {institution}
+                  {platform}
                 </span>
               ))}
             </li>
@@ -59,14 +55,6 @@ const CustomResultViewSoftwares = ({ result }: ResultViewProps) => {
                 <span className="sui-result__value">{result.activitySector?.raw}</span>
               </li>
               <li>
-                <span className="sui-result__key">{t('Environment')}</span>
-                <span className="sui-result__value">{result.environment?.raw}</span>
-              </li>
-              <li>
-                <span className="sui-result__key">{t('INPI registration code')}</span>
-                <span className="sui-result__value">{result.inpiRegistrationCode?.raw}</span>
-              </li>
-              <li>
                 <span className="sui-result__key">{t('Knowledge areas')}</span>
                 {result.knowledgeAreas?.raw.map((area: any, index: number) => (
                   <span key={index} className="sui-result__value">
@@ -81,14 +69,6 @@ const CustomResultViewSoftwares = ({ result }: ResultViewProps) => {
               <li>
                 <span className="sui-result__key">{t('Language')}</span>
                 <span className="sui-result__value">{result.language?.raw}</span>
-              </li>
-              <li>
-                <span className="sui-result__key">{t('Availability')}</span>
-                <span className="sui-result__value">{result.availability?.raw}</span>
-              </li>
-              <li>
-                <span className="sui-result__key">{t('Additional information')}</span>
-                <span className="sui-result__value">{result.additionalInformation?.raw}</span>
               </li>
             </ReadMoreCollapse>
           </ul>

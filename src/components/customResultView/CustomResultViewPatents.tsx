@@ -49,7 +49,7 @@ const CustomResultViewPatents = ({ result }: ResultViewProps) => {
             </li>
 
             <li>
-              <span className="sui-result__key">{t('Country Code')}</span>
+              <span className="sui-result__key">{t('Country code')}</span>
               <span className="sui-result__value">{result.countryCode?.raw}</span>
             </li>
 
