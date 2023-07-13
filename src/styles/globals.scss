@@ -199,13 +199,13 @@ a.nav-link {
   margin-right: 0.5rem;
 }
 
-.sui-result__value a.lattes-link:after {
-  content: ',';
-}
+// .sui-result__value a.lattes-link:after {
+//   content: ',';
+// }
 
-.sui-result__value a.lattes-link:last-child:after {
-  content: '';
-}
+// .sui-result__value a.lattes-link:last-child:after {
+//   content: '';
+// }
 
 .sui-result__value span:after {
   content: ', ';
