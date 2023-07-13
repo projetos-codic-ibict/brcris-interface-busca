@@ -20,7 +20,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
-import { Bar, Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
 import { IndicatorsProps } from '../../types/Propos';
@@ -28,21 +28,7 @@ import { IndicatorsProps } from '../../types/Propos';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-journals';
 
-export const optionsStatus = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: true,
-    },
-    title: {
-      display: true,
-      text: 'Journals by status',
-    },
-  },
-};
-
-export const optPublishers: ChartOptions = {
+export const optQualis: ChartOptions = {
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -56,13 +42,13 @@ export const optPublishers: ChartOptions = {
     },
     title: {
       display: true,
-      text: 'Journals by publishers',
+      text: 'Journals by qualis',
     },
   },
   scales: {
     x: {
       ticks: {
-        display: false,
+        display: true,
       },
     },
   },
@@ -73,13 +59,8 @@ type IndicatorType = {
   doc_count: number;
 };
 
-const headersPublishers = [
-  { label: 'Publisher', key: 'key' },
-  { label: 'Quantity', key: 'doc_count' },
-];
-
-const headersStatus = [
-  { label: 'Status', key: 'key' },
+const headersQualis = [
+  { label: 'Qualis', key: 'key' },
   { label: 'Quantity', key: 'doc_count' },
 ];
 
@@ -162,16 +143,10 @@ function JornalsIndicators({ filters, searchTerm, isLoading, indicatorsState }: 
   useEffect(() => {
     // tradução
     // @ts-ignore
-    optPublishers.plugins.title.text = t(optPublishers.plugins?.title?.text);
-    optionsStatus.plugins.title.text = t(optionsStatus.plugins?.title?.text);
+    optQualis.plugins.title.text = t(optQualis.plugins?.title?.text);
     isLoading
       ? ElasticSearchService(
-          [
-            JSON.stringify(
-              getKeywordQuery(queryCommonBase, 'publisher.name', filters, searchTerm, indicatorsState.config)
-            ),
-            JSON.stringify(getKeywordQuery(queryCommonBase, 'status', filters, searchTerm, indicatorsState.config)),
-          ],
+          [JSON.stringify(getKeywordQuery(queryCommonBase, 'qualis', filters, searchTerm, indicatorsState.config))],
           INDEX_NAME
         ).then((data) => {
           setIndicators(data);
@@ -186,69 +161,33 @@ function JornalsIndicators({ filters, searchTerm, isLoading, indicatorsState }: 
     indicatorsState.config.searchQuery.operator,
   ]);
 
-  const publisherIndicators: IndicatorType[] = indicators ? indicators[0] : [];
+  const qualisIndicators: IndicatorType[] = indicators ? indicators[0] : [];
 
-  const publisherLabels = publisherIndicators != null ? publisherIndicators.map((d) => d.key) : [];
-
-  const statusIndicators: IndicatorType[] = indicators ? indicators[1] : [];
-
-  const statusLabels = statusIndicators != null ? statusIndicators.map((d) => d.key) : [];
-
-  const statusCount = statusIndicators != null ? statusIndicators.map((d) => d.doc_count) : [];
+  const qualisLabels = qualisIndicators != null ? qualisIndicators.map((d) => d.key) : [];
 
   return (
     <div className={styles.charts}>
-      <div className={styles.chart} hidden={publisherIndicators == null}>
+      <div className={styles.chart} hidden={qualisIndicators == null}>
         <CSVLink
           className={styles.download}
           title="Export to csv"
-          data={publisherIndicators ? publisherIndicators : []}
+          data={qualisIndicators ? qualisIndicators : []}
           filename={'arquivo.csv'}
-          headers={headersPublishers}
+          headers={headersQualis}
         >
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
           /** 
       // @ts-ignore */
-          options={optPublishers}
+          options={optQualis}
           width="500"
           data={{
-            labels: publisherLabels,
+            labels: qualisLabels,
             datasets: [
               {
-                data: publisherIndicators,
+                data: qualisIndicators,
                 label: 'Articles per Year',
-                backgroundColor: CHART_BACKGROUD_COLORS,
-                borderColor: CHART_BORDER_COLORS,
-                borderWidth: 1,
-              },
-            ],
-          }}
-        />
-      </div>
-
-      <div className={styles.chart} hidden={statusIndicators == null}>
-        <CSVLink
-          className={styles.download}
-          title={t('Export to csv') || ''}
-          data={statusIndicators ? statusIndicators : []}
-          filename={'arquivo.csv'}
-          headers={headersStatus}
-        >
-          <IoCloudDownloadOutline />
-        </CSVLink>
-        <Pie
-          /** 
-      // @ts-ignore */
-          options={optionsStatus}
-          width="500"
-          data={{
-            labels: statusLabels.map((label) => label.split('#')[1] || label),
-            datasets: [
-              {
-                data: statusCount,
-                label: '# of Votes',
                 backgroundColor: CHART_BACKGROUD_COLORS,
                 borderColor: CHART_BORDER_COLORS,
                 borderWidth: 1,

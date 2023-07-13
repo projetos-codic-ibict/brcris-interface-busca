@@ -2,6 +2,8 @@
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
+import { Author } from '../../types/Entities';
+import AuthorLink from '../externalLinks/AuthorLink';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
@@ -36,7 +38,11 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
             <li>
               <span className="sui-result__key">Issn</span>
-              <span className="sui-result__value">{result.issn?.raw}</span>
+              <span className="sui-result__value">
+                {result.issn?.raw.map((issn: any, index: any) => (
+                  <span key={index}>{issn}</span>
+                ))}
+              </span>
             </li>
             <li>
               <span className="sui-result__key">Issnl</span>
@@ -52,11 +58,11 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             </li>
             <li>
               <span className="sui-result__key">{t('Publisher')}</span>
-              {result.publisher?.raw.map((publisher: any, index: any) => (
-                <span key={index} className="sui-result__value">
-                  {publisher.name}
-                </span>
-              ))}
+              <span className="sui-result__value">
+                {result.publisher?.raw.map((author: Author) => (
+                  <AuthorLink key={author.id} id={author.id} name={author.name} idLattes={author.idLattes} />
+                ))}
+              </span>
             </li>
             <li>
               <span className="sui-result__key">{t('Keywords')} </span>
