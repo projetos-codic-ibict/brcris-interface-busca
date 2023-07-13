@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next';
 /* import { useRouter } from 'next/router'; */
 /* import { Author, OrgUnit, Service } from '../../types/Entities'; */
 import ReadMoreCollapse from '../ReadMoreCollapse';
-import AuthorLink from '../externalLinks/AuthorLink';
 import LattesLink from '../externalLinks/LattesLink';
 
 const CustomResultViewGroups = ({ result }: ResultViewProps) => {
@@ -125,8 +124,10 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
                 <span className="sui-result__key">{t('Member')}(s)</span>
                 {result.member?.raw.map((member: any, index: any) => (
                   <span key={index} className="sui-result__value">
-                    <AuthorLink key={member.id} id={member.id} name={member.name} idLattes={member.idLattes!} />
-                    {', '}
+                    <a target="_blank" href={`http://lattes.cnpq.br/${member.idLattes}`} rel="noreferrer">
+                      {member.name}
+                    </a>
+                    {member.idLattes ? <LattesLink lattesId={member.idLattes!} /> : ''}
                   </span>
                 ))}
               </li>
