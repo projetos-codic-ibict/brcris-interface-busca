@@ -196,7 +196,7 @@ export default function App() {
                         header={
                           <CustomSearchBox
                             titleFieldName="name"
-                            itemLinkPrefix="soft_"
+                            itemLinkPrefix="softw_"
                             updateOpetatorConfig={updateOpetatorConfig}
                           />
                         }

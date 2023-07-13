@@ -184,7 +184,7 @@ export default function App() {
                         header={
                           <CustomSearchBox
                             titleFieldName="espacenetTitle"
-                            itemLinkPrefix="paten_"
+                            itemLinkPrefix="pat_"
                             updateOpetatorConfig={updateOpetatorConfig}
                           />
                         }

@@ -172,7 +172,7 @@ export default function App() {
                         header={
                           <CustomSearchBox
                             titleFieldName="name"
-                            itemLinkPrefix="prog_"
+                            itemLinkPrefix="gprog_"
                             updateOpetatorConfig={updateOpetatorConfig}
                           />
                         }

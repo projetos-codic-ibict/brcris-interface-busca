@@ -1,16 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import ReadMoreCollapse from '../ReadMoreCollapse';
 import AuthorLink from '../externalLinks/AuthorLink';
 
-const CustomResultViewSoftwares = ({ result }: ResultViewProps) => {
+const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
+
+const CustomResultViewSoftwares = ({ result, onClickLink }: ResultViewProps) => {
+  const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <li className="sui-result">
       <div>
         <div className="sui-result__header">
-          <h6>{result.name?.raw}</h6>
+          <h6>
+            <a
+              onClick={onClickLink}
+              target="_blank"
+              href={`${VIVO_URL_ITEM_BASE}/softw_${result.id.raw}&lang=${router.locale}`}
+              rel="noreferrer"
+            >
+              {result.name.raw}
+            </a>
+          </h6>
         </div>
 
         <div className="sui-result__body">
