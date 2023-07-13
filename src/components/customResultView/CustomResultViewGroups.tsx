@@ -3,8 +3,9 @@ import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 /* import { useRouter } from 'next/router'; */
 /* import { Author, OrgUnit, Service } from '../../types/Entities'; */
-import AuthorLink from '../externalLinks/AuthorLink';
 import ReadMoreCollapse from '../ReadMoreCollapse';
+import AuthorLink from '../externalLinks/AuthorLink';
+import LattesLink from '../externalLinks/LattesLink';
 
 const CustomResultViewGroups = ({ result }: ResultViewProps) => {
   // const [buttonReadText, setButtonReadText] = useState('Read more...');
@@ -42,7 +43,10 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
               <span className="sui-result__key">{t('Leader')}</span>
               {result.leader?.raw.map((leader: any, index: any) => (
                 <span key={index} className="sui-result__value">
-                  <AuthorLink key={leader.id} id={leader.id} name={leader.name} idLattes={leader.idLattes!} />
+                  <a target="_blank" href={`http://lattes.cnpq.br/${leader.idLattes}`} rel="noreferrer">
+                    {leader.name}
+                  </a>
+                  {leader.idLattes ? <LattesLink lattesId={leader.idLattes!} /> : ''}
                 </span>
               ))}
             </li>
