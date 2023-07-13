@@ -253,7 +253,7 @@ export default function App() {
                             <Facet key={'4'} field={'orgunit.name'} label={t('Institution')} />
                             <Facet key={'5'} field={'journal.title'} label={t('Journal')} />
                             <Facet key={'6'} field={'type'} label={t('Type')} />
-                            <Facet key={'7'} field={'cnpqResearchArea'} label={t('Cnpq Research Area')} />
+                            <Facet key={'7'} field={'cnpqResearchArea'} label={t('CNPq research area')} />
                             <Facet key={'8'} field={'publicationDate'} filterType={'none'} label={t('Year')} />
                             {/* <Facet
                             mapContextToProps={(context) => {

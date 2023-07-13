@@ -112,12 +112,6 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
 
             <li>
               <span className="sui-result__key">{t('Research area(s)')}</span>
-              {/* {result.cnpqResearchArea ? (
-                <span className="sui-result__key">Cnpq Research Area(s)</span>
-              ) : (
-                ' '
-              )} */}
-
               {result.cnpqResearchArea?.raw.map((cnpqResearchArea: string, index: any) => (
                 <span key={index} className="sui-result__value">
                   {cnpqResearchArea + ', '}
