@@ -49,13 +49,11 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
 
             <li>
               <span className="sui-result__key">
-                {' '}
                 {result.type?.raw == 'doctoral thesis' || result.type?.raw == 'master thesis'
                   ? `${t('Institution')}(s)`
                   : result.type?.raw == 'conference proceedings'
                   ? `${t('Organization')}(s)`
                   : `${t('Journals')}`}
-                {''}
               </span>
               <span className="sui-result__value">
                 {result.orgunit?.raw.map((org: OrgUnit) => (
@@ -97,15 +95,9 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
 
             <li>
               <span className="sui-result__key">{t('Language')}</span>
-              {/* {result.language ? (
-                <span className="sui-result__key">Language(s)</span>
-              ) : (
-                ' '
-              )} */}
-
               {result.language?.raw.map((language: string, index: any) => (
                 <span key={index} className="sui-result__value">
-                  {language + ', '}
+                  {language}
                 </span>
               ))}
             </li>
@@ -114,22 +106,16 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
               <span className="sui-result__key">{t('Research area(s)')}</span>
               {result.cnpqResearchArea?.raw.map((cnpqResearchArea: string, index: any) => (
                 <span key={index} className="sui-result__value">
-                  {cnpqResearchArea + ', '}
+                  {cnpqResearchArea}
                 </span>
               ))}
             </li>
 
             <li>
               <span className="sui-result__key">{t('Keyword')}</span>
-              {/* {result.keyword ? (
-                <span className="sui-result__key">Keyword</span>
-              ) : (
-                ' '
-              )} */}
-
               {result.keyword?.raw.map((keyword: string, index: any) => (
                 <span key={index} className="sui-result__value">
-                  {keyword + ', '}
+                  {keyword}
                 </span>
               ))}
             </li>
