@@ -1,8 +1,8 @@
-import Navbar from '../Navbar'
-import Footer from '../Footer'
-import { PropsWithChildren } from 'react'
-import CookieConsent from '../banners/CookieConsent'
-import { Alert } from '../Alert'
+import { PropsWithChildren } from 'react';
+import { Alert } from '../Alert';
+import Footer from '../Footer';
+import Navbar from '../Navbar';
+import CookieConsent from '../banners/CookieConsent';
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
@@ -13,5 +13,5 @@ export default function Layout({ children }: PropsWithChildren) {
       <CookieConsent />
       <Footer />
     </>
-  )
+  );
 }
