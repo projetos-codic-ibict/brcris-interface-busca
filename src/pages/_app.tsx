@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
 import Layout from '../components/layouts/Layout';
 import '../styles/globals.scss';
+import Analytics from '../components/analytics';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -11,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
   return (
     <Layout>
-      <Component {...pageProps} />{' '}
+      <Component {...pageProps} /> <Analytics />
     </Layout>
   );
 }
