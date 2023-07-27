@@ -101,25 +101,25 @@ const config = {
       'creationYear',
       'researchLine',
       'knowledgeArea',
-      'applicationSector',
+      'orgunit',
       'keyword',
       'status',
       'leader',
       'partner',
       'member',
-      'orgunit',
+      'applicationSector',
     ],
     facets: {
       creationYear: { type: 'value' },
       researchLine: { type: 'value' },
       knowledgeArea: { type: 'value' },
-      applicationSector: { type: 'value' },
+      'orgunit.name': { type: 'value' },
       keyword: { type: 'value' },
       status: { type: 'value' },
-      leader: { type: 'value' },
-      partner: { type: 'value' },
+      'leader.name': { type: 'value' },
+      'partner.name': { type: 'value' },
       member: { type: 'value' },
-      orgunit: { type: 'value' },
+      applicationSector: { type: 'value' },
     },
   },
   // autocompleteQuery: {
@@ -235,19 +235,19 @@ export default function App() {
 
                             <Facet key={'3'} field={'knowledgeArea'} label={t('Knowledge area')} />
 
-                            <Facet key={'4'} field={'applicationSector'} label={t('Application sector')} />
+                            <Facet key={'4'} field={'orgunit.name'} label={t('Organization')} />
 
                             <Facet key={'5'} field={'keyword'} label={t('Keyword')} />
 
                             <Facet key={'6'} field={'status'} label={t('Status')} />
 
-                            <Facet key={'7'} field={'leader'} label={t('Leader')} />
+                            <Facet key={'7'} field={'leader.name'} label={t('Leader')} />
 
-                            <Facet key={'8'} field={'partner'} label={t('Partner')} />
+                            <Facet key={'8'} field={'partner.name'} label={t('Partner')} />
 
                             <Facet key={'9'} field={'member'} label={t('Member')} />
 
-                            <Facet key={'10'} field={'orgunit'} label={t('Organization')} />
+                            <Facet key={'10'} field={'applicationSector'} label={t('Application sector')} />
                           </div>
                         }
                         bodyContent={<Results resultView={CustomResultViewGroups} />}

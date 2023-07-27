@@ -2,8 +2,10 @@
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { Author, OrgUnit, Service } from '../../types/Entities';
-import AuthorLink from '../externalLinks/AuthorLink';
+import { OrgUnit, Service } from '../../types/Entities';
+import ExternalLink from '../externalLinks';
+import ShowAuthorItem from './ShowAuthorItem';
+import ShowItem from './ShowItem';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
@@ -28,97 +30,54 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
 
         <div className="sui-result__body">
           <ul className="sui-result__details">
-            <li>
-              <span className="sui-result__key">{t('Year')}</span>
-              <span className="sui-result__value">{result.publicationDate?.raw}</span>
-            </li>
+            <ShowItem label={t('Year')} value={result.publicationDate?.raw} />
 
-            <li>
-              <span className="sui-result__key">{t('Author')}</span>
-              <span className="sui-result__value">
-                {result.author?.raw.map((author: Author) => (
-                  <AuthorLink key={author.id} id={author.id} name={author.name} idLattes={author.idLattes} />
-                ))}
-              </span>
-            </li>
+            <ShowAuthorItem label={t('Author')} authors={result.author?.raw} />
 
-            <li>
-              <span className="sui-result__key">{t('Type')}</span>
-              <span className="sui-result__value">{result.type?.raw}</span>
-            </li>
+            <ShowItem label={t('Type')} value={result.type?.raw} />
 
             <li>
               <span className="sui-result__key">
                 {result.type?.raw == 'doctoral thesis' || result.type?.raw == 'master thesis'
-                  ? `${t('Institution')}(s)`
+                  ? `${t('Institution')}`
                   : result.type?.raw == 'conference proceedings'
-                  ? `${t('Organization')}(s)`
+                  ? `${t('Organization')}`
                   : `${t('Journals')}`}
               </span>
               <span className="sui-result__value">
                 {result.orgunit?.raw.map((org: OrgUnit) => (
-                  <a
+                  <ExternalLink
                     key={org.id}
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`${VIVO_URL_ITEM_BASE}/org_${org.id}&lang=${router.locale}`}
-                  >
-                    {org.name}
-                  </a>
+                    content={org.name}
+                    url={`${VIVO_URL_ITEM_BASE}/org_${org.id}&lang=${router.locale}`}
+                  />
                 ))}
 
                 {result.service?.raw.map((service: Service) =>
                   service.title?.map((title: string) => (
-                    <a
+                    <ExternalLink
                       key={title}
-                      target="_blank"
-                      rel="noreferrer"
-                      href={`${VIVO_URL_ITEM_BASE}/serv_${service.id}&lang=${router.locale}`}
-                    >
-                      {title}
-                    </a>
+                      content={title}
+                      url={`${VIVO_URL_ITEM_BASE}/serv_${service.id}&lang=${router.locale}`}
+                    />
                   ))
                 )}
 
                 {result.journal?.raw.map((journal: any, index: any) => (
-                  <a
+                  <ExternalLink
                     key={index}
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`${VIVO_URL_ITEM_BASE}/journ_${journal.id}&lang=${router.locale}`}
-                  >
-                    {journal.title ? journal.title : journal}
-                  </a>
+                    content={journal.title ? journal.title : journal}
+                    url={`${VIVO_URL_ITEM_BASE}/journ_${journal.id}&lang=${router.locale}`}
+                  />
                 ))}
               </span>
             </li>
 
-            <li>
-              <span className="sui-result__key">{t('Language')}</span>
-              {result.language?.raw.map((language: string, index: any) => (
-                <span key={index} className="sui-result__value">
-                  {language}
-                </span>
-              ))}
-            </li>
+            <ShowItem label={t('Language')} value={result.language?.raw} />
 
-            <li>
-              <span className="sui-result__key">{t('Research area(s)')}</span>
-              {result.cnpqResearchArea?.raw.map((cnpqResearchArea: string, index: any) => (
-                <span key={index} className="sui-result__value">
-                  {cnpqResearchArea}
-                </span>
-              ))}
-            </li>
+            <ShowItem label={t('Research area(s)')} value={result.cnpqResearchArea?.raw} />
 
-            <li>
-              <span className="sui-result__key">{t('Keyword')}</span>
-              {result.keyword?.raw.map((keyword: string, index: any) => (
-                <span key={index} className="sui-result__value">
-                  {keyword}
-                </span>
-              ))}
-            </li>
+            <ShowItem label={t('Keywords')} value={result.keyword?.raw} />
           </ul>
         </div>
       </div>

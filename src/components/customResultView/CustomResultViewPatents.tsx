@@ -2,7 +2,10 @@
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import AuthorLink from '../externalLinks/AuthorLink';
+import { OrgUnit } from '../../types/Entities';
+import ExternalLink from '../externalLinks';
+import ShowAuthorItem from './ShowAuthorItem';
+import ShowItem from './ShowItem';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
@@ -27,53 +30,24 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
 
         <div className="sui-result__body">
           <ul className="sui-result__details">
-            <li>
-              <span className="sui-result__key">{t('Inventor(s)')}</span>
-              <span className="sui-result__value">
-                {result.inventor?.raw.map((inventor: any) => (
-                  <AuthorLink
-                    key={inventor.id}
-                    id={inventor.id}
-                    nationality={inventor.nationality}
-                    name={inventor.name}
-                    idLattes={inventor.idLattes}
-                  />
-                ))}
-              </span>
-            </li>
+            <ShowAuthorItem label={t('Inventor(s)')} authors={result.inventor?.raw} />
             <li>
               <span className="sui-result__key">{t('Applicant')}</span>
-              {result.applicant?.raw.map((applicant: any, index: number) => (
+              {result.applicant?.raw.map((applicant: OrgUnit, index: number) => (
                 <span key={index} className="sui-result__value">
-                  {applicant.name}
+                  <ExternalLink
+                    key={applicant.id}
+                    content={applicant.name}
+                    url={`${VIVO_URL_ITEM_BASE}/org_${applicant.id}&lang=${router.locale}`}
+                  />
                 </span>
               ))}
             </li>
-
-            <li>
-              <span className="sui-result__key">{t('Deposit date')}</span>
-              <span className="sui-result__value">{result.depositDate?.raw}</span>
-            </li>
-
-            <li>
-              <span className="sui-result__key">{t('Kind Code')}</span>
-              <span className="sui-result__value">{result.kindCode?.raw}</span>
-            </li>
-
-            <li>
-              <span className="sui-result__key">{t('Country code')}</span>
-              <span className="sui-result__value">{result.countryCode?.raw}</span>
-            </li>
-
-            <li>
-              <span className="sui-result__key">{t('Lattes Title')}</span>
-              <span className="sui-result__value">{result.lattesTitle?.raw}</span>
-            </li>
-
-            <li>
-              <span className="sui-result__key">{t('Publication date')}</span>
-              <span className="sui-result__value">{result.publicationDate?.raw}</span>
-            </li>
+            <ShowItem label={t('Deposit date')} value={result.depositDate?.raw} />
+            <ShowItem label={t('Kind Code')} value={result.kindCode?.raw} />
+            <ShowItem label={t('Country Code')} value={result.countryCode?.raw} />
+            <ShowItem label={t('Lattes Title')} value={result.lattesTitle?.raw} />
+            <ShowItem label={t('Publication date')} value={result.publicationDate?.raw} />
           </ul>
         </div>
       </div>

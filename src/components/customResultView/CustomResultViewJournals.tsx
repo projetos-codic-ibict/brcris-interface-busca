@@ -2,8 +2,8 @@
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { Author } from '../../types/Entities';
-import AuthorLink from '../externalLinks/AuthorLink';
+import ShowAuthorItem from './ShowAuthorItem';
+import ShowItem from './ShowItem';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
@@ -28,46 +28,14 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
 
         <div className="sui-result__body">
           <ul className="sui-result__details">
-            <li>
-              <span className="sui-result__key">{t('Qualis')} </span>
-              <span className="sui-result__value">{result.qualis?.raw}</span>
-            </li>
-            <li>
-              <span className="sui-result__key">{t('Type')} </span>
-              <span className="sui-result__value">{result.type?.raw}</span>
-            </li>
-            <li>
-              <span className="sui-result__key">Issn</span>
-              <span className="sui-result__value">
-                {result.issn?.raw.map((issn: any, index: any) => (
-                  <span key={index}>{issn}</span>
-                ))}
-              </span>
-            </li>
-            <li>
-              <span className="sui-result__key">Issnl</span>
-              <span className="sui-result__value">{result.issnl?.raw}</span>
-            </li>
-            <li>
-              <span className="sui-result__key">{t('Access type')} </span>
-              <span className="sui-result__value">{result.accessType?.raw}</span>
-            </li>
-            <li>
-              <span className="sui-result__key">{t('Status')} </span>
-              <span className="sui-result__value">{result.status?.raw}</span>
-            </li>
-            <li>
-              <span className="sui-result__key">{t('Publisher')}</span>
-              <span className="sui-result__value">
-                {result.publisher?.raw.map((author: Author) => (
-                  <AuthorLink key={author.id} id={author.id} name={author.name} idLattes={author.idLattes} />
-                ))}
-              </span>
-            </li>
-            <li>
-              <span className="sui-result__key">{t('Keywords')} </span>
-              <span className="sui-result__value">{result.keywords?.raw}</span>
-            </li>
+            <ShowItem label={t('Qualis')} value={result.qualis?.raw} />
+            <ShowItem label={t('Type')} value={result.type?.raw} />
+            <ShowItem label={t('Issn')} value={result.issn?.raw} />
+            <ShowItem label={t('Issnl')} value={result.issnl?.raw} />
+            <ShowItem label={t('Access type')} value={result.accessType?.raw} />
+            <ShowItem label={t('Status')} value={result.status?.raw} />
+            <ShowAuthorItem label={t('Publisher')} authors={result.publisher?.raw} />
+            <ShowItem label={t('Keywords')} value={result.keywords?.raw} />
           </ul>
         </div>
       </div>

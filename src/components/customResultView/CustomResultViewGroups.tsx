@@ -1,19 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
-/* import { useRouter } from 'next/router'; */
-/* import { Author, OrgUnit, Service } from '../../types/Entities'; */
 import ReadMoreCollapse from '../ReadMoreCollapse';
 import LattesLink from '../externalLinks/LattesLink';
+import ShowItem from './ShowItem';
 
 const CustomResultViewGroups = ({ result }: ResultViewProps) => {
-  // const [buttonReadText, setButtonReadText] = useState('Read more...');
-
-  // function handleClick() {
-  //   setButtonReadText(buttonReadText == 'Read more...' ? 'Read less' : 'Read more...');
-  // }
-
-  /* const router = useRouter(); */
   const { t } = useTranslation('common');
   return (
     <li className="sui-result">
@@ -24,19 +16,9 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
 
         <div className="sui-result__body">
           <ul className="sui-result__details">
-            <li>
-              <span className="sui-result__key">{t('Creation year')}</span>
-              <span className="sui-result__value">{result.creationYear?.raw}</span>
-            </li>
+            <ShowItem label={t('Creation year')} value={result.creationYear?.raw} />
 
-            <li>
-              <span className="sui-result__key">{t('Research line')}</span>
-              {result.researchLine?.raw.map((line: string, index: any) => (
-                <span key={index} className="sui-result__value">
-                  {line + ', '}
-                </span>
-              ))}
-            </li>
+            <ShowItem label={t('Research line')} value={result.researchLine?.raw} />
 
             <li>
               <span className="sui-result__key">{t('Leader')}</span>
@@ -55,61 +37,27 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
               {result.orgunit?.raw.map((orgunit: any, index: any) => (
                 <span key={index} className="sui-result__value">
                   {orgunit.name}
+                  {/* <ExternalLink
+                    key={orgunit.id}
+                    content={orgunit.name}
+                    url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}&lang=${router.locale}`}
+                  /> */}
                 </span>
               ))}
             </li>
 
-            <li>
-              <span className="sui-result__key">{t('Status')}</span>
-              <span className="sui-result__value">{result.status?.raw}</span>
-            </li>
+            <ShowItem label={t('Status')} value={result.status?.raw} />
+
             <ReadMoreCollapse id={result.id?.raw}>
-              <li>
-                <span className="sui-result__key">{t('Description')}</span>
-                <span className="sui-result__value">{result.description?.raw}</span>
-              </li>
+              <ShowItem label={t('Description')} value={result.description?.raw} />
 
-              <li>
-                <span className="sui-result__key">{t('Knowledge area')}(s)</span>
-                {result.knowledgeArea?.raw.map((area: string, index: any) => (
-                  <span key={index} className="sui-result__value">
-                    {area + ', '}
-                  </span>
-                ))}
-              </li>
+              <ShowItem label={t('Knowledge area')} value={result.knowledgeArea?.raw} />
 
-              <li>
-                <span className="sui-result__key">{t('Application sector')}</span>
-                {result.applicationSector?.raw.map((sector: string, index: any) => (
-                  <span key={index} className="sui-result__value">
-                    {sector + ', '}
-                  </span>
-                ))}
-              </li>
+              <ShowItem label={t('Application sector')} value={result.applicationSector?.raw} />
 
-              <li>
-                <span className="sui-result__key">{t('Keyword')}</span>
-                {/* {result.keyword ? (
-                <span className="sui-result__key">Keyword</span>
-              ) : (
-                ' '
-              )} */}
+              <ShowItem label={t('Keywords')} value={result.keyword?.raw} />
 
-                {result.keyword?.raw.map((keyword: string, index: any) => (
-                  <span key={index} className="sui-result__value">
-                    {keyword + ', '}
-                  </span>
-                ))}
-              </li>
-
-              <li>
-                <span className="sui-result__key">{t('URL')}</span>
-                <span className="sui-result__value">
-                  <a href="result.URL?.raw" target="_blank" no-referer>
-                    {result.URL?.raw}
-                  </a>
-                </span>
-              </li>
+              <ShowItem label={t('URL')} value={result.URL?.raw} />
 
               <li>
                 <span className="sui-result__key">{t('Partner')}</span>
@@ -132,19 +80,9 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
                 ))}
               </li>
 
-              <li>
-                <span className="sui-result__key">{t('Software')}</span>
-                {result.software?.raw.map((software: any, index: any) => (
-                  <span key={index} className="sui-result__value">
-                    {software.name}
-                  </span>
-                ))}
-              </li>
+              <ShowItem label={t('Software')} value={result.software?.raw} />
 
-              <li>
-                <span className="sui-result__key">{t('Equipment')}</span>
-                <span className="sui-result__value">{result.equipment?.raw}</span>
-              </li>
+              <ShowItem label={t('Equipment')} value={result.equipment?.raw} />
             </ReadMoreCollapse>
           </ul>
         </div>

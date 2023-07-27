@@ -2,6 +2,7 @@
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
+import ShowItem from './ShowItem';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
@@ -26,18 +27,9 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
 
         <div className="sui-result__body">
           <ul className="sui-result__details">
-            <li>
-              <span className="sui-result__key">{t('Country')}</span>
-              <span className="sui-result__value">{result.country?.raw}</span>
-            </li>
-            <li>
-              <span className="sui-result__key">{t('State')}</span>
-              <span className="sui-result__value">{result.state?.raw}</span>
-            </li>
-            <li>
-              <span className="sui-result__key">{t('City')}</span>
-              <span className="sui-result__value">{result.city?.raw}</span>
-            </li>
+            <ShowItem value={result.country?.raw} label={t('Country')} />
+            <ShowItem value={result.state?.raw} label={t('State')} />
+            <ShowItem value={result.city?.raw} label={t('City')} />
           </ul>
         </div>
       </div>

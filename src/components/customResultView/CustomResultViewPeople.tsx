@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ResultViewProps } from '@elastic/react-search-ui-views'
-import { useTranslation } from 'next-i18next'
-import AuthorLink from '../externalLinks/AuthorLink'
+import { ResultViewProps } from '@elastic/react-search-ui-views';
+import { useTranslation } from 'next-i18next';
+import AuthorLink from '../externalLinks/AuthorLink';
+import ShowItem from './ShowItem';
 
 const CustomResultViewPeople = ({ result }: ResultViewProps) => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('common');
   return (
     <li className="sui-result">
       <div>
@@ -21,45 +22,18 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
 
         <div className="sui-result__body">
           <ul className="sui-result__details">
-            <li>
-              <span className="sui-result__key">{t('Nationality')}</span>
-
-              <span className="sui-result__value">
-                {result.nationality?.raw}
-              </span>
-            </li>
-
-            <li>
-              <span className="sui-result__key">{t('Orcid')}</span>
-              <span className="sui-result__value">
-                {result.orcid ? (
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`https://orcid.org/${result.orcid?.raw}`}
-                  >
-                    https://orcid.org/{result.orcid?.raw}
-                  </a>
-                ) : (
-                  ''
-                )}
-              </span>
-            </li>
-
-            <li>
-              <span className="sui-result__key">{t('Research area(s)')}</span>
-
-              <span className="sui-result__value">
-                {result.researchArea?.raw.map((area: string) => (
-                  <span key={area}>{area}</span>
-                ))}
-              </span>
-            </li>
+            <ShowItem label={t('Nationality')} value={result.nationality?.raw} />
+            <ShowItem
+              label={t('Orcid')}
+              value={result.orcid ? `https://orcid.org/${result.orcid?.raw}` : ''}
+              urlLink={result.orcid ? `https://orcid.org/${result.orcid?.raw}` : ''}
+            />
+            <ShowItem label={t('Research area(s)')} value={result.researchArea?.raw} />
           </ul>
         </div>
       </div>
     </li>
-  )
-}
+  );
+};
 
-export default CustomResultViewPeople
+export default CustomResultViewPeople;

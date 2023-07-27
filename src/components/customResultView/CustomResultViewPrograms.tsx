@@ -3,6 +3,8 @@ import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { OrgUnit } from '../../types/Entities';
+import ExternalLink from '../externalLinks';
+import ShowItem from './ShowItem';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
@@ -31,29 +33,17 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
               <span className="sui-result__key">{t('Institution')}</span>
               <span className="sui-result__value">
                 {result.orgunit?.raw.map((org: OrgUnit) => (
-                  <a
+                  <ExternalLink
                     key={org.id}
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`${VIVO_URL_ITEM_BASE}/org_${org.id}&lang=${router.locale}`}
-                  >
-                    {org.name}
-                  </a>
+                    content={org.name}
+                    url={`${VIVO_URL_ITEM_BASE}/org_${org.id}&lang=${router.locale}`}
+                  />
                 ))}
               </span>
             </li>
-            <li>
-              <span className="sui-result__key">{t('Capes research area')}</span>
-              <span className="sui-result__value">{result.capesResearchArea?.raw}</span>
-            </li>
-            <li>
-              <span className="sui-result__key">{t('CNPq research area')}</span>
-              <span className="sui-result__value">{result.cnpqResearchArea?.raw}</span>
-            </li>
-            <li>
-              <span className="sui-result__key">{t('Evaluation area')}</span>
-              <span className="sui-result__value">{result.evaluationArea?.raw}</span>
-            </li>
+            <ShowItem label={t('Capes research area')} value={result.capesResearchArea?.raw} />
+            <ShowItem label={t('CNPq research area')} value={result.cnpqResearchArea?.raw} />
+            <ShowItem label={t('Evaluation area')} value={result.evaluationArea?.raw} />
           </ul>
         </div>
       </div>
