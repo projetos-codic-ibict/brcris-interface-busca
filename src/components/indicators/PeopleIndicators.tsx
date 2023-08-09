@@ -16,12 +16,13 @@ import ElasticSearchService from '../../services/ElasticSearchService';
 
 import { useTranslation } from 'next-i18next';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
-import { IndicatorsProps } from '../../types/Propos';
+import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-person';
 
-export const optionsResearchArea = {
+export const optionsResearchArea: CustomChartOptions = {
+  title: 'Research areas',
   responsive: true,
   plugins: {
     legend: {
@@ -30,7 +31,7 @@ export const optionsResearchArea = {
     },
     title: {
       display: true,
-      text: 'Research area(s)',
+      text: 'Research areas',
     },
   },
 };
@@ -128,7 +129,8 @@ function PeopleIndicators({ filters, searchTerm, isLoading, indicatorsState, sen
   const [indicators, setIndicators] = useState(indicatorsState.data);
 
   useEffect(() => {
-    optionsResearchArea.plugins.title.text = t(optionsResearchArea.plugins?.title?.text);
+    // @ts-ignore
+    optionsResearchArea.plugins.title.text = t(optionsResearchArea.title);
     isLoading
       ? ElasticSearchService(
           [

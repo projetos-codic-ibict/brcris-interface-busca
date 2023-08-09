@@ -9,26 +9,17 @@ import { CSVLink } from 'react-csv';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
-import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  ChartOptions,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from 'chart.js';
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { IndicatorsProps } from '../../types/Propos';
+import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-patent';
 
-export const optCountryCode = {
+export const optCountryCode: CustomChartOptions = {
+  title: 'Patents by country code',
   responsive: true,
   plugins: {
     legend: {
@@ -41,7 +32,8 @@ export const optCountryCode = {
     },
   },
 };
-export const optKindCode = {
+export const optKindCode: CustomChartOptions = {
+  title: 'Patents by kind code',
   responsive: true,
   plugins: {
     legend: {
@@ -55,7 +47,8 @@ export const optKindCode = {
   },
 };
 
-export const optDepositDate: ChartOptions = {
+export const optDepositDate: CustomChartOptions = {
+  title: 'Patents by deposit year',
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -74,7 +67,8 @@ export const optDepositDate: ChartOptions = {
   },
 };
 
-export const optPubDate: ChartOptions = {
+export const optPubDate: CustomChartOptions = {
+  title: 'Patents by publication year',
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -200,11 +194,13 @@ function PatentsIndicators({ filters, searchTerm, isLoading, indicatorsState, se
   useEffect(() => {
     // tradução
     // @ts-ignore
-    optDepositDate.plugins.title.text = t(optDepositDate.plugins?.title?.text);
+    optDepositDate.plugins.title.text = t(optDepositDate.title);
     // @ts-ignore
-    optPubDate.plugins.title.text = t(optPubDate.plugins?.title?.text);
-    optCountryCode.plugins.title.text = t(optCountryCode.plugins?.title?.text);
-    optKindCode.plugins.title.text = t(optKindCode.plugins?.title?.text);
+    optPubDate.plugins.title.text = t(optPubDate.title);
+    // @ts-ignore
+    optCountryCode.plugins.title.text = t(optCountryCode.title);
+    // @ts-ignore
+    optKindCode.plugins.title.text = t(optKindCode.title);
     isLoading
       ? ElasticSearchService(
           [

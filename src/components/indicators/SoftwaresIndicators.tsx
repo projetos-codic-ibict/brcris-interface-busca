@@ -9,26 +9,17 @@ import { CSVLink } from 'react-csv';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
-import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  ChartOptions,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from 'chart.js';
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { IndicatorsProps } from '../../types/Propos';
+import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-software';
 
-export const optknowledgeAreas = {
+export const optknowledgeAreas: CustomChartOptions = {
+  title: 'Softwares by knowledge area',
   responsive: true,
   plugins: {
     legend: {
@@ -42,7 +33,8 @@ export const optknowledgeAreas = {
   },
 };
 
-export const optPubDate: ChartOptions = {
+export const optPubDate: CustomChartOptions = {
+  title: 'Softwares by release year',
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -159,8 +151,9 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState, 
   useEffect(() => {
     // tradução
     // @ts-ignore
-    optPubDate.plugins.title.text = t(optPubDate.plugins?.title?.text);
-    optknowledgeAreas.plugins.title.text = t(optknowledgeAreas.plugins?.title?.text);
+    optPubDate.plugins.title.text = t(optPubDate.title);
+    // @ts-ignore
+    optknowledgeAreas.plugins.title.text = t(optknowledgeAreas.title);
     isLoading
       ? ElasticSearchService(
           [

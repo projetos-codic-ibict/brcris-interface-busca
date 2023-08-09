@@ -9,25 +9,16 @@ import { CSVLink } from 'react-csv';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
-import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  ChartOptions,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from 'chart.js';
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { IndicatorsProps } from '../../types/Propos';
+import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-publication';
-export const optionsType = {
+export const optionsType: CustomChartOptions = {
+  title: 'Documents by type',
   responsive: true,
   plugins: {
     legend: {
@@ -41,7 +32,8 @@ export const optionsType = {
   },
 };
 
-export const options: ChartOptions = {
+export const options: CustomChartOptions = {
+  title: 'Documents by year',
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -158,11 +150,11 @@ function PublicationsIndicators({
   const { t } = useTranslation('common');
 
   useEffect(() => {
-    console.log('indicators>>>>>', indicatorsState);
     // tradução
     // @ts-ignore
-    options.plugins.title.text = t(options.plugins?.title?.text);
-    optionsType.plugins.title.text = t(optionsType.plugins?.title?.text);
+    options.plugins.title.text = t(options.title);
+    // @ts-ignore
+    optionsType.plugins.title.text = t(optionsType.title);
     isLoading
       ? ElasticSearchService(
           [
@@ -176,7 +168,6 @@ function PublicationsIndicators({
           setIndicators(data);
           indicatorsState.data = data;
           sendDataToParent(indicatorsState);
-          console.log('indicators#######2', data);
         })
       : null;
   }, [

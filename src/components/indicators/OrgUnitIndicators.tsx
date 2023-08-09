@@ -9,26 +9,17 @@ import { CSVLink } from 'react-csv';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
-import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  ChartOptions,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from 'chart.js';
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { IndicatorsProps } from '../../types/Propos';
+import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-orgunit';
 
-export const options: ChartOptions = {
+export const options: CustomChartOptions = {
+  title: 'Institutions by country',
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -54,9 +45,10 @@ export const options: ChartOptions = {
   },
 };
 
-const optionsState: ChartOptions = {
+const optionsState: CustomChartOptions = {
   ...options,
   plugins: { title: { text: 'Institutions by state', display: true }, legend: { display: false } },
+  title: 'Institutions by state',
 };
 console.log(JSON.stringify(optionsState));
 type IndicatorType = {
@@ -151,9 +143,9 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState, se
   useEffect(() => {
     // tradução
     // @ts-ignore
-    options.plugins.title.text = t(options.plugins?.title?.text);
+    options.plugins.title.text = t(options.title);
     // @ts-ignore
-    optionsState.plugins.title.text = t(optionsState.plugins?.title?.text);
+    optionsState.plugins.title.text = t(optionsState.title);
     isLoading
       ? ElasticSearchService(
           [

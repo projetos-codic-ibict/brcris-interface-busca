@@ -9,26 +9,17 @@ import { CSVLink } from 'react-csv';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
-import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  ChartOptions,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from 'chart.js';
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { IndicatorsProps } from '../../types/Propos';
+import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-journals';
 
-export const optQualis: ChartOptions = {
+export const optQualis: CustomChartOptions = {
+  title: 'Journals by qualis',
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -143,7 +134,7 @@ function JornalsIndicators({ filters, searchTerm, isLoading, indicatorsState, se
   useEffect(() => {
     // tradução
     // @ts-ignore
-    optQualis.plugins.title.text = t(optQualis.plugins?.title?.text);
+    optQualis.plugins.title.text = t(optQualis.title);
     isLoading
       ? ElasticSearchService(
           [JSON.stringify(getKeywordQuery(queryCommonBase, 'qualis', filters, searchTerm, indicatorsState.config))],

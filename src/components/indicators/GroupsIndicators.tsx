@@ -9,26 +9,17 @@ import { CSVLink } from 'react-csv';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
-import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  ChartOptions,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from 'chart.js';
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { IndicatorsProps } from '../../types/Propos';
+import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'researchgroups';
 
-export const optResearchLine = {
+export const optResearchLine: CustomChartOptions = {
+  title: 'Research groups by Research line', // este é somente para ser usado na tradução
   responsive: true,
   plugins: {
     legend: {
@@ -41,7 +32,8 @@ export const optResearchLine = {
     },
   },
 };
-const optKnowledgeArea = {
+const optKnowledgeArea: CustomChartOptions = {
+  title: 'Research groups by knowledge area',
   responsive: true,
   plugins: {
     legend: {
@@ -55,7 +47,8 @@ const optKnowledgeArea = {
   },
 };
 
-const optStatus = {
+const optStatus: CustomChartOptions = {
+  title: 'Research groups by status',
   responsive: true,
   plugins: {
     legend: {
@@ -69,7 +62,8 @@ const optStatus = {
   },
 };
 
-const optCreatYear: ChartOptions = {
+const optCreatYear: CustomChartOptions = {
+  title: 'Research groups by creation year',
   parsing: {
     xAxisKey: 'key',
     yAxisKey: 'doc_count',
@@ -192,14 +186,15 @@ function GroupsIndicators({ filters, searchTerm, isLoading, indicatorsState, sen
   const { t } = useTranslation('common');
 
   useEffect(() => {
-    console.log('GroupsIndicators');
     // tradução
     // @ts-ignore
-    optCreatYear.plugins.title.text = t(optCreatYear.plugins?.title?.text);
+    optCreatYear.plugins.title.text = t(optCreatYear.title);
     // @ts-ignore
-    optStatus.plugins.title.text = t(optStatus.plugins?.title?.text);
-    optResearchLine.plugins.title.text = t(optResearchLine.plugins?.title?.text);
-    optKnowledgeArea.plugins.title.text = t(optKnowledgeArea.plugins?.title?.text);
+    optStatus.plugins.title.text = t(optStatus.title);
+    // @ts-ignore
+    optResearchLine.plugins.title.text = t(optResearchLine.title);
+    // @ts-ignore
+    optKnowledgeArea.plugins.title.text = t(optKnowledgeArea.title);
     isLoading
       ? ElasticSearchService(
           [
