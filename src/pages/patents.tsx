@@ -14,7 +14,7 @@ import {
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 /* import IndicatorsPeople from '../components/IndicatorsPeople' */
@@ -25,8 +25,8 @@ import Head from 'next/head';
 import ClearFilters from '../components/ClearFilters';
 import CustomSearchBox from '../components/CustomSearchBox';
 import CustomResultViewPatents from '../components/customResultView/CustomResultViewPatents';
-import PatentsIndicators from '../components/indicators/PatentsIndicators';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
+import PatentsIndicators from '../components/indicators/PatentsIndicators';
 type Props = {
   // Add custom props here
 };
@@ -157,9 +157,13 @@ export default function App() {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
-  const indicatorsState = {
+  const [indicatorsState, setIndicatorsState] = useState({
     config,
     data: [],
+  });
+
+  const receiveChildData = (data: any) => {
+    setIndicatorsState(data);
   };
 
   return (
@@ -203,7 +207,7 @@ export default function App() {
                         }
                         bodyContent={<Results resultView={CustomResultViewPatents} />}
                         bodyHeader={
-                          <React.Fragment>
+                          <>
                             {wasSearched && (
                               <div className="d-flex align-items-center">
                                 <PagingInfo view={CustomViewPagingInfo} />
@@ -211,14 +215,14 @@ export default function App() {
                               </div>
                             )}
                             {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                          </React.Fragment>
+                          </>
                         }
                         bodyFooter={<Paging />}
                       />
                       <div className={styles.Indicators}>
                         {/* 
                         // @ts-ignore  */}
-                        <PatentsIndicators indicatorsState={indicatorsState} />
+                        <PatentsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
                       </div>
                     </div>
                   </ErrorBoundary>

@@ -18,11 +18,11 @@ import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import React from 'react';
 import ClearFilters from '../components/ClearFilters';
 import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 
+import { useState } from 'react';
 import CustomResultViewGroups from '../components/customResultView/CustomResultViewGroups';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import GroupsIndicators from '../components/indicators/GroupsIndicators';
@@ -180,16 +180,21 @@ const SORT_OPTIONS: SortOptionsType[] = [
   },
 ];
 
-const indicatorsState = {
-  config,
-  data: [],
-};
-
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
   const { t } = useTranslation('common');
   // tradução
   SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
+
+  const [indicatorsState, setIndicatorsState] = useState({
+    config,
+    data: [],
+  });
+
+  const receiveChildData = (data: any) => {
+    setIndicatorsState(data);
+  };
+
   return (
     <div>
       <Head>
@@ -253,7 +258,7 @@ export default function App() {
                         }
                         bodyContent={<Results resultView={CustomResultViewGroups} />}
                         bodyHeader={
-                          <React.Fragment>
+                          <>
                             {wasSearched && (
                               <div className="d-flex align-items-center">
                                 <PagingInfo view={CustomViewPagingInfo} />
@@ -261,14 +266,14 @@ export default function App() {
                               </div>
                             )}
                             {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                          </React.Fragment>
+                          </>
                         }
                         bodyFooter={<Paging />}
                       />
                       <div className={styles.Indicators}>
                         {/** 
                         // @ts-ignore */}
-                        <GroupsIndicators indicatorsState={indicatorsState} />
+                        <GroupsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
                       </div>
                     </div>
                   </ErrorBoundary>

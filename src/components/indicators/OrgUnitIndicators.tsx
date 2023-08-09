@@ -144,7 +144,7 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } };
 }
 
-function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
+function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
 
@@ -164,6 +164,7 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState }: 
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
+          sendDataToParent(indicatorsState);
         })
       : null;
   }, [
@@ -246,10 +247,11 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState }: 
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading, indicatorsState }) => ({
+  ({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }) => ({
     filters,
     searchTerm,
     isLoading,
     indicatorsState,
+    sendDataToParent,
   })
 )(OrgUnitIndicators);

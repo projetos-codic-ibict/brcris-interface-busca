@@ -14,7 +14,7 @@ import {
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
 import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
 import Indicators from '../components/indicators/PublicationsIndicators';
@@ -210,9 +210,13 @@ export default function App() {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
-  const indicatorsState = {
+  const [indicatorsState, setIndicatorsState] = useState({
     config,
     data: [],
+  });
+
+  const receiveChildData = (data: any) => {
+    setIndicatorsState(data);
   };
 
   return (
@@ -285,7 +289,7 @@ export default function App() {
                         }
                         bodyContent={<Results resultView={CustomResultViewPublications} />}
                         bodyHeader={
-                          <React.Fragment>
+                          <>
                             {wasSearched && (
                               <div className="d-flex align-items-center">
                                 <PagingInfo view={CustomViewPagingInfo} />
@@ -293,14 +297,14 @@ export default function App() {
                               </div>
                             )}
                             {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                          </React.Fragment>
+                          </>
                         }
                         bodyFooter={<Paging />}
                       />
                       <div className={styles.indicators}>
                         {/* 
                         // @ts-ignore  */}
-                        <Indicators indicatorsState={indicatorsState} />
+                        <Indicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
                       </div>
                     </div>
                   </ErrorBoundary>

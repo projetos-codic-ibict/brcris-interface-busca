@@ -17,7 +17,7 @@ import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
 import CustomSearchBox from '../components/CustomSearchBox';
 import CustomResultViewInstitutions from '../components/customResultView/CustomResultViewInstitutions';
@@ -143,9 +143,13 @@ export default function App() {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
-  const indicatorsState = {
+  const [indicatorsState, setIndicatorsState] = useState({
     config,
     data: [],
+  });
+
+  const receiveChildData = (data: any) => {
+    setIndicatorsState(data);
   };
 
   return (
@@ -188,7 +192,7 @@ export default function App() {
                         }
                         bodyContent={<Results resultView={CustomResultViewInstitutions} />}
                         bodyHeader={
-                          <React.Fragment>
+                          <>
                             {wasSearched && (
                               <div className="d-flex align-items-center">
                                 <PagingInfo view={CustomViewPagingInfo} />
@@ -196,14 +200,14 @@ export default function App() {
                               </div>
                             )}
                             {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                          </React.Fragment>
+                          </>
                         }
                         bodyFooter={<Paging />}
                       />
                       <div className={styles.indicators}>
                         {/** 
                         // @ts-ignore */}
-                        <OrgUnitIndicators indicatorsState={indicatorsState} />
+                        <OrgUnitIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
                       </div>
                     </div>
                   </ErrorBoundary>

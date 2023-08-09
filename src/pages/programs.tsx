@@ -21,10 +21,10 @@ import React, { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
 import CustomSearchBox from '../components/CustomSearchBox';
 import CustomResultViewPrograms from '../components/customResultView/CustomResultViewPrograms';
+import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import ProgramsIndicators from '../components/indicators/ProgramsIndicators';
 import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
-import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 type Props = {
   // Add custom props here
 };
@@ -145,9 +145,13 @@ export default function App() {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
-  const indicatorsState = {
+  const [indicatorsState, setIndicatorsState] = useState({
     config,
     data: [],
+  });
+
+  const receiveChildData = (data: any) => {
+    setIndicatorsState(data);
   };
 
   return (
@@ -207,7 +211,7 @@ export default function App() {
                       <div className={styles.Indicators}>
                         {/** 
                         // @ts-ignore */}
-                        <ProgramsIndicators indicatorsState={indicatorsState} />
+                        <ProgramsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
                       </div>
                     </div>
                   </ErrorBoundary>

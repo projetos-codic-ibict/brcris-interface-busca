@@ -134,7 +134,7 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } };
 }
 
-function PublicationsIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
+function ProgramsIndicators({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
 
@@ -153,6 +153,7 @@ function PublicationsIndicators({ filters, searchTerm, isLoading, indicatorsStat
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
+          sendDataToParent(indicatorsState);
         })
       : null;
   }, [
@@ -202,10 +203,11 @@ function PublicationsIndicators({ filters, searchTerm, isLoading, indicatorsStat
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading, indicatorsState }) => ({
+  ({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }) => ({
     filters,
     searchTerm,
     isLoading,
     indicatorsState,
+    sendDataToParent,
   })
-)(PublicationsIndicators);
+)(ProgramsIndicators);

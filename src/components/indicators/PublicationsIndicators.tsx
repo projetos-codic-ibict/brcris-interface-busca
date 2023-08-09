@@ -147,12 +147,18 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } };
 }
 
-function PublicationsIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
+function PublicationsIndicators({
+  filters,
+  searchTerm,
+  isLoading,
+  indicatorsState,
+  sendDataToParent,
+}: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
 
-  console.log('indicatorsState.config.searchQuery.index', indicatorsState.config.searchQuery.index);
   useEffect(() => {
+    console.log('indicators>>>>>', indicatorsState);
     // tradução
     // @ts-ignore
     options.plugins.title.text = t(options.plugins?.title?.text);
@@ -169,6 +175,8 @@ function PublicationsIndicators({ filters, searchTerm, isLoading, indicatorsStat
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
+          sendDataToParent(indicatorsState);
+          console.log('indicators#######2', data);
         })
       : null;
   }, [
@@ -255,10 +263,11 @@ function PublicationsIndicators({ filters, searchTerm, isLoading, indicatorsStat
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading, indicatorsState }) => ({
+  ({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }) => ({
     filters,
     searchTerm,
     isLoading,
     indicatorsState,
+    sendDataToParent,
   })
 )(PublicationsIndicators);

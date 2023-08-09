@@ -122,7 +122,7 @@ function getKeywordQuery(queryBase: any, filters: any, searchTerm: any, config: 
   return queryBase;
 }
 
-function PeopleIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
+function PeopleIndicators({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }: IndicatorsProps) {
   const { t } = useTranslation('common');
 
   const [indicators, setIndicators] = useState(indicatorsState.data);
@@ -139,6 +139,7 @@ function PeopleIndicators({ filters, searchTerm, isLoading, indicatorsState }: I
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
+          sendDataToParent(indicatorsState);
         })
       : null;
   }, [
@@ -230,10 +231,11 @@ function PeopleIndicators({ filters, searchTerm, isLoading, indicatorsState }: I
 // @ts-ignore
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading, indicatorsState }) => ({
+  ({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }) => ({
     filters,
     searchTerm,
     isLoading,
     indicatorsState,
+    sendDataToParent,
   })
 )(PeopleIndicators);

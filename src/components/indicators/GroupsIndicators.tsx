@@ -187,11 +187,12 @@ function getFilterFormated(filter: Filter): any {
   return { terms: { [filter.field]: filter.values } };
 }
 
-function GroupsIndicators({ filters, searchTerm, isLoading, indicatorsState }: IndicatorsProps) {
+function GroupsIndicators({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
 
   useEffect(() => {
+    console.log('GroupsIndicators');
     // tradução
     // @ts-ignore
     optCreatYear.plugins.title.text = t(optCreatYear.plugins?.title?.text);
@@ -213,6 +214,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading, indicatorsState }: I
         ).then((data) => {
           setIndicators(data);
           indicatorsState.data = data;
+          sendDataToParent(indicatorsState);
         })
       : null;
   }, [
@@ -368,10 +370,11 @@ function GroupsIndicators({ filters, searchTerm, isLoading, indicatorsState }: I
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading, indicatorsState }) => ({
+  ({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }) => ({
     filters,
     searchTerm,
     isLoading,
     indicatorsState,
+    sendDataToParent,
   })
 )(GroupsIndicators);
