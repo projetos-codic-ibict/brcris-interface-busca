@@ -24,6 +24,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import CustomSearchBox from '../components/CustomSearchBox';
+import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import JornalsIndicators from '../components/indicators/JornalsIndicators';
 type Props = {
   // Add custom props here
@@ -212,11 +213,11 @@ export default function App() {
                           <React.Fragment>
                             {wasSearched && (
                               <div className="d-flex align-items-center">
-                                <PagingInfo />
+                                <PagingInfo view={CustomViewPagingInfo} />
                                 <ClearFilters />
                               </div>
                             )}
-                            {wasSearched && <ResultsPerPage />}
+                            {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
                           </React.Fragment>
                         }
                         bodyFooter={<Paging />}

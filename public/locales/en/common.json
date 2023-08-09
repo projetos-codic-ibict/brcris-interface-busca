@@ -101,5 +101,9 @@
   "Softwares by release year": "Softwares by release year",
   "Softwares by knowledge area": "Softwares by knowledge area",
   "Creator(s)": "Creator(s)",
-  "Journals by qualis": "Journals by qualis"
+  "Journals by qualis": "Journals by qualis",
+  "Showing": "Showing",
+  "for": "for",
+  "out of": "out of",
+  "numberFormat": "{{value, number}}"
 }

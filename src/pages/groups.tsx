@@ -24,6 +24,7 @@ import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 
 import CustomResultViewGroups from '../components/customResultView/CustomResultViewGroups';
+import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import GroupsIndicators from '../components/indicators/GroupsIndicators';
 type Props = {
   // Add custom props here
@@ -255,11 +256,11 @@ export default function App() {
                           <React.Fragment>
                             {wasSearched && (
                               <div className="d-flex align-items-center">
-                                <PagingInfo />
+                                <PagingInfo view={CustomViewPagingInfo} />
                                 <ClearFilters />
                               </div>
                             )}
-                            {wasSearched && <ResultsPerPage />}
+                            {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
                           </React.Fragment>
                         }
                         bodyFooter={<Paging />}
