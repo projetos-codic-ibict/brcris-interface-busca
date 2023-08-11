@@ -51,7 +51,7 @@ const CookieConsent = () => {
               className="p-3 text-sm font-bold text-white uppercase bg-gray-700 whitespace-nowrap"
               onClick={onClick}
             >
-              Got it
+              {t('Got it')}
             </button>
           </div>
         </div>

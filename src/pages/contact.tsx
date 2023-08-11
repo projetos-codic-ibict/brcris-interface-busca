@@ -1,21 +1,21 @@
-import { GetStaticProps } from 'next'
-import ContactForm from '../components/ContactForm'
-import Head from 'next/head'
-import { useTranslation } from 'react-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Head from 'next/head';
+import { useTranslation } from 'react-i18next';
+import ContactForm from '../components/ContactForm';
 
 type Props = {
   // Add custom props here
-}
+};
 // or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['contact', 'navbar'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
   },
-})
+});
 
 export default function About() {
-  const { t } = useTranslation('contact')
+  const { t } = useTranslation('common');
   return (
     <>
       <Head>
@@ -33,5 +33,5 @@ export default function About() {
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -106,5 +106,13 @@
   "Showing": "Mostrando",
   "for": "para",
   "out of": "de",
-  "numberFormat": "{{value, number}}"
+  "numberFormat": "{{value, number}}",
+  "Got it": "Prosseguir",
+  "Contact": "Contato",
+  "Email": "Email",
+  "Message": "Menssagem",
+  "Submit": "Enviar",
+  "ContactUs": "Fale conosco",
+  "Mail sent success": "Sua mensagem foi enviada!",
+  "Mail sent error": "Erro ao enviar a mensagem. Tente novamente mais tarde."
 }

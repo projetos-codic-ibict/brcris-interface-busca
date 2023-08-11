@@ -9,7 +9,7 @@ import Loader from './Loader';
 
 function ContactForm() {
   /* const router = useRouter() */
-  const { t } = useTranslation('contact');
+  const { t } = useTranslation('common');
 
   const options = {
     autoClose: true,
@@ -121,14 +121,7 @@ function ContactForm() {
             />
 
             <button
-              disabled={
-                !(
-                  captchaCode !== '' &&
-                  name !== '' &&
-                  email !== '' &&
-                  message !== ''
-                )
-              }
+              disabled={!(captchaCode !== '' && name !== '' && email !== '' && message !== '')}
               className="btn btn-primary px-4 py-2"
               type="submit"
             >

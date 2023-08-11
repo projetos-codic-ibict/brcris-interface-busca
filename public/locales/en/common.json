@@ -106,5 +106,13 @@
   "Showing": "Showing",
   "for": "for",
   "out of": "out of",
-  "numberFormat": "{{value, number}}"
+  "numberFormat": "{{value, number}}",
+  "Got it": "Got it",
+  "Contact": "Contact",
+  "Email": "Email",
+  "Message": "Message",
+  "Submit": "Submit",
+  "ContactUs": "Get in Touch",
+  "Mail sent success": "Your message has been delivered!",
+  "Mail sent error": "Error sending message. Try again later."
 }

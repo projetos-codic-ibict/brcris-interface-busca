@@ -24,7 +24,7 @@
 }
 
 .cookieItems button {
-  background-color: #383e52;
+  background-color: var(--secondary-color);
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.875rem;
