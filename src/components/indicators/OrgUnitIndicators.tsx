@@ -13,48 +13,15 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
+import { IndicatorType } from '../../types/Entities';
+import { IndicatorsProps } from '../../types/Propos';
+import { OptionsBar } from './options/ChartsOptions';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-orgunit';
 
-export const options: CustomChartOptions = {
-  title: 'Institutions by country',
-  parsing: {
-    xAxisKey: 'key',
-    yAxisKey: 'doc_count',
-  },
-  responsive: true,
-  aspectRatio: 1,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: false,
-    },
-    title: {
-      display: true,
-      text: 'Institutions by country',
-    },
-  },
-  scales: {
-    x: {
-      ticks: {
-        display: true,
-      },
-    },
-  },
-};
-
-const optionsState: CustomChartOptions = {
-  ...options,
-  plugins: { title: { text: 'Institutions by state', display: true }, legend: { display: false } },
-  title: 'Institutions by state',
-};
-console.log(JSON.stringify(optionsState));
-type IndicatorType = {
-  key: string;
-  doc_count: number;
-};
+const options = new OptionsBar('Institutions by country');
+const optionsState = new OptionsBar('Institutions by state');
 
 const headersOrgUnit = [
   { label: 'Country', key: 'key' },

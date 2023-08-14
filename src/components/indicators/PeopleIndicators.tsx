@@ -16,30 +16,14 @@ import ElasticSearchService from '../../services/ElasticSearchService';
 
 import { useTranslation } from 'next-i18next';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
-import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
+import { IndicatorType } from '../../types/Entities';
+import { IndicatorsProps } from '../../types/Propos';
+import { OptionsPie } from './options/ChartsOptions';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-person';
 
-export const optionsResearchArea: CustomChartOptions = {
-  title: 'Research areas',
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: true,
-    },
-    title: {
-      display: true,
-      text: 'Research areas',
-    },
-  },
-};
-
-type IndicatorType = {
-  key: string;
-  doc_count: number;
-};
+export const optionsResearchArea = new OptionsPie('Research areas');
 
 const headersNacionality = [
   { label: 'Nacionality', key: 'key' },

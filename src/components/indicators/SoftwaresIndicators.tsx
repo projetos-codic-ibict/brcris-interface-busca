@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { withSearch } from '@elastic/react-search-ui';
-import { Filter } from '@elastic/search-ui';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import { CSVLink } from 'react-csv';
@@ -13,50 +12,16 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
+import { IndicatorType } from '../../types/Entities';
+import { IndicatorsProps } from '../../types/Propos';
+import { OptionsBar, OptionsPie } from './options/ChartsOptions';
+import getFormatedQuery from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-software';
 
-export const optknowledgeAreas: CustomChartOptions = {
-  title: 'Softwares by knowledge area',
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: true,
-    },
-    title: {
-      display: true,
-      text: 'Softwares by knowledge area',
-    },
-  },
-};
-
-export const optPubDate: CustomChartOptions = {
-  title: 'Softwares by release year',
-  parsing: {
-    xAxisKey: 'key',
-    yAxisKey: 'doc_count',
-  },
-  responsive: true,
-  aspectRatio: 1,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: false,
-    },
-    title: {
-      display: true,
-      text: 'Softwares by release year',
-    },
-  },
-};
-
-type IndicatorType = {
-  key: string;
-  doc_count: number;
-};
+const optPubDate = new OptionsBar('Softwares by release year');
+const optknowledgeAreas = new OptionsPie('Softwares by knowledge area');
 
 const headersByReleaseYear = [
   { label: 'Release year', key: 'key' },
@@ -68,82 +33,6 @@ const headersKnowledgeAreas = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-const queryCommonBase = {
-  track_total_hits: true,
-  _source: [],
-  size: 0,
-  aggs: {
-    aggregate: {
-      terms: {
-        field: '',
-        size: 100,
-        order: {
-          _key: 'desc',
-        },
-      },
-    },
-  },
-  query: {
-    bool: {
-      must: {
-        query_string: {
-          query: '*',
-        },
-      },
-      filter: [],
-    },
-  },
-};
-
-const queryPie = JSON.parse(JSON.stringify(queryCommonBase));
-queryPie.aggs.aggregate.terms.size = 10;
-queryPie.aggs.aggregate.terms.order = { _count: 'desc' };
-
-function getKeywordQuery(queryBase: any, indicador: string, filters: any, searchTerm: any, config: any) {
-  const field = Object.keys(config.searchQuery.search_fields)[0];
-  if (indicador) {
-    queryBase._source = [indicador];
-    queryBase.aggs.aggregate.terms.field = indicador;
-  }
-
-  if (searchTerm) {
-    queryBase.query.bool.must.query_string.default_field = field;
-    queryBase.query.bool.must.query_string.default_operator = config.searchQuery.operator;
-    queryBase.query.bool.must.query_string.query = searchTerm;
-  } else {
-    queryBase.query.bool.must.query_string.query = '*';
-  }
-  if (filters && filters.length > 0) {
-    queryBase.query.bool.filter = [];
-    filters.forEach((filter: Filter) => {
-      queryBase.query.bool.filter.push(getFilterFormated(filter));
-    });
-  } else {
-    queryBase.query.bool.filter = [];
-  }
-  return queryBase;
-}
-
-function getFilterFormated(filter: Filter): any {
-  if (filter.type === 'none') {
-    const matrix = filter.values.map((val: any) => val.split(' - '));
-    const values = [].concat(...matrix);
-    values.sort();
-    const from = values[0];
-    const to = values[values.length - 1];
-
-    return {
-      range: {
-        [filter.field]: {
-          gte: from,
-          lte: to,
-        },
-      },
-    };
-  }
-  return { terms: { [filter.field]: filter.values } };
-}
-
 function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
@@ -154,13 +43,33 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState, 
     optPubDate.plugins.title.text = t(optPubDate.title);
     // @ts-ignore
     optknowledgeAreas.plugins.title.text = t(optknowledgeAreas.title);
+    const fields = Object.keys(indicatorsState.config.searchQuery.search_fields);
+    const operator = indicatorsState.config.searchQuery.operator;
+
     isLoading
       ? ElasticSearchService(
           [
             JSON.stringify(
-              getKeywordQuery(queryCommonBase, 'releaseYear', filters, searchTerm, indicatorsState.config)
+              getFormatedQuery({
+                size: 1000,
+                indicadorName: 'releaseYear',
+                searchTerm,
+                fields,
+                operator,
+                filters,
+              })
             ),
-            JSON.stringify(getKeywordQuery(queryPie, 'knowledgeAreas', filters, searchTerm, indicatorsState.config)),
+            JSON.stringify(
+              getFormatedQuery({
+                size: 10,
+                indicadorName: 'knowledgeAreas',
+                searchTerm,
+                fields,
+                operator,
+                filters,
+                order: '_count',
+              })
+            ),
           ],
           INDEX_NAME
         ).then((data) => {

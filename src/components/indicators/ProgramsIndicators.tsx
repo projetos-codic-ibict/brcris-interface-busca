@@ -13,42 +13,14 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
+import { IndicatorType } from '../../types/Entities';
+import { IndicatorsProps } from '../../types/Propos';
+import { OptionsBar } from './options/ChartsOptions';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-program';
 
-export const options: CustomChartOptions = {
-  title: 'Program by OrgUnit',
-  parsing: {
-    xAxisKey: 'key',
-    yAxisKey: 'doc_count',
-  },
-  responsive: true,
-  aspectRatio: 1,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: false,
-    },
-    title: {
-      display: true,
-      text: 'Program by OrgUnit',
-    },
-  },
-  scales: {
-    x: {
-      ticks: {
-        display: false,
-      },
-    },
-  },
-};
-
-type IndicatorType = {
-  key: string;
-  doc_count: number;
-};
+export const options = new OptionsBar('Program by OrgUnit', false);
 
 const headersOrgUnit = [
   { label: 'Organization', key: 'key' },

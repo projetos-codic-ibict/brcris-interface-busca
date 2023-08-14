@@ -13,79 +13,17 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
+import { IndicatorType } from '../../types/Entities';
+import { IndicatorsProps } from '../../types/Propos';
+import { OptionsBar, OptionsPie } from './options/ChartsOptions';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'researchgroups';
 
-export const optResearchLine: CustomChartOptions = {
-  title: 'Research groups by Research line', // este é somente para ser usado na tradução
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: true,
-    },
-    title: {
-      display: true,
-      text: 'Research groups by Research line',
-    },
-  },
-};
-const optKnowledgeArea: CustomChartOptions = {
-  title: 'Research groups by knowledge area',
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: true,
-    },
-    title: {
-      display: true,
-      text: 'Research groups by knowledge area',
-    },
-  },
-};
-
-const optStatus: CustomChartOptions = {
-  title: 'Research groups by status',
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: true,
-    },
-    title: {
-      display: true,
-      text: 'Research groups by status',
-    },
-  },
-};
-
-const optCreatYear: CustomChartOptions = {
-  title: 'Research groups by creation year',
-  parsing: {
-    xAxisKey: 'key',
-    yAxisKey: 'doc_count',
-  },
-  responsive: true,
-  aspectRatio: 1,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: false,
-    },
-    title: {
-      display: true,
-      text: 'Research groups by creation year',
-    },
-  },
-};
-
-type IndicatorType = {
-  key: string;
-  doc_count: number;
-};
+const optResearchLine = new OptionsPie('Research groups by Research line');
+const optKnowledgeArea = new OptionsPie('Research groups by knowledge area');
+const optStatus = new OptionsPie('Research groups by status');
+const optCreatYear = new OptionsBar('Research groups by creation year');
 
 const headersByCreationYear = [
   { label: 'Creation year', key: 'key' },

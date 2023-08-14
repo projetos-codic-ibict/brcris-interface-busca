@@ -13,84 +13,17 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { CustomChartOptions, IndicatorsProps } from '../../types/Propos';
+import { IndicatorType } from '../../types/Entities';
+import { IndicatorsProps } from '../../types/Propos';
+import { OptionsBar, OptionsPie } from './options/ChartsOptions';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-patent';
 
-export const optCountryCode: CustomChartOptions = {
-  title: 'Patents by country code',
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: true,
-    },
-    title: {
-      display: true,
-      text: 'Patents by country code',
-    },
-  },
-};
-export const optKindCode: CustomChartOptions = {
-  title: 'Patents by kind code',
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: true,
-    },
-    title: {
-      display: true,
-      text: 'Patents by kind code',
-    },
-  },
-};
-
-export const optDepositDate: CustomChartOptions = {
-  title: 'Patents by deposit year',
-  parsing: {
-    xAxisKey: 'key',
-    yAxisKey: 'doc_count',
-  },
-  responsive: true,
-  aspectRatio: 1,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: false,
-    },
-    title: {
-      display: true,
-      text: 'Patents by deposit year',
-    },
-  },
-};
-
-export const optPubDate: CustomChartOptions = {
-  title: 'Patents by publication year',
-  parsing: {
-    xAxisKey: 'key',
-    yAxisKey: 'doc_count',
-  },
-  responsive: true,
-  aspectRatio: 1,
-  plugins: {
-    legend: {
-      position: 'bottom',
-      display: false,
-    },
-    title: {
-      display: true,
-      text: 'Patents by publication year',
-    },
-  },
-};
-
-type IndicatorType = {
-  key: string;
-  doc_count: number;
-};
+const optDepositDate = new OptionsBar('Patents by deposit year');
+const optPubDate = new OptionsBar('Patents by publication year');
+const optCountryCode = new OptionsPie('Patents by country code');
+const optKindCode = new OptionsPie('Patents by kind code');
 
 const headersByDepositDate = [
   { label: 'Deposit year', key: 'key' },
