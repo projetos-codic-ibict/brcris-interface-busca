@@ -180,7 +180,7 @@ export default function App() {
                   <ErrorBoundary>
                     <div className="container page">
                       <div className="page-title">
-                        <h2>{t('Patents')}</h2>
+                        <h1>{t('Patents')}</h1>
                       </div>
                     </div>
 

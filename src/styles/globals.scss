@@ -1,6 +1,7 @@
 :root {
   --accent-color: #e61f93;
   --secondary-color: #430059;
+  --tabs-color: #660b6e;
   --dark-color: #210d41;
   --bs-link-color: #6610f2;
   --bs-link-hover-color: #8540f5;
@@ -20,6 +21,30 @@ body {
   background-color: #fcfcfc;
 }
 
+h1,
+h2,
+h3 {
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.1rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+h1 {
+  position: relative;
+  font-size: 1.5rem;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .btn-primary {
   background-color: var(--dark-color) !important;
   border-color: #290043 !important;
@@ -28,11 +53,6 @@ body {
 .btn-primary:hover {
   background-color: var(--secondary-color) !important;
   border-color: #290043 !important;
-}
-
-img {
-  max-width: 100%;
-  max-height: 100%;
 }
 
 .bg-violet {
@@ -129,9 +149,9 @@ a.nav-link {
   color: #fff;
 }
 
-.nav-tabs .nav-item.show .nav-link,
-.nav-tabs .nav-link.active {
-  background-color: transparent !important;
+.card .nav-tabs .nav-item.show .nav-link,
+.card .nav-tabs .nav-link.active {
+  background-color: transparent;
 }
 
 .graph {
@@ -234,6 +254,7 @@ li .sui-result__key:after {
 
 .page {
   padding-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 .lattes-icon {
@@ -269,11 +290,7 @@ li .sui-result__key:after {
   margin-bottom: 16px;
 }
 
-.page-title h2 {
-  position: relative;
-}
-
-.page-title h2::after {
+.page-title h1::after {
   content: '';
   width: 50%;
   position: absolute;
@@ -507,6 +524,57 @@ footer {
 
 .col-full {
   width: 100%;
+}
+
+.about {
+  max-width: 930px;
+}
+
+.about .nav-tabs {
+  margin-bottom: 0 !important;
+}
+
+.about .nav-tabs .nav-link {
+  background-color: var(--tabs-color);
+  color: #fff;
+  margin: 0 1px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.about .nav-tabs .nav-link:hover {
+  border: 1px solid var(--accent-color);
+}
+
+.about .nav-tabs .nav-link.active {
+  background-color: #fff;
+  color: var(--dark-color);
+  padding: calc(0.5rem + 1px) 1rem;
+  border: 1px solid var(--accent-color);
+  border-bottom: none;
+  position: relative;
+  font-weight: 500;
+}
+
+.about .nav-tabs .nav-link.active::after {
+  content: '';
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 5px;
+  background-color: #fff;
+}
+
+.about .tab-content {
+  border: 1px solid var(--accent-color);
+  padding: 32px 8px 8px 8px;
+  border-radius: 4px;
+}
+.about h2,
+.about h3,
+.about p {
+  color: #595b5b;
 }
 
 @media (max-width: 800px) {

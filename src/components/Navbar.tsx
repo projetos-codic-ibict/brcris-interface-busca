@@ -61,7 +61,7 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item me-5" role="presentation">
-              <Link href={`${process.env.VIVO_URL_BASE}/about?lang=${router.locale}`}>
+              <Link href="/about">
                 <a className="nav-link">{t('About')}</a>
               </Link>
             </li>

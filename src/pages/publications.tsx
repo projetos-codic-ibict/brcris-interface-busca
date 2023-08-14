@@ -233,7 +233,7 @@ export default function App() {
                   <ErrorBoundary>
                     <div className="container page">
                       <div className="page-title">
-                        <h2>{t('Publications')}</h2>
+                        <h1>{t('Publications')}</h1>
                       </div>
                     </div>
 

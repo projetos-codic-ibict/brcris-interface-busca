@@ -65,9 +65,10 @@ function ContactForm() {
     <div>
       {isLoading ? <Loader /> : ''}
       <div className={style.contact}>
-        <div className={`${style.contactUs} mb-3 mx-auto`}>
-          <h5 className="text-center">{t('ContactUs')}</h5>
+        <div className="page-title">
+          <h1 className="text-center">{t('ContactUs')}</h1>
         </div>
+
         <form
           onSubmit={(event) => {
             handleSubmit(event);
