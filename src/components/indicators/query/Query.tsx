@@ -7,16 +7,16 @@ type QueryProps = {
   fields: string[];
   operator: boolean;
   filters: [];
-  order?: string;
+  order?: { _count?: string; _key?: string };
 };
 export default function getFormatedQuery({
-  size,
+  size = 10,
   indicadorName,
   searchTerm,
   fields,
   operator,
   filters,
-  order = '_key',
+  order = { _count: 'desc' },
 }: QueryProps) {
   return {
     track_total_hits: true,
@@ -27,9 +27,7 @@ export default function getFormatedQuery({
         terms: {
           field: indicadorName,
           size: size,
-          order: {
-            [order]: 'desc',
-          },
+          order: order,
         },
       },
     },
@@ -39,7 +37,7 @@ export default function getFormatedQuery({
           query_string: {
             query: searchTerm || '*',
             default_operator: operator,
-            fields: fields,
+            fields: searchTerm ? fields : [],
           },
         },
         filter: filters && filters.length > 0 ? getFormatedFilters(filters) : [],

@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { withSearch } from '@elastic/react-search-ui';
-import { Filter } from '@elastic/search-ui';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import { CSVLink } from 'react-csv';
@@ -16,6 +15,7 @@ import ElasticSearchService from '../../services/ElasticSearchService';
 import { IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
 import { OptionsBar, OptionsPie } from './options/ChartsOptions';
+import getFormatedQuery from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-patent';
@@ -44,82 +44,6 @@ const headersKindCode = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-const queryCommonBase = {
-  track_total_hits: true,
-  _source: [],
-  size: 0,
-  aggs: {
-    aggregate: {
-      terms: {
-        field: '',
-        size: 100,
-        order: {
-          _key: 'desc',
-        },
-      },
-    },
-  },
-  query: {
-    bool: {
-      must: {
-        query_string: {
-          query: '*',
-        },
-      },
-      filter: [],
-    },
-  },
-};
-
-const queryPie = JSON.parse(JSON.stringify(queryCommonBase));
-// queryPie.aggs.aggregate.terms.size = 10
-queryPie.aggs.aggregate.terms.order = { _count: 'desc' };
-
-function getKeywordQuery(queryBase: any, indicador: string, filters: any, searchTerm: any, config: any) {
-  const field = Object.keys(config.searchQuery.search_fields)[0];
-  if (indicador) {
-    queryBase._source = [indicador];
-    queryBase.aggs.aggregate.terms.field = indicador;
-  }
-
-  if (searchTerm) {
-    queryBase.query.bool.must.query_string.default_field = field;
-    queryBase.query.bool.must.query_string.default_operator = config.searchQuery.operator;
-    queryBase.query.bool.must.query_string.query = searchTerm;
-  } else {
-    queryBase.query.bool.must.query_string.query = '*';
-  }
-  if (filters && filters.length > 0) {
-    queryBase.query.bool.filter = [];
-    filters.forEach((filter: Filter) => {
-      queryBase.query.bool.filter.push(getFilterFormated(filter));
-    });
-  } else {
-    queryBase.query.bool.filter = [];
-  }
-  return queryBase;
-}
-
-function getFilterFormated(filter: Filter): any {
-  if (filter.type === 'none') {
-    const matrix = filter.values.map((val: any) => val.split(' - '));
-    const values = [].concat(...matrix);
-    values.sort();
-    const from = values[0];
-    const to = values[values.length - 1];
-
-    return {
-      range: {
-        [filter.field]: {
-          gte: from,
-          lte: to,
-        },
-      },
-    };
-  }
-  return { terms: { [filter.field]: filter.values } };
-}
-
 function PatentsIndicators({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }: IndicatorsProps) {
   const [indicators, setIndicators] = useState(indicatorsState.data);
   const { t } = useTranslation('common');
@@ -134,17 +58,55 @@ function PatentsIndicators({ filters, searchTerm, isLoading, indicatorsState, se
     optCountryCode.plugins.title.text = t(optCountryCode.title);
     // @ts-ignore
     optKindCode.plugins.title.text = t(optKindCode.title);
+
+    const fields = Object.keys(indicatorsState.config.searchQuery.search_fields);
+    const operator = indicatorsState.config.searchQuery.operator;
+
     isLoading
       ? ElasticSearchService(
           [
             JSON.stringify(
-              getKeywordQuery(queryCommonBase, 'depositDate', filters, searchTerm, indicatorsState.config)
+              getFormatedQuery({
+                size: 10,
+                indicadorName: 'depositDate',
+                searchTerm,
+                fields,
+                operator,
+                filters,
+                order: { _key: 'desc' },
+              })
             ),
             JSON.stringify(
-              getKeywordQuery(queryCommonBase, 'publicationDate', filters, searchTerm, indicatorsState.config)
+              getFormatedQuery({
+                size: 10,
+                indicadorName: 'publicationDate',
+                searchTerm,
+                fields,
+                operator,
+                filters,
+                order: { _key: 'desc' },
+              })
             ),
-            JSON.stringify(getKeywordQuery(queryPie, 'countryCode', filters, searchTerm, indicatorsState.config)),
-            JSON.stringify(getKeywordQuery(queryPie, 'kindCode', filters, searchTerm, indicatorsState.config)),
+            JSON.stringify(
+              getFormatedQuery({
+                size: 10,
+                indicadorName: 'countryCode',
+                searchTerm,
+                fields,
+                operator,
+                filters,
+              })
+            ),
+            JSON.stringify(
+              getFormatedQuery({
+                size: 10,
+                indicadorName: 'kindCode',
+                searchTerm,
+                fields,
+                operator,
+                filters,
+              })
+            ),
           ],
           INDEX_NAME
         ).then((data) => {

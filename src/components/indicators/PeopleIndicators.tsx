@@ -10,7 +10,6 @@ import styles from '../../styles/Indicators.module.css';
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 // @ts-ignore
-import { Filter } from '@elastic/search-ui';
 import { TagCloud } from 'react-tagcloud';
 import ElasticSearchService from '../../services/ElasticSearchService';
 
@@ -19,6 +18,7 @@ import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Util
 import { IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
 import { OptionsPie } from './options/ChartsOptions';
+import getFormatedQuery from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = 'pesqdf-person';
@@ -35,78 +35,6 @@ const headersResearchArea = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-const nationtalityQueryBase = {
-  track_total_hits: true,
-  _source: ['nationality'],
-  size: 0,
-  aggs: {
-    aggregate: {
-      terms: {
-        field: 'nationality',
-        size: 10,
-        // order: {
-        //   _key: 'desc',
-        // },
-      },
-    },
-  },
-  query: {
-    bool: {
-      must: {
-        query_string: {
-          query: '*',
-        },
-      },
-      filter: [],
-    },
-  },
-};
-
-const keywordQueryBase = {
-  track_total_hits: true,
-  _source: ['researchArea'],
-  size: 0,
-  aggs: {
-    aggregate: {
-      terms: {
-        field: 'researchArea',
-        size: 10,
-      },
-    },
-  },
-  query: {
-    bool: {
-      must: {
-        query_string: {
-          query: '*',
-        },
-      },
-      filter: [],
-    },
-  },
-};
-
-function getKeywordQuery(queryBase: any, filters: any, searchTerm: any, config: any) {
-  if (searchTerm) {
-    queryBase.query.bool.must.query_string.default_field = Object.keys(config.searchQuery.search_fields)[0];
-    queryBase.query.bool.must.query_string.default_operator = config.searchQuery.operator;
-    queryBase.query.bool.must.query_string.query = searchTerm;
-  } else {
-    queryBase.query.bool.must.query_string.query = '*';
-  }
-  if (filters && filters.length > 0) {
-    queryBase.query.bool.filter = [];
-    filters.forEach((filter: Filter) => {
-      queryBase.query.bool.filter.push({
-        terms: { [filter.field]: filter.values },
-      });
-    });
-  } else {
-    queryBase.query.bool.filter = [];
-  }
-  return queryBase;
-}
-
 function PeopleIndicators({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }: IndicatorsProps) {
   const { t } = useTranslation('common');
 
@@ -115,11 +43,31 @@ function PeopleIndicators({ filters, searchTerm, isLoading, indicatorsState, sen
   useEffect(() => {
     // @ts-ignore
     optionsResearchArea.plugins.title.text = t(optionsResearchArea.title);
+    const fields = Object.keys(indicatorsState.config.searchQuery.search_fields);
+    const operator = indicatorsState.config.searchQuery.operator;
     isLoading
       ? ElasticSearchService(
           [
-            JSON.stringify(getKeywordQuery(nationtalityQueryBase, filters, searchTerm, indicatorsState.config)),
-            JSON.stringify(getKeywordQuery(keywordQueryBase, filters, searchTerm, indicatorsState.config)),
+            JSON.stringify(
+              getFormatedQuery({
+                size: 10,
+                indicadorName: 'nationality',
+                searchTerm,
+                fields,
+                operator,
+                filters,
+              })
+            ),
+            JSON.stringify(
+              getFormatedQuery({
+                size: 10,
+                indicadorName: 'researchArea',
+                searchTerm,
+                fields,
+                operator,
+                filters,
+              })
+            ),
           ],
           INDEX_NAME
         ).then((data) => {

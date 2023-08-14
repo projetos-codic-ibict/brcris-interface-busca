@@ -56,17 +56,18 @@ function PublicationsIndicators({
           [
             JSON.stringify(
               getFormatedQuery({
-                size: 1000,
+                size: 10,
                 indicadorName: 'publicationDate',
                 searchTerm,
                 fields,
                 operator,
                 filters,
+                order: { _key: 'desc' },
               })
             ),
             JSON.stringify(
               getFormatedQuery({
-                size: 1000,
+                size: 10,
                 indicadorName: 'type',
                 searchTerm,
                 fields,

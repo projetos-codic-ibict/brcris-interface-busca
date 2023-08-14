@@ -51,12 +51,13 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState, 
           [
             JSON.stringify(
               getFormatedQuery({
-                size: 1000,
+                size: 10,
                 indicadorName: 'releaseYear',
                 searchTerm,
                 fields,
                 operator,
                 filters,
+                order: { _key: 'desc' },
               })
             ),
             JSON.stringify(
@@ -67,7 +68,6 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState, 
                 fields,
                 operator,
                 filters,
-                order: '_count',
               })
             ),
           ],
