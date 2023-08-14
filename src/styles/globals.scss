@@ -577,6 +577,10 @@ footer {
   color: #595b5b;
 }
 
+.about b {
+  font-weight: 500;
+}
+
 @media (max-width: 800px) {
   .sui-result__value {
     word-break: break-all;
