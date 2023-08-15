@@ -12,6 +12,14 @@ const nextConfig = {
     PUBLIC_RECAPTCHA_SITE_KEY: process.env.PUBLIC_RECAPTCHA_SITE_KEY,
   },
   i18n,
+  webpack5: true,
+  webpack: (config) => {
+    config.resolve.fallback = {
+      fs: false,
+    };
+
+    return config;
+  },
 };
 
 module.exports = nextConfig;

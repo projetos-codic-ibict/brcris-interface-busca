@@ -568,13 +568,17 @@ footer {
 
 .about .tab-content {
   border: 1px solid var(--accent-color);
-  padding: 32px 8px 8px 8px;
+  padding: 32px;
   border-radius: 4px;
 }
 .about h2,
 .about h3,
 .about p {
   color: #595b5b;
+}
+
+.about p {
+  margin-bottom: 2rem;
 }
 
 .about b {

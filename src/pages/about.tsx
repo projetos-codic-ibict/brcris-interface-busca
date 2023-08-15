@@ -105,23 +105,23 @@ export default function About() {
 
           <div className="tab-content">
             <div className="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <h2 className="text-center">Termo de Uso</h2>
+              <h2 className="text-center">{t('Terms of Use')}</h2>
               <TermsOfUse />
             </div>
             <div className="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              <h2 className="text-center">Fontes de coleta</h2>
+              <h2 className="text-center">{t('Data sources')}</h2>
               <DataSources />
             </div>
             <div className="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-              <h2 className="text-center">Publicações</h2>
+              <h2 className="text-center">{t('Publications')}</h2>
               <Publications />
             </div>
             <div className="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-              <h2 className="text-center">Arquitetura do sistema</h2>
+              <h2 className="text-center">{t('System architecture')}</h2>
               <Architecture />
             </div>
             <div className="tab-pane" id="history" role="tabpanel" aria-labelledby="history-tab">
-              <h2 className="text-center">Histórico</h2>
+              <h2 className="text-center">{t('History')}</h2>
               <History />
             </div>
           </div>
