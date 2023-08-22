@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Architecture from '../components/about/Architecture';
 import DataSources from '../components/about/DataSources';
 import History from '../components/about/History';
+import Privacy from '../components/about/Privacy';
 import Publications from '../components/about/Publications';
 import TermsOfUse from '../components/about/TermsOfUse';
 
@@ -34,12 +35,12 @@ export default function About() {
             <li className="nav-item" role="presentation">
               <button
                 className="nav-link active"
-                id="home-tab"
+                id="terms-tab"
                 data-bs-toggle="tab"
-                data-bs-target="#home"
+                data-bs-target="#terms"
                 type="button"
                 role="tab"
-                aria-controls="home"
+                aria-controls="terms"
                 aria-selected="true"
               >
                 {t('Terms of use')}
@@ -48,12 +49,26 @@ export default function About() {
             <li className="nav-item" role="presentation">
               <button
                 className="nav-link"
-                id="profile-tab"
+                id="privacy-tab"
                 data-bs-toggle="tab"
-                data-bs-target="#profile"
+                data-bs-target="#privacy"
                 type="button"
                 role="tab"
-                aria-controls="profile"
+                aria-controls="privacy"
+                aria-selected="false"
+              >
+                {t('Privacy policy')}
+              </button>
+            </li>
+            <li className="nav-item" role="presentation">
+              <button
+                className="nav-link"
+                id="sources-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#sources"
+                type="button"
+                role="tab"
+                aria-controls="sources"
                 aria-selected="false"
               >
                 {t('Data sources')}
@@ -62,12 +77,12 @@ export default function About() {
             <li className="nav-item" role="presentation">
               <button
                 className="nav-link"
-                id="messages-tab"
+                id="publications-tab"
                 data-bs-toggle="tab"
-                data-bs-target="#messages"
+                data-bs-target="#publications"
                 type="button"
                 role="tab"
-                aria-controls="messages"
+                aria-controls="publications"
                 aria-selected="false"
               >
                 {t('Publications')}
@@ -76,12 +91,12 @@ export default function About() {
             <li className="nav-item" role="presentation">
               <button
                 className="nav-link"
-                id="settings-tab"
+                id="architecture-tab"
                 data-bs-toggle="tab"
-                data-bs-target="#settings"
+                data-bs-target="#architecture"
                 type="button"
                 role="tab"
-                aria-controls="settings"
+                aria-controls="architecture"
                 aria-selected="false"
               >
                 {t('System architecture')}
@@ -104,19 +119,23 @@ export default function About() {
           </ul>
 
           <div className="tab-content">
-            <div className="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <h2 className="text-center">{t('Terms of Use')}</h2>
+            <div className="tab-pane active" id="terms" role="tabpanel" aria-labelledby="terms-tab">
+              <h2 className="text-center">{t('Terms of use')}</h2>
               <TermsOfUse />
             </div>
-            <div className="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div className="tab-pane" id="privacy" role="tabpanel" aria-labelledby="privacy-tab">
+              <h2 className="text-center">{t('Privacy policy')}</h2>
+              <Privacy />
+            </div>
+            <div className="tab-pane" id="sources" role="tabpanel" aria-labelledby="sources-tab">
               <h2 className="text-center">{t('Data sources')}</h2>
               <DataSources />
             </div>
-            <div className="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+            <div className="tab-pane" id="publications" role="tabpanel" aria-labelledby="publications-tab">
               <h2 className="text-center">{t('Publications')}</h2>
               <Publications />
             </div>
-            <div className="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            <div className="tab-pane" id="architecture" role="tabpanel" aria-labelledby="architecture-tab">
               <h2 className="text-center">{t('System architecture')}</h2>
               <Architecture />
             </div>

@@ -5,6 +5,7 @@
   --dark-color: #210d41;
   --bs-link-color: #6610f2;
   --bs-link-hover-color: #8540f5;
+  --text-secondary-color: #595b5b;
 }
 
 * {
@@ -527,7 +528,7 @@ footer {
 }
 
 .about {
-  max-width: 930px;
+  max-width: 1000px;
 }
 
 .about .nav-tabs {
@@ -583,6 +584,32 @@ footer {
 
 .about b {
   font-weight: 500;
+}
+
+.dashboards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 1rem auto;
+}
+
+.dashboards .card {
+  width: 300px;
+  cursor: pointer;
+}
+
+.dashboards .card h2 {
+  color: var(--dark-color);
+}
+
+.dashboards .card p {
+  color: var(--text-secondary-color);
+}
+
+.dashboards .card:hover {
+  border-color: var(--accent-color);
 }
 
 @media (max-width: 800px) {
