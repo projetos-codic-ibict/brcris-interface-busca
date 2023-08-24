@@ -16,7 +16,6 @@ import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
 import CustomResultViewJournals from '../components/customResultView/CustomResultViewJournals';
-import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 // import OperatorSelect from '../components/OperatorSelect'
 import { GetStaticProps } from 'next';
@@ -24,6 +23,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import CustomSearchBox from '../components/CustomSearchBox';
+import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import JornalsIndicators from '../components/indicators/JornalsIndicators';
 type Props = {
@@ -37,14 +37,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 });
 
 const INDEX_NAME = 'pesqdf-journals';
-const connector = new Connector(INDEX_NAME);
 
 const configDefault = {
-  debug: true,
-  urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: false,
-  hasA11yNotifications: true,
-  apiConnector: connector,
+  ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
     track_total_hits: true,
     operator: 'OR',

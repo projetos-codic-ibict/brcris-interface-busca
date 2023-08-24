@@ -20,10 +20,10 @@ import Head from 'next/head';
 import React, { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
 import CustomSearchBox from '../components/CustomSearchBox';
+import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import CustomResultViewPrograms from '../components/customResultView/CustomResultViewPrograms';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import ProgramsIndicators from '../components/indicators/ProgramsIndicators';
-import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 type Props = {
   // Add custom props here
@@ -36,14 +36,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 });
 
 const INDEX_NAME = 'pesqdf-program';
-const connector = new Connector(INDEX_NAME);
-
 const configDefault = {
-  debug: true,
-  urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: false,
-  hasA11yNotifications: true,
-  apiConnector: connector,
+  ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
     track_total_hits: true,
     operator: 'OR',

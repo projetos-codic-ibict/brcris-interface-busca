@@ -26,6 +26,12 @@ PUT pesqdf-publication/_mapping
   }
 }
 
+// para aumentar o limite de busca no índice
+PUT pesqdf-publication/_settings
+{
+  "index.max_result_window": 1000000
+}
+
 
 
 POST pesqdf-publication/_update_by_query
@@ -33,13 +39,13 @@ POST pesqdf-publication/_update_by_query
   "query": {
         "constant_score" : {
             "filter" : {
-                "exists" : { "field" : "title-text" }
+                "exists" : { "field" : "title_text" }
             }
         }
 
   },
   "script" : {
-      "source": "ctx._source.title_suggest = ctx._source.title-text;",
+      "source": "ctx._source.title_suggest = ctx._source.title_text;",
       "lang": "painless"
   }
 }

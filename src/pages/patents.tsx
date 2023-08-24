@@ -15,7 +15,6 @@ import {
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import { useState } from 'react';
-import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 /* import IndicatorsPeople from '../components/IndicatorsPeople' */
 import { GetStaticProps } from 'next';
@@ -24,6 +23,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import ClearFilters from '../components/ClearFilters';
 import CustomSearchBox from '../components/CustomSearchBox';
+import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import CustomResultViewPatents from '../components/customResultView/CustomResultViewPatents';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import PatentsIndicators from '../components/indicators/PatentsIndicators';
@@ -38,14 +38,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 });
 
 const INDEX_NAME = 'pesqdf-patent';
-const connector = new Connector(INDEX_NAME);
 
 const configDefault = {
-  debug: true,
-  urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: false,
-  hasA11yNotifications: true,
-  apiConnector: connector,
+  ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
     track_total_hits: true,
     operator: 'OR',

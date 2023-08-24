@@ -17,12 +17,14 @@ type CustomSearchBoxProps = {
 const CustomSearchBox = ({ titleFieldName, itemLinkPrefix, indexName, updateOpetatorConfig }: CustomSearchBoxProps) => {
   const { t } = useTranslation('common');
   const router = useRouter();
-  const [docsCount, setDocsCount] = useState(0);
+  const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
 
   useEffect(() => {
     ElasticSearchStatsService(indexName)
       .then((res) => {
-        setDocsCount(res['docs.count']);
+        const count = res['docs.count'];
+        localStorage.setItem(indexName, count);
+        setDocsCount(count);
       })
       .catch((err) => {
         console.error(err);

@@ -12,7 +12,7 @@ import {
   Sorting,
   WithSearch,
 } from '@elastic/react-search-ui';
-import { Layout, PagingInfoViewProps } from '@elastic/react-search-ui-views';
+import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import type { SearchDriverOptions } from '@elastic/search-ui';
 import { GetServerSideProps } from 'next';
@@ -22,10 +22,10 @@ import Head from 'next/head';
 import { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
 import CustomSearchBox from '../components/CustomSearchBox';
+import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import Indicators from '../components/indicators/PublicationsIndicators';
-import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 type Props = {
   // Add custom props here
@@ -37,21 +37,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ locale }) 
 });
 
 const INDEX_NAME = 'pesqdf-publication';
-const connector = new Connector(INDEX_NAME);
 const configDefault: SearchDriverOptions = {
-  debug: false,
-  indicators: [],
-  urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: false,
-  hasA11yNotifications: true,
-  a11yNotificationMessages: {
-    searchResults: ({ start, end, totalResults, searchTerm }: PagingInfoViewProps) =>
-      `Searching for "${searchTerm}". Showing ${start} to ${end} results out of ${totalResults}.`,
-  },
-  apiConnector: connector,
-  initialState: {
-    resultsPerPage: 10,
-  },
+  ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
     //@ts-ignore
     operator: 'OR',

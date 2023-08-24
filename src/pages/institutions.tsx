@@ -20,10 +20,10 @@ import Head from 'next/head';
 import { useState } from 'react';
 import ClearFilters from '../components/ClearFilters';
 import CustomSearchBox from '../components/CustomSearchBox';
+import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import CustomResultViewInstitutions from '../components/customResultView/CustomResultViewInstitutions';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import OrgUnitIndicators from '../components/indicators/OrgUnitIndicators';
-import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 type Props = {
   // Add custom props here
@@ -36,13 +36,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 });
 
 const INDEX_NAME = 'pesqdf-orgunit';
-const connector = new Connector(INDEX_NAME);
 const configDefault = {
-  debug: true,
-  urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: false,
-  hasA11yNotifications: true,
-  apiConnector: connector,
+  ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
     track_total_hits: true,
     operator: 'OR',

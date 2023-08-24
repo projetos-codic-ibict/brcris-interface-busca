@@ -19,10 +19,10 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import ClearFilters from '../components/ClearFilters';
-import Connector from '../services/APIConnector';
 import styles from '../styles/Home.module.css';
 
 import { useState } from 'react';
+import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import CustomResultViewGroups from '../components/customResultView/CustomResultViewGroups';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import GroupsIndicators from '../components/indicators/GroupsIndicators';
@@ -37,14 +37,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 });
 
 const INDEX_NAME = 'researchgroups';
-const connector = new Connector(INDEX_NAME);
-
 const config = {
-  debug: true,
-  urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: false,
-  hasA11yNotifications: true,
-  apiConnector: connector,
+  ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
     track_total_hits: true,
     operator: 'OR',
