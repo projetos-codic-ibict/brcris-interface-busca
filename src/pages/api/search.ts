@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connector';
+import { NextApiRequest, NextApiResponse } from 'next';
 // https://docs.elastic.co/search-ui/api/connectors/elasticsearch#customise-the-elasticsearch-request-body
 function builConnector(index: string) {
   const connector = new ElasticsearchAPIConnector(
@@ -10,7 +11,7 @@ function builConnector(index: string) {
       apiKey: process.env.API_KEY,
     },
     (requestBody, requestState, queryConfig) => {
-      requestBody.track_total_hits = true;
+      // requestBody.track_total_hits = true;
       if (!requestState.searchTerm) return requestBody;
 
       // transforming the query before sending to Elasticsearch using the requestState and queryConfig
@@ -18,7 +19,6 @@ function builConnector(index: string) {
       requestBody.query = {
         multi_match: {
           query: requestState.searchTerm,
-          // operator: 'OR',
           // @ts-ignore
           operator: queryConfig.operator,
           fields: Object.keys(searchFields).map((fieldName) => {
@@ -35,9 +35,14 @@ function builConnector(index: string) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function handler(req: any, res: any) {
-  const { requestState, queryConfig } = req.body;
-  const connector = builConnector(queryConfig.index);
-  const response = await connector.onSearch(requestState, queryConfig);
-  res.json(response);
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const { requestState, queryConfig } = req.body;
+    const connector = builConnector(queryConfig.index);
+    const response = await connector.onSearch(requestState, queryConfig);
+    res.json(response);
+  } catch (e) {
+    console.error(e);
+    res.json({});
+  }
 }

@@ -178,13 +178,14 @@ export default function App() {
                             titleFieldName="name"
                             itemLinkPrefix="pers_"
                             updateOpetatorConfig={updateOpetatorConfig}
+                            indexName={INDEX_NAME}
                           />
                         }
                         sideContent={
                           <div>
                             {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
-                              <span className="sui-sorting__label">{t('Filters')}</span>
+                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
                             </div>
                             <Facet key={'1'} field={'nationality'} label={t('Nationality')} />
                             <Facet key={'2'} field={'researchArea'} label={t('Research area(s)')} />
@@ -204,11 +205,10 @@ export default function App() {
                         }
                         bodyFooter={<Paging />}
                       />
-                      <div className={styles.Indicators}>
-                        {/** 
+
+                      {/** 
                         // @ts-ignore */}
-                        <IndicatorsPeople indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                      </div>
+                      <IndicatorsPeople indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
                     </div>
                   </ErrorBoundary>
                 </div>

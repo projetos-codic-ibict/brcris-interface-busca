@@ -43,7 +43,7 @@ const connector = new Connector(INDEX_NAME);
 const configDefault = {
   debug: true,
   urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: true,
+  alwaysSearchOnInitialLoad: false,
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
@@ -191,13 +191,14 @@ export default function App() {
                             titleFieldName="espacenetTitle"
                             itemLinkPrefix="pat_"
                             updateOpetatorConfig={updateOpetatorConfig}
+                            indexName={INDEX_NAME}
                           />
                         }
                         sideContent={
                           <div>
                             {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
-                              <span className="sui-sorting__label">{t('Filters')}</span>
+                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
                             </div>
                             <Facet key={'1'} field={'inventor.name'} label={t('Inventor')} />
                             <Facet key={'2'} field={'countryCode'} label={t('Country code')} />
@@ -219,11 +220,9 @@ export default function App() {
                         }
                         bodyFooter={<Paging />}
                       />
-                      <div className={styles.Indicators}>
-                        {/* 
+                      {/* 
                         // @ts-ignore  */}
-                        <PatentsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                      </div>
+                      <PatentsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
                     </div>
                   </ErrorBoundary>
                 </div>

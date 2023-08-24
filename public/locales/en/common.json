@@ -114,5 +114,7 @@
   "Submit": "Submit",
   "ContactUs": "Get in Touch",
   "Mail sent success": "Your message has been delivered!",
-  "Mail sent error": "Error sending message. Try again later."
+  "Mail sent error": "Error sending message. Try again later.",
+  "Search among": "Search among",
+  "documents": " documents"
 }

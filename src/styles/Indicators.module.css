@@ -1,11 +1,13 @@
 .charts {
-  padding: 0;
-  margin-right: 24px;
-  min-width: 340px;
-  max-width: 25%;
+  margin-top: 60px;
+  width: calc(25% - 16px);
+
 }
 
 .chart {
+  padding: 0;
+  margin-right: 16px;
+  width: 100%;
   position: relative;
   border: 1px solid var(--dark-color);
   border-radius: 5px;

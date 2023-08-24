@@ -12,21 +12,21 @@ import {
   Sorting,
   WithSearch,
 } from '@elastic/react-search-ui';
-import { Layout } from '@elastic/react-search-ui-views';
+import { Layout, PagingInfoViewProps } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-import { useState } from 'react';
-import ClearFilters from '../components/ClearFilters';
-import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
-import Indicators from '../components/indicators/PublicationsIndicators';
-import Connector from '../services/APIConnector';
-import styles from '../styles/Home.module.css';
-// import OperatorSelect from '../components/OperatorSelect'
+import type { SearchDriverOptions } from '@elastic/search-ui';
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
+import { useState } from 'react';
+import ClearFilters from '../components/ClearFilters';
 import CustomSearchBox from '../components/CustomSearchBox';
+import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
+import Indicators from '../components/indicators/PublicationsIndicators';
+import Connector from '../services/APIConnector';
+import styles from '../styles/Home.module.css';
 type Props = {
   // Add custom props here
 };
@@ -38,15 +38,22 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ locale }) 
 
 const INDEX_NAME = 'pesqdf-publication';
 const connector = new Connector(INDEX_NAME);
-const configDefault = {
+const configDefault: SearchDriverOptions = {
   debug: false,
   indicators: [],
   urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: true,
+  alwaysSearchOnInitialLoad: false,
   hasA11yNotifications: true,
+  a11yNotificationMessages: {
+    searchResults: ({ start, end, totalResults, searchTerm }: PagingInfoViewProps) =>
+      `Searching for "${searchTerm}". Showing ${start} to ${end} results out of ${totalResults}.`,
+  },
   apiConnector: connector,
+  initialState: {
+    resultsPerPage: 10,
+  },
   searchQuery: {
-    track_total_hits: true,
+    //@ts-ignore
     operator: 'OR',
     search_fields: {
       title_text: {
@@ -207,6 +214,7 @@ export default function App() {
   const [config, setConfig] = useState(configDefault);
 
   function updateOpetatorConfig(op: string) {
+    //@ts-ignore
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
@@ -244,13 +252,14 @@ export default function App() {
                             titleFieldName="title"
                             itemLinkPrefix="publ_"
                             updateOpetatorConfig={updateOpetatorConfig}
+                            indexName={INDEX_NAME}
                           />
                         }
                         sideContent={
                           <div>
                             {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
-                              <span className="sui-sorting__label">{t('Filters')}</span>
+                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
                             </div>
                             <Facet key={'1'} field={'language'} label={t('Language')} />
                             <Facet key={'2'} field={'author.name'} label={t('Authors')} />
@@ -301,11 +310,9 @@ export default function App() {
                         }
                         bodyFooter={<Paging />}
                       />
-                      <div className={styles.indicators}>
-                        {/* 
+                      {/* 
                         // @ts-ignore  */}
-                        <Indicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                      </div>
+                      <Indicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
                     </div>
                   </ErrorBoundary>
                 </div>

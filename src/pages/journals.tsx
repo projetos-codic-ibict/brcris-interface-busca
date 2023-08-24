@@ -42,7 +42,7 @@ const connector = new Connector(INDEX_NAME);
 const configDefault = {
   debug: true,
   urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: true,
+  alwaysSearchOnInitialLoad: false,
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
@@ -198,13 +198,14 @@ export default function App() {
                             titleFieldName="title"
                             itemLinkPrefix="journ_"
                             updateOpetatorConfig={updateOpetatorConfig}
+                            indexName={INDEX_NAME}
                           />
                         }
                         sideContent={
                           <div>
                             {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
-                              <span className="sui-sorting__label">{t('Filters')}</span>
+                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
                             </div>
                             <Facet key={'1'} field={'qualis'} label={t('Qualis')} />
                             <Facet key={'2'} field={'status'} label={t('Status')} />
@@ -226,11 +227,9 @@ export default function App() {
                         }
                         bodyFooter={<Paging />}
                       />
-                      <div className={styles.indicators}>
-                        {/** 
+                      {/** 
                         // @ts-ignore */}
-                        <JornalsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                      </div>
+                      <JornalsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
                     </div>
                   </ErrorBoundary>
                 </div>

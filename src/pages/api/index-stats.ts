@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Client } from 'es7'
+import { Client } from 'es7';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 const client = new Client({
   maxRetries: 5,
@@ -9,16 +10,16 @@ const client = new Client({
   auth: {
     apiKey: process.env.API_KEY || '',
   },
-})
+});
 
-const indexesNames = process.env.ELASTIC_INDEXES?.split(',')
+const indexesNames = process.env.ELASTIC_INDEXES?.split(',');
 
-const proxy = async (req: any, res: any) => {
+const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   const { body } = await client.cat.indices({
     format: 'json',
-    index: indexesNames,
-  })
-  res.json(body)
-}
+    index: req.query.indexName || indexesNames,
+  });
+  res.json(body.length == 1 ? body[0] : body);
+};
 
-export default proxy
+export default proxy;

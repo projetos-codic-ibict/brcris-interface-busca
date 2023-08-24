@@ -42,7 +42,7 @@ const connector = new Connector(INDEX_NAME);
 const config = {
   debug: true,
   urlPushDebounceLength: 500,
-  alwaysSearchOnInitialLoad: true,
+  alwaysSearchOnInitialLoad: false,
   hasA11yNotifications: true,
   apiConnector: connector,
   searchQuery: {
@@ -233,7 +233,7 @@ export default function App() {
                           <div>
                             {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
                             <div className="filters">
-                              <span className="sui-sorting__label">{t('Filters')}</span>
+                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
                             </div>
                             <Facet key={'1'} field={'creationYear'} label={t('Creation year')} />
 
@@ -270,11 +270,9 @@ export default function App() {
                         }
                         bodyFooter={<Paging />}
                       />
-                      <div className={styles.Indicators}>
-                        {/** 
+                      {/** 
                         // @ts-ignore */}
-                        <GroupsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                      </div>
+                      <GroupsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
                     </div>
                   </ErrorBoundary>
                 </div>

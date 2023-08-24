@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { NextApiRequest, NextApiResponse } from 'next';
 import fetch from 'node-fetch';
 import nodemailer from 'nodemailer';
 
@@ -9,7 +10,7 @@ type BodyType = {
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const proxy = async (req: any, res: any) => {
+const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   const { body } = req;
 
   if (body.name === '' || body.email === '' || body.message === '' || body.captcha === '') {
