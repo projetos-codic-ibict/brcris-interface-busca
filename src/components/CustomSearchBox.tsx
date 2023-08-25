@@ -43,7 +43,6 @@ const CustomSearchBox = ({ titleFieldName, itemLinkPrefix, indexName, updateOpet
         shouldTrackClickThrough: true,
       }}
       autocompleteSuggestions={true}
-      inputProps={{ placeholder: `${t('Search among')} ${t('numberFormat', { value: docsCount })} ${t('documents')}` }}
       debounceLength={0}
       onSubmit={(searchTerm) => {
         updateOpetatorConfig('OR');
@@ -58,6 +57,23 @@ const CustomSearchBox = ({ titleFieldName, itemLinkPrefix, indexName, updateOpet
           router.push(`${VIVO_URL_ITEM_BASE}/${itemLinkPrefix}${selection.id.raw}&lang=${router.locale}`);
         }
       }}
+      inputView={({ getAutocomplete, getInputProps, getButtonProps }) => (
+        <>
+          <div className="sui-search-box__wrapper">
+            <input
+              {...getInputProps({
+                placeholder: `${t('Search among')} ${t('numberFormat', { value: docsCount })} ${t('documents')}`,
+              })}
+            />
+            {getAutocomplete()}
+          </div>
+          <input
+            {...getButtonProps({
+              disabled: getInputProps()?.value?.trim().length < 3,
+            })}
+          />
+        </>
+      )}
     ></SearchBox>
   );
 };

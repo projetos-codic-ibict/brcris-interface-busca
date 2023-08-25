@@ -18,7 +18,6 @@ import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import ClearFilters from '../components/ClearFilters';
 import styles from '../styles/Home.module.css';
 
 import { useState } from 'react';
@@ -40,7 +39,6 @@ const INDEX_NAME = 'researchgroups';
 const config = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
-    track_total_hits: true,
     operator: 'OR',
     search_fields: {
       name: {},
@@ -256,7 +254,7 @@ export default function App() {
                             {wasSearched && (
                               <div className="d-flex align-items-center">
                                 <PagingInfo view={CustomViewPagingInfo} />
-                                <ClearFilters />
+                                {/* <ClearFilters /> */}
                               </div>
                             )}
                             {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}

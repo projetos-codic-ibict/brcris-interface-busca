@@ -11,7 +11,7 @@ function builConnector(index: string) {
       apiKey: process.env.API_KEY,
     },
     (requestBody, requestState, queryConfig) => {
-      requestBody.track_total_hits = true;
+      // requestBody.track_total_hits = true;
       if (!requestState.searchTerm) return requestBody;
 
       // transforming the query before sending to Elasticsearch using the requestState and queryConfig

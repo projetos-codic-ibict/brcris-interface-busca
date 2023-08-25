@@ -6,7 +6,7 @@ const DefaultQueryConfig = (indexName: string) => {
     debug: false,
     indicators: [],
     urlPushDebounceLength: 500,
-    alwaysSearchOnInitialLoad: true,
+    alwaysSearchOnInitialLoad: false,
     hasA11yNotifications: true,
     a11yNotificationMessages: {
       searchResults: ({ start, end, totalResults, searchTerm }: PagingInfoViewProps) =>

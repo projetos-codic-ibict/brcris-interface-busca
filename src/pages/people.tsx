@@ -39,7 +39,6 @@ const INDEX_NAME = 'pesqdf-person';
 const configDefault = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
-    track_total_hits: true,
     operator: 'OR',
     search_fields: {
       name_text: {},
@@ -191,7 +190,7 @@ export default function App() {
                             {wasSearched && (
                               <div className="d-flex align-items-center">
                                 <PagingInfo view={CustomViewPagingInfo} />
-                                <ClearFilters />
+                                {/* <ClearFilters /> */}
                               </div>
                             )}
                             {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}

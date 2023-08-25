@@ -18,7 +18,6 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import React, { useState } from 'react';
-import ClearFilters from '../components/ClearFilters';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import CustomResultViewPrograms from '../components/customResultView/CustomResultViewPrograms';
@@ -39,7 +38,6 @@ const INDEX_NAME = 'pesqdf-program';
 const configDefault = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
-    track_total_hits: true,
     operator: 'OR',
     search_fields: {
       name_text: {},
@@ -195,7 +193,7 @@ export default function App() {
                             {wasSearched && (
                               <div className="d-flex align-items-center">
                                 <PagingInfo view={CustomViewPagingInfo} />
-                                <ClearFilters />
+                                {/* <ClearFilters /> */}
                               </div>
                             )}
                             {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}

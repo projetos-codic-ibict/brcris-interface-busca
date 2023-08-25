@@ -19,7 +19,7 @@ export default function getFormatedQuery({
   order = { _count: 'desc' },
 }: QueryProps) {
   return {
-    track_total_hits: true,
+    // track_total_hits: true,
     _source: [indicadorName],
     size: 0,
     aggs: {
