@@ -62,7 +62,9 @@ const CustomSearchBox = ({ titleFieldName, itemLinkPrefix, indexName, updateOpet
           <div className="sui-search-box__wrapper">
             <input
               {...getInputProps({
-                placeholder: `${t('Search among')} ${t('numberFormat', { value: docsCount })} ${t('documents')}`,
+                placeholder: `${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
+                  value: docsCount,
+                })} ${t('documents')}`,
               })}
             />
             {getAutocomplete()}

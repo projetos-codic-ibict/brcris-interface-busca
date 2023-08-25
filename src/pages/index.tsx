@@ -122,7 +122,7 @@ export default function App() {
                           type="text"
                           value={term}
                           onChange={(e) => setTerm(e.target.value)}
-                          placeholder={`${t('Search among')} ${t('numberFormat', {
+                          placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
                             value: docsCount,
                           })} ${t('documents')}`}
                         />
