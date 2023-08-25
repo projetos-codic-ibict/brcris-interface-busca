@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AllIndexVisNetwork from '../components/AllIndexVisNetwork';
 import styles from '../styles/Home.module.css';
 
@@ -75,6 +75,11 @@ export default function App() {
   const [term, setTerm] = useState('');
   const [searchPage, setSearchPage] = useState('publications');
   const [selectedIndex, setSelectedIndex] = useState('pesqdf-publication');
+  const [docsCount, setDocsCount] = useState('');
+
+  useEffect(() => {
+    setDocsCount(localStorage.getItem(selectedIndex) || '');
+  }, [selectedIndex]);
 
   return (
     <>
@@ -118,7 +123,7 @@ export default function App() {
                           value={term}
                           onChange={(e) => setTerm(e.target.value)}
                           placeholder={`${t('Search among')} ${t('numberFormat', {
-                            value: localStorage.getItem(selectedIndex),
+                            value: docsCount,
                           })} ${t('documents')}`}
                         />
                       </div>
