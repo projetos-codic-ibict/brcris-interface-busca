@@ -147,9 +147,10 @@ const edges: Edge = [
   { from: 4, to: 2, id: 4 },
   { from: 1, to: 3, id: 5 },
   { from: 5, to: 2, id: 10 },
-  { from: 7, to: 1, id: 12 },
   { from: 7, to: 2, id: 13 },
   { from: 8, to: 2, id: 15 },
+  { from: 2, to: 3, id: 16 },
+  { from: 2, to: 6, id: 17 },
 ];
 
 const options: Options = {

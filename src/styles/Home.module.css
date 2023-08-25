@@ -36,6 +36,10 @@
   align-items: center;
 }
 
+.info p {
+  font-size: 1.2rem;
+}
+
 .main section {
   width: 100%;
   display: flex;
