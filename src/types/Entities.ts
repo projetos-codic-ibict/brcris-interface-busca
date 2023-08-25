@@ -18,3 +18,9 @@ export type IndicatorType = {
   key: string;
   doc_count: number;
 };
+
+export type MemberType = {
+  name: string;
+  image: string;
+  lattes: string;
+};

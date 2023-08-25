@@ -116,5 +116,9 @@
   "Mail sent success": "Sua mensagem foi enviada!",
   "Mail sent error": "Erro ao enviar a mensagem. Tente novamente mais tarde.",
   "Search among": "Pesquise entre",
-  "documents": " documentos"
+  "documents": " documentos",
+  "Dashboards": "Painéis de indicadores",
+  "Theses and Dissertations": "Teses e Dissertações",
+  "Experts networks": "Redes de especialistas",
+  "Concepts clusters": "Agrupamento de conceitos"
 }

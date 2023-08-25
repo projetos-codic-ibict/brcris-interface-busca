@@ -14,20 +14,20 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   },
 });
 
-export default function PublicationsDashboard() {
+export default function Theses() {
   const { t } = useTranslation('common');
   return (
     <>
       <Head>
-        <title>{`BrCris - ${t('Publications dashboard')}`}</title>
+        <title>{`BrCris - ${t('Theses and Dissertations dashboard')}`}</title>
       </Head>
       <div className="page-search">
         <div className="App">
           <div className="container page">
             <div className="page-title">
-              <h1>{t('Publications dashboard')}</h1>
+              <h1>{t('Theses and Dissertations dashboard')}</h1>
             </div>
-            <Iframe url="https://dashboardbrcris.ibict.br/app/dashboards#/view/5b28ef30-eb4a-11ed-8ce5-b1f0783636f8?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" />
+            <Iframe url="https://dashboardbrcris.ibict.br/app/dashboards#/view/20c0cc30-ee94-11ed-8ce5-b1f0783636f8?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" />
           </div>
         </div>
       </div>

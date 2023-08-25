@@ -10,12 +10,12 @@ type Props = {
 // or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['about', 'navbar', 'common'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['navbar', 'common'])),
   },
 });
 
 export default function Dashboards() {
-  const { t } = useTranslation(['about', 'common']);
+  const { t } = useTranslation(['common']);
   return (
     <>
       <Head>
@@ -29,7 +29,7 @@ export default function Dashboards() {
           <div className="dashboards">
             <div className="card text-center p-2">
               <Link href="/dashboards/publications">
-                <div>
+                <a>
                   <h2>{t('Publications')}</h2>
                   <picture className="d-flex justify-content-center">
                     <img className="img-fluid" src="/images/dashboards/publications.png" alt="ícone de publications" />
@@ -39,12 +39,12 @@ export default function Dashboards() {
                       {t('Articles or documents published in scientific vehicles (Journals or Events).')}
                     </p>
                   </div>
-                </div>
+                </a>
               </Link>
             </div>
             <div className="card text-center p-2">
               <Link href="/dashboards/theses">
-                <div>
+                <a>
                   <h2>{t('Theses and Dissertations')}</h2>
                   <picture className="d-flex justify-content-center">
                     <img className="img-fluid" src="/images/dashboards/tese.png" alt="ícone de teses" />
@@ -54,12 +54,12 @@ export default function Dashboards() {
                       {t("Academic monographs defended in Brazil at the master's or doctoral levels.")}
                     </p>
                   </div>
-                </div>
+                </a>
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/br-cris">
-                <div>
+              <Link href="/dashboards/people">
+                <a>
                   <h2>{t('People')}</h2>
                   <picture className="d-flex justify-content-center">
                     <img className="img-fluid" src="/images/dashboards/people.png" alt="ícone de pessoas" />
@@ -71,12 +71,12 @@ export default function Dashboards() {
                       )}
                     </p>
                   </div>
-                </div>
+                </a>
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/br-cris">
-                <div>
+              <Link href="/dashboards/journals">
+                <a>
                   <h2>{t('Journals')}</h2>
                   <picture className="d-flex justify-content-center">
                     <img className="img-fluid" src="/images/dashboards/journals.png" alt="ícone de revistas" />
@@ -84,12 +84,12 @@ export default function Dashboards() {
                   <div className="card-body">
                     <p className="card-text">{t('Scientific journals used for the publication of articles.')}</p>
                   </div>
-                </div>
+                </a>
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/br-cris">
-                <div>
+              <Link href="/dashboards/patents">
+                <a>
                   <h2>{t('Patents')}</h2>
                   <picture className="d-flex justify-content-center">
                     <img className="img-fluid" src="/images/dashboards/patents.png" alt="ícone de patentes" />
@@ -97,12 +97,12 @@ export default function Dashboards() {
                   <div className="card-body">
                     <p className="card-text">{t('Legal rights granted to people who own intellectual properties.')}</p>
                   </div>
-                </div>
+                </a>
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/br-cris">
-                <div>
+              <Link href="/dashboards/groups">
+                <a>
                   <h2>{t('Research Groups')}</h2>
                   <picture className="d-flex justify-content-center">
                     <img className="img-fluid" src="/images/dashboards/groups.png" alt="ícone de grupos de pesquisa" />
@@ -110,12 +110,12 @@ export default function Dashboards() {
                   <div className="card-body">
                     <p className="card-text">{t('Teams made up of researchers and students.')}</p>
                   </div>
-                </div>
+                </a>
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/br-cris">
-                <div>
+              <Link href="/dashboards/softwares">
+                <a>
                   <h2>{t('Softwares')}</h2>
                   <picture className="d-flex justify-content-center">
                     <img className="img-fluid" src="/images/dashboards/softwares.png" alt="ícone de softwares" />
@@ -123,13 +123,13 @@ export default function Dashboards() {
                   <div className="card-body">
                     <p className="card-text">{t('Set of computer programs registered by the researchers.')}</p>
                   </div>
-                </div>
+                </a>
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/br-cris">
-                <div>
-                  <h2>{t('Experts Network')}</h2>
+              <Link href="/dashboards/networks">
+                <a>
+                  <h2>{t('Experts networks')}</h2>
                   <picture className="d-flex justify-content-center">
                     <img
                       className="img-fluid"
@@ -142,13 +142,13 @@ export default function Dashboards() {
                       {t('Group or community of highly qualified professionals in a specific knowledge area.')}
                     </p>
                   </div>
-                </div>
+                </a>
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/br-cris">
-                <div>
-                  <h2>{t('Concepts Clusters')}</h2>
+              <Link href="/dashboards/clusters">
+                <a>
+                  <h2>{t('Concepts clusters')}</h2>
                   <picture className="d-flex justify-content-center">
                     <img
                       className="img-fluid"
@@ -159,7 +159,7 @@ export default function Dashboards() {
                   <div className="card-body">
                     <p className="card-text">{t("Research topics obtained by grouping researchers' activities.")}</p>
                   </div>
-                </div>
+                </a>
               </Link>
             </div>
           </div>

@@ -633,6 +633,30 @@ footer {
   padding: 8px;
 }
 
+.team {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.team-member {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid var(--accent-color);
+  border-radius: 4px;
+}
+
+.team-member h2 {
+  font-size: 1rem;
+  color: var(--dark-color);
+  margin: 0;
+  text-align: center;
+}
+
 @media (max-width: 800px) {
   .sui-result__value {
     word-break: break-all;

@@ -116,5 +116,9 @@
   "Mail sent success": "Your message has been delivered!",
   "Mail sent error": "Error sending message. Try again later.",
   "Search among": "Search among",
-  "documents": " documents"
+  "documents": " documents",
+  "Dashboards": "Dashboards",
+  "Theses and Dissertations": "Theses and Dissertations",
+  "Experts networks": "Experts networks",
+  "Concepts clusters": "Concepts clusters"
 }
