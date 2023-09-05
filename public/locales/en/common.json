@@ -121,5 +121,14 @@
   "Dashboards": "Dashboards",
   "Theses and Dissertations": "Theses and Dissertations",
   "Experts networks": "Experts networks",
-  "Concepts clusters": "Concepts clusters"
+  "Concepts clusters": "Concepts clusters",
+  "Concepts clusters dashboard": "Concepts clusters dashboard",
+  "Research groups dashboard": "Research groups dashboard",
+  "Journals dashboard": "Journals dashboard",
+  "Experts networks dashboard": "Experts networks dashboard",
+  "Patents dashboard": "Patents dashboard",
+  "People dashboard": "People dashboard",
+  "Publications dashboard": "Publications dashboard",
+  "Softwares dashboard": "Softwares dashboard",
+  "Theses and Dissertations dashboard": "Theses and Dissertations dashboard"
 }

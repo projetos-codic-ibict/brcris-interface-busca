@@ -121,5 +121,14 @@
   "Dashboards": "Painéis de indicadores",
   "Theses and Dissertations": "Teses e Dissertações",
   "Experts networks": "Redes de especialistas",
-  "Concepts clusters": "Agrupamento de conceitos"
+  "Concepts clusters": "Agrupamento de conceitos",
+  "Concepts clusters dashboard": "Indicadores de agrupamento de conceitos",
+  "Research groups dashboard": "Indicadores de grupos de pesquisa",
+  "Journals dashboard": "Indicadores de revistas",
+  "Experts networks dashboard": "Indicadores de redes de especialistas",
+  "Patents dashboard": "Indicadores de pantentes",
+  "People dashboard": "Indicadores de pessoas",
+  "Publications dashboard": "Indicadores de publicações",
+  "Softwares dashboard": "Indicadores de softwares",
+  "Theses and Dissertations dashboard": "Indicadores de teses e dissertações"
 }
