@@ -56,6 +56,11 @@ img {
   border-color: #290043 !important;
 }
 
+.btn-secondary {
+  background: var(--accent-color) !important;
+  border-color: var(--accent-color) !important;
+}
+
 .bg-violet {
   background: var(--dark-color);
 }
@@ -307,6 +312,9 @@ li .sui-result__key:after {
 
 .search-btn {
   width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-weight: bold;
 }
 
 .partners {

@@ -124,11 +124,11 @@ export default function App() {
                           onChange={(e) => setTerm(e.target.value)}
                           placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
                             value: docsCount,
-                          })} ${t('documents')}`}
+                          })} ${t(searchPage)}`}
                         />
                       </div>
                       <div className="col-auto">
-                        <button disabled={term?.trim().length < 3} className="btn btn-light search-btn col-auto">
+                        <button disabled={term?.trim().length < 3} className="btn btn-secondary search-btn col-auto">
                           {t('Search')}
                         </button>
                       </div>
