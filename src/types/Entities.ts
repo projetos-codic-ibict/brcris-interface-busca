@@ -29,7 +29,7 @@ export type MemberType = {
 export interface CustomSearchQuery extends SearchQuery {
   operator: 'AND' | 'OR';
   advanced?: boolean;
-  advancedSearchFields?: AdvancedFieldType[];
+  advancedQuery?: string;
 }
 
 export interface CustomSearchDriverOptions extends SearchDriverOptions {

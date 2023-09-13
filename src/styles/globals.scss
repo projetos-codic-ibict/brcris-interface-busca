@@ -454,7 +454,19 @@ li .sui-result__key:after {
 }
 
 .page-search .sui-layout-body {
-  margin-top: 60px;
+  margin-top: 200px;
+}
+
+.flex-gap-1 {
+  gap: 1rem;
+}
+
+.d-flex .sui-search-box__submit {
+  margin-left: 0;
+}
+
+.advanced .form-select {
+  width: auto;
 }
 
 .collapse.show {

@@ -25,7 +25,7 @@ import CustomResultViewPublications from '../components/customResultView/CustomR
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import Indicators from '../components/indicators/PublicationsIndicators';
 import styles from '../styles/Home.module.css';
-import { AdvancedFieldType, CustomSearchDriverOptions } from '../types/Entities';
+import { CustomSearchDriverOptions } from '../types/Entities';
 type Props = {
   // Add custom props here
 };
@@ -203,11 +203,11 @@ export default function App() {
     //@ts-ignore
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
-  function updateAdvancedConfig(advancedFields: AdvancedFieldType[]) {
+  function updateAdvancedConfig(advancedQuery: string) {
     //@ts-ignore
     setConfig({
       ...config,
-      searchQuery: { ...config.searchQuery, advanced: true, advancedSearchFields: advancedFields },
+      searchQuery: { ...config.searchQuery, advanced: true, advancedQuery: advancedQuery },
     });
   }
 
@@ -227,8 +227,8 @@ export default function App() {
       </Head>
       <div className="page-search">
         <SearchProvider config={config}>
-          <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-            {({ wasSearched }) => {
+          <WithSearch mapContextToProps={({ wasSearched, results }) => ({ wasSearched, results })}>
+            {({ wasSearched, results }) => {
               return (
                 <div className="App">
                   <ErrorBoundary>
@@ -247,14 +247,20 @@ export default function App() {
                           //   updateOpetatorConfig={updateOpetatorConfig}
                           //   indexName={INDEX_NAME}
                           // />
+                          //@ts-ignore
                           <AdvancedSearchBox updateQueryConfig={updateAdvancedConfig} />
                         }
                         sideContent={
                           <div>
-                            {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
-                            <div className="filters">
-                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
-                            </div>
+                            {wasSearched && results.length > 0 && (
+                              <>
+                                <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />
+                                <div className="filters">
+                                  <span className="sui-sorting__label">{t('Filters')}</span>
+                                </div>
+                              </>
+                            )}
+
                             <Facet key={'1'} field={'language'} label={t('Language')} />
                             <Facet key={'2'} field={'author.name'} label={t('Authors')} />
                             <Facet key={'3'} field={'keyword'} label={t('Keyword')} />
