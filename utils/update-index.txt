@@ -91,3 +91,24 @@ POST pesqdf-publication/_update_by_query
       "lang": "painless"
   }
 }
+
+
+GET pesqdf-publication/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title_text": "Java+Microcontroller"
+          }
+        },
+        {
+          "match": {
+            "keyword_text": "Java"
+          }
+        }
+      ]
+    }
+  }
+}

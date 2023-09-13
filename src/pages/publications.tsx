@@ -14,19 +14,18 @@ import {
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-import type { SearchDriverOptions } from '@elastic/search-ui';
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useState } from 'react';
-import ClearFilters from '../components/ClearFilters';
-import CustomSearchBox from '../components/CustomSearchBox';
+import AdvancedSearchBox from '../components/AdvancedSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import Indicators from '../components/indicators/PublicationsIndicators';
 import styles from '../styles/Home.module.css';
+import { AdvancedFieldType, CustomSearchDriverOptions } from '../types/Entities';
 type Props = {
   // Add custom props here
 };
@@ -37,11 +36,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ locale }) 
 });
 
 const INDEX_NAME = 'pesqdf-publication';
-const configDefault: SearchDriverOptions = {
+const configDefault: CustomSearchDriverOptions = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
-    //@ts-ignore
     operator: 'OR',
+    advanced: false,
     search_fields: {
       title_text: {
         weight: 3,
@@ -204,6 +203,13 @@ export default function App() {
     //@ts-ignore
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
+  function updateAdvancedConfig(advancedFields: AdvancedFieldType[]) {
+    //@ts-ignore
+    setConfig({
+      ...config,
+      searchQuery: { ...config.searchQuery, advanced: true, advancedSearchFields: advancedFields },
+    });
+  }
 
   const [indicatorsState, setIndicatorsState] = useState({
     config,
@@ -235,12 +241,13 @@ export default function App() {
                     <div className={styles.content}>
                       <Layout
                         header={
-                          <CustomSearchBox
-                            titleFieldName="title"
-                            itemLinkPrefix="publ_"
-                            updateOpetatorConfig={updateOpetatorConfig}
-                            indexName={INDEX_NAME}
-                          />
+                          // <CustomSearchBox
+                          //   titleFieldName="title"
+                          //   itemLinkPrefix="publ_"
+                          //   updateOpetatorConfig={updateOpetatorConfig}
+                          //   indexName={INDEX_NAME}
+                          // />
+                          <AdvancedSearchBox updateQueryConfig={updateAdvancedConfig} />
                         }
                         sideContent={
                           <div>

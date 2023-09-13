@@ -1,3 +1,4 @@
+import type { SearchDriverOptions, SearchQuery } from '@elastic/search-ui';
 export type Author = {
   id: string;
   name: string;
@@ -23,4 +24,21 @@ export type MemberType = {
   name: string;
   image: string;
   lattes: string;
+};
+
+export interface CustomSearchQuery extends SearchQuery {
+  operator: 'AND' | 'OR';
+  advanced?: boolean;
+  advancedSearchFields?: AdvancedFieldType[];
+}
+
+export interface CustomSearchDriverOptions extends SearchDriverOptions {
+  searchQuery: CustomSearchQuery;
+}
+
+export type AdvancedFieldType = {
+  field: string;
+  op: string;
+  value: string;
+  sequence: number;
 };

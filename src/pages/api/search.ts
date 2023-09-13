@@ -12,6 +12,7 @@ function builConnector(index: string) {
     },
     (requestBody, requestState, queryConfig) => {
       // requestBody.track_total_hits = true;
+      console.log('passou aqui##>', requestState, queryConfig);
       if (!requestState.searchTerm) return requestBody;
 
       // transforming the query before sending to Elasticsearch using the requestState and queryConfig
@@ -37,6 +38,7 @@ function builConnector(index: string) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
+    console.log('passou aqui');
     const { requestState, queryConfig } = req.body;
     const connector = builConnector(queryConfig.index);
     const response = await connector.onSearch(requestState, queryConfig);
