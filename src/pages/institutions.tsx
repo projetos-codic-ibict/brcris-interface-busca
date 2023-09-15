@@ -20,6 +20,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import { IndicatorProvider } from '../components/context/IndicatorsContext';
 import CustomResultViewInstitutions from '../components/customResultView/CustomResultViewInstitutions';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import OrgUnitIndicators from '../components/indicators/OrgUnitIndicators';
@@ -136,78 +137,72 @@ export default function App() {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
-  const [indicatorsState, setIndicatorsState] = useState({
-    config,
-    data: [],
-  });
-
-  const receiveChildData = (data: any) => {
-    setIndicatorsState(data);
-  };
-
   return (
     <div>
       <Head>
         <title>{`BrCris - ${t('Institutions')}`}</title>
       </Head>
       <div className="page-search">
-        <SearchProvider config={config}>
-          <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-            {({ wasSearched }) => {
-              return (
-                <div className="App">
-                  <ErrorBoundary>
-                    <div className="container page">
-                      <div className="page-title">
-                        <h1>{t('Institutions')}</h1>
+        <IndicatorProvider>
+          <SearchProvider config={config}>
+            <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
+              {({ wasSearched }) => {
+                return (
+                  <div className="App">
+                    <ErrorBoundary>
+                      <div className="container page">
+                        <div className="page-title">
+                          <h1>{t('Institutions')}</h1>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className={styles.content}>
-                      <Layout
-                        header={
-                          <CustomSearchBox
-                            titleFieldName="name"
-                            itemLinkPrefix="pers_"
-                            updateOpetatorConfig={updateOpetatorConfig}
-                            indexName={INDEX_NAME}
-                          />
-                        }
-                        sideContent={
-                          <div>
-                            {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
-                            <div className="filters">
-                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
-                            </div>
-                            <Facet key={'1'} field={'country'} label={t('Country')} />
-                            <Facet key={'2'} field={'state'} label={t('State')} />
-                            <Facet key={'3'} field={'city'} label={t('City')} />
-                          </div>
-                        }
-                        bodyContent={<Results resultView={CustomResultViewInstitutions} />}
-                        bodyHeader={
-                          <>
-                            {wasSearched && (
-                              <div className="d-flex align-items-center">
-                                <PagingInfo view={CustomViewPagingInfo} />
-                                {/* <ClearFilters /> */}
+                      <div className={styles.content}>
+                        <Layout
+                          header={
+                            <CustomSearchBox
+                              titleFieldName="name"
+                              itemLinkPrefix="pers_"
+                              updateOpetatorConfig={updateOpetatorConfig}
+                              indexName={INDEX_NAME}
+                            />
+                          }
+                          sideContent={
+                            <div>
+                              {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
+                              <div className="filters">
+                                {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
                               </div>
-                            )}
-                            {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                          </>
-                        }
-                        bodyFooter={<Paging />}
-                      />
-                      {/** 
+                              <Facet key={'1'} field={'country'} label={t('Country')} />
+                              <Facet key={'2'} field={'state'} label={t('State')} />
+                              <Facet key={'3'} field={'city'} label={t('City')} />
+                            </div>
+                          }
+                          bodyContent={<Results resultView={CustomResultViewInstitutions} />}
+                          bodyHeader={
+                            <>
+                              {wasSearched && (
+                                <div className="d-flex align-items-center">
+                                  <PagingInfo view={CustomViewPagingInfo} />
+                                  {/* <ClearFilters /> */}
+                                </div>
+                              )}
+                              {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
+                            </>
+                          }
+                          bodyFooter={<Paging />}
+                        />
+                        {/** 
                         // @ts-ignore */}
-                      <OrgUnitIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                    </div>
-                  </ErrorBoundary>
-                </div>
-              );
-            }}
-          </WithSearch>
-        </SearchProvider>
+
+                        <OrgUnitIndicators />
+                      </div>
+                    </ErrorBoundary>
+                  </div>
+                );
+              }}
+            </WithSearch>
+          </SearchProvider>
+        </IndicatorProvider>
       </div>
     </div>
   );

@@ -14,7 +14,6 @@ import {
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import { useState } from 'react';
-import ClearFilters from '../components/ClearFilters';
 import CustomResultViewJournals from '../components/customResultView/CustomResultViewJournals';
 import styles from '../styles/Home.module.css';
 // import OperatorSelect from '../components/OperatorSelect'
@@ -24,6 +23,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import { IndicatorProvider } from '../components/context/IndicatorsContext';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import JornalsIndicators from '../components/indicators/JornalsIndicators';
 type Props = {
@@ -158,79 +158,72 @@ export default function App() {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
-  const [indicatorsState, setIndicatorsState] = useState({
-    config,
-    data: [],
-  });
-
-  const receiveChildData = (data: any) => {
-    setIndicatorsState(data);
-  };
-
   return (
     <div>
       <Head>
         <title>{`BrCris - ${t('Journals')}`}</title>
       </Head>
       <div className="page-search">
-        <SearchProvider config={config}>
-          <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-            {({ wasSearched }) => {
-              return (
-                <div className="App">
-                  <ErrorBoundary>
-                    <div className="container page">
-                      <div className="page-title">
-                        <h1>{t('Journals')}</h1>
+        <IndicatorProvider>
+          <SearchProvider config={config}>
+            <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
+              {({ wasSearched }) => {
+                return (
+                  <div className="App">
+                    <ErrorBoundary>
+                      <div className="container page">
+                        <div className="page-title">
+                          <h1>{t('Journals')}</h1>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className={styles.content}>
-                      <Layout
-                        header={
-                          <CustomSearchBox
-                            titleFieldName="title"
-                            itemLinkPrefix="journ_"
-                            updateOpetatorConfig={updateOpetatorConfig}
-                            indexName={INDEX_NAME}
-                          />
-                        }
-                        sideContent={
-                          <div>
-                            {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
-                            <div className="filters">
-                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
-                            </div>
-                            <Facet key={'1'} field={'qualis'} label={t('Qualis')} />
-                            <Facet key={'2'} field={'status'} label={t('Status')} />
-                            <Facet key={'3'} field={'type'} label={t('Type')} />
-                            <Facet key={'4'} field={'publisher.name'} label={t('Publisher')} />
-                          </div>
-                        }
-                        bodyContent={<Results resultView={CustomResultViewJournals} />}
-                        bodyHeader={
-                          <>
-                            {wasSearched && (
-                              <div className="d-flex align-items-center">
-                                <PagingInfo view={CustomViewPagingInfo} />
-                                {/* <ClearFilters /> */}
+                      <div className={styles.content}>
+                        <Layout
+                          header={
+                            <CustomSearchBox
+                              titleFieldName="title"
+                              itemLinkPrefix="journ_"
+                              updateOpetatorConfig={updateOpetatorConfig}
+                              indexName={INDEX_NAME}
+                            />
+                          }
+                          sideContent={
+                            <div>
+                              {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
+                              <div className="filters">
+                                {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
                               </div>
-                            )}
-                            {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                          </>
-                        }
-                        bodyFooter={<Paging />}
-                      />
-                      {/** 
+                              <Facet key={'1'} field={'qualis'} label={t('Qualis')} />
+                              <Facet key={'2'} field={'status'} label={t('Status')} />
+                              <Facet key={'3'} field={'type'} label={t('Type')} />
+                              <Facet key={'4'} field={'publisher.name'} label={t('Publisher')} />
+                            </div>
+                          }
+                          bodyContent={<Results resultView={CustomResultViewJournals} />}
+                          bodyHeader={
+                            <>
+                              {wasSearched && (
+                                <div className="d-flex align-items-center">
+                                  <PagingInfo view={CustomViewPagingInfo} />
+                                  {/* <ClearFilters /> */}
+                                </div>
+                              )}
+                              {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
+                            </>
+                          }
+                          bodyFooter={<Paging />}
+                        />
+                        {/** 
                         // @ts-ignore */}
-                      <JornalsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                    </div>
-                  </ErrorBoundary>
-                </div>
-              );
-            }}
-          </WithSearch>
-        </SearchProvider>
+                        <JornalsIndicators />
+                      </div>
+                    </ErrorBoundary>
+                  </div>
+                );
+              }}
+            </WithSearch>
+          </SearchProvider>
+        </IndicatorProvider>
       </div>
     </div>
   );

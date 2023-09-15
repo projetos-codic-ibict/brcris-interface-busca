@@ -12,8 +12,6 @@ function builConnector(index: string) {
     },
     (requestBody, requestState, queryConfig) => {
       // requestBody.track_total_hits = true;
-      console.log('queryConfig: >', queryConfig);
-      console.log('searchTerm: ', requestState.searchTerm);
       if (!requestState.searchTerm) return requestBody;
 
       // transforming the query before sending to Elasticsearch using the requestState and queryConfig

@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { withSearch } from '@elastic/react-search-ui';
+import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
@@ -12,8 +12,9 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { IndicatorType } from '../../types/Entities';
+import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
+import IndicatorContext from '../context/IndicatorsContext';
 import { OptionsBar, OptionsPie } from './options/ChartsOptions';
 import getFormatedQuery from './query/Query';
 
@@ -33,9 +34,14 @@ const headersKnowledgeAreas = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }: IndicatorsProps) {
-  const [indicators, setIndicators] = useState(indicatorsState.data);
+function SoftwaresIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
   const { t } = useTranslation('common');
+
+  const { driver } = useContext(SearchContext);
+  const { indicators, setIndicatorsData, isEmpty } = useContext(IndicatorContext);
+  const { search_fields, operator } = driver.searchQuery as CustomSearchQuery;
+  // @ts-ignore
+  const fields = Object.keys(search_fields);
 
   useEffect(() => {
     // tradução
@@ -43,8 +49,6 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState, 
     optPubDate.plugins.title.text = t(optPubDate.title);
     // @ts-ignore
     optknowledgeAreas.plugins.title.text = t(optknowledgeAreas.title);
-    const fields = Object.keys(indicatorsState.config.searchQuery.search_fields);
-    const operator = indicatorsState.config.searchQuery.operator;
 
     isLoading
       ? ElasticSearchService(
@@ -73,18 +77,10 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState, 
           ],
           INDEX_NAME
         ).then((data) => {
-          setIndicators(data);
-          indicatorsState.data = data;
-          sendDataToParent(indicatorsState);
+          setIndicatorsData(data);
         })
       : null;
-  }, [
-    filters,
-    searchTerm,
-    isLoading,
-    indicatorsState.config.searchQuery.search_fields,
-    indicatorsState.config.searchQuery.operator,
-  ]);
+  }, [filters, searchTerm, isLoading]);
 
   //  release date
   const releaseYearIndicators: IndicatorType[] = indicators ? indicators[0] : [];
@@ -96,8 +92,8 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState, 
   const knowledgeAreasCount = knowledgeAreasIndicators != null ? knowledgeAreasIndicators.map((d) => d.doc_count) : [];
 
   return (
-    <div className={styles.charts}>
-      <div className={styles.chart} hidden={headersByReleaseYear == null}>
+    <div className={styles.charts} hidden={isEmpty()}>
+      <div className={styles.chart}>
         <CSVLink
           className={styles.download}
           title="Export to csv"
@@ -161,11 +157,9 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading, indicatorsState, 
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }) => ({
+  ({ filters, searchTerm, isLoading }) => ({
     filters,
     searchTerm,
     isLoading,
-    indicatorsState,
-    sendDataToParent,
   })
 )(SoftwaresIndicators);

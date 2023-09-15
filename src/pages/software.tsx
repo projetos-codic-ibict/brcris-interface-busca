@@ -24,6 +24,7 @@ import CustomResultViewSoftwares from '../components/customResultView/CustomResu
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import SoftwaresIndicators from '../components/indicators/SoftwaresIndicators';
 import styles from '../styles/Home.module.css';
+import { IndicatorProvider } from '../components/context/IndicatorsContext';
 type Props = {
   // Add custom props here
 };
@@ -162,80 +163,71 @@ export default function App() {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
-  const [indicatorsState, setIndicatorsState] = useState({
-    config,
-    data: [],
-  });
-
-  const receiveChildData = (data: any) => {
-    setIndicatorsState(data);
-  };
-
   return (
     <div>
       <Head>
         <title>{`BrCris - ${t('Softwares')}`}</title>
       </Head>
       <div className="page-search">
-        <SearchProvider config={config}>
-          <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-            {({ wasSearched }) => {
-              return (
-                <div className="App">
-                  <ErrorBoundary>
-                    <div className="container page">
-                      <div className="page-title">
-                        <h1>{t('Softwares')}</h1>
+        <IndicatorProvider>
+          <SearchProvider config={config}>
+            <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
+              {({ wasSearched }) => {
+                return (
+                  <div className="App">
+                    <ErrorBoundary>
+                      <div className="container page">
+                        <div className="page-title">
+                          <h1>{t('Softwares')}</h1>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className={styles.content}>
-                      <Layout
-                        header={
-                          <CustomSearchBox
-                            titleFieldName="name"
-                            itemLinkPrefix="softw_"
-                            updateOpetatorConfig={updateOpetatorConfig}
-                            indexName={INDEX_NAME}
-                          />
-                        }
-                        sideContent={
-                          <div>
-                            {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
-                            <div className="filters">
-                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
-                            </div>
-                            <Facet key={'1'} field={'creator'} label={t('Author')} />
-                            <Facet key={'2'} field={'registrationCountry'} label={t('Country')} />
-                            <Facet key={'4'} field={'releaseYear'} label={t('Release year')} />
-                            <Facet key={'5'} field={'knowledgeAreas'} label={t('Knowledge areas')} />
-                            <Facet key={'6'} field={'language'} label={t('Language')} />
-                          </div>
-                        }
-                        bodyContent={<Results resultView={CustomResultViewSoftwares} />}
-                        bodyHeader={
-                          <>
-                            {wasSearched && (
-                              <div className="d-flex align-items-center">
-                                <PagingInfo view={CustomViewPagingInfo} />
-                                {/* <ClearFilters /> */}
+                      <div className={styles.content}>
+                        <Layout
+                          header={
+                            <CustomSearchBox
+                              titleFieldName="name"
+                              itemLinkPrefix="softw_"
+                              updateOpetatorConfig={updateOpetatorConfig}
+                              indexName={INDEX_NAME}
+                            />
+                          }
+                          sideContent={
+                            <div>
+                              {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
+                              <div className="filters">
+                                {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
                               </div>
-                            )}
-                            {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                          </>
-                        }
-                        bodyFooter={<Paging />}
-                      />
-                      {/** 
-                        // @ts-ignore */}
-                      <SoftwaresIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                    </div>
-                  </ErrorBoundary>
-                </div>
-              );
-            }}
-          </WithSearch>
-        </SearchProvider>
+                              <Facet key={'1'} field={'creator'} label={t('Author')} />
+                              <Facet key={'2'} field={'registrationCountry'} label={t('Country')} />
+                              <Facet key={'4'} field={'releaseYear'} label={t('Release year')} />
+                              <Facet key={'5'} field={'knowledgeAreas'} label={t('Knowledge areas')} />
+                              <Facet key={'6'} field={'language'} label={t('Language')} />
+                            </div>
+                          }
+                          bodyContent={<Results resultView={CustomResultViewSoftwares} />}
+                          bodyHeader={
+                            <>
+                              {wasSearched && (
+                                <div className="d-flex align-items-center">
+                                  <PagingInfo view={CustomViewPagingInfo} />
+                                  {/* <ClearFilters /> */}
+                                </div>
+                              )}
+                              {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
+                            </>
+                          }
+                          bodyFooter={<Paging />}
+                        />
+                        <SoftwaresIndicators />
+                      </div>
+                    </ErrorBoundary>
+                  </div>
+                );
+              }}
+            </WithSearch>
+          </SearchProvider>
+        </IndicatorProvider>
       </div>
     </div>
   );

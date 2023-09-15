@@ -21,9 +21,9 @@ import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import ClearFilters from '../components/ClearFilters';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import { IndicatorProvider } from '../components/context/IndicatorsContext';
 import CustomResultViewPatents from '../components/customResultView/CustomResultViewPatents';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import PatentsIndicators from '../components/indicators/PatentsIndicators';
@@ -151,79 +151,72 @@ export default function App() {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
-  const [indicatorsState, setIndicatorsState] = useState({
-    config,
-    data: [],
-  });
-
-  const receiveChildData = (data: any) => {
-    setIndicatorsState(data);
-  };
-
   return (
     <div>
       <Head>
         <title>{`BrCris - ${t('Patents')}`}</title>
       </Head>
       <div className="page-search">
-        <SearchProvider config={config}>
-          <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-            {({ wasSearched }) => {
-              return (
-                <div className="App">
-                  <ErrorBoundary>
-                    <div className="container page">
-                      <div className="page-title">
-                        <h1>{t('Patents')}</h1>
+        <IndicatorProvider>
+          <SearchProvider config={config}>
+            <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
+              {({ wasSearched }) => {
+                return (
+                  <div className="App">
+                    <ErrorBoundary>
+                      <div className="container page">
+                        <div className="page-title">
+                          <h1>{t('Patents')}</h1>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className={styles.content}>
-                      <Layout
-                        header={
-                          <CustomSearchBox
-                            titleFieldName="espacenetTitle"
-                            itemLinkPrefix="pat_"
-                            updateOpetatorConfig={updateOpetatorConfig}
-                            indexName={INDEX_NAME}
-                          />
-                        }
-                        sideContent={
-                          <div>
-                            {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
-                            <div className="filters">
-                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
-                            </div>
-                            <Facet key={'1'} field={'inventor.name'} label={t('Inventor')} />
-                            <Facet key={'2'} field={'countryCode'} label={t('Country code')} />
-                            <Facet key={'2'} field={'publicationDate'} label={t('Publication date')} />
-                            <Facet key={'3'} field={'depositDate'} label={t('Deposit date')} />
-                          </div>
-                        }
-                        bodyContent={<Results resultView={CustomResultViewPatents} />}
-                        bodyHeader={
-                          <>
-                            {wasSearched && (
-                              <div className="d-flex align-items-center">
-                                <PagingInfo view={CustomViewPagingInfo} />
-                                {/* <ClearFilters /> */}
+                      <div className={styles.content}>
+                        <Layout
+                          header={
+                            <CustomSearchBox
+                              titleFieldName="espacenetTitle"
+                              itemLinkPrefix="pat_"
+                              updateOpetatorConfig={updateOpetatorConfig}
+                              indexName={INDEX_NAME}
+                            />
+                          }
+                          sideContent={
+                            <div>
+                              {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
+                              <div className="filters">
+                                {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
                               </div>
-                            )}
-                            {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                          </>
-                        }
-                        bodyFooter={<Paging />}
-                      />
-                      {/* 
+                              <Facet key={'1'} field={'inventor.name'} label={t('Inventor')} />
+                              <Facet key={'2'} field={'countryCode'} label={t('Country code')} />
+                              <Facet key={'2'} field={'publicationDate'} label={t('Publication date')} />
+                              <Facet key={'3'} field={'depositDate'} label={t('Deposit date')} />
+                            </div>
+                          }
+                          bodyContent={<Results resultView={CustomResultViewPatents} />}
+                          bodyHeader={
+                            <>
+                              {wasSearched && (
+                                <div className="d-flex align-items-center">
+                                  <PagingInfo view={CustomViewPagingInfo} />
+                                  {/* <ClearFilters /> */}
+                                </div>
+                              )}
+                              {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
+                            </>
+                          }
+                          bodyFooter={<Paging />}
+                        />
+                        {/* 
                         // @ts-ignore  */}
-                      <PatentsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                    </div>
-                  </ErrorBoundary>
-                </div>
-              );
-            }}
-          </WithSearch>
-        </SearchProvider>
+                        <PatentsIndicators />
+                      </div>
+                    </ErrorBoundary>
+                  </div>
+                );
+              }}
+            </WithSearch>
+          </SearchProvider>
+        </IndicatorProvider>
       </div>
     </div>
   );

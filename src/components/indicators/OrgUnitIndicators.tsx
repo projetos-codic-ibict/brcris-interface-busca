@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { withSearch } from '@elastic/react-search-ui';
+import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
@@ -12,8 +12,9 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import ElasticSearchService from '../../services/ElasticSearchService';
-import { IndicatorType } from '../../types/Entities';
+import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
+import IndicatorContext from '../context/IndicatorsContext';
 import { OptionsBar } from './options/ChartsOptions';
 import getFormatedQuery from './query/Query';
 
@@ -32,9 +33,16 @@ const headersOrgUnitState = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }: IndicatorsProps) {
-  const [indicators, setIndicators] = useState(indicatorsState.data);
+function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
   const { t } = useTranslation('common');
+
+  const { driver } = useContext(SearchContext);
+  const { indicators, setIndicatorsData, isEmpty } = useContext(IndicatorContext);
+  console.log('indicators', indicators);
+
+  const { search_fields, operator } = driver.searchQuery as CustomSearchQuery;
+  // @ts-ignore
+  const fields = Object.keys(search_fields);
 
   useEffect(() => {
     // tradução
@@ -42,46 +50,33 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState, se
     options.plugins.title.text = t(options.title);
     // @ts-ignore
     optionsState.plugins.title.text = t(optionsState.title);
-    const fields = Object.keys(indicatorsState.config.searchQuery.search_fields);
-    const operator = indicatorsState.config.searchQuery.operator;
+
+    const countryQuery = JSON.stringify(
+      getFormatedQuery({
+        size: 10,
+        indicadorName: 'country',
+        searchTerm,
+        fields,
+        operator,
+        filters,
+      })
+    );
+    const stateQuery = JSON.stringify(
+      getFormatedQuery({
+        size: 10,
+        indicadorName: 'state',
+        searchTerm,
+        fields,
+        operator,
+        filters,
+      })
+    );
     isLoading
-      ? ElasticSearchService(
-          [
-            JSON.stringify(
-              getFormatedQuery({
-                size: 10,
-                indicadorName: 'country',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-              })
-            ),
-            JSON.stringify(
-              getFormatedQuery({
-                size: 10,
-                indicadorName: 'state',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-              })
-            ),
-          ],
-          INDEX_NAME
-        ).then((data) => {
-          setIndicators(data);
-          indicatorsState.data = data;
-          sendDataToParent(indicatorsState);
+      ? ElasticSearchService([countryQuery, stateQuery], INDEX_NAME).then((data) => {
+          setIndicatorsData(data);
         })
       : null;
-  }, [
-    filters,
-    searchTerm,
-    isLoading,
-    indicatorsState.config.searchQuery.search_fields,
-    indicatorsState.config.searchQuery.operator,
-  ]);
+  }, [filters, searchTerm, isLoading]);
 
   const countryIndicators: IndicatorType[] = indicators ? indicators[0] : [];
   const countryLabels = countryIndicators != null ? countryIndicators.map((d) => d.key) : [];
@@ -90,8 +85,8 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState, se
   const stateLabels = stateIndicators != null ? stateIndicators.map((d) => d.key) : [];
 
   return (
-    <div className={styles.charts}>
-      <div className={styles.chart} hidden={countryIndicators == null}>
+    <div className={styles.charts} hidden={isEmpty()}>
+      <div className={styles.chart}>
         <CSVLink
           className={styles.download}
           title="Export to csv"
@@ -155,11 +150,9 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading, indicatorsState, se
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading, indicatorsState, sendDataToParent }) => ({
+  ({ filters, searchTerm, isLoading }) => ({
     filters,
     searchTerm,
     isLoading,
-    indicatorsState,
-    sendDataToParent,
   })
 )(OrgUnitIndicators);

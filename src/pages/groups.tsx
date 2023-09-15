@@ -20,8 +20,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
-import { useState } from 'react';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import { IndicatorProvider } from '../components/context/IndicatorsContext';
 import CustomResultViewGroups from '../components/customResultView/CustomResultViewGroups';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import GroupsIndicators from '../components/indicators/GroupsIndicators';
@@ -178,100 +178,93 @@ export default function App() {
   // tradução
   SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
 
-  const [indicatorsState, setIndicatorsState] = useState({
-    config,
-    data: [],
-  });
-
-  const receiveChildData = (data: any) => {
-    setIndicatorsState(data);
-  };
-
   return (
     <div>
       <Head>
         <title>{`BrCris - ${t('Research groups')}`}</title>
       </Head>
       <div className="page-search">
-        <SearchProvider config={config}>
-          <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-            {({ wasSearched }) => {
-              return (
-                <div className="App">
-                  <ErrorBoundary>
-                    <div className="container page">
-                      <div className="page-title">
-                        <h1>{t('Research Groups')}</h1>
+        <IndicatorProvider>
+          <SearchProvider config={config}>
+            <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
+              {({ wasSearched }) => {
+                return (
+                  <div className="App">
+                    <ErrorBoundary>
+                      <div className="container page">
+                        <div className="page-title">
+                          <h1>{t('Research Groups')}</h1>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className={styles.content}>
-                      <Layout
-                        header={
-                          <SearchBox
-                            autocompleteMinimumCharacters={3}
-                            autocompleteResults={{
-                              linkTarget: '_blank',
-                              sectionTitle: t('Open link') || '',
-                              titleField: 'name',
-                              urlField: 'vivo_link',
-                              shouldTrackClickThrough: true,
-                            }}
-                            autocompleteSuggestions={true}
-                            debounceLength={0}
-                          />
-                        }
-                        sideContent={
-                          <div>
-                            {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
-                            <div className="filters">
-                              {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
-                            </div>
-                            <Facet key={'1'} field={'creationYear'} label={t('Creation year')} />
-
-                            <Facet key={'2'} field={'researchLine'} label={t('Research line')} />
-
-                            <Facet key={'3'} field={'knowledgeArea'} label={t('Knowledge area')} />
-
-                            <Facet key={'4'} field={'orgunit.name'} label={t('Organization')} />
-
-                            <Facet key={'5'} field={'keyword'} label={t('Keyword')} />
-
-                            <Facet key={'6'} field={'status'} label={t('Status')} />
-
-                            <Facet key={'7'} field={'leader.name'} label={t('Leader')} />
-
-                            <Facet key={'8'} field={'partner.name'} label={t('Partner')} />
-
-                            <Facet key={'9'} field={'member'} label={t('Member')} />
-
-                            <Facet key={'10'} field={'applicationSector'} label={t('Application sector')} />
-                          </div>
-                        }
-                        bodyContent={<Results resultView={CustomResultViewGroups} />}
-                        bodyHeader={
-                          <>
-                            {wasSearched && (
-                              <div className="d-flex align-items-center">
-                                <PagingInfo view={CustomViewPagingInfo} />
-                                {/* <ClearFilters /> */}
+                      <div className={styles.content}>
+                        <Layout
+                          header={
+                            <SearchBox
+                              autocompleteMinimumCharacters={3}
+                              autocompleteResults={{
+                                linkTarget: '_blank',
+                                sectionTitle: t('Open link') || '',
+                                titleField: 'name',
+                                urlField: 'vivo_link',
+                                shouldTrackClickThrough: true,
+                              }}
+                              autocompleteSuggestions={true}
+                              debounceLength={0}
+                            />
+                          }
+                          sideContent={
+                            <div>
+                              {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
+                              <div className="filters">
+                                {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
                               </div>
-                            )}
-                            {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                          </>
-                        }
-                        bodyFooter={<Paging />}
-                      />
-                      {/** 
+                              <Facet key={'1'} field={'creationYear'} label={t('Creation year')} />
+
+                              <Facet key={'2'} field={'researchLine'} label={t('Research line')} />
+
+                              <Facet key={'3'} field={'knowledgeArea'} label={t('Knowledge area')} />
+
+                              <Facet key={'4'} field={'orgunit.name'} label={t('Organization')} />
+
+                              <Facet key={'5'} field={'keyword'} label={t('Keyword')} />
+
+                              <Facet key={'6'} field={'status'} label={t('Status')} />
+
+                              <Facet key={'7'} field={'leader.name'} label={t('Leader')} />
+
+                              <Facet key={'8'} field={'partner.name'} label={t('Partner')} />
+
+                              <Facet key={'9'} field={'member'} label={t('Member')} />
+
+                              <Facet key={'10'} field={'applicationSector'} label={t('Application sector')} />
+                            </div>
+                          }
+                          bodyContent={<Results resultView={CustomResultViewGroups} />}
+                          bodyHeader={
+                            <>
+                              {wasSearched && (
+                                <div className="d-flex align-items-center">
+                                  <PagingInfo view={CustomViewPagingInfo} />
+                                  {/* <ClearFilters /> */}
+                                </div>
+                              )}
+                              {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
+                            </>
+                          }
+                          bodyFooter={<Paging />}
+                        />
+                        {/** 
                         // @ts-ignore */}
-                      <GroupsIndicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                    </div>
-                  </ErrorBoundary>
-                </div>
-              );
-            }}
-          </WithSearch>
-        </SearchProvider>
+                        <GroupsIndicators />
+                      </div>
+                    </ErrorBoundary>
+                  </div>
+                );
+              }}
+            </WithSearch>
+          </SearchProvider>
+        </IndicatorProvider>
       </div>
     </div>
   );

@@ -21,6 +21,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import AdvancedSearchBox from '../components/AdvancedSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import { IndicatorProvider } from '../components/context/IndicatorsContext';
 import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import Indicators from '../components/indicators/PublicationsIndicators';
@@ -211,65 +212,57 @@ export default function App() {
     });
   }
 
-  const [indicatorsState, setIndicatorsState] = useState({
-    config,
-    data: [],
-  });
-
-  const receiveChildData = (data: any) => {
-    setIndicatorsState(data);
-  };
-
   return (
     <div>
       <Head>
         <title>{`BrCris - ${t('Publications')}`}</title>
       </Head>
       <div className="page-search">
-        <SearchProvider config={config}>
-          <WithSearch mapContextToProps={({ wasSearched, results }) => ({ wasSearched, results })}>
-            {({ wasSearched, results }) => {
-              return (
-                <div className="App">
-                  <ErrorBoundary>
-                    <div className="container page">
-                      <div className="page-title">
-                        <h1>{t('Publications')}</h1>
+        <IndicatorProvider>
+          <SearchProvider config={config}>
+            <WithSearch mapContextToProps={({ wasSearched, results }) => ({ wasSearched, results })}>
+              {({ wasSearched, results }) => {
+                return (
+                  <div className="App">
+                    <ErrorBoundary>
+                      <div className="container page">
+                        <div className="page-title">
+                          <h1>{t('Publications')}</h1>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className={styles.content}>
-                      <Layout
-                        header={
-                          // <CustomSearchBox
-                          //   titleFieldName="title"
-                          //   itemLinkPrefix="publ_"
-                          //   updateOpetatorConfig={updateOpetatorConfig}
-                          //   indexName={INDEX_NAME}
-                          // />
-                          //@ts-ignore
-                          <AdvancedSearchBox updateQueryConfig={updateAdvancedConfig} />
-                        }
-                        sideContent={
-                          <div>
-                            {wasSearched && results.length > 0 && (
-                              <>
-                                <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />
-                                <div className="filters">
-                                  <span className="sui-sorting__label">{t('Filters')}</span>
-                                </div>
-                              </>
-                            )}
+                      <div className={styles.content}>
+                        <Layout
+                          header={
+                            // <CustomSearchBox
+                            //   titleFieldName="title"
+                            //   itemLinkPrefix="publ_"
+                            //   updateOpetatorConfig={updateOpetatorConfig}
+                            //   indexName={INDEX_NAME}
+                            // />
+                            //@ts-ignore
+                            <AdvancedSearchBox updateQueryConfig={updateAdvancedConfig} />
+                          }
+                          sideContent={
+                            <div>
+                              {wasSearched && results.length > 0 && (
+                                <>
+                                  <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />
+                                  <div className="filters">
+                                    <span className="sui-sorting__label">{t('Filters')}</span>
+                                  </div>
+                                </>
+                              )}
 
-                            <Facet key={'1'} field={'language'} label={t('Language')} />
-                            <Facet key={'2'} field={'author.name'} label={t('Authors')} />
-                            <Facet key={'3'} field={'keyword'} label={t('Keyword')} />
-                            <Facet key={'4'} field={'orgunit.name'} label={t('Institution')} />
-                            <Facet key={'5'} field={'journal.title'} label={t('Journal')} />
-                            <Facet key={'6'} field={'type'} label={t('Type')} />
-                            <Facet key={'7'} field={'cnpqResearchArea'} label={t('CNPq research area')} />
-                            <Facet key={'8'} field={'publicationDate'} filterType={'none'} label={t('Year')} />
-                            {/* <Facet
+                              <Facet key={'1'} field={'language'} label={t('Language')} />
+                              <Facet key={'2'} field={'author.name'} label={t('Authors')} />
+                              <Facet key={'3'} field={'keyword'} label={t('Keyword')} />
+                              <Facet key={'4'} field={'orgunit.name'} label={t('Institution')} />
+                              <Facet key={'5'} field={'journal.title'} label={t('Journal')} />
+                              <Facet key={'6'} field={'type'} label={t('Type')} />
+                              <Facet key={'7'} field={'cnpqResearchArea'} label={t('CNPq research area')} />
+                              <Facet key={'8'} field={'publicationDate'} filterType={'none'} label={t('Year')} />
+                              {/* <Facet
                             mapContextToProps={(context) => {
                               if (!context.facets['publicationDate.keyword'])
                                 return context
@@ -294,32 +287,31 @@ export default function App() {
                             label="ano"
                             show={10}
                           /> */}
-                          </div>
-                        }
-                        bodyContent={<Results resultView={CustomResultViewPublications} />}
-                        bodyHeader={
-                          <>
-                            {wasSearched && (
-                              <div className="d-flex align-items-center">
-                                <PagingInfo view={CustomViewPagingInfo} />
-                                {/* <ClearFilters /> */}
-                              </div>
-                            )}
-                            {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                          </>
-                        }
-                        bodyFooter={<Paging />}
-                      />
-                      {/* 
-                        // @ts-ignore  */}
-                      <Indicators indicatorsState={indicatorsState} sendDataToParent={receiveChildData} />
-                    </div>
-                  </ErrorBoundary>
-                </div>
-              );
-            }}
-          </WithSearch>
-        </SearchProvider>
+                            </div>
+                          }
+                          bodyContent={<Results resultView={CustomResultViewPublications} />}
+                          bodyHeader={
+                            <>
+                              {wasSearched && (
+                                <div className="d-flex align-items-center">
+                                  <PagingInfo view={CustomViewPagingInfo} />
+                                  {/* <ClearFilters /> */}
+                                </div>
+                              )}
+                              {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
+                            </>
+                          }
+                          bodyFooter={<Paging />}
+                        />
+                        <Indicators />
+                      </div>
+                    </ErrorBoundary>
+                  </div>
+                );
+              }}
+            </WithSearch>
+          </SearchProvider>
+        </IndicatorProvider>
       </div>
     </div>
   );

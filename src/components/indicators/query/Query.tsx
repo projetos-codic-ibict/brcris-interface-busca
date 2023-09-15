@@ -5,7 +5,7 @@ type QueryProps = {
   indicadorName: string;
   searchTerm: string;
   fields: string[];
-  operator: boolean;
+  operator: string;
   filters: [];
   order?: { _count?: string; _key?: string };
 };
