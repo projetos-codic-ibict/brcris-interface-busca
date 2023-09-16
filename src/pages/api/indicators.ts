@@ -23,7 +23,6 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   const data: RequestData = JSON.parse(req.body);
   const querys: any[] = [];
   data.querys.forEach((query) => {
-    console.log(query);
     querys.push({ index: data.index });
     querys.push(query);
   });

@@ -40,5 +40,4 @@ export type AdvancedFieldType = {
   field: string;
   op: string;
   value: string;
-  sequence: number;
 };

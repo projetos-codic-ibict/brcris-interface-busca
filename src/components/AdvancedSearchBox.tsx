@@ -15,12 +15,12 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
   const router = useRouter();
   const [field, setField] = useState('All fields');
   const [value, setValue] = useState('');
-  const [op, setOp] = useState('AND');
+  const [op, setOp] = useState('&');
   const [fullQuery, setFullQuery] = useState(searchTerm || '');
 
   const handleQueryChange = () => {
-    const newQuery = `${fullQuery ? op : ''}[${field}=${value}]`;
-    setFullQuery(`${fullQuery}${newQuery}`);
+    const newQuery = `${field}=${value}${fullQuery ? `${op}` : ''}`;
+    setFullQuery(fullQuery ? `(${newQuery}${fullQuery})` : `${newQuery}${fullQuery}`);
   };
 
   return (
@@ -37,8 +37,8 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
           <option selected={field == 'All field'} value="All fields">
             All fields
           </option>
-          <option value="Title">Title</option>
-          <option value="Keyword">Keyword</option>
+          <option value="title_text">Title</option>
+          <option value="keyword_text">Keyword</option>
         </select>
         <input
           value={value}
@@ -57,11 +57,9 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
           }}
           className="form-select"
         >
-          <option selected={op == 'AND'} value="AND">
-            AND
-          </option>
-          <option value="OR">OR</option>
-          <option value="NOT">NOT</option>
+          <option value="&">AND</option>
+          <option value="|">OR</option>
+          <option value="!">NOT</option>
         </select>
         <button
           className="btn btn-secondary"
@@ -92,6 +90,7 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
                 onChange(e.target.value);
               }}
             ></textarea>
+            <span onClick={() => setFullQuery('')}>X</span>
             <input type="submit" value={t('Search') || 'Search'} className="button sui-search-box__submit" />
           </form>
         )}

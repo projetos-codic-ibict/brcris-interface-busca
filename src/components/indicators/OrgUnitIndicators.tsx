@@ -38,7 +38,6 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
 
   const { driver } = useContext(SearchContext);
   const { indicators, setIndicatorsData, isEmpty } = useContext(IndicatorContext);
-  console.log('indicators', indicators);
 
   const { search_fields, operator } = driver.searchQuery as CustomSearchQuery;
   // @ts-ignore

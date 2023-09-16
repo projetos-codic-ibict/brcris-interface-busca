@@ -112,3 +112,41 @@ GET pesqdf-publication/_search
     }
   }
 }
+
+
+GET pesqdf-publication/_search
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "bool": {
+            "must": [
+              {
+                "match": {
+                  "title_text": "Java"
+                }
+              },
+              {
+                "match": {
+                  "keyword_text": "VHDL"
+                }
+              }
+            ]
+          }
+        },
+            {
+          "bool": {
+            "should": [
+              {
+                "match": {
+                  "keyword_text": "Computação"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

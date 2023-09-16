@@ -18,7 +18,6 @@ export function IndicatorProvider(props: PropsWithChildren<object>) {
   }
 
   function isEmpty(): boolean {
-    console.log(JSON.stringify(indicators));
     return indicators.length < 1 || indicators[0] == null || indicators[0].length < 1;
   }
 
