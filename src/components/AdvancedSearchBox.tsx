@@ -7,13 +7,13 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 interface CustomSearchBoxProps extends SearchContextState {
-  updateQueryConfig: (advancedQuery: string) => void;
+  toogleAdvancedConfig: (advanced: boolean) => void;
 }
 
-const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: CustomSearchBoxProps) => {
+const AdvancedSearchBox = ({ searchTerm, setSearchTerm, toogleAdvancedConfig }: CustomSearchBoxProps) => {
   const { t } = useTranslation('common');
   const router = useRouter();
-  const [field, setField] = useState('All fields');
+  const [field, setField] = useState('title_text');
   const [value, setValue] = useState('');
   const [op, setOp] = useState('&');
   const [fullQuery, setFullQuery] = useState(searchTerm || '');
@@ -25,7 +25,6 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
 
   return (
     <div className="d-flex flex-column flex-gap-1 advanced">
-      <span className="">Basic Search </span>
       <div className="d-flex flex-gap-1">
         <select
           id={`field`}
@@ -70,9 +69,9 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
       <SearchBox
         onSubmit={(searchTerm) => {
           searchTerm = fullQuery || searchTerm;
-          updateQueryConfig(fullQuery);
+          // updateQueryConfig(fullQuery);
           setSearchTerm(fullQuery);
-          router.query.q = `advanced=true&&${searchTerm}`;
+          router.query.q = `${searchTerm}`;
           router.push(router);
         }}
         view={({ onChange, onSubmit }) => (
@@ -99,6 +98,9 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
           </form>
         )}
       />
+      <span onClick={() => toogleAdvancedConfig(false)} className="link-color">
+        Basic Search
+      </span>
     </div>
   );
 };

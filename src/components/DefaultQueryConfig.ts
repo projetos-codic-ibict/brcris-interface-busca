@@ -5,6 +5,7 @@ const DefaultQueryConfig = (indexName: string) => {
   return {
     debug: false,
     indicators: [],
+    advanced: false,
     urlPushDebounceLength: 500,
     alwaysSearchOnInitialLoad: false,
     hasA11yNotifications: true,

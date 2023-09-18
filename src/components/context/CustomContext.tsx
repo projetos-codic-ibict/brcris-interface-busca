@@ -1,17 +1,20 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 import { IndicatorType } from '../../types/Entities';
 
-interface IndicadorContextProps {
+interface CustomContextProps {
   indicators: IndicatorType[][];
   setIndicatorsData: (data: Array<IndicatorType[]>) => void;
   isEmpty: () => boolean;
+  advanced: boolean;
+  setAdvanced: (advanced: boolean) => void;
 }
 
-const IndicatorContext = createContext<IndicadorContextProps>({} as IndicadorContextProps);
-export default IndicatorContext;
+const CustomContext = createContext<CustomContextProps>({} as CustomContextProps);
+export default CustomContext;
 
-export function IndicatorProvider(props: PropsWithChildren<object>) {
+export function CustomProvider(props: PropsWithChildren<object>) {
   const [indicators, setIndicators] = useState<Array<IndicatorType[]>>([] as Array<IndicatorType[]>);
+  const [advanced, setAdvanced] = useState(false);
 
   function setIndicatorsData(data: Array<IndicatorType[]>) {
     setIndicators(data);
@@ -22,14 +25,16 @@ export function IndicatorProvider(props: PropsWithChildren<object>) {
   }
 
   return (
-    <IndicatorContext.Provider
+    <CustomContext.Provider
       value={{
         indicators,
         setIndicatorsData,
         isEmpty,
+        advanced,
+        setAdvanced,
       }}
     >
       {props.children}
-    </IndicatorContext.Provider>
+    </CustomContext.Provider>
   );
 }

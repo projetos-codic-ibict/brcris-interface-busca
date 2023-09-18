@@ -14,7 +14,7 @@ import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Util
 import ElasticSearchService from '../../services/ElasticSearchService';
 import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
-import IndicatorContext from '../context/IndicatorsContext';
+import IndicatorContext from '../context/CustomContext';
 import { OptionsBar, OptionsPie } from './options/ChartsOptions';
 import getFormatedQuery from './query/Query';
 
@@ -48,7 +48,7 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
     options.plugins.title.text = t(options.title);
     // @ts-ignore
     optionsType.plugins.title.text = t(optionsType.title);
-
+    console.log(isLoading);
     isLoading
       ? ElasticSearchService(
           [

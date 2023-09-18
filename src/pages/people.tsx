@@ -18,9 +18,9 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useState } from 'react';
-import CustomSearchBox from '../components/CustomSearchBox';
+import CustomSearchBox from '../components/BasicSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
-import { IndicatorProvider } from '../components/context/IndicatorsContext';
+import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewPeople from '../components/customResultView/CustomResultViewPeople';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import IndicatorsPeople from '../components/indicators/PeopleIndicators';
@@ -143,7 +143,7 @@ export default function App() {
         <title>{`BrCris - ${t('People')}`}</title>
       </Head>
       <div className="page-search">
-        <IndicatorProvider>
+        <CustomProvider>
           <SearchProvider config={config}>
             <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
               {({ wasSearched }) => {
@@ -164,6 +164,7 @@ export default function App() {
                               itemLinkPrefix="pers_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
+                              toogleAdvancedConfig={() => null}
                             />
                           }
                           sideContent={
@@ -198,7 +199,7 @@ export default function App() {
               }}
             </WithSearch>
           </SearchProvider>
-        </IndicatorProvider>
+        </CustomProvider>
       </div>
     </div>
   );

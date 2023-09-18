@@ -18,13 +18,13 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useState } from 'react';
-import CustomSearchBox from '../components/CustomSearchBox';
+import BasicSearchBox from '../components/BasicSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewSoftwares from '../components/customResultView/CustomResultViewSoftwares';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import SoftwaresIndicators from '../components/indicators/SoftwaresIndicators';
 import styles from '../styles/Home.module.css';
-import { IndicatorProvider } from '../components/context/IndicatorsContext';
 type Props = {
   // Add custom props here
 };
@@ -169,7 +169,7 @@ export default function App() {
         <title>{`BrCris - ${t('Softwares')}`}</title>
       </Head>
       <div className="page-search">
-        <IndicatorProvider>
+        <CustomProvider>
           <SearchProvider config={config}>
             <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
               {({ wasSearched }) => {
@@ -185,11 +185,12 @@ export default function App() {
                       <div className={styles.content}>
                         <Layout
                           header={
-                            <CustomSearchBox
+                            <BasicSearchBox
                               titleFieldName="name"
                               itemLinkPrefix="softw_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
+                              toogleAdvancedConfig={() => null}
                             />
                           }
                           sideContent={
@@ -227,7 +228,7 @@ export default function App() {
               }}
             </WithSearch>
           </SearchProvider>
-        </IndicatorProvider>
+        </CustomProvider>
       </div>
     </div>
   );

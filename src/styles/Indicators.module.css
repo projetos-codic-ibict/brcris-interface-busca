@@ -1,7 +1,6 @@
 .charts {
   margin-top: 200px;
   width: calc(25% - 16px);
-
 }
 
 .chart {
@@ -33,5 +32,8 @@
     margin-right: 0;
     margin-bottom: 32px;
     max-width: 100%;
+    width: 100%;
+    padding: 0 16px;
+    margin-top: 20px;
   }
 }

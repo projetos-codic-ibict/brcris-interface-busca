@@ -18,7 +18,7 @@ function builConnector(index: string) {
       // transforming the query before sending to Elasticsearch using the requestState and queryConfig
       const searchFields: any = queryConfig.search_fields;
       // @ts-ignore
-      if (queryConfig.advanced) {
+      if (requestState.searchTerm.indexOf('=') > 0) {
         if (requestState.searchTerm.indexOf('(') >= 0) {
           let fullQuery = stringify(parseElasticsearchQuery(requestState.searchTerm));
           fullQuery = fullQuery.replace(',null', '');

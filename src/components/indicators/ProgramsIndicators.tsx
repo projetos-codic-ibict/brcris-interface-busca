@@ -14,7 +14,7 @@ import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Util
 import ElasticSearchService from '../../services/ElasticSearchService';
 import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
-import IndicatorContext from '../context/IndicatorsContext';
+import IndicatorContext from '../context/CustomContext';
 import { OptionsBar } from './options/ChartsOptions';
 import getFormatedQuery from './query/Query';
 

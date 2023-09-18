@@ -19,9 +19,9 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useState } from 'react';
-import AdvancedSearchBox from '../components/AdvancedSearchBox';
+import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
-import { IndicatorProvider } from '../components/context/IndicatorsContext';
+import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import Indicators from '../components/indicators/PublicationsIndicators';
@@ -41,7 +41,6 @@ const configDefault: CustomSearchDriverOptions = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
     operator: 'OR',
-    advanced: false,
     search_fields: {
       title_text: {
         weight: 3,
@@ -204,11 +203,11 @@ export default function App() {
     //@ts-ignore
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
-  function updateAdvancedConfig(advancedQuery: string) {
+  function toogleAdvancedConfig(advanced: boolean) {
     //@ts-ignore
     setConfig({
       ...config,
-      searchQuery: { ...config.searchQuery, advanced: true, advancedQuery: advancedQuery },
+      advanced: true,
     });
   }
 
@@ -218,7 +217,7 @@ export default function App() {
         <title>{`BrCris - ${t('Publications')}`}</title>
       </Head>
       <div className="page-search">
-        <IndicatorProvider>
+        <CustomProvider>
           <SearchProvider config={config}>
             <WithSearch mapContextToProps={({ wasSearched, results }) => ({ wasSearched, results })}>
               {({ wasSearched, results }) => {
@@ -230,18 +229,27 @@ export default function App() {
                           <h1>{t('Publications')}</h1>
                         </div>
                       </div>
-
                       <div className={styles.content}>
                         <Layout
                           header={
-                            // <CustomSearchBox
-                            //   titleFieldName="title"
-                            //   itemLinkPrefix="publ_"
-                            //   updateOpetatorConfig={updateOpetatorConfig}
-                            //   indexName={INDEX_NAME}
-                            // />
-                            //@ts-ignore
-                            <AdvancedSearchBox updateQueryConfig={updateAdvancedConfig} />
+                            <CustomSearchBox
+                              titleFieldName="title"
+                              itemLinkPrefix="publ_"
+                              updateOpetatorConfig={updateOpetatorConfig}
+                              indexName={INDEX_NAME}
+                            />
+                            // config.advanced ? (
+                            //   //@ts-ignore
+                            //   <AdvancedSearchBox toogleAdvancedConfig={toogleAdvancedConfig} />
+                            // ) : (
+                            //   <CustomSearchBox
+                            //     titleFieldName="title"
+                            //     itemLinkPrefix="publ_"
+                            //     updateOpetatorConfig={updateOpetatorConfig}
+                            //     indexName={INDEX_NAME}
+                            //     toogleAdvancedConfig={toogleAdvancedConfig}
+                            //   />
+                            // )
                           }
                           sideContent={
                             <div>
@@ -311,7 +319,7 @@ export default function App() {
               }}
             </WithSearch>
           </SearchProvider>
-        </IndicatorProvider>
+        </CustomProvider>
       </div>
     </div>
   );

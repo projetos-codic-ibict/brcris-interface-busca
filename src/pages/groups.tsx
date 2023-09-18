@@ -21,7 +21,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
-import { IndicatorProvider } from '../components/context/IndicatorsContext';
+import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewGroups from '../components/customResultView/CustomResultViewGroups';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import GroupsIndicators from '../components/indicators/GroupsIndicators';
@@ -184,7 +184,7 @@ export default function App() {
         <title>{`BrCris - ${t('Research groups')}`}</title>
       </Head>
       <div className="page-search">
-        <IndicatorProvider>
+        <CustomProvider>
           <SearchProvider config={config}>
             <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
               {({ wasSearched }) => {
@@ -264,7 +264,7 @@ export default function App() {
               }}
             </WithSearch>
           </SearchProvider>
-        </IndicatorProvider>
+        </CustomProvider>
       </div>
     </div>
   );

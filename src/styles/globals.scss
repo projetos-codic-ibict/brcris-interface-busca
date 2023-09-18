@@ -458,7 +458,7 @@ li .sui-result__key:after {
 }
 
 .flex-gap-1 {
-  gap: 1rem;
+  gap: 5px;
 }
 
 .d-flex .sui-search-box__submit {
@@ -484,6 +484,13 @@ li .sui-result__key:after {
 
 .advanced .close:hover {
   border: 1px solid var(--accent-color);
+}
+.link-color {
+  color: var(--text-secondary-color);
+  cursor: pointer;
+}
+.basic-search {
+  width: 100%;
 }
 
 .collapse.show {
@@ -722,6 +729,8 @@ footer {
   }
 
   .page-search .sui-layout {
+    padding: 0 16px;
+    width: 100%;
     margin-left: 0;
   }
 

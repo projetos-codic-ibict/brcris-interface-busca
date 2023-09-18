@@ -21,9 +21,9 @@ import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import CustomSearchBox from '../components/CustomSearchBox';
+import CustomSearchBox from '../components/BasicSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
-import { IndicatorProvider } from '../components/context/IndicatorsContext';
+import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewPatents from '../components/customResultView/CustomResultViewPatents';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import PatentsIndicators from '../components/indicators/PatentsIndicators';
@@ -157,7 +157,7 @@ export default function App() {
         <title>{`BrCris - ${t('Patents')}`}</title>
       </Head>
       <div className="page-search">
-        <IndicatorProvider>
+        <CustomProvider>
           <SearchProvider config={config}>
             <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
               {({ wasSearched }) => {
@@ -178,6 +178,7 @@ export default function App() {
                               itemLinkPrefix="pat_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
+                              toogleAdvancedConfig={() => null}
                             />
                           }
                           sideContent={
@@ -216,7 +217,7 @@ export default function App() {
               }}
             </WithSearch>
           </SearchProvider>
-        </IndicatorProvider>
+        </CustomProvider>
       </div>
     </div>
   );
