@@ -90,7 +90,12 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
             <span title={t('Close') || 'Close'} className="close" onClick={() => setFullQuery('')}>
               X
             </span>
-            <input type="submit" value={t('Search') || 'Search'} className="button sui-search-box__submit" />
+            <input
+              disabled={fullQuery == null || fullQuery.length < 3}
+              type="submit"
+              value={t('Search') || 'Search'}
+              className="button sui-search-box__submit"
+            />
           </form>
         )}
       />
