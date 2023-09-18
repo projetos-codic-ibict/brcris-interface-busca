@@ -34,9 +34,6 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
           }}
           className="form-select"
         >
-          <option selected={field == 'All field'} value="All fields">
-            All fields
-          </option>
           <option value="title_text">Title</option>
           <option value="keyword_text">Keyword</option>
         </select>
@@ -59,7 +56,7 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
         >
           <option value="&">AND</option>
           <option value="|">OR</option>
-          <option value="!">NOT</option>
+          {/* <option value="!">NOT</option> */}
         </select>
         <button
           className="btn btn-primary"

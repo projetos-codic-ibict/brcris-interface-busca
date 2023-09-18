@@ -19,10 +19,24 @@ function builConnector(index: string) {
       const searchFields: any = queryConfig.search_fields;
       // @ts-ignore
       if (queryConfig.advanced) {
-        let fullQuery = stringify(parseElasticsearchQuery(requestState.searchTerm));
-        fullQuery = fullQuery.replace(',null', '');
-        console.log('fullQuery: ', fullQuery);
-        requestBody.query = JSON.parse(fullQuery);
+        if (requestState.searchTerm.indexOf('(') >= 0) {
+          let fullQuery = stringify(parseElasticsearchQuery(requestState.searchTerm));
+          fullQuery = fullQuery.replace(',null', '');
+          console.log('fullQuery: ', fullQuery);
+          requestBody.query = JSON.parse(fullQuery);
+        } else {
+          requestBody.query = {
+            bool: {
+              must: [
+                {
+                  match_phrase: {
+                    [requestState.searchTerm.split('=')[0]]: requestState.searchTerm.split('=')[1],
+                  },
+                },
+              ],
+            },
+          };
+        }
       } else {
         requestBody.query = {
           multi_match: {
@@ -109,9 +123,9 @@ function parseElasticsearchQuery(input: string) {
       i++;
     } else if (char === ')') {
       if (stack.length === 0) {
-        // throw new Error('Erro de formato na string.');
-        i++;
-        continue;
+        throw new Error('Erro de formato na string.');
+        // i++;
+        // continue;
       }
       const top = stack.pop();
       if (top?.bool?.should) {
@@ -129,7 +143,7 @@ function parseElasticsearchQuery(input: string) {
       const indexOr = input.indexOf('|', i);
       const indexAnd = input.indexOf('&', i);
 
-      let index = Math.min(indexOr >= 0 ? indexOr : Infinity, indexAnd >= 0 ? indexAnd : Infinity);
+      let index = getMinValidIndex([indexOr, indexAnd]);
 
       const fields = [];
 
@@ -141,16 +155,11 @@ function parseElasticsearchQuery(input: string) {
 
       if (fields.length > 0 && !chars.includes(input.charAt(nextIndex))) {
         for (nextIndex; nextIndex < input.length && !chars.includes(input.charAt(nextIndex)); index++) {
-          let nextNextIndex = input.indexOf('|', nextIndex);
-          if (nextNextIndex < 0) {
-            nextNextIndex = input.indexOf('&', nextIndex);
-          }
-          if (nextNextIndex < 0) {
-            nextNextIndex = input.indexOf('(', nextIndex);
-          }
-          if (nextNextIndex < 0) {
-            nextNextIndex = input.indexOf(')', nextIndex);
-          }
+          const nexIndexOr = input.indexOf('|', nextIndex);
+          const nextIndexAnd = input.indexOf('&', nextIndex);
+          const nextIndexOpenPar = input.indexOf('(', nextIndex);
+          const nextIndexClosePar = input.indexOf(')', nextIndex);
+          const nextNextIndex = getMinValidIndex([nexIndexOr, nextIndexAnd, nextIndexOpenPar, nextIndexClosePar]);
           if (nextNextIndex > 0) {
             index = nextNextIndex - 1;
             fields.push(input.substring(nextIndex, nextNextIndex));
@@ -212,6 +221,10 @@ function parseElasticsearchQuery(input: string) {
   }
 
   return current;
+}
+
+function getMinValidIndex(list: number[]) {
+  return Math.min(...list.map((value) => (value >= 0 ? value : Infinity)));
 }
 
 function stringify(obj: object) {
