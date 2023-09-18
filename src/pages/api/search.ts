@@ -109,7 +109,9 @@ function parseElasticsearchQuery(input: string) {
       i++;
     } else if (char === ')') {
       if (stack.length === 0) {
-        throw new Error('Erro de formato na string.');
+        // throw new Error('Erro de formato na string.');
+        i++;
+        continue;
       }
       const top = stack.pop();
       if (top?.bool?.should) {
@@ -120,10 +122,14 @@ function parseElasticsearchQuery(input: string) {
       current = top ? top : {};
       i++;
     } else {
-      let index = input.indexOf('|', i);
-      if (index < 0) {
-        index = input.indexOf('&', i);
+      if (char === '|' || char === '&') {
+        i++;
+        continue;
       }
+      const indexOr = input.indexOf('|', i);
+      const indexAnd = input.indexOf('&', i);
+
+      let index = Math.min(indexOr >= 0 ? indexOr : Infinity, indexAnd >= 0 ? indexAnd : Infinity);
 
       const fields = [];
 
@@ -146,7 +152,7 @@ function parseElasticsearchQuery(input: string) {
             nextNextIndex = input.indexOf(')', nextIndex);
           }
           if (nextNextIndex > 0) {
-            index = nextNextIndex;
+            index = nextNextIndex - 1;
             fields.push(input.substring(nextIndex, nextNextIndex));
             nextIndex = nextNextIndex;
           }

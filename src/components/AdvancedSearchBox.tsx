@@ -25,7 +25,7 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
 
   return (
     <div className="d-flex flex-column flex-gap-1 advanced">
-      <p className="">Advanced Search</p>
+      <span className="">Basic Search </span>
       <div className="d-flex flex-gap-1">
         <select
           id={`field`}
@@ -62,7 +62,7 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
           <option value="!">NOT</option>
         </select>
         <button
-          className="btn btn-secondary"
+          className="btn btn-primary"
           onClick={() => {
             handleQueryChange();
           }}
@@ -90,7 +90,9 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, updateQueryConfig }: Cus
                 onChange(e.target.value);
               }}
             ></textarea>
-            <span onClick={() => setFullQuery('')}>X</span>
+            <span title={t('Close') || 'Close'} className="close" onClick={() => setFullQuery('')}>
+              X
+            </span>
             <input type="submit" value={t('Search') || 'Search'} className="button sui-search-box__submit" />
           </form>
         )}

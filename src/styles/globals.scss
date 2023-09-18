@@ -469,6 +469,23 @@ li .sui-result__key:after {
   width: auto;
 }
 
+.advanced form {
+  position: relative;
+}
+
+.advanced .close {
+  position: absolute;
+  right: 100px;
+  top: 4px;
+  cursor: pointer;
+  padding: 2px;
+  border: 1px solid transparent;
+}
+
+.advanced .close:hover {
+  border: 1px solid var(--accent-color);
+}
+
 .collapse.show {
   display: block;
 }
