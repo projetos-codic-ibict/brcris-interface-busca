@@ -223,13 +223,13 @@ export default function App() {
               {({ wasSearched, results }) => {
                 return (
                   <div className="App">
-                    <ErrorBoundary>
-                      <div className="container page">
-                        <div className="page-title">
-                          <h1>{t('Publications')}</h1>
-                        </div>
+                    <div className="container page">
+                      <div className="page-title">
+                        <h1>{t('Publications')}</h1>
                       </div>
-                      <div className={styles.content}>
+                    </div>
+                    <div className={styles.content}>
+                      <div className={styles.searchLayout}>
                         <Layout
                           header={
                             <CustomSearchBox
@@ -238,18 +238,6 @@ export default function App() {
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
                             />
-                            // config.advanced ? (
-                            //   //@ts-ignore
-                            //   <AdvancedSearchBox toogleAdvancedConfig={toogleAdvancedConfig} />
-                            // ) : (
-                            //   <CustomSearchBox
-                            //     titleFieldName="title"
-                            //     itemLinkPrefix="publ_"
-                            //     updateOpetatorConfig={updateOpetatorConfig}
-                            //     indexName={INDEX_NAME}
-                            //     toogleAdvancedConfig={toogleAdvancedConfig}
-                            //   />
-                            // )
                           }
                           sideContent={
                             <div>
@@ -300,20 +288,23 @@ export default function App() {
                           bodyContent={<Results resultView={CustomResultViewPublications} />}
                           bodyHeader={
                             <>
-                              {wasSearched && (
+                              {wasSearched && results.length > 0 && (
                                 <div className="d-flex align-items-center">
                                   <PagingInfo view={CustomViewPagingInfo} />
                                   {/* <ClearFilters /> */}
                                 </div>
                               )}
-                              {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
+                              {wasSearched && results.length > 0 && <ResultsPerPage options={[10, 20, 50]} />}
                             </>
                           }
                           bodyFooter={<Paging />}
                         />
-                        <Indicators />
+                        <ErrorBoundary className={styles.searchError}>
+                          <span></span>
+                        </ErrorBoundary>
                       </div>
-                    </ErrorBoundary>
+                      <Indicators />
+                    </div>
                   </div>
                 );
               }}

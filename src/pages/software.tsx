@@ -175,14 +175,14 @@ export default function App() {
               {({ wasSearched }) => {
                 return (
                   <div className="App">
-                    <ErrorBoundary>
-                      <div className="container page">
-                        <div className="page-title">
-                          <h1>{t('Softwares')}</h1>
-                        </div>
+                    <div className="container page">
+                      <div className="page-title">
+                        <h1>{t('Softwares')}</h1>
                       </div>
+                    </div>
 
-                      <div className={styles.content}>
+                    <div className={styles.content}>
+                      <div className={styles.searchLayout}>
                         <Layout
                           header={
                             <BasicSearchBox
@@ -220,9 +220,12 @@ export default function App() {
                           }
                           bodyFooter={<Paging />}
                         />
-                        <SoftwaresIndicators />
+                        <ErrorBoundary className={styles.searchError}>
+                          <span></span>
+                        </ErrorBoundary>
                       </div>
-                    </ErrorBoundary>
+                      <SoftwaresIndicators />
+                    </div>
                   </div>
                 );
               }}

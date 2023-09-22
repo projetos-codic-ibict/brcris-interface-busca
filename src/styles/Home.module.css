@@ -154,6 +154,16 @@
   margin: auto;
 }
 
+.searchLayout {
+  display: flex;
+  flex-direction: column;
+  width: calc(75% - 32px);
+}
+
+.searchError {
+  align-items: flex-start;
+}
+
 
 .indicatorsTitle {
   display: none;
@@ -181,6 +191,10 @@
   .main,
   .info {
     flex-direction: column;
+  }
+
+  .searchLayout {
+    width: 100%;
   }
 
 }

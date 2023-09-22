@@ -19,8 +19,8 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, toogleAdvancedConfig }: 
   const [fullQuery, setFullQuery] = useState(searchTerm || '');
 
   const handleQueryChange = () => {
-    const newQuery = `${field}=${value}${fullQuery ? `${op}` : ''}`;
-    setFullQuery(fullQuery ? `(${newQuery}${fullQuery})` : `${newQuery}${fullQuery}`);
+    const newQuery = `${fullQuery ? ` ${op} ` : ''}${field}=${value}`;
+    setFullQuery(fullQuery ? `(${fullQuery}${newQuery})` : `${fullQuery}${newQuery}`);
   };
 
   return (

@@ -49,36 +49,36 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
     // @ts-ignore
     optionsType.plugins.title.text = t(optionsType.title);
     console.log(isLoading);
-    isLoading
-      ? ElasticSearchService(
-          [
-            JSON.stringify(
-              getFormatedQuery({
-                size: 10,
-                indicadorName: 'publicationDate',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-                order: { _key: 'desc' },
-              })
-            ),
-            JSON.stringify(
-              getFormatedQuery({
-                size: 10,
-                indicadorName: 'type',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-              })
-            ),
-          ],
-          INDEX_NAME
-        ).then((data) => {
-          setIndicatorsData(data);
+    try {
+      const pdQuery = JSON.stringify(
+        getFormatedQuery({
+          size: 10,
+          indicadorName: 'publicationDate',
+          searchTerm,
+          fields,
+          operator,
+          filters,
+          order: { _key: 'desc' },
         })
-      : null;
+      );
+      const typeQuery = JSON.stringify(
+        getFormatedQuery({
+          size: 10,
+          indicadorName: 'type',
+          searchTerm,
+          fields,
+          operator,
+          filters,
+        })
+      );
+      isLoading
+        ? ElasticSearchService([pdQuery, typeQuery], INDEX_NAME).then((data) => {
+            setIndicatorsData(data);
+          })
+        : null;
+    } catch (error) {
+      console.error('error', error);
+    }
   }, [filters, searchTerm, isLoading]);
 
   const yearIndicators: IndicatorType[] = indicators ? indicators[0] : [];

@@ -343,11 +343,10 @@ li .sui-result__key:after {
 
 /* sobrescrevendo o css do componente do search-ui  */
 
-.page-search .sui-layout {
-  width: auto;
-  width: calc(75% - 32px);
-  margin-left: 16px;
-}
+// .page-search .sui-layout {
+//   width: 100%;
+//   margin-left: 16px;
+// }
 
 .page-search,
 .page-search .sui-multi-checkbox-facet {
@@ -728,6 +727,9 @@ footer {
     width: 100%;
   }
 
+  .sui-search-error {
+    align-items: baseline !important;
+  }
   .page-search .sui-layout {
     padding: 0 16px;
     width: 100%;

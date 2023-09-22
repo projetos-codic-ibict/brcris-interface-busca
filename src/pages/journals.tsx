@@ -23,9 +23,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import CustomSearchBox from '../components/BasicSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import { CustomProvider } from '../components/context/CustomContext';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import JornalsIndicators from '../components/indicators/JornalsIndicators';
-import { CustomProvider } from '../components/context/CustomContext';
 type Props = {
   // Add custom props here
 };
@@ -170,14 +170,14 @@ export default function App() {
               {({ wasSearched }) => {
                 return (
                   <div className="App">
-                    <ErrorBoundary>
-                      <div className="container page">
-                        <div className="page-title">
-                          <h1>{t('Journals')}</h1>
-                        </div>
+                    <div className="container page">
+                      <div className="page-title">
+                        <h1>{t('Journals')}</h1>
                       </div>
+                    </div>
 
-                      <div className={styles.content}>
+                    <div className={styles.content}>
+                      <div className={styles.searchLayout}>
                         <Layout
                           header={
                             <CustomSearchBox
@@ -214,11 +214,12 @@ export default function App() {
                           }
                           bodyFooter={<Paging />}
                         />
-                        {/** 
-                        // @ts-ignore */}
-                        <JornalsIndicators />
+                        <ErrorBoundary className={styles.searchError}>
+                          <span></span>
+                        </ErrorBoundary>
                       </div>
-                    </ErrorBoundary>
+                      <JornalsIndicators />
+                    </div>
                   </div>
                 );
               }}

@@ -26,7 +26,7 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     querys.push({ index: data.index });
     querys.push(query);
   });
-
+  console.log('querys: ', querys);
   // https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.17/msearch_examples.html
   const { body } = await client.msearch({
     body: querys,

@@ -27,7 +27,7 @@ export type MemberType = {
 };
 
 export interface CustomSearchQuery extends SearchQuery {
-  operator: 'AND' | 'OR';
+  operator: 'and' | 'AND' | 'or' | 'OR';
 }
 
 export interface CustomSearchDriverOptions extends SearchDriverOptions {

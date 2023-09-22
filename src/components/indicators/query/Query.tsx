@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { QueryDslOperator, QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 import { Filter, FilterValue } from '@elastic/search-ui';
+import { parseElasticsearchQuery } from '../../../services/QueryFormat';
 type QueryProps = {
   size: number;
   indicadorName: string;
   searchTerm: string;
   fields: string[];
-  operator: string;
+  operator: QueryDslOperator;
   filters: [];
   order?: { _count?: string; _key?: string };
 };
@@ -18,6 +20,46 @@ export default function getFormatedQuery({
   filters,
   order = { _count: 'desc' },
 }: QueryProps) {
+  let query: QueryDslQueryContainer = {};
+  console.log('searchTerm', searchTerm);
+  if (searchTerm.indexOf('=') > 0) {
+    if (searchTerm.indexOf('(') >= 0) {
+      query = parseElasticsearchQuery(searchTerm);
+      if (query.bool) {
+        query.bool.filter = filters && filters.length > 0 ? getFormatedFilters(filters) : [];
+        query.bool.minimum_should_match = 1;
+      }
+      console.log('query', query);
+    } else {
+      query = {
+        bool: {
+          must: [
+            {
+              match_phrase: {
+                [searchTerm.split('=')[0].trim()]: searchTerm.split('=')[1].trim(),
+              },
+            },
+          ],
+          filter: filters && filters.length > 0 ? getFormatedFilters(filters) : [],
+          // minimum_should_match: 1,
+        },
+      };
+    }
+  } else {
+    query = {
+      bool: {
+        must: {
+          query_string: {
+            query: searchTerm || '*',
+            default_operator: operator,
+            fields: searchTerm ? fields : [],
+          },
+        },
+        filter: filters && filters.length > 0 ? getFormatedFilters(filters) : [],
+        // minimum_should_match: 1,
+      },
+    };
+  }
   return {
     // track_total_hits: true,
     _source: [indicadorName],
@@ -31,18 +73,7 @@ export default function getFormatedQuery({
         },
       },
     },
-    query: {
-      bool: {
-        must: {
-          query_string: {
-            query: searchTerm || '*',
-            default_operator: operator,
-            fields: searchTerm ? fields : [],
-          },
-        },
-        filter: filters && filters.length > 0 ? getFormatedFilters(filters) : [],
-      },
-    },
+    query: query,
   };
 }
 
