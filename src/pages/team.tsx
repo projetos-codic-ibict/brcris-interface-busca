@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import membersData from '../../team/members.json';
 import Member from '../components/team/Member';
@@ -16,14 +17,24 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   },
 });
 
-const getMembersData = (): MemberType[] => {
-  const result = JSON.stringify(membersData);
-  const members = JSON.parse(result);
-  return members;
+const shuffle = (array: MemberType[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 };
 
 export default function Team() {
   const { t } = useTranslation(['navbar', 'common']);
+
+  const [members, setMembers] = useState<MemberType[]>([]);
+
+  useEffect(() => {
+    const result = JSON.stringify(membersData);
+    const members = JSON.parse(result);
+    setMembers(members);
+  }, []);
 
   return (
     <>
@@ -36,7 +47,7 @@ export default function Team() {
             <h1>{t('Team')}</h1>
           </div>
           <div className="team">
-            {getMembersData().map((member: MemberType, index: number) => (
+            {shuffle(members).map((member: MemberType, index: number) => (
               <Member key={index} image={member.image} name={member.name} lattes={member.lattes} />
             ))}
           </div>
