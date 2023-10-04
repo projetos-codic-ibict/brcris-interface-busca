@@ -23,28 +23,12 @@ export default function getFormatedQuery({
   let query: QueryDslQueryContainer = {};
   console.log('searchTerm', searchTerm);
   if (searchTerm.indexOf('=') > 0) {
-    if (searchTerm.indexOf('(') >= 0) {
-      query = parseElasticsearchQuery(searchTerm);
-      if (query.bool) {
-        query.bool.filter = filters && filters.length > 0 ? getFormatedFilters(filters) : [];
-        query.bool.minimum_should_match = 1;
-      }
-      console.log('query', query);
-    } else {
-      query = {
-        bool: {
-          must: [
-            {
-              match_phrase: {
-                [searchTerm.split('=')[0].trim()]: searchTerm.split('=')[1].trim(),
-              },
-            },
-          ],
-          filter: filters && filters.length > 0 ? getFormatedFilters(filters) : [],
-          // minimum_should_match: 1,
-        },
-      };
+    query = parseElasticsearchQuery(searchTerm);
+    if (query.bool) {
+      query.bool.filter = filters && filters.length > 0 ? getFormatedFilters(filters) : [];
+      query.bool.minimum_should_match = 1;
     }
+    console.log('query', query);
   } else {
     query = {
       bool: {

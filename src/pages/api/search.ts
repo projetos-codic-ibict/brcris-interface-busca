@@ -20,22 +20,8 @@ function builConnector(index: string) {
       const searchFields: any = queryConfig.search_fields;
       // @ts-ignore
       if (requestState.searchTerm.indexOf('=') > 0) {
-        if (requestState.searchTerm.indexOf('(') >= 0) {
-          const fullQuery = parseElasticsearchQuery(requestState.searchTerm);
-          requestBody.query = fullQuery;
-        } else {
-          requestBody.query = {
-            bool: {
-              must: [
-                {
-                  match_phrase: {
-                    [requestState.searchTerm.split('=')[0].trim()]: requestState.searchTerm.split('=')[1].trim(),
-                  },
-                },
-              ],
-            },
-          };
-        }
+        const fullQuery = parseElasticsearchQuery(requestState.searchTerm);
+        requestBody.query = fullQuery;
       } else {
         requestBody.query = {
           multi_match: {

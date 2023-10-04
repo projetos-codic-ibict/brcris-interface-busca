@@ -15,7 +15,7 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, toogleAdvancedConfig }: 
   const router = useRouter();
   const [field, setField] = useState('title_text');
   const [value, setValue] = useState('');
-  const [op, setOp] = useState('&');
+  const [op, setOp] = useState(' AND ');
   const [fullQuery, setFullQuery] = useState(searchTerm || '');
 
   const handleQueryChange = () => {
@@ -53,9 +53,9 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, toogleAdvancedConfig }: 
           }}
           className="form-select"
         >
-          <option value="&">AND</option>
-          <option value="|">OR</option>
-          {/* <option value="!">NOT</option> */}
+          <option value="AND">AND</option>
+          <option value="OR">OR</option>
+          <option value="NOT">NOT</option>
         </select>
         <button
           className="btn btn-primary"

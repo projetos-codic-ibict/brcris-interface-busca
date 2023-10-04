@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -9,10 +10,52 @@ type BoolType = {
 };
 
 export function parseElasticsearchQuery(originalInput: string): QueryDslQueryContainer {
-  const input = formatQuery(originalInput);
+  let input = formatQuery(originalInput);
   const stack: BoolType[] = [];
   let current: BoolType = {};
   let i = 0;
+
+  const listOfMustNots = [];
+
+  let notIndex = input.indexOf('!');
+  while (notIndex >= 0) {
+    const nexIndexOr = input.indexOf('|', notIndex);
+    const nextIndexAnd = input.indexOf('&', notIndex);
+    const nextIndexOpenPar = input.indexOf('(', notIndex);
+    const nextIndexClosePar = input.indexOf(')', notIndex);
+    const endNot = getMinValidIndex([nexIndexOr, nextIndexAnd, nextIndexOpenPar, nextIndexClosePar]);
+
+    let field = input.substring(notIndex, endNot);
+
+    input = input.replace(field.charAt(notIndex - 1) === '(' ? `(${field}` : field, ''); // remove o campo de not (incluindo o parentese antes se houver) da string
+    input = input.slice(0, -1); // remove o ultimo parentese da string
+
+    field = field.substring(1); // remove primeiro caractere (!)
+    console.log(field);
+    const must_not = {
+      match: {
+        [field.split('=')[0].trim()]: field.split('=')[1].trim(),
+      },
+    };
+    listOfMustNots.push(must_not);
+    notIndex = input.indexOf('!');
+  }
+
+  if (input.indexOf('|') < 0 && input.indexOf('&') < 0) {
+    input = removeParentheses(input);
+    current = {
+      bool: {
+        must: [
+          {
+            match_phrase: {
+              [input.split('=')[0].trim()]: input.split('=')[1].trim(),
+            },
+          },
+        ],
+      },
+    };
+    i = input.length;
+  }
 
   while (i < input.length) {
     const char = input[i];
@@ -154,6 +197,11 @@ export function parseElasticsearchQuery(originalInput: string): QueryDslQueryCon
     throw new Error('String de busca mal formatada.');
   }
 
+  if (listOfMustNots.length > 0) {
+    //@ts-ignore
+    current.bool.must_not = listOfMustNots;
+  }
+
   let fullQuery = stringify(current);
   fullQuery = fullQuery.replace(',null', '');
   return JSON.parse(fullQuery);
@@ -181,7 +229,7 @@ function stringify(obj: object) {
 }
 
 function formatQuery(originalQuery: string) {
-  const cleanQuery = originalQuery.replaceAll(' ', '');
+  const cleanQuery = replaceOperators(originalQuery);
   let subQuerys = cleanQuery.split(')');
   if (subQuerys.length <= 2) {
     return cleanQuery;
@@ -189,8 +237,7 @@ function formatQuery(originalQuery: string) {
   subQuerys.pop();
 
   for (let index = 0; index < subQuerys.length; index++) {
-    subQuerys[index] = subQuerys[index].replaceAll('(', '');
-    subQuerys[index] = subQuerys[index].replaceAll(')', '');
+    subQuerys[index] = removeParentheses(subQuerys[index]);
     if (subQuerys[index].charAt(0) == '|' || subQuerys[index].charAt(0) == '&') {
       const primeiroCaractere = subQuerys[index].charAt(0);
       const restoDaString = subQuerys[index].slice(1);
@@ -209,5 +256,19 @@ function formatQuery(originalQuery: string) {
   for (let index = 0; index < subQuerys.length; index++) {
     query += ')';
   }
+  return query;
+}
+
+function removeParentheses(query: string) {
+  query = query.replaceAll('(', '');
+  query = query.replaceAll(')', '');
+  return query;
+}
+
+function replaceOperators(query: string) {
+  query = query.replaceAll(' AND ', '&');
+  query = query.replaceAll(' OR ', '|');
+  query = query.replaceAll(' NOT ', '!');
+  query = query.replaceAll(' ', '');
   return query;
 }
