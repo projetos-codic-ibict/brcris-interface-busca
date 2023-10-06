@@ -148,11 +148,6 @@ export default function App() {
                       'The Brazilian Scientific Research Information Ecosystem, BrCris, is an aggregator platform that allows retrieving, certifying and visualizing data and information related to the various actors who work in scientific research in the Brazilian context.'
                     )}
                   </p>
-                  <p>
-                    {t(
-                      'BrCris offers a unified interface for searching information, visualization of collaboration networks and dashboards of indicators in science, technology and innovation.'
-                    )}
-                  </p>
                 </div>
               </section>
             </div>
