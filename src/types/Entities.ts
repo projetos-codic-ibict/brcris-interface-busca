@@ -35,8 +35,8 @@ export interface CustomSearchDriverOptions extends SearchDriverOptions {
   advanced: boolean;
 }
 
-export type AdvancedFieldType = {
-  field: string;
-  op: string;
-  value: string;
+export type QueryItem = {
+  field?: string;
+  operator?: string;
+  value?: string;
 };

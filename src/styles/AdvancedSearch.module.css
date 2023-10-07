@@ -1,0 +1,60 @@
+.advancedSearch input,
+.advancedSearch select {
+  border: 0;
+}
+
+.advancedSearch a {
+  cursor: pointer;
+}
+
+.container {
+  margin-top: 12px;
+}
+
+.container:first-child {
+  margin-top: 0;
+}
+
+.container span {
+  padding: 0px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+
+.group {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2.5px 0;
+  width: 100%;
+  margin-right: 8px;
+}
+
+.group input {
+  padding: 4px 8px !important;
+}
+
+.group input:focus,
+.group select:focus {
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  border-left: 1px solid #ccc;
+}
+
+.group select {
+  border-left: 1px solid #ccc;
+  border-radius: 0;
+  padding: 4px 16px !important;
+  min-width: 11em;
+}
+
+.op {
+  border: 0 !important;
+  border-right: 1px solid #ccc !important;
+  min-width: 7em !important;
+}
+
+.op:focus {
+  border-right: 1px solid #ccc !important;
+}

@@ -3,6 +3,7 @@ import { SearchBox } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { IoSearch } from 'react-icons/io5';
 import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
@@ -64,30 +65,55 @@ const BasicSearchBox = ({
           router.push(`${VIVO_URL_ITEM_BASE}/${itemLinkPrefix}${selection.id.raw}&lang=${router.locale}`);
         }
       }}
-      inputView={({ getAutocomplete, getInputProps, getButtonProps }) => (
-        <div className="d-flex flex-column flex-gap-1 basic-search">
-          <div className="d-flex flex-gap-1 align-items-center">
-            <div className="sui-search-box__wrapper">
-              <input
-                {...getInputProps({
-                  placeholder: `${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                    value: docsCount,
-                  })} ${t('documents')}`,
-                })}
-              />
-              {getAutocomplete()}
-            </div>
+      view={({ value, onChange, onSubmit }) => (
+        <div>
+          <form onSubmit={onSubmit} className="d-flex flex-gap-8 align-items-center">
             <input
-              {...getButtonProps({
-                disabled: getInputProps()?.value?.trim().length < 3,
-              })}
+              className="sui-search-box__text-input"
+              type="text"
+              value={value}
+              placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
+                value: docsCount,
+              })} ${t('documents')}`}
+              onChange={(e) => onChange(e.target.value)}
             />
-          </div>
+            <button className="button sui-search-box__submit d-flex align-items-center flex-gap-8" type="submit">
+              <IoSearch />
+              {t('Search')}
+            </button>
+          </form>
           <span onClick={() => toogleAdvancedConfig(true)} className="link-color">
             Advanced Search
           </span>
         </div>
       )}
+      // inputView={({ getAutocomplete, getInputProps, getButtonProps }) => (
+      //   <div className="d-flex flex-column 8 basic-search">
+      //     <div className="d-flex flex-gap-8 align-items-center">
+      //       <div className="sui-search-box__wrapper">
+      //         <input
+      //           {...getInputProps({
+      //             placeholder: `${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
+      //               value: docsCount,
+      //             })} ${t('documents')}`,
+      //           })}
+      //         />
+      //         {getAutocomplete()}
+      //       </div>
+      //       <input
+      //         className="d-flex align-items-center flex-gap-8"
+      //         {...getButtonProps({
+      //           disabled: getInputProps()?.value?.trim().length < 3,
+      //         })}
+      //       >
+      //         {t('Search')}
+      //       </input>
+      //     </div>
+      //     <span onClick={() => toogleAdvancedConfig(true)} className="link-color">
+      //       Advanced Search
+      //     </span>
+      //   </div>
+      // )}
     ></SearchBox>
   );
 };

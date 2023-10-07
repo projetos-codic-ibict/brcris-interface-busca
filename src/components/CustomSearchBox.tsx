@@ -16,7 +16,7 @@ const CustomSearchBox = ({ titleFieldName, itemLinkPrefix, indexName, updateOpet
 
   return advanced ? (
     //@ts-ignore
-    <AdvancedSearchBox toogleAdvancedConfig={setAdvanced} />
+    <AdvancedSearchBox indexName={indexName} toogleAdvancedConfig={setAdvanced} />
   ) : (
     <BasicSearchBox
       titleFieldName={titleFieldName}

@@ -3,105 +3,145 @@
 import { SearchBox, withSearch } from '@elastic/react-search-ui';
 import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch';
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { IoAdd, IoClose, IoSearch } from 'react-icons/io5';
+import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
+import styles from '../styles/AdvancedSearch.module.css';
+import { QueryItem } from '../types/Entities';
 
 interface CustomSearchBoxProps extends SearchContextState {
+  indexName: string;
   toogleAdvancedConfig: (advanced: boolean) => void;
 }
 
-const AdvancedSearchBox = ({ searchTerm, setSearchTerm, toogleAdvancedConfig }: CustomSearchBoxProps) => {
+const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvancedConfig }: CustomSearchBoxProps) => {
   const { t } = useTranslation('common');
-  const router = useRouter();
-  const [field, setField] = useState('title_text');
-  const [value, setValue] = useState('');
-  const [op, setOp] = useState(' AND ');
-  const [fullQuery, setFullQuery] = useState(searchTerm || '');
+  const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
+  const [query, setQuery] = useState(searchTerm);
+  const [campos, setCampos] = useState<QueryItem[]>([
+    {
+      field: 'title_text',
+      operator: 'AND',
+      value: '',
+    },
+  ]);
 
-  const handleQueryChange = () => {
-    const newQuery = `${fullQuery ? ` ${op} ` : ''}${field}=${value}`;
-    setFullQuery(fullQuery ? `(${fullQuery}${newQuery})` : `${fullQuery}${newQuery}`);
+  const adicionarCampo = () => {
+    setCampos([...campos, { value: '', field: 'all', operator: 'AND' }]);
   };
 
+  const removerCampo = (indice: number) => {
+    const novosCampos = [...campos];
+    novosCampos.splice(indice, 1);
+    setCampos(novosCampos);
+  };
+
+  const handleChange = ({ value, operator, field }: QueryItem, indice: number) => {
+    const novosCampos = [...campos];
+    if (value) {
+      novosCampos[indice].value = value;
+    } else if (operator) {
+      novosCampos[indice].operator = operator;
+    } else if (field) {
+      novosCampos[indice].field = field;
+    }
+    setCampos(novosCampos);
+  };
+
+  useEffect(() => {
+    ElasticSearchStatsService(indexName)
+      .then((res) => {
+        const count = res['docs.count'];
+        localStorage.setItem(indexName, count);
+        setDocsCount(count);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   return (
-    <div className="d-flex flex-column flex-gap-1 advanced">
-      <div className="d-flex flex-gap-1">
-        <select
-          id={`field`}
-          onChange={(e) => {
-            setField(e.target.value);
-          }}
-          className="form-select"
-        >
-          <option value="title_text">Title</option>
-          <option value="keyword_text">Keyword</option>
-        </select>
-        <input
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-          }}
-          type="text"
-          id={`value`}
-          className="sui-search-box__text-input"
-        />
-        <select
-          hidden={fullQuery == ''}
-          id={`op`}
-          onChange={(e) => {
-            setOp(e.target.value);
-          }}
-          className="form-select"
-        >
-          <option value="AND">AND</option>
-          <option value="OR">OR</option>
-          <option value="NOT">NOT</option>
-        </select>
-        <button
-          className="btn btn-primary"
-          onClick={() => {
-            handleQueryChange();
-          }}
-        >
-          +
-        </button>
-      </div>
-      <SearchBox
-        onSubmit={(searchTerm) => {
-          searchTerm = fullQuery || searchTerm;
-          // updateQueryConfig(fullQuery);
-          setSearchTerm(fullQuery);
-          router.query.q = `${searchTerm}`;
-          router.push(router);
-        }}
-        view={({ onChange, onSubmit }) => (
-          <form onSubmit={onSubmit} className="d-flex flex-gap-1 align-items-center">
-            <textarea
-              className="sui-search-box__text-input"
-              value={fullQuery}
-              readOnly
-              id="searchTerm"
-              onChange={(e) => {
-                setFullQuery(e.target.value);
-                onChange(e.target.value);
+    <>
+      <div className="d-flex flex-column flex-gap-8 advanced">
+        <div className={styles.advancedSearch}>
+          <div className={`d-flex align-content-center ${styles.container}`}>
+            <div className={`d-flex flex-gap-0 ${styles.group}`}>
+              <input
+                value={query}
+                placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
+                  value: docsCount,
+                })} ${t('documents')}`}
+                onChange={(e) => setQuery(e.target.value)}
+                type="text"
+                className="sui-search-box__text-input"
+              />
+              <select className="form-select">
+                <option value="all">Todos os campos</option>
+                <option value="title_text">Title</option>
+                <option value="keyword_text">Keyword</option>
+              </select>
+            </div>
+            <SearchBox
+              onSubmit={() => {
+                console.log(query);
+                setSearchTerm(query || '');
               }}
-            ></textarea>
-            <span title={t('Close') || 'Close'} className="close" onClick={() => setFullQuery('')}>
-              X
-            </span>
-            <input
-              disabled={fullQuery == null || fullQuery.length < 3}
-              type="submit"
-              value={t('Search') || 'Search'}
-              className="button sui-search-box__submit"
+              view={({ onSubmit }) => (
+                <form onSubmit={onSubmit} className="d-flex flex-gap-8 align-items-center sui-search-box ">
+                  <button type="submit" className="button sui-search-box__submit d-flex align-items-center flex-gap-8">
+                    <IoSearch />
+                    {t('Search')}
+                  </button>
+                </form>
+              )}
             />
-          </form>
-        )}
-      />
-      <span onClick={() => toogleAdvancedConfig(false)} className="link-color">
-        Basic Search
-      </span>
-    </div>
+          </div>
+          {campos.map((campo, indice) => (
+            <div className={`d-flex align-content-center ${styles.container}`} key={indice}>
+              <div className={`d-flex flex-gap-0 ${styles.group}`}>
+                <select
+                  value={campo.operator}
+                  onChange={(e) => handleChange({ operator: e.target.value }, indice)}
+                  className={`form-select ${styles.op}`}
+                >
+                  <option value="AND">AND</option>
+                  <option value="OR">OR</option>
+                  <option value="AND NOT">AND NOT</option>
+                </select>
+                <input
+                  value={campo.value}
+                  onChange={(e) => handleChange({ value: e.target.value }, indice)}
+                  type="text"
+                  className="sui-search-box__text-input"
+                />
+                <select
+                  value={campo.field}
+                  onChange={(e) => handleChange({ field: e.target.value }, indice)}
+                  className="form-select"
+                >
+                  <option value="all">Todos os campos</option>
+                  <option value="title_text">Title</option>
+                  <option value="keyword_text">Keyword</option>
+                </select>
+              </div>
+              <span onClick={() => removerCampo(indice)} className="d-flex align-items-center">
+                <IoClose />
+              </span>
+            </div>
+          ))}
+          <div className="d-flex justify-content-center">
+            <a href="#" onClick={adicionarCampo}>
+              Adicionar Campo
+              <IoAdd />
+            </a>
+          </div>
+        </div>
+
+        <span onClick={() => toogleAdvancedConfig(false)} className="link-color">
+          Basic Search
+        </span>
+      </div>
+    </>
   );
 };
 
