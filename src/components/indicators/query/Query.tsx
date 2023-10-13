@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { QueryDslOperator, QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 import { Filter, FilterValue } from '@elastic/search-ui';
-import { parseElasticsearchQuery } from '../../../services/QueryFormat';
+import QueryFormat from '../../../services/QueryFormat';
 type QueryProps = {
   size: number;
   indicadorName: string;
@@ -22,13 +22,8 @@ export default function getFormatedQuery({
 }: QueryProps) {
   let query: QueryDslQueryContainer = {};
   console.log('searchTerm', searchTerm);
-  if (searchTerm.indexOf('=') > 0) {
-    query = parseElasticsearchQuery(searchTerm);
-    if (query.bool) {
-      query.bool.filter = filters && filters.length > 0 ? getFormatedFilters(filters) : [];
-      query.bool.minimum_should_match = 1;
-    }
-    console.log('query', query);
+  if (searchTerm.indexOf('(') >= 0) {
+    query = new QueryFormat().toElasticsearch(searchTerm, fields);
   } else {
     query = {
       bool: {

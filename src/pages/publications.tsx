@@ -46,6 +46,7 @@ const configDefault: CustomSearchDriverOptions = {
         weight: 3,
       },
       keyword_text: {},
+      publicationDate: {},
     },
     result_fields: {
       title: {
@@ -285,7 +286,14 @@ export default function App() {
                           /> */}
                             </div>
                           }
-                          bodyContent={<Results resultView={CustomResultViewPublications} />}
+                          bodyContent={
+                            <>
+                              <div>
+                                <Results resultView={CustomResultViewPublications} /> <Paging />
+                              </div>{' '}
+                              <Indicators />{' '}
+                            </>
+                          }
                           bodyHeader={
                             <>
                               {wasSearched && results.length > 0 && (
@@ -297,13 +305,12 @@ export default function App() {
                               {wasSearched && results.length > 0 && <ResultsPerPage options={[10, 20, 50]} />}
                             </>
                           }
-                          bodyFooter={<Paging />}
+                          // bodyFooter={}
                         />
                         <ErrorBoundary className={styles.searchError}>
                           <span></span>
                         </ErrorBoundary>
                       </div>
-                      <Indicators />
                     </div>
                   </div>
                 );

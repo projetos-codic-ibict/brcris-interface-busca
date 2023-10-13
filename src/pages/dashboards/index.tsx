@@ -36,7 +36,7 @@ export default function Dashboards() {
                   </picture>
                   <div className="card-body">
                     <p className="card-text">
-                      {t('Articles or documents published in scientific vehicles (Journals or Events).')}
+                      {t('Articles or documents published in scientific vehicles (Journals or Events)')}
                     </p>
                   </div>
                 </a>
@@ -51,7 +51,7 @@ export default function Dashboards() {
                   </picture>
                   <div className="card-body">
                     <p className="card-text">
-                      {t("Academic monographs defended in Brazil at the master's or doctoral levels.")}
+                      {t("Academic monographs defended in Brazil at the master's or doctoral levels")}
                     </p>
                   </div>
                 </a>
@@ -67,7 +67,7 @@ export default function Dashboards() {
                   <div className="card-body">
                     <p className="card-text">
                       {t(
-                        'People dedicated to the scientific research activity and who participated in at least one scientific production.'
+                        'People dedicated to the scientific research activity and who participated in at least one scientific production'
                       )}
                     </p>
                   </div>
@@ -82,7 +82,7 @@ export default function Dashboards() {
                     <img className="img-fluid" src="/images/dashboards/journals.png" alt="ícone de revistas" />
                   </picture>
                   <div className="card-body">
-                    <p className="card-text">{t('Scientific journals used for the publication of articles.')}</p>
+                    <p className="card-text">{t('Scientific journals used for the publication of articles')}</p>
                   </div>
                 </a>
               </Link>
@@ -95,7 +95,7 @@ export default function Dashboards() {
                     <img className="img-fluid" src="/images/dashboards/patents.png" alt="ícone de patentes" />
                   </picture>
                   <div className="card-body">
-                    <p className="card-text">{t('Legal rights granted to people who own intellectual properties.')}</p>
+                    <p className="card-text">{t('Legal rights granted to people who own intellectual properties')}</p>
                   </div>
                 </a>
               </Link>
@@ -108,7 +108,7 @@ export default function Dashboards() {
                     <img className="img-fluid" src="/images/dashboards/groups.png" alt="ícone de grupos de pesquisa" />
                   </picture>
                   <div className="card-body">
-                    <p className="card-text">{t('Teams made up of researchers and students.')}</p>
+                    <p className="card-text">{t('Teams made up of researchers and students')}</p>
                   </div>
                 </a>
               </Link>
@@ -121,7 +121,7 @@ export default function Dashboards() {
                     <img className="img-fluid" src="/images/dashboards/softwares.png" alt="ícone de softwares" />
                   </picture>
                   <div className="card-body">
-                    <p className="card-text">{t('Set of computer programs registered by the researchers.')}</p>
+                    <p className="card-text">{t('Set of computer programs registered by the researchers')}</p>
                   </div>
                 </a>
               </Link>
@@ -139,7 +139,7 @@ export default function Dashboards() {
                   </picture>
                   <div className="card-body">
                     <p className="card-text">
-                      {t('Group or community of highly qualified professionals in a specific knowledge area.')}
+                      {t('Group or community of highly qualified professionals in a specific knowledge area')}
                     </p>
                   </div>
                 </a>
@@ -157,7 +157,7 @@ export default function Dashboards() {
                     />
                   </picture>
                   <div className="card-body">
-                    <p className="card-text">{t("Research topics obtained by grouping researchers' activities.")}</p>
+                    <p className="card-text">{t("Research topics obtained by grouping researchers' activities")}</p>
                   </div>
                 </a>
               </Link>

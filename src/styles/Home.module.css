@@ -157,7 +157,8 @@
 .searchLayout {
   display: flex;
   flex-direction: column;
-  width: calc(75% - 32px);
+  width: 100%;
+  padding: 0 16px;
 }
 
 .searchError {

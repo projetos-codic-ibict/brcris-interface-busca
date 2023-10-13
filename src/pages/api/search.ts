@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connector';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { parseElasticsearchQuery } from '../../services/QueryFormat';
+import QueryFormat from '../../services/QueryFormat';
 
 // https://docs.elastic.co/search-ui/api/connectors/elasticsearch#customise-the-elasticsearch-request-body
 function builConnector(index: string) {
@@ -19,8 +19,8 @@ function builConnector(index: string) {
       // transforming the query before sending to Elasticsearch using the requestState and queryConfig
       const searchFields: any = queryConfig.search_fields;
       // @ts-ignore
-      if (requestState.searchTerm.indexOf('=') > 0) {
-        const fullQuery = parseElasticsearchQuery(requestState.searchTerm);
+      if (requestState.searchTerm.indexOf('(') >= 0) {
+        const fullQuery = new QueryFormat().toElasticsearch(requestState.searchTerm, Object.keys(searchFields));
         requestBody.query = fullQuery;
       } else {
         requestBody.query = {

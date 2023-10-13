@@ -1,6 +1,6 @@
 .charts {
-  margin-top: 200px;
-  width: calc(25% - 16px);
+  width: 30%;
+  min-width: 250px;
 }
 
 .chart {

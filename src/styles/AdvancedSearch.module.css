@@ -1,4 +1,5 @@
 .advancedSearch input,
+.advancedSearch textarea,
 .advancedSearch select {
   border: 0;
 }
@@ -16,8 +17,6 @@
 }
 
 .container span {
-  padding: 0px;
-  font-size: 1.5rem;
   cursor: pointer;
 }
 
@@ -25,21 +24,26 @@
 .group {
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 2.5px 0;
+  padding: 1px;
   width: 100%;
   margin-right: 8px;
+  position: relative;
 }
 
-.group input {
+.group input,
+.group textarea {
   padding: 4px 8px !important;
+  z-index: 1;
 }
 
 .group input:focus,
+.group textarea:focus,
 .group select:focus {
   border: 0;
   outline: 0;
   box-shadow: none;
   border-left: 1px solid #ccc;
+  border-left: none;
 }
 
 .group select {
@@ -57,4 +61,26 @@
 
 .op:focus {
   border-right: 1px solid #ccc !important;
+}
+
+.help {
+  position: absolute;
+  font-size: 0.9em;
+  top: 5px;
+  left: 4px;
+  background: var(--accent-color);
+  color: #fff;
+  padding: 0 4px;
+  border-radius: 4px 4px 0 0;
+  transition: all .5s ease-out, text-indent .5s ease-out;
+  animation-duration: .5s;
+  animation-fill-mode: both;
+  opacity: 0;
+  z-index: 0;
+}
+
+.group:focus-within .help,
+.group:hover .help {
+  top: -1.5em;
+  opacity: 1;
 }

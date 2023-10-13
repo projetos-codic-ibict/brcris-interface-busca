@@ -4,10 +4,11 @@ import { SearchBox, withSearch } from '@elastic/react-search-ui';
 import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
-import { IoAdd, IoClose, IoSearch } from 'react-icons/io5';
+import { IoAdd, IoArrowUndoOutline, IoClose, IoSearch } from 'react-icons/io5';
 import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
 import styles from '../styles/AdvancedSearch.module.css';
 import { QueryItem } from '../types/Entities';
+import HelpModal from './HelpModal';
 
 interface CustomSearchBoxProps extends SearchContextState {
   indexName: string;
@@ -18,16 +19,11 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvance
   const { t } = useTranslation('common');
   const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
   const [query, setQuery] = useState(searchTerm);
-  const [campos, setCampos] = useState<QueryItem[]>([
-    {
-      field: 'title_text',
-      operator: 'AND',
-      value: '',
-    },
-  ]);
+  const [queryField, setQueryField] = useState('all');
+  const [campos, setCampos] = useState<QueryItem[]>([]);
 
   const adicionarCampo = () => {
-    setCampos([...campos, { value: '', field: 'all', operator: 'AND' }]);
+    setCampos([...campos, { value: '', field: 'title_text', operator: 'AND' }]);
   };
 
   const removerCampo = (indice: number) => {
@@ -48,6 +44,16 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvance
     setCampos(novosCampos);
   };
 
+  function getFormatedQuery() {
+    //@ts-ignore
+    const isAdvancedQuery = query?.indexOf('(') >= 0 && query?.indexOf(':') >= 0;
+    let fullQuery = isAdvancedQuery ? query?.trim() : `(${queryField}:${query})`;
+    fullQuery = fullQuery + campos.map((campo) => ` ${campo.operator} (${campo.field}:${campo.value})`).join(' ');
+    setQuery(fullQuery);
+    setCampos([]);
+    return fullQuery;
+  }
+
   useEffect(() => {
     ElasticSearchStatsService(indexName)
       .then((res) => {
@@ -62,29 +68,31 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvance
 
   return (
     <>
-      <div className="d-flex flex-column flex-gap-8 advanced">
+      <div className="d-flex flex-column advanced">
         <div className={styles.advancedSearch}>
           <div className={`d-flex align-content-center ${styles.container}`}>
             <div className={`d-flex flex-gap-0 ${styles.group}`}>
-              <input
+              <textarea
                 value={query}
                 placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
                   value: docsCount,
                 })} ${t('documents')}`}
                 onChange={(e) => setQuery(e.target.value)}
-                type="text"
+                rows={1}
                 className="sui-search-box__text-input"
-              />
-              <select className="form-select">
+              ></textarea>
+              <HelpModal />
+              <select className="form-select" value={queryField} onChange={(e) => setQueryField(e.target.value)}>
                 <option value="all">Todos os campos</option>
                 <option value="title_text">Title</option>
                 <option value="keyword_text">Keyword</option>
+                <option value="publicationDate">Data</option>
               </select>
             </div>
             <SearchBox
               onSubmit={() => {
-                console.log(query);
-                setSearchTerm(query || '');
+                const fullQuery = getFormatedQuery();
+                setSearchTerm(fullQuery || '');
               }}
               view={({ onSubmit }) => (
                 <form onSubmit={onSubmit} className="d-flex flex-gap-8 align-items-center sui-search-box ">
@@ -119,9 +127,9 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvance
                   onChange={(e) => handleChange({ field: e.target.value }, indice)}
                   className="form-select"
                 >
-                  <option value="all">Todos os campos</option>
                   <option value="title_text">Title</option>
                   <option value="keyword_text">Keyword</option>
+                  <option value="publicationDate">Data</option>
                 </select>
               </div>
               <span onClick={() => removerCampo(indice)} className="d-flex align-items-center">
@@ -129,16 +137,17 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvance
               </span>
             </div>
           ))}
-          <div className="d-flex justify-content-center">
-            <a href="#" onClick={adicionarCampo}>
-              Adicionar Campo
+          <div className="d-flex justify-content-center ">
+            <button className="btn-link d-flex align-items-center flex-gap-8" onClick={adicionarCampo}>
               <IoAdd />
-            </a>
+              Adicionar campo
+            </button>
           </div>
         </div>
 
-        <span onClick={() => toogleAdvancedConfig(false)} className="link-color">
-          Basic Search
+        <span onClick={() => toogleAdvancedConfig(false)} className="link-color d-flex align-items-center flex-gap-8">
+          <IoArrowUndoOutline />
+          {t('Basic search')}
         </span>
       </div>
     </>

@@ -100,18 +100,21 @@ a {
   margin-right: 0.3rem !important;
 }
 
-.btn-clear {
+.btn-link {
   color: var(--bs-link-color);
+  background-color: transparent;
   border: none;
   margin-left: 8px;
   padding: 4px;
   font-size: 0.9rem;
-  font-weight: 300;
+  font-weight: 400;
+  text-decoration: none;
 }
 
-.btn-clear:hover {
+.btn-link:hover {
   color: var(--bs-link-hover-color);
   border: none;
+  text-decoration: underline;
 }
 
 .navbar {
@@ -185,6 +188,11 @@ a.nav-link {
 .search-card .nav-tabs .nav-item.show .nav-link,
 .search-card .nav-tabs .nav-link.active {
   border-bottom: 2px solid var(--accent-color);
+}
+
+.sui-layout-main-body {
+  display: flex;
+  gap: 1rem;
 }
 
 .search-card .sui-search-box__text-input {
@@ -410,7 +418,8 @@ li .sui-result__key:after {
 }
 
 .page-search .sui-layout-main {
-  padding: 16px;
+  padding: 16px 0 0 16px;
+  width: 80%;
 }
 
 .page-search .sui-layout-main-header {
@@ -424,7 +433,8 @@ li .sui-result__key:after {
 .page-search .sui-layout-sidebar {
   border-radius: 5px;
   padding: 0;
-  width: 25%;
+  width: 20%;
+  min-width: 200px;
 }
 
 .page-search .sui-layout-body__inner {
@@ -486,9 +496,10 @@ li .sui-result__key:after {
 }
 
 .link-color {
-  color: var(--text-secondary-color);
+  color: var(--bs-link-color);
   cursor: pointer;
   width: fit-content;
+  font-weight: 300;
 }
 
 .basic-search {
@@ -708,6 +719,11 @@ footer {
   text-align: center;
 }
 
+.sui-paging {
+  display: flex;
+  justify-content: center;
+}
+
 @media (max-width: 800px) {
   .sui-result__value {
     word-break: break-all;
@@ -734,7 +750,7 @@ footer {
     align-items: baseline !important;
   }
   .page-search .sui-layout {
-    padding: 0 16px;
+    // padding: 0 16px;
     width: 100%;
     margin-left: 0;
   }
@@ -748,11 +764,18 @@ footer {
   }
 
   .page-search .sui-layout-body__inner {
-    padding: 0 16px 0 16px;
+    // padding: 0 16px 0 16px;
   }
 
   .page-search .sui-layout-sidebar {
     width: 100%;
     padding: 16px;
+  }
+  .sui-layout-main-body {
+    flex-direction: column;
+  }
+  .page-search .sui-layout-main {
+    width: 100%;
+    padding: 16px 0 0 0;
   }
 }

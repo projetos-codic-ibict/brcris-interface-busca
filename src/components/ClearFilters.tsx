@@ -8,7 +8,7 @@ function ClearFilters({ filters, searchTerm, resultSearchTerm, setSearchTerm, cl
   return resultSearchTerm || (filters && filters.length > 0) ? (
     <div>
       <button
-        className="btn btn-clear"
+        className="btn btn-link"
         onClick={() => {
           clearFilters();
           setSearchTerm('');
