@@ -26,10 +26,15 @@ const Architecture = () => {
       </picture>
       <br />
       <p>
-        {t(
-          'It is based on the infrastructure of Brazilian scientific repositories and journals, these aggregated by the Oasisbr Portal < https://oasisbr.ibict.br>, based on the software provided by the LA Referencia network. Information is collected from national and international sources. All the information collected is duplicated and exported to indexes of the Elasticsearch search engine, and also to an instance of the VIVO software.'
-        )}
+        <span
+          dangerouslySetInnerHTML={{
+            __html: t(
+              'It is based on the infrastructure of Brazilian scientific repositories and journals, these aggregated by the Oasisbr Portal <https://oasisbr.ibict.br>, based on the software provided by the LA Referencia network. Information is collected from national and international sources. All the information collected is duplicated and exported to indexes of the Elasticsearch search engine, and also to an instance of the VIVO software.'
+            ),
+          }}
+        />
       </p>
+
       <br />
       <picture className="d-flex justify-content-center">
         <img className="img-fluid" src="/images/ecossistema.png" alt="entidades que compõe o ecossistema do BrCris" />
