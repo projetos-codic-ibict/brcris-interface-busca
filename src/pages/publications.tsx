@@ -270,7 +270,7 @@ export default function App() {
                               view={({ className, error }) => (
                                 <>
                                   {error && <p className={`sui-search-error ${className}`}>{t(error.trim())}</p>}
-                                  {!error && results.length == 0 && (
+                                  {!error && wasSearched && results.length == 0 && (
                                     <strong>{t('No documents were found for your search')}</strong>
                                   )}
                                   {!error && (
