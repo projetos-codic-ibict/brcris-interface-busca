@@ -149,5 +149,7 @@
   "Group or community of highly qualified professionals in a specific knowledge area": "Grupo ou comunidade de profissionais altamente qualificados em uma área de conhecimento específica",
   "Research topics obtained by grouping researchers' activities": "Tópicos de investigação obtidos através do agrupamento das atividades dos pesquisadores",
   "Advanced search": "Busca avançada",
-  "Basic search": "Busca básica"
+  "Basic search": "Busca básica",
+  "Invalid search query": "Query de busca inválida",
+  "No documents were found for your search": "Não foram encontrados resultados para sua pesquisa"
 }

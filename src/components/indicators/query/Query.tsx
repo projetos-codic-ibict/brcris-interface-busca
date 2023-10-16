@@ -20,40 +20,43 @@ export default function getFormatedQuery({
   filters,
   order = { _count: 'desc' },
 }: QueryProps) {
-  let query: QueryDslQueryContainer = {};
-  console.log('searchTerm', searchTerm);
-  if (searchTerm.indexOf('(') >= 0) {
-    query = new QueryFormat().toElasticsearch(searchTerm, fields);
-  } else {
-    query = {
-      bool: {
-        must: {
-          query_string: {
-            query: searchTerm || '*',
-            default_operator: operator,
-            fields: searchTerm ? fields : [],
+  try {
+    let query: QueryDslQueryContainer = {};
+    if (searchTerm.indexOf('(') >= 0) {
+      query = new QueryFormat().toElasticsearch(searchTerm, fields);
+    } else {
+      query = {
+        bool: {
+          must: {
+            query_string: {
+              query: searchTerm || '*',
+              default_operator: operator,
+              fields: searchTerm ? fields : [],
+            },
+          },
+          filter: filters && filters.length > 0 ? getFormatedFilters(filters) : [],
+          // minimum_should_match: 1,
+        },
+      };
+    }
+    return {
+      // track_total_hits: true,
+      _source: [indicadorName],
+      size: 0,
+      aggs: {
+        aggregate: {
+          terms: {
+            field: indicadorName,
+            size: size,
+            order: order,
           },
         },
-        filter: filters && filters.length > 0 ? getFormatedFilters(filters) : [],
-        // minimum_should_match: 1,
       },
+      query: query,
     };
+  } catch (err) {
+    throw err;
   }
-  return {
-    // track_total_hits: true,
-    _source: [indicadorName],
-    size: 0,
-    aggs: {
-      aggregate: {
-        terms: {
-          field: indicadorName,
-          size: size,
-          order: order,
-        },
-      },
-    },
-    query: query,
-  };
 }
 
 function getFormatedFilters(filters: Filter[]): any {

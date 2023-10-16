@@ -163,6 +163,14 @@
 
 .searchError {
   align-items: flex-start;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+
+.searchErrorHidden {
+  display: none !important;
 }
 
 

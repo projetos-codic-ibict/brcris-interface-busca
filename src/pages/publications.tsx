@@ -241,7 +241,7 @@ export default function App() {
                             />
                           }
                           sideContent={
-                            <div>
+                            <ErrorBoundary className={styles.searchErrorHidden}>
                               {wasSearched && results.length > 0 && (
                                 <>
                                   <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />
@@ -250,52 +250,43 @@ export default function App() {
                                   </div>
                                 </>
                               )}
-
-                              <Facet key={'1'} field={'language'} label={t('Language')} />
-                              <Facet key={'2'} field={'author.name'} label={t('Authors')} />
-                              <Facet key={'3'} field={'keyword'} label={t('Keyword')} />
-                              <Facet key={'4'} field={'orgunit.name'} label={t('Institution')} />
-                              <Facet key={'5'} field={'journal.title'} label={t('Journal')} />
-                              <Facet key={'6'} field={'type'} label={t('Type')} />
-                              <Facet key={'7'} field={'cnpqResearchArea'} label={t('CNPq research area')} />
-                              <Facet key={'8'} field={'publicationDate'} filterType={'none'} label={t('Year')} />
-                              {/* <Facet
-                            mapContextToProps={(context) => {
-                              if (!context.facets['publicationDate.keyword'])
-                                return context
-                              return {
-                                ...context,
-                                facets: {
-                                  ...(context.facets || {}),
-                                  year: context.facets[
-                                    'publicationDate.keyword'
-                                  ].map((s: any) => ({
-                                    ...s,
-                                    data: s.data.sort((a: any, b: any) => {
-                                      if (a.value > b.value) return -1
-                                      if (a.value < b.value) return 1
-                                      return 0
-                                    }),
-                                  })),
-                                },
-                              }
-                            }}
-                            field="publicationDate.keyword"
-                            label="ano"
-                            show={10}
-                          /> */}
-                            </div>
+                              {wasSearched && results.length > 0 && (
+                                <>
+                                  <Facet key={'1'} field={'language'} label={t('Language')} />
+                                  <Facet key={'2'} field={'author.name'} label={t('Authors')} />
+                                  <Facet key={'3'} field={'keyword'} label={t('Keyword')} />
+                                  <Facet key={'4'} field={'orgunit.name'} label={t('Institution')} />
+                                  <Facet key={'5'} field={'journal.title'} label={t('Journal')} />
+                                  <Facet key={'6'} field={'type'} label={t('Type')} />
+                                  <Facet key={'7'} field={'cnpqResearchArea'} label={t('CNPq research area')} />
+                                  <Facet key={'8'} field={'publicationDate'} filterType={'none'} label={t('Year')} />
+                                </>
+                              )}
+                            </ErrorBoundary>
                           }
                           bodyContent={
-                            <>
-                              <div>
-                                <Results resultView={CustomResultViewPublications} /> <Paging />
-                              </div>{' '}
-                              <Indicators />{' '}
-                            </>
+                            <ErrorBoundary
+                              className={styles.searchError}
+                              view={({ className, error }) => (
+                                <>
+                                  {error && <p className={`sui-search-error ${className}`}>{t(error.trim())}</p>}
+                                  {!error && results.length == 0 && (
+                                    <strong>{t('No documents were found for your search')}</strong>
+                                  )}
+                                  {!error && (
+                                    <>
+                                      <div>
+                                        <Results resultView={CustomResultViewPublications} /> <Paging />
+                                      </div>
+                                      <Indicators />
+                                    </>
+                                  )}
+                                </>
+                              )}
+                            ></ErrorBoundary>
                           }
                           bodyHeader={
-                            <>
+                            <ErrorBoundary className={styles.searchErrorHidden}>
                               {wasSearched && results.length > 0 && (
                                 <div className="d-flex align-items-center">
                                   <PagingInfo view={CustomViewPagingInfo} />
@@ -303,13 +294,10 @@ export default function App() {
                                 </div>
                               )}
                               {wasSearched && results.length > 0 && <ResultsPerPage options={[10, 20, 50]} />}
-                            </>
+                            </ErrorBoundary>
                           }
                           // bodyFooter={}
                         />
-                        <ErrorBoundary className={styles.searchError}>
-                          <span></span>
-                        </ErrorBoundary>
                       </div>
                     </div>
                   </div>
