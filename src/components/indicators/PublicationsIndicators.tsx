@@ -76,8 +76,9 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
             setIndicatorsData(data);
           })
         : null;
-    } catch (error) {
-      console.error('error', error);
+    } catch (err) {
+      console.error(err);
+      setIndicatorsData([]);
     }
   }, [filters, searchTerm, isLoading]);
 

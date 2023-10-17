@@ -49,36 +49,40 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
   useEffect(() => {
     // @ts-ignore
     optionsResearchArea.plugins.title.text = t(optionsResearchArea.title);
-
-    isLoading
-      ? ElasticSearchService(
-          [
-            JSON.stringify(
-              getFormatedQuery({
-                size: 10,
-                indicadorName: 'nationality',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-              })
-            ),
-            JSON.stringify(
-              getFormatedQuery({
-                size: 10,
-                indicadorName: 'researchArea',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-              })
-            ),
-          ],
-          INDEX_NAME
-        ).then((data) => {
-          setIndicatorsData(data);
-        })
-      : null;
+    try {
+      isLoading
+        ? ElasticSearchService(
+            [
+              JSON.stringify(
+                getFormatedQuery({
+                  size: 10,
+                  indicadorName: 'nationality',
+                  searchTerm,
+                  fields,
+                  operator,
+                  filters,
+                })
+              ),
+              JSON.stringify(
+                getFormatedQuery({
+                  size: 10,
+                  indicadorName: 'researchArea',
+                  searchTerm,
+                  fields,
+                  operator,
+                  filters,
+                })
+              ),
+            ],
+            INDEX_NAME
+          ).then((data) => {
+            setIndicatorsData(data);
+          })
+        : null;
+    } catch (err) {
+      console.error(err);
+      setIndicatorsData([]);
+    }
   }, [filters, searchTerm, isLoading]);
 
   const nationalities: IndicatorType[] = indicators ? indicators[0] : [];

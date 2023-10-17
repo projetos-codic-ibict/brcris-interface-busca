@@ -12,28 +12,35 @@ import HelpModal from './HelpModal';
 
 interface CustomSearchBoxProps extends SearchContextState {
   indexName: string;
+  fieldNames: string[];
   toogleAdvancedConfig: (advanced: boolean) => void;
 }
 
-const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvancedConfig }: CustomSearchBoxProps) => {
+const AdvancedSearchBox = ({
+  searchTerm,
+  setSearchTerm,
+  indexName,
+  fieldNames,
+  toogleAdvancedConfig,
+}: CustomSearchBoxProps) => {
   const { t } = useTranslation('common');
   const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
   const [query, setQuery] = useState(searchTerm);
   const [queryField, setQueryField] = useState('all');
-  const [campos, setCampos] = useState<QueryItem[]>([]);
+  const [inputs, setInputs] = useState<QueryItem[]>([]);
 
   const adicionarCampo = () => {
-    setCampos([...campos, { value: '', field: 'title_text', operator: 'AND' }]);
+    setInputs([...inputs, { value: '', field: fieldNames[0], operator: 'AND' }]);
   };
 
   const removerCampo = (indice: number) => {
-    const novosCampos = [...campos];
+    const novosCampos = [...inputs];
     novosCampos.splice(indice, 1);
-    setCampos(novosCampos);
+    setInputs(novosCampos);
   };
 
   const handleChange = ({ value, operator, field }: QueryItem, indice: number) => {
-    const novosCampos = [...campos];
+    const novosCampos = [...inputs];
     if (value) {
       novosCampos[indice].value = value;
     } else if (operator) {
@@ -41,16 +48,16 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvance
     } else if (field) {
       novosCampos[indice].field = field;
     }
-    setCampos(novosCampos);
+    setInputs(novosCampos);
   };
 
   function getFormatedQuery() {
     //@ts-ignore
     const isAdvancedQuery = query?.indexOf('(') >= 0 && query?.indexOf(':') >= 0;
     let fullQuery = isAdvancedQuery ? query?.trim() : `(${queryField}:${query})`;
-    fullQuery = fullQuery + campos.map((campo) => ` ${campo.operator} (${campo.field}:${campo.value})`).join(' ');
+    fullQuery = fullQuery + inputs.map((campo) => ` ${campo.operator} (${campo.field}:${campo.value})`).join(' ');
     setQuery(fullQuery);
-    setCampos([]);
+    setInputs([]);
     return fullQuery;
   }
 
@@ -83,10 +90,12 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvance
               ></textarea>
               <HelpModal />
               <select className="form-select" value={queryField} onChange={(e) => setQueryField(e.target.value)}>
-                <option value="all">Todos os campos</option>
-                <option value="title_text">Title</option>
-                <option value="keyword_text">Keyword</option>
-                <option value="publicationDate">Data</option>
+                <option value="all">Todos os inputs</option>
+                {fieldNames.map((field) => (
+                  <option key={field} value={field}>
+                    {field}
+                  </option>
+                ))}
               </select>
             </div>
             <SearchBox
@@ -104,7 +113,7 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvance
               )}
             />
           </div>
-          {campos.map((campo, indice) => (
+          {inputs.map((campo, indice) => (
             <div className={`d-flex align-content-center ${styles.container}`} key={indice}>
               <div className={`d-flex flex-gap-0 ${styles.group}`}>
                 <select
@@ -127,9 +136,11 @@ const AdvancedSearchBox = ({ searchTerm, setSearchTerm, indexName, toogleAdvance
                   onChange={(e) => handleChange({ field: e.target.value }, indice)}
                   className="form-select"
                 >
-                  <option value="title_text">Title</option>
-                  <option value="keyword_text">Keyword</option>
-                  <option value="publicationDate">Data</option>
+                  {fieldNames.map((field) => (
+                    <option key={field} value={field}>
+                      {field}
+                    </option>
+                  ))}
                 </select>
               </div>
               <span onClick={() => removerCampo(indice)} className="d-flex align-items-center">

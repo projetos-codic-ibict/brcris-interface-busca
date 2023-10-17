@@ -7,7 +7,7 @@ import ShowItem from './ShowItem';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
-const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
+const CustomResultViewJournals = ({ result, onClickLink }: ResultViewProps) => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
@@ -43,4 +43,4 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
   );
 };
 
-export default CustomResultViewPeople;
+export default CustomResultViewJournals;

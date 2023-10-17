@@ -212,6 +212,10 @@ export default function App() {
     });
   }
 
+  function containsResults(wasSearched: any, results: any) {
+    return wasSearched && results.length > 0;
+  }
+
   return (
     <div>
       <Head>
@@ -238,11 +242,13 @@ export default function App() {
                               itemLinkPrefix="publ_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
+                              //@ts-ignore
+                              fieldNames={Object.keys(config.searchQuery.search_fields)}
                             />
                           }
                           sideContent={
                             <ErrorBoundary className={styles.searchErrorHidden}>
-                              {wasSearched && results.length > 0 && (
+                              {containsResults(wasSearched, results) && (
                                 <>
                                   <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />
                                   <div className="filters">
@@ -250,7 +256,7 @@ export default function App() {
                                   </div>
                                 </>
                               )}
-                              {wasSearched && results.length > 0 && (
+                              {containsResults(wasSearched, results) && (
                                 <>
                                   <Facet key={'1'} field={'language'} label={t('Language')} />
                                   <Facet key={'2'} field={'author.name'} label={t('Authors')} />
@@ -287,13 +293,13 @@ export default function App() {
                           }
                           bodyHeader={
                             <ErrorBoundary className={styles.searchErrorHidden}>
-                              {wasSearched && results.length > 0 && (
+                              {containsResults(wasSearched, results) && (
                                 <div className="d-flex align-items-center">
                                   <PagingInfo view={CustomViewPagingInfo} />
                                   {/* <ClearFilters /> */}
                                 </div>
                               )}
-                              {wasSearched && results.length > 0 && <ResultsPerPage options={[10, 20, 50]} />}
+                              {containsResults(wasSearched, results) && <ResultsPerPage options={[10, 20, 50]} />}
                             </ErrorBoundary>
                           }
                           // bodyFooter={}

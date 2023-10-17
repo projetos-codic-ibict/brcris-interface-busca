@@ -18,7 +18,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useState } from 'react';
-import CustomSearchBox from '../components/BasicSearchBox';
+import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewPeople from '../components/customResultView/CustomResultViewPeople';
@@ -42,6 +42,8 @@ const configDefault = {
     operator: 'OR',
     search_fields: {
       name_text: {},
+      lattesId: {},
+      orcid: {},
     },
     result_fields: {
       id: {
@@ -137,6 +139,10 @@ export default function App() {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
+  function containsResults(wasSearched: any, results: any) {
+    return wasSearched && results.length > 0;
+  }
+
   return (
     <div>
       <Head>
@@ -145,8 +151,8 @@ export default function App() {
       <div className="page-search">
         <CustomProvider>
           <SearchProvider config={config}>
-            <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-              {({ wasSearched }) => {
+            <WithSearch mapContextToProps={({ wasSearched, results }) => ({ wasSearched, results })}>
+              {({ wasSearched, results }) => {
                 return (
                   <div className="App">
                     <div className="container page">
@@ -164,38 +170,60 @@ export default function App() {
                               itemLinkPrefix="pers_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
-                              toogleAdvancedConfig={() => null}
+                              fieldNames={Object.keys(config.searchQuery.search_fields)}
                             />
                           }
                           sideContent={
-                            <div>
-                              {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
-                              <div className="filters">
-                                {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
-                              </div>
-                              <Facet key={'1'} field={'nationality'} label={t('Nationality')} />
-                              <Facet key={'2'} field={'researchArea'} label={t('Research area(s)')} />
-                            </div>
+                            <ErrorBoundary className={styles.searchErrorHidden}>
+                              {wasSearched && results.length > 0 && (
+                                <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />
+                              )}
+                              {containsResults(wasSearched, results) && (
+                                <>
+                                  <div className="filters">
+                                    {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
+                                  </div>
+                                  <Facet key={'1'} field={'nationality'} label={t('Nationality')} />
+                                  <Facet key={'2'} field={'researchArea'} label={t('Research area(s)')} />
+                                </>
+                              )}
+                            </ErrorBoundary>
                           }
-                          bodyContent={<Results resultView={CustomResultViewPeople} />}
+                          bodyContent={
+                            <ErrorBoundary
+                              className={styles.searchError}
+                              view={({ className, error }) => (
+                                <>
+                                  {error && <p className={`sui-search-error ${className}`}>{t(error.trim())}</p>}
+                                  {!error && wasSearched && results.length == 0 && (
+                                    <strong>{t('No documents were found for your search')}</strong>
+                                  )}
+                                  {!error && (
+                                    <>
+                                      <div className="result">
+                                        <Results resultView={CustomResultViewPeople} /> <Paging />
+                                      </div>
+                                      <IndicatorsPeople />
+                                    </>
+                                  )}
+                                </>
+                              )}
+                            ></ErrorBoundary>
+                          }
                           bodyHeader={
-                            <>
-                              {wasSearched && (
+                            <ErrorBoundary className={styles.searchErrorHidden}>
+                              {containsResults(wasSearched, results) && (
                                 <div className="d-flex align-items-center">
                                   <PagingInfo view={CustomViewPagingInfo} />
                                   {/* <ClearFilters /> */}
                                 </div>
                               )}
-                              {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                            </>
+                              {containsResults(wasSearched, results) && <ResultsPerPage options={[10, 20, 50]} />}
+                            </ErrorBoundary>
                           }
-                          bodyFooter={<Paging />}
+                          // bodyFooter={<Paging />}
                         />
-                        <ErrorBoundary className={styles.searchError}>
-                          <span></span>
-                        </ErrorBoundary>
                       </div>
-                      <IndicatorsPeople />
                     </div>
                   </div>
                 );
