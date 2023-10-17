@@ -28,19 +28,15 @@ class QueryFormat {
           const [field, value] = query.split(':');
           if (field === 'all') {
             allFields.forEach((field) => {
-              this.queryBase.bool.should.push({
-                match: {
-                  [field]: value,
-                },
-              });
+              this.fillQuery('OR', field, value);
             });
           } else {
             //@ts-ignore
-            let op = index + 1 < items.length ? items[index + 1].split('(').shift().trim() : 'AND';
-            if (op === 'AND NOT') {
-              op = 'AND';
+            let nextOperator = index + 1 < items.length ? items[index + 1].split('(').shift().trim() : 'AND';
+            if (nextOperator === 'AND NOT') {
+              nextOperator = 'AND';
             }
-            this.fillQuery(op, field, value);
+            this.fillQuery(nextOperator, field, value);
           }
         } else {
           const [field, value] = query.split(':');
@@ -59,22 +55,50 @@ class QueryFormat {
   private fillQuery(operator: string, field: string, value: string) {
     try {
       this.validQuery(operator, field, value);
-      if (operator.trim() === 'AND') {
+
+      // if (this.specificPhrase(value)) {
+      //   if (operator.trim() === 'AND') {
+      //     this.queryBase.bool.must.push({
+      //       match_phrase: {
+      //         [field]: value,
+      //       },
+      //     });
+      //   } else if (operator.trim() === 'OR') {
+      //     this.queryBase.bool.should.push({
+      //       match_phrase: {
+      //         [field]: value,
+      //       },
+      //     });
+      //   } else if (operator.trim() === 'AND NOT') {
+      //     this.queryBase.bool.must_not.push({
+      //       match_phrase: {
+      //         [field]: value,
+      //       },
+      //     });
+      //   }
+      // } else
+      const match = value.startsWith('"') && value.endsWith('"') ? 'match_phrase' : 'match';
+      console.log('match', match);
+      if (value === '*') {
         this.queryBase.bool.must.push({
-          match: {
-            [field]: value,
+          match_all: {},
+        });
+      } else if (operator.trim() === 'AND') {
+        this.queryBase.bool.must.push({
+          [match]: {
+            [field]: value.replaceAll('"', ''),
           },
         });
       } else if (operator.trim() === 'OR') {
         this.queryBase.bool.should.push({
-          match: {
-            [field]: value,
+          [match]: {
+            [field]: value.replaceAll('"', ''),
           },
         });
       } else if (operator.trim() === 'AND NOT') {
         this.queryBase.bool.must_not.push({
-          match: {
-            [field]: value,
+          [match]: {
+            [field]: value.replaceAll('"', ''),
           },
         });
       }

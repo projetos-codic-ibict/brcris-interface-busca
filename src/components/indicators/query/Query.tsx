@@ -40,7 +40,7 @@ export default function getFormatedQuery({
       };
     }
     return {
-      // track_total_hits: true,
+      track_total_hits: true,
       _source: [indicadorName],
       size: 0,
       aggs: {

@@ -77,7 +77,11 @@ const BasicSearchBox = ({
               })} ${t('documents')}`}
               onChange={(e) => onChange(e.target.value)}
             />
-            <button className="button sui-search-box__submit d-flex align-items-center flex-gap-8" type="submit">
+            <button
+              disabled={value.trim().length < 3}
+              className="button sui-search-box__submit d-flex align-items-center flex-gap-8"
+              type="submit"
+            >
               <IoSearch />
               {t('Search')}
             </button>
