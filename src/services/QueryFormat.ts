@@ -36,7 +36,10 @@ class QueryFormat {
             });
           } else {
             //@ts-ignore
-            const op = index + 1 < items.length ? items[index + 1].split('(').shift().trim() : 'AND';
+            let op = index + 1 < items.length ? items[index + 1].split('(').shift().trim() : 'AND';
+            if (op === 'AND NOT') {
+              op = 'AND';
+            }
             this.fillQuery(op, field, value);
           }
         } else {
