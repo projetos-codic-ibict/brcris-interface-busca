@@ -151,5 +151,6 @@
   "Advanced search": "Advanced search",
   "Basic search": "Basic search",
   "Invalid search query": "Invalid search query",
-  "No documents were found for your search": "No documents were found for your search"
+  "No documents were found for your search": "No documents were found for your search",
+  "All fields": "All fields"
 }

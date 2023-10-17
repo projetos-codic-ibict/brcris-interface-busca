@@ -90,7 +90,7 @@ const AdvancedSearchBox = ({
               ></textarea>
               <HelpModal />
               <select className="form-select" value={queryField} onChange={(e) => setQueryField(e.target.value)}>
-                <option value="all">Todos os inputs</option>
+                <option value="all">{t('All fields')}</option>
                 {fieldNames.map((field) => (
                   <option key={field} value={field}>
                     {field}
