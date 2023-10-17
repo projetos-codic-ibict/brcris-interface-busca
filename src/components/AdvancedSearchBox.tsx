@@ -29,26 +29,27 @@ const AdvancedSearchBox = ({
   const [queryField, setQueryField] = useState('all');
   const [inputs, setInputs] = useState<QueryItem[]>([]);
 
-  const adicionarCampo = () => {
+  const addInput = () => {
     setInputs([...inputs, { value: '', field: fieldNames[0], operator: 'AND' }]);
   };
 
-  const removerCampo = (indice: number) => {
-    const novosCampos = [...inputs];
-    novosCampos.splice(indice, 1);
-    setInputs(novosCampos);
+  const removeInput = (indice: number) => {
+    const newInputs = [...inputs];
+    newInputs.splice(indice, 1);
+    setInputs(newInputs);
   };
 
   const handleChange = ({ value, operator, field }: QueryItem, indice: number) => {
-    const novosCampos = [...inputs];
-    if (value) {
-      novosCampos[indice].value = value;
+    const newInputs = [...inputs];
+    console.log('value', value);
+    if (value != undefined) {
+      newInputs[indice].value = value;
     } else if (operator) {
-      novosCampos[indice].operator = operator;
+      newInputs[indice].operator = operator;
     } else if (field) {
-      novosCampos[indice].field = field;
+      newInputs[indice].field = field;
     }
-    setInputs(novosCampos);
+    setInputs(newInputs);
   };
 
   function getFormatedQuery() {
@@ -143,13 +144,13 @@ const AdvancedSearchBox = ({
                   ))}
                 </select>
               </div>
-              <span onClick={() => removerCampo(indice)} className="d-flex align-items-center">
+              <span onClick={() => removeInput(indice)} className="d-flex align-items-center">
                 <IoClose />
               </span>
             </div>
           ))}
           <div className="d-flex justify-content-center ">
-            <button className="btn-link d-flex align-items-center flex-gap-8" onClick={adicionarCampo}>
+            <button className="btn-link d-flex align-items-center flex-gap-8" onClick={addInput}>
               <IoAdd />
               Adicionar campo
             </button>
