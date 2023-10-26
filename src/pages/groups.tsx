@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
@@ -7,7 +8,6 @@ import {
   PagingInfo,
   Results,
   ResultsPerPage,
-  SearchBox,
   SearchProvider,
   Sorting,
   WithSearch,
@@ -20,6 +20,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
+import { useState } from 'react';
+import { containsResults } from '../../utils/Utils';
+import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewGroups from '../components/customResultView/CustomResultViewGroups';
@@ -36,12 +39,17 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 });
 
 const INDEX_NAME = 'researchgroups';
-const config = {
+const configDefault = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
     operator: 'OR',
     search_fields: {
       name: {},
+      // creationYear: {}, dá erro na busca simples por causo do tipo long
+      status: {},
+      'leader.name': {},
+      'member.name': {},
+      'orgunit.name': {},
     },
     result_fields: {
       name: {
@@ -115,33 +123,6 @@ const config = {
       applicationSector: { type: 'value' },
     },
   },
-  // autocompleteQuery: {
-  //   results: {
-  //     search_fields: {
-  //       'titlesuggest.suggest': {},
-  //     },
-  //     resultsPerPage: 5,
-  //     result_fields: {
-  //       title: {
-  //         snippet: {
-  //           size: 100,
-  //           fallback: true,
-  //         },
-  //       },
-  //       vivo_link: {
-  //         raw: {},
-  //       },
-  //     },
-  //   },
-  //   suggestions: {
-  //     types: {
-  //       documents: {
-  //         fields: ['suggest'],
-  //       },
-  //     },
-  //     size: 4,
-  //   },
-  // },
 };
 type SortOptionsType = {
   name: string;
@@ -175,8 +156,14 @@ const SORT_OPTIONS: SortOptionsType[] = [
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
   const { t } = useTranslation('common');
+  const [config, setConfig] = useState(configDefault);
   // tradução
   SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
+
+  function updateOpetatorConfig(op: string) {
+    //@ts-ignore
+    setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
+  }
 
   return (
     <div>
@@ -186,8 +173,8 @@ export default function App() {
       <div className="page-search">
         <CustomProvider>
           <SearchProvider config={config}>
-            <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-              {({ wasSearched }) => {
+            <WithSearch mapContextToProps={({ wasSearched, results }) => ({ wasSearched, results })}>
+              {({ wasSearched, results }) => {
                 return (
                   <div className="App">
                     <div className="container page">
@@ -200,65 +187,84 @@ export default function App() {
                       <div className={styles.searchLayout}>
                         <Layout
                           header={
-                            <SearchBox
-                              autocompleteMinimumCharacters={3}
-                              autocompleteResults={{
-                                linkTarget: '_blank',
-                                sectionTitle: t('Open link') || '',
-                                titleField: 'name',
-                                urlField: 'vivo_link',
-                                shouldTrackClickThrough: true,
-                              }}
-                              autocompleteSuggestions={true}
-                              debounceLength={0}
+                            <CustomSearchBox
+                              titleFieldName="name"
+                              itemLinkPrefix="group_"
+                              updateOpetatorConfig={updateOpetatorConfig}
+                              indexName={INDEX_NAME}
+                              //@ts-ignore
+                              fieldNames={Object.keys(config.searchQuery.search_fields)}
                             />
                           }
                           sideContent={
-                            <div>
-                              {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
-                              <div className="filters">
-                                {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
-                              </div>
-                              <Facet key={'1'} field={'creationYear'} label={t('Creation year')} />
+                            <ErrorBoundary className={styles.searchErrorHidden}>
+                              {containsResults(wasSearched, results) && (
+                                <>
+                                  <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />
+                                  <div className="filters">
+                                    <span className="sui-sorting__label">{t('Filters')}</span>
+                                  </div>
+                                </>
+                              )}
+                              {containsResults(wasSearched, results) && (
+                                <>
+                                  <Facet key={'1'} field={'creationYear'} label={t('Creation year')} />
 
-                              <Facet key={'2'} field={'researchLine'} label={t('Research line')} />
+                                  <Facet key={'2'} field={'researchLine'} label={t('Research line')} />
 
-                              <Facet key={'3'} field={'knowledgeArea'} label={t('Knowledge area')} />
+                                  <Facet key={'3'} field={'knowledgeArea'} label={t('Knowledge area')} />
 
-                              <Facet key={'4'} field={'orgunit.name'} label={t('Organization')} />
+                                  <Facet key={'4'} field={'orgunit.name'} label={t('Organization')} />
 
-                              <Facet key={'5'} field={'keyword'} label={t('Keyword')} />
+                                  <Facet key={'5'} field={'keyword'} label={t('Keyword')} />
 
-                              <Facet key={'6'} field={'status'} label={t('Status')} />
+                                  <Facet key={'6'} field={'status'} label={t('Status')} />
 
-                              <Facet key={'7'} field={'leader.name'} label={t('Leader')} />
+                                  <Facet key={'7'} field={'leader.name'} label={t('Leader')} />
 
-                              <Facet key={'8'} field={'partner.name'} label={t('Partner')} />
+                                  <Facet key={'8'} field={'partner.name'} label={t('Partner')} />
 
-                              <Facet key={'9'} field={'member'} label={t('Member')} />
+                                  <Facet key={'9'} field={'member'} label={t('Member')} />
 
-                              <Facet key={'10'} field={'applicationSector'} label={t('Application sector')} />
-                            </div>
+                                  <Facet key={'10'} field={'applicationSector'} label={t('Application sector')} />
+                                </>
+                              )}
+                            </ErrorBoundary>
                           }
-                          bodyContent={<Results resultView={CustomResultViewGroups} />}
+                          bodyContent={
+                            <ErrorBoundary
+                              className={styles.searchError}
+                              view={({ className, error }) => (
+                                <>
+                                  {error && <p className={`sui-search-error ${className}`}>{t(error.trim())}</p>}
+                                  {!error && wasSearched && results.length == 0 && (
+                                    <strong>{t('No documents were found for your search')}</strong>
+                                  )}
+                                  {!error && (
+                                    <>
+                                      <div className="result">
+                                        <Results resultView={CustomResultViewGroups} /> <Paging />
+                                      </div>
+                                      <GroupsIndicators />
+                                    </>
+                                  )}
+                                </>
+                              )}
+                            ></ErrorBoundary>
+                          }
                           bodyHeader={
-                            <>
-                              {wasSearched && (
+                            <ErrorBoundary className={styles.searchErrorHidden}>
+                              {containsResults(wasSearched, results) && (
                                 <div className="d-flex align-items-center">
                                   <PagingInfo view={CustomViewPagingInfo} />
-                                  {/* <ClearFilters /> */}
                                 </div>
                               )}
-                              {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                            </>
+                              {containsResults(wasSearched, results) && <ResultsPerPage options={[10, 20, 50]} />}
+                            </ErrorBoundary>
                           }
-                          bodyFooter={<Paging />}
+                          // bodyFooter={<Paging />}
                         />
-                        <ErrorBoundary className={styles.searchError}>
-                          <span></span>
-                        </ErrorBoundary>
                       </div>
-                      <GroupsIndicators />
                     </div>
                   </div>
                 );

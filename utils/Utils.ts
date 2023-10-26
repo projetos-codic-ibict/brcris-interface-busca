@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const CHART_BACKGROUD_COLORS = [
   'rgba(255,0,0, 0.2)',
   'rgba(54, 162, 235, 0.2)',
@@ -22,3 +23,7 @@ export const CHART_BORDER_COLORS = [
   'rgba(139,69,19, 1)',
   'rgba(50,205,50, 1)',
 ];
+
+export function containsResults(wasSearched: any, results: any) {
+  return wasSearched && results.length > 0;
+}

@@ -41,7 +41,6 @@ const AdvancedSearchBox = ({
 
   const handleChange = ({ value, operator, field }: QueryItem, indice: number) => {
     const newInputs = [...inputs];
-    console.log('value', value);
     if (value != undefined) {
       newInputs[indice].value = value;
     } else if (operator) {

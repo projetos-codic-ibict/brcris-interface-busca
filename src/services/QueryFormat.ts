@@ -78,7 +78,6 @@ class QueryFormat {
       //   }
       // } else
       const match = value.startsWith('"') && value.endsWith('"') ? 'match_phrase' : 'match';
-      console.log('match', match);
       if (value === '*') {
         this.queryBase.bool.must.push({
           match_all: {},

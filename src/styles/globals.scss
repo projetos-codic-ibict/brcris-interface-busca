@@ -197,7 +197,7 @@ a.nav-link {
 }
 
 .result {
-  width: 70%;
+  width: 72%;
 }
 
 .search-card .sui-search-box__text-input {
@@ -429,6 +429,7 @@ li .sui-result__key:after {
 
 .page-search .sui-layout-main-header {
   margin-bottom: 1.5rem;
+  width: 72%;
 }
 
 .page-search .sui-layout-body__inner {
@@ -783,5 +784,10 @@ footer {
   .page-search .sui-layout-main {
     width: 100%;
     padding: 16px 0 0 0;
+  }
+
+  .page-search .sui-layout-main-header,
+  .result {
+    width: 100%;
   }
 }

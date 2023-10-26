@@ -19,6 +19,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useState } from 'react';
+import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import { CustomProvider } from '../components/context/CustomContext';
@@ -204,17 +205,6 @@ export default function App() {
     //@ts-ignore
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
-  function toogleAdvancedConfig(advanced: boolean) {
-    //@ts-ignore
-    setConfig({
-      ...config,
-      advanced: true,
-    });
-  }
-
-  function containsResults(wasSearched: any, results: any) {
-    return wasSearched && results.length > 0;
-  }
 
   return (
     <div>
@@ -281,7 +271,7 @@ export default function App() {
                                   )}
                                   {!error && (
                                     <>
-                                      <div>
+                                      <div className="result">
                                         <Results resultView={CustomResultViewPublications} /> <Paging />
                                       </div>
                                       <Indicators />
@@ -296,7 +286,6 @@ export default function App() {
                               {containsResults(wasSearched, results) && (
                                 <div className="d-flex align-items-center">
                                   <PagingInfo view={CustomViewPagingInfo} />
-                                  {/* <ClearFilters /> */}
                                 </div>
                               )}
                               {containsResults(wasSearched, results) && <ResultsPerPage options={[10, 20, 50]} />}

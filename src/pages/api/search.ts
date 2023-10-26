@@ -35,6 +35,7 @@ function builConnector(index: string) {
           },
         };
       }
+      console.log('requestBody: ', requestBody.query);
       return requestBody;
     }
   );
@@ -49,7 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const response = await connector.onSearch(requestState, queryConfig);
     res.json(response);
   } catch (e) {
-    console.error('ERROR::::', e);
+    console.error('ERROR: ', e);
     res.status(400).json({ error: e.message });
   }
 }

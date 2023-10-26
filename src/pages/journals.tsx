@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
@@ -21,7 +22,8 @@ import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import CustomSearchBox from '../components/BasicSearchBox';
+import { containsResults } from '../../utils/Utils';
+import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
@@ -44,7 +46,13 @@ const configDefault = {
     operator: 'OR',
     search_fields: {
       title_text: {},
+      issn: {},
+      issnl: {},
+      status: {},
+      qualis: {},
+      type: {},
     },
+
     result_fields: {
       id: {
         raw: {},
@@ -166,8 +174,8 @@ export default function App() {
       <div className="page-search">
         <CustomProvider>
           <SearchProvider config={config}>
-            <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-              {({ wasSearched }) => {
+            <WithSearch mapContextToProps={({ wasSearched, results }) => ({ wasSearched, results })}>
+              {({ wasSearched, results }) => {
                 return (
                   <div className="App">
                     <div className="container page">
@@ -185,40 +193,64 @@ export default function App() {
                               itemLinkPrefix="journ_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
-                              toogleAdvancedConfig={() => null}
+                              //@ts-ignore
+                              fieldNames={Object.keys(config.searchQuery.search_fields)}
                             />
                           }
                           sideContent={
-                            <div>
-                              {wasSearched && <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />}
-                              <div className="filters">
-                                {wasSearched && <span className="sui-sorting__label">{t('Filters')}</span>}
-                              </div>
-                              <Facet key={'1'} field={'qualis'} label={t('Qualis')} />
-                              <Facet key={'2'} field={'status'} label={t('Status')} />
-                              <Facet key={'3'} field={'type'} label={t('Type')} />
-                              <Facet key={'4'} field={'publisher.name'} label={t('Publisher')} />
-                            </div>
+                            <ErrorBoundary className={styles.searchErrorHidden}>
+                              {containsResults(wasSearched, results) && (
+                                <>
+                                  <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />
+                                  <div className="filters">
+                                    <span className="sui-sorting__label">{t('Filters')}</span>
+                                  </div>
+                                </>
+                              )}
+                              {containsResults(wasSearched, results) && (
+                                <>
+                                  <Facet key={'1'} field={'qualis'} label={t('Qualis')} />
+                                  <Facet key={'2'} field={'status'} label={t('Status')} />
+                                  <Facet key={'3'} field={'type'} label={t('Type')} />
+                                  <Facet key={'4'} field={'publisher.name'} label={t('Publisher')} />
+                                </>
+                              )}
+                            </ErrorBoundary>
                           }
-                          bodyContent={<Results resultView={CustomResultViewJournals} />}
+                          bodyContent={
+                            <ErrorBoundary
+                              className={styles.searchError}
+                              view={({ className, error }) => (
+                                <>
+                                  {error && <p className={`sui-search-error ${className}`}>{t(error.trim())}</p>}
+                                  {!error && wasSearched && results.length == 0 && (
+                                    <strong>{t('No documents were found for your search')}</strong>
+                                  )}
+                                  {!error && (
+                                    <>
+                                      <div className="result">
+                                        <Results resultView={CustomResultViewJournals} /> <Paging />
+                                      </div>
+                                      <JornalsIndicators />
+                                    </>
+                                  )}
+                                </>
+                              )}
+                            ></ErrorBoundary>
+                          }
                           bodyHeader={
-                            <>
-                              {wasSearched && (
+                            <ErrorBoundary className={styles.searchErrorHidden}>
+                              {containsResults(wasSearched, results) && (
                                 <div className="d-flex align-items-center">
                                   <PagingInfo view={CustomViewPagingInfo} />
-                                  {/* <ClearFilters /> */}
                                 </div>
                               )}
-                              {wasSearched && <ResultsPerPage options={[10, 20, 50]} />}
-                            </>
+                              {containsResults(wasSearched, results) && <ResultsPerPage options={[10, 20, 50]} />}
+                            </ErrorBoundary>
                           }
-                          bodyFooter={<Paging />}
+                          // bodyFooter={<Paging />}
                         />
-                        <ErrorBoundary className={styles.searchError}>
-                          <span></span>
-                        </ErrorBoundary>
                       </div>
-                      <JornalsIndicators />
                     </div>
                   </div>
                 );

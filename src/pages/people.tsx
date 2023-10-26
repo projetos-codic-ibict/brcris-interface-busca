@@ -25,6 +25,7 @@ import CustomResultViewPeople from '../components/customResultView/CustomResultV
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import IndicatorsPeople from '../components/indicators/PeopleIndicators';
 import styles from '../styles/Home.module.css';
+import { containsResults } from '../../utils/Utils';
 type Props = {
   // Add custom props here
 };
@@ -139,10 +140,6 @@ export default function App() {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
-  function containsResults(wasSearched: any, results: any) {
-    return wasSearched && results.length > 0;
-  }
-
   return (
     <div>
       <Head>
@@ -215,7 +212,6 @@ export default function App() {
                               {containsResults(wasSearched, results) && (
                                 <div className="d-flex align-items-center">
                                   <PagingInfo view={CustomViewPagingInfo} />
-                                  {/* <ClearFilters /> */}
                                 </div>
                               )}
                               {containsResults(wasSearched, results) && <ResultsPerPage options={[10, 20, 50]} />}

@@ -48,7 +48,6 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
     options.plugins.title.text = t(options.title);
     // @ts-ignore
     optionsType.plugins.title.text = t(optionsType.title);
-    console.log(isLoading);
     try {
       const pdQuery = JSON.stringify(
         getFormatedQuery({
