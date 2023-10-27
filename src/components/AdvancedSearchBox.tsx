@@ -30,7 +30,7 @@ const AdvancedSearchBox = ({
   const [inputs, setInputs] = useState<QueryItem[]>([]);
 
   const addInput = () => {
-    setInputs([...inputs, { value: '', field: fieldNames[0], operator: 'AND' }]);
+    setInputs([...inputs, { value: '', field: 'all', operator: 'AND' }]);
   };
 
   const removeInput = (indice: number) => {
@@ -136,6 +136,7 @@ const AdvancedSearchBox = ({
                   onChange={(e) => handleChange({ field: e.target.value }, indice)}
                   className="form-select"
                 >
+                  <option value="all">{t('All fields')}</option>
                   {fieldNames.map((field) => (
                     <option key={field} value={field}>
                       {field}

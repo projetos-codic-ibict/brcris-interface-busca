@@ -35,7 +35,7 @@ function builConnector(index: string) {
           },
         };
       }
-      console.log('requestBody: ', requestBody.query);
+      console.log('requestBody: ', JSON.stringify(requestBody.query));
       return requestBody;
     }
   );

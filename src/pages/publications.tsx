@@ -46,8 +46,12 @@ const configDefault: CustomSearchDriverOptions = {
       title_text: {
         weight: 3,
       },
-      keyword_text: {},
       publicationDate: {},
+      'author.name': {},
+      language: {},
+      type: {},
+      'orgunit.name': {},
+      keyword_text: {},
     },
     result_fields: {
       title: {
