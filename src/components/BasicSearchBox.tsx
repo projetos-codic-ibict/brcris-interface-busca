@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SearchBox } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { IoArrowRedoOutline, IoSearch } from 'react-icons/io5';
+import { IoSearch } from 'react-icons/io5';
 import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
@@ -86,39 +87,12 @@ const BasicSearchBox = ({
               {t('Search')}
             </button>
           </form>
-          <span onClick={() => toogleAdvancedConfig(true)} className="link-color d-flex align-items-center flex-gap-8">
+          {/* <span onClick={() => toogleAdvancedConfig(true)} className="link-color d-flex align-items-center flex-gap-8">
             <IoArrowRedoOutline />
             {t('Advanced search')}
-          </span>
+          </span> */}
         </div>
       )}
-      // inputView={({ getAutocomplete, getInputProps, getButtonProps }) => (
-      //   <div className="d-flex flex-column 8 basic-search">
-      //     <div className="d-flex flex-gap-8 align-items-center">
-      //       <div className="sui-search-box__wrapper">
-      //         <input
-      //           {...getInputProps({
-      //             placeholder: `${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-      //               value: docsCount,
-      //             })} ${t('documents')}`,
-      //           })}
-      //         />
-      //         {getAutocomplete()}
-      //       </div>
-      //       <input
-      //         className="d-flex align-items-center flex-gap-8"
-      //         {...getButtonProps({
-      //           disabled: getInputProps()?.value?.trim().length < 3,
-      //         })}
-      //       >
-      //         {t('Search')}
-      //       </input>
-      //     </div>
-      //     <span onClick={() => toogleAdvancedConfig(true)} className="link-color">
-      //       Advanced Search
-      //     </span>
-      //   </div>
-      // )}
     ></SearchBox>
   );
 };

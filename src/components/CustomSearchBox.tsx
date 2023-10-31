@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useContext } from 'react';
-import AdvancedSearchBox from './AdvancedSearchBox';
 import BasicSearchBox from './BasicSearchBox';
 import CustomContext from './context/CustomContext';
 
@@ -21,10 +21,7 @@ const CustomSearchBox = ({
 }: CustomSearchBoxProps) => {
   const { advanced, setAdvanced } = useContext(CustomContext);
 
-  return advanced ? (
-    //@ts-ignore
-    <AdvancedSearchBox indexName={indexName} fieldNames={fieldNames} toogleAdvancedConfig={setAdvanced} />
-  ) : (
+  return (
     <BasicSearchBox
       titleFieldName={titleFieldName}
       itemLinkPrefix={itemLinkPrefix}
@@ -33,6 +30,19 @@ const CustomSearchBox = ({
       toogleAdvancedConfig={setAdvanced}
     />
   );
+
+  // return advanced ? (
+  //   //@ts-ignore
+  //   <AdvancedSearchBox indexName={indexName} fieldNames={fieldNames} toogleAdvancedConfig={setAdvanced} />
+  // ) : (
+  //   <BasicSearchBox
+  //     titleFieldName={titleFieldName}
+  //     itemLinkPrefix={itemLinkPrefix}
+  //     updateOpetatorConfig={updateOpetatorConfig}
+  //     indexName={indexName}
+  //     toogleAdvancedConfig={setAdvanced}
+  //   />
+  // );
 };
 
 export default CustomSearchBox;
