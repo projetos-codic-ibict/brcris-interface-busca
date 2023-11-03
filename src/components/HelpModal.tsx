@@ -1,10 +1,18 @@
+import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import styles from '../styles/AdvancedSearch.module.css';
 
-const HelpModal = () => {
-  const [show, setShow] = useState(false);
+type HelpModalProps = {
+  fields: string[];
+};
 
+const HelpModal = ({ fields }: HelpModalProps) => {
+  const { t } = useTranslation('common');
+  const router = useRouter();
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -14,50 +22,41 @@ const HelpModal = () => {
         Precisa de ajuda?
       </span>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Glossário e ajuda para busca</Modal.Title>
+          <Modal.Title>{t('Glossary and search help')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>
-            Você pode enriquecer sua busca de uma forma muito simples. Use os campos de pesquisa combinados com os
-            conectores (AND, OR e AND NOT) e especifique cada vez mais sua busca.
+            {t(
+              'You can enrich your search in a very simple way. Use the search indexes combined with the connectors (AND, OR or AND NOT) and specify more your search.'
+            )}
           </p>
-          <p>Por exemplo, se você deseja buscar publicaṍes sobre Java em 2018, use:</p>
+          <p>
+            {t(
+              'For example, if you want to search for publications on Computing in 2018, excluding master thesis: go to the '
+            )}{' '}
+            <Link href="/publications">{t('publications')}</Link> {t('index page and use the query below')}:
+          </p>
           <p className="text-center">
-            <code>(title_text:Java) AND (publicationDate:2018)</code>
+            <code>{t('(all:Computing) AND (publicationDate:2018) AND NOT (type:master thesis)')}</code>
           </p>
-          <p>Veja abaixo a lista completa de campos de pesquisa que podem ser usados:</p>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Campo</th>
-                <th>Elemento</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>all</td>
-                <td>todos os campos</td>
-              </tr>
-              <tr>
-                <td>title</td>
-                <td>título do registro</td>
-              </tr>
-              <tr>
-                <td>autor</td>
-                <td>autor</td>
-              </tr>
-              <tr>
-                <td>publicationDate</td>
-                <td>data de publicação</td>
-              </tr>
-            </tbody>
-          </table>
+          <hr />
+          <p>
+            {t('See below for the full list of search fields that can be used for the index of')}{' '}
+            <b>{t(router.pathname.replaceAll('/', ''))}</b>.
+          </p>
+          <ul>
+            <li>all *</li>
+            {fields.map((field) => (
+              <li key={field}>{field}</li>
+            ))}
+          </ul>
+          <span>* {t('All fields')}</span>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Fechar
+            {t('Close')}
           </Button>
         </Modal.Footer>
       </Modal>

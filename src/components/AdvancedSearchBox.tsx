@@ -88,7 +88,7 @@ const AdvancedSearchBox = ({
                 rows={1}
                 className="sui-search-box__text-input"
               ></textarea>
-              <HelpModal />
+              <HelpModal fields={fieldNames} />
               <select className="form-select" value={queryField} onChange={(e) => setQueryField(e.target.value)}>
                 <option value="all">{t('All fields')}</option>
                 {fieldNames.map((field) => (

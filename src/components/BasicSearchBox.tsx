@@ -4,7 +4,7 @@ import { SearchBox } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { IoSearch } from 'react-icons/io5';
+import { IoArrowRedoOutline, IoSearch } from 'react-icons/io5';
 import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
@@ -87,10 +87,10 @@ const BasicSearchBox = ({
               {t('Search')}
             </button>
           </form>
-          {/* <span onClick={() => toogleAdvancedConfig(true)} className="link-color d-flex align-items-center flex-gap-8">
+          <span onClick={() => toogleAdvancedConfig(true)} className="link-color d-flex align-items-center flex-gap-8">
             <IoArrowRedoOutline />
             {t('Advanced search')}
-          </span> */}
+          </span>
         </div>
       )}
     ></SearchBox>
