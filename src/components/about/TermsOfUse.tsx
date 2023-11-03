@@ -18,7 +18,7 @@ const TermsOfUse = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  return <>{isMounted && <div dangerouslySetInnerHTML={{ __html: t('html:terms of use') }} />}</>;
+  return <>{isMounted && <div dangerouslySetInnerHTML={{ __html: t('html:terms of use') || '' }} />}</>;
 };
 
 export default TermsOfUse;

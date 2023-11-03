@@ -18,6 +18,6 @@ const Privacy = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  return <>{isMounted && <div dangerouslySetInnerHTML={{ __html: t('html:privacy policy') }} />}</>;
+  return <>{isMounted && <div dangerouslySetInnerHTML={{ __html: t('html:privacy policy') || '' }} />}</>;
 };
 export default Privacy;

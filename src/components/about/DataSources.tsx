@@ -19,7 +19,7 @@ const DataSources = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  return <>{isMounted && <div dangerouslySetInnerHTML={{ __html: t('html:data sources') }} />}</>;
+  return <>{isMounted && <div dangerouslySetInnerHTML={{ __html: t('html:data sources') || '' }} />}</>;
 };
 
 export default DataSources;
