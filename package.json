@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "PORT=3000 && next start -p $PORT",
     "lint": "next lint --fix",
-    "deploy": "npm ci && npm run build && pm2 start --name 'brcris-nextjs' --interpreter bash -- start"
+    "deploy": "yarn && yarn build && pm2 start yarn --name 'brcris-nextjs' --interpreter bash -- start"
   },
   "dependencies": {
     "@elastic/react-search-ui": "^1.18.1",
