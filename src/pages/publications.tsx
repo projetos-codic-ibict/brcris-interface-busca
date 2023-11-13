@@ -37,7 +37,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ locale }) 
   },
 });
 
-const INDEX_NAME = 'pesqdf-publication';
+const INDEX_NAME = process.env.INDEX_PUBLICATION || '';
+console.log('INDEX_PUBLICATION: ', INDEX_NAME);
 const configDefault: CustomSearchDriverOptions = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {

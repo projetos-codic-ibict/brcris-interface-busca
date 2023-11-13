@@ -19,7 +19,7 @@ import { OptionsBar } from './options/ChartsOptions';
 import getFormatedQuery from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
-const INDEX_NAME = 'pesqdf-journals';
+const INDEX_NAME = process.env.INDEX_JOURNAL || '';
 
 const optQualis = new OptionsBar('Journals by qualis');
 

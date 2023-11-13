@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   },
 });
 
-const INDEX_NAME = 'pesqdf-orgunit';
+const INDEX_NAME = process.env.INDEX_ORGUNIT || '';
 const configDefault = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {

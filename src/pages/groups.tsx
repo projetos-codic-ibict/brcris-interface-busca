@@ -38,7 +38,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   },
 });
 
-const INDEX_NAME = 'researchgroups';
+const INDEX_NAME = process.env.INDEX_GROUP || '';
 const configDefault = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {

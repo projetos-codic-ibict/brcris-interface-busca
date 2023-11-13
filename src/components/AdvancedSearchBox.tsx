@@ -82,7 +82,7 @@ const AdvancedSearchBox = ({
               <textarea
                 value={query}
                 placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                  value: docsCount,
+                  value: docsCount || 0,
                 })} ${t('documents')}`}
                 onChange={(e) => setQuery(e.target.value)}
                 rows={1}

@@ -27,6 +27,7 @@ const BasicSearchBox = ({
   const { t } = useTranslation('common');
   const router = useRouter();
   const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
+  console.log('indexName', indexName);
 
   useEffect(() => {
     ElasticSearchStatsService(indexName)
@@ -74,7 +75,7 @@ const BasicSearchBox = ({
               type="text"
               value={value}
               placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                value: docsCount,
+                value: docsCount || 0,
               })} ${t('documents')}`}
               onChange={(e) => onChange(e.target.value)}
             />

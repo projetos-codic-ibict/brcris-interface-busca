@@ -22,7 +22,7 @@ import { OptionsPie } from './options/ChartsOptions';
 import getFormatedQuery from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
-const INDEX_NAME = 'pesqdf-person';
+const INDEX_NAME = process.env.INDEX_PERSON || '';
 
 export const optionsResearchArea = new OptionsPie('Research areas');
 

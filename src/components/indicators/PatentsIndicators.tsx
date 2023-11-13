@@ -19,7 +19,7 @@ import { OptionsBar, OptionsPie } from './options/ChartsOptions';
 import getFormatedQuery from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
-const INDEX_NAME = 'pesqdf-patent';
+const INDEX_NAME = process.env.INDEX_PATENT || '';
 
 const optDepositDate = new OptionsBar('Patents by deposit year');
 const optPubDate = new OptionsBar('Patents by publication year');

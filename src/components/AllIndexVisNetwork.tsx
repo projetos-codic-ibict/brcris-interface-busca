@@ -26,7 +26,7 @@ interface IndexNode extends Node {
 const nodes: IndexNode[] = [
   {
     id: 1,
-    index: 'pesqdf-publication',
+    index: process.env.INDEX_PUBLICATION || '',
     label: 'Publications',
     title: '100',
     widthConstraint: 100,
@@ -40,7 +40,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 2,
-    index: 'pesqdf-person',
+    index: process.env.INDEX_PERSON || '',
     label: 'People',
     size: 200,
     title: '100',
@@ -54,7 +54,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 3,
-    index: 'pesqdf-journals',
+    index: process.env.INDEX_JOURNAL || '',
     label: 'Journals',
     title: '100',
     level: 3,
@@ -67,7 +67,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 4,
-    index: 'pesqdf-orgunit',
+    index: process.env.INDEX_ORGUNIT || '',
     label: 'Institutions',
     title: '100',
     level: 4,
@@ -80,7 +80,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 5,
-    index: 'pesqdf-patent',
+    index: process.env.INDEX_PATENT || '',
     label: 'Patentes',
     title: '100',
     level: 5,
@@ -93,7 +93,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 6,
-    index: 'pesqdf-program',
+    index: process.env.INDEX_PROGRAM || '',
     label: 'PPGs',
     title: '100',
     level: 6,
@@ -106,7 +106,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 7,
-    index: 'researchgroups',
+    index: process.env.INDEX_GROUP || '',
     label: 'Research Groups',
     title: '100',
     level: 7,
@@ -118,7 +118,7 @@ const nodes: IndexNode[] = [
   },
   {
     id: 8,
-    index: 'pesqdf-software',
+    index: process.env.INDEX_SOFTWARE || '',
     label: 'Software',
     title: '100 ',
     level: 8,

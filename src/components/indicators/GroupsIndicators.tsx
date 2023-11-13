@@ -19,7 +19,7 @@ import { OptionsBar, OptionsPie } from './options/ChartsOptions';
 import getFormatedQuery from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
-const INDEX_NAME = 'researchgroups';
+const INDEX_NAME = process.env.INDEX_GROUP || '';
 
 const optResearchLine = new OptionsPie('Research groups by Research line');
 const optKnowledgeArea = new OptionsPie('Research groups by knowledge area');

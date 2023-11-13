@@ -19,7 +19,7 @@ import { OptionsBar, OptionsPie } from './options/ChartsOptions';
 import getFormatedQuery from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
-const INDEX_NAME = 'pesqdf-software';
+const INDEX_NAME = process.env.INDEX_SOFTWARE || '';
 
 const optPubDate = new OptionsBar('Softwares by release year');
 const optknowledgeAreas = new OptionsPie('Softwares by knowledge area');

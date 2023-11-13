@@ -38,7 +38,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   },
 });
 
-const INDEX_NAME = 'pesqdf-patent';
+const INDEX_NAME = process.env.INDEX_PATENT || '';
 
 const configDefault = {
   ...DefaultQueryConfig(INDEX_NAME),

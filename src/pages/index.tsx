@@ -23,14 +23,14 @@ export default function App() {
   const { t } = useTranslation('common');
 
   const indexes = [
-    { text: 'Publications', page: 'publications', name: 'pesqdf-publication' },
-    { text: 'People', page: 'people', name: 'pesqdf-person' },
-    { text: 'Journals', page: 'journals', name: 'pesqdf-journals' },
-    { text: 'Institutions', page: 'institutions', name: 'pesqdf-orgunit' },
-    { text: 'Patents', page: 'patents', name: 'pesqdf-patent' },
-    { text: 'Programs', page: 'programs', name: 'pesqdf-program' },
-    { text: 'Research Groups', page: 'groups', name: 'researchgroups' },
-    { text: 'Software', page: 'software', name: 'pesqdf-software' },
+    { text: 'Publications', page: 'publications', name: process.env.INDEX_PUBLICATION || '' },
+    { text: 'People', page: 'people', name: process.env.INDEX_PERSON || '' },
+    { text: 'Journals', page: 'journals', name: process.env.INDEX_JOURNAL || '' },
+    { text: 'Institutions', page: 'institutions', name: process.env.INDEX_ORGUNIT || '' },
+    { text: 'Patents', page: 'patents', name: process.env.INDEX_PATENT || '' },
+    { text: 'Programs', page: 'programs', name: process.env.INDEX_PROGRAM || '' },
+    { text: 'Research Groups', page: 'groups', name: process.env.INDEX_GROUP || '' },
+    { text: 'Software', page: 'software', name: process.env.INDEX_SOFTWARE || '' },
   ];
   const partners = [
     {
@@ -74,7 +74,7 @@ export default function App() {
   ];
   const [term, setTerm] = useState('');
   const [searchPage, setSearchPage] = useState('publications');
-  const [selectedIndex, setSelectedIndex] = useState('pesqdf-publication');
+  const [selectedIndex, setSelectedIndex] = useState(process.env.INDEX_PUBLICATION || '');
   const [docsCount, setDocsCount] = useState('');
 
   useEffect(() => {

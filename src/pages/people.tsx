@@ -18,6 +18,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useState } from 'react';
+import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import { CustomProvider } from '../components/context/CustomContext';
@@ -25,7 +26,6 @@ import CustomResultViewPeople from '../components/customResultView/CustomResultV
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import IndicatorsPeople from '../components/indicators/PeopleIndicators';
 import styles from '../styles/Home.module.css';
-import { containsResults } from '../../utils/Utils';
 type Props = {
   // Add custom props here
 };
@@ -36,7 +36,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   },
 });
 
-const INDEX_NAME = 'pesqdf-person';
+const INDEX_NAME = process.env.INDEX_PERSON || '';
 const configDefault = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
