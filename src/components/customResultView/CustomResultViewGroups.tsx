@@ -1,11 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import ReadMoreCollapse from '../ReadMoreCollapse';
-import LattesLink from '../externalLinks/LattesLink';
+import ExternalLink from '../externalLinks';
+import ShowAuthorItem from './ShowAuthorItem';
 import ShowItem from './ShowItem';
 
+const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
+
 const CustomResultViewGroups = ({ result }: ResultViewProps) => {
+  const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <li className="sui-result">
@@ -19,29 +24,17 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
             <ShowItem label={t('Creation year')} value={result.creationYear?.raw} />
 
             <ShowItem label={t('Research line')} value={result.researchLine?.raw} />
-
-            <li>
-              <span className="sui-result__key">{t('Leader')}</span>
-              {result.leader?.raw.map((leader: any, index: any) => (
-                <span key={index} className="sui-result__value">
-                  <a target="_blank" href={`http://lattes.cnpq.br/${leader.idLattes}`} rel="noreferrer">
-                    {leader.name}
-                  </a>
-                  {leader.idLattes ? <LattesLink lattesId={leader.idLattes!} /> : ''}
-                </span>
-              ))}
-            </li>
+            <ShowAuthorItem label={t('Leader')} authors={result.leader?.raw} />
 
             <li>
               <span className="sui-result__key">{t('Organization')}</span>
               {result.orgunit?.raw.map((orgunit: any, index: any) => (
                 <span key={index} className="sui-result__value">
-                  {orgunit.name}
-                  {/* <ExternalLink
+                  <ExternalLink
                     key={orgunit.id}
                     content={orgunit.name}
                     url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}&lang=${router.locale}`}
-                  /> */}
+                  />
                 </span>
               ))}
             </li>
@@ -68,20 +61,8 @@ const CustomResultViewGroups = ({ result }: ResultViewProps) => {
                 ))}
               </li>
 
-              <li>
-                <span className="sui-result__key">{t('Member')}(s)</span>
-                {result.member?.raw.map((member: any, index: any) => (
-                  <span key={index} className="sui-result__value">
-                    <a target="_blank" href={`http://lattes.cnpq.br/${member.idLattes}`} rel="noreferrer">
-                      {member.name}
-                    </a>
-                    {member.idLattes ? <LattesLink lattesId={member.idLattes!} /> : ''}
-                  </span>
-                ))}
-              </li>
-
+              <ShowAuthorItem label={t('Member')} authors={result.member?.raw} />
               <ShowItem label={t('Software')} value={result.software?.raw} />
-
               <ShowItem label={t('Equipment')} value={result.equipment?.raw} />
             </ReadMoreCollapse>
           </ul>

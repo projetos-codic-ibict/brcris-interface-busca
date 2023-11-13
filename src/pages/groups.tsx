@@ -44,7 +44,10 @@ const configDefault = {
   searchQuery: {
     operator: 'OR',
     search_fields: {
-      name: {},
+      name_text: {
+        weight: 3,
+      },
+      keyword_text: {},
       // creationYear: {}, dá erro na busca simples por causo do tipo long
       status: {},
       'leader.name': {},
