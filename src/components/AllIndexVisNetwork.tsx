@@ -231,6 +231,7 @@ function VisGraph() {
   }, []);
 
   useEffect(() => {
+    console.log('indexStat', indexesStats);
     const newNodes: IndexNode[] = [];
     const maxSizeOfNode = Math.max(...indexesStats.map((item) => item['docs.count']));
     for (let i = 0; i < keysLanguage.length; i++) {

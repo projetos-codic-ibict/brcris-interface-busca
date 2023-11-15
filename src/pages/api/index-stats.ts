@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Client } from 'es7';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -12,7 +13,16 @@ const client = new Client({
   },
 });
 
-const indexesNames = process.env.ELASTIC_INDEXES?.split(',');
+const indexesNames: string[] = [
+  process.env.INDEX_PUBLICATION!,
+  process.env.INDEX_PERSON!,
+  process.env.INDEX_ORGUNIT!,
+  process.env.INDEX_JOURNAL!,
+  process.env.INDEX_PROGRAM!,
+  process.env.INDEX_PATENT!,
+  process.env.INDEX_GROUP!,
+  process.env.INDEX_SOFTWARE!,
+];
 
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   const { body } = await client.cat.indices({
