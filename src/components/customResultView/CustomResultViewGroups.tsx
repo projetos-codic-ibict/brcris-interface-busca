@@ -9,14 +9,23 @@ import ShowItem from './ShowItem';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
-const CustomResultViewGroups = ({ result }: ResultViewProps) => {
+const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <li className="sui-result">
       <div>
         <div className="sui-result__header">
-          <h6>{result.name.raw}</h6>
+          <h6>
+            <a
+              onClick={onClickLink}
+              target="_blank"
+              href={`${VIVO_URL_ITEM_BASE}/resgr_${result.id.raw}&lang=${router.locale}`}
+              rel="noreferrer"
+            >
+              {result.name.raw}
+            </a>
+          </h6>
         </div>
 
         <div className="sui-result__body">
