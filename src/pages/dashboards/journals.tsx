@@ -27,7 +27,7 @@ export default function JournalsDashboard() {
             <div className="page-title">
               <h1>{t('Journals dashboard')}</h1>
             </div>
-            <Iframe url="https://dashboardbrcris.ibict.br/app/dashboards#/view/d5ad31f0-ffe3-11ed-beba-e7b6fd72a1fd?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" />
+            <Iframe url="https://dashboardbrcris.ibict.br/app/dashboards#/view/fee7937a-272b-4a82-9d34-85c0921bb748?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" />
           </div>
         </div>
       </div>

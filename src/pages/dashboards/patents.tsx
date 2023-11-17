@@ -27,7 +27,7 @@ export default function PatentsDashboard() {
             <div className="page-title">
               <h1>{t('Patents dashboard')}</h1>
             </div>
-            <Iframe url="https://dashboardbrcris.ibict.br/app/dashboards#/view/36b7b690-f99b-11ed-8ce5-b1f0783636f8?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" />
+            <Iframe url="https://dashboardbrcris.ibict.br/app/dashboards#/view/3ff5d37a-aa14-4a95-98ac-da4e09e0cf80?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" />
           </div>
         </div>
       </div>

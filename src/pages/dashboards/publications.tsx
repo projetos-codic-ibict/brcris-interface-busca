@@ -27,7 +27,7 @@ export default function PublicationsDashboard() {
             <div className="page-title">
               <h1>{t('Publications dashboard')}</h1>
             </div>
-            <Iframe url="https://dashboardbrcris.ibict.br/app/dashboards#/view/5b28ef30-eb4a-11ed-8ce5-b1f0783636f8?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" />
+            <Iframe url="https://dashboardbrcris.ibict.br/app/dashboards#/view/0d5b3e41-b9c3-4ea1-857d-8bd19cb0758f?embed=true&_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" />
           </div>
         </div>
       </div>
