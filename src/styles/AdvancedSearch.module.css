@@ -49,8 +49,8 @@
 .group select {
   border-left: 1px solid #ccc;
   border-radius: 0;
-  padding: 4px 16px !important;
-  min-width: 11em;
+  padding: 4px 8px !important;
+  min-width: 12em;
 }
 
 .op {
