@@ -62,17 +62,16 @@ const AdvancedSearchBox = ({
   }
 
   function validSearch() {
-    let valid = query ? query.length > 2 : false;
+    let valid = query ? query.trim().length > 2 : false;
     if (valid) {
       return true;
     }
     inputs.forEach((input) => {
-      if (input.value ? input.value.length > 2 : false) {
+      if (input.value ? input.value.trim().length > 2 : false) {
         valid = true;
         return;
       }
     });
-    console.log('disabled', valid);
     return valid;
   }
 
@@ -115,8 +114,10 @@ const AdvancedSearchBox = ({
             </div>
             <SearchBox
               onSubmit={() => {
-                const fullQuery = getFormatedQuery();
-                setSearchTerm(fullQuery || '');
+                if (validSearch()) {
+                  const fullQuery = getFormatedQuery();
+                  setSearchTerm(fullQuery || '');
+                }
               }}
               view={({ onSubmit }) => (
                 <form onSubmit={onSubmit} className="d-flex flex-gap-8 align-items-center sui-search-box ">

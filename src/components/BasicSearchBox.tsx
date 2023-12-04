@@ -69,7 +69,10 @@ const BasicSearchBox = ({
       }}
       view={({ value, onChange, onSubmit }) => (
         <div>
-          <form onSubmit={onSubmit} className="d-flex flex-gap-8 align-items-center">
+          <form
+            onSubmit={value.trim().length > 2 ? onSubmit : undefined}
+            className="d-flex flex-gap-8 align-items-center"
+          >
             <input
               className="sui-search-box__text-input"
               type="text"
