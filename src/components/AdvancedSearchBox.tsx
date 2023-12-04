@@ -61,6 +61,21 @@ const AdvancedSearchBox = ({
     return fullQuery;
   }
 
+  function validSearch() {
+    let valid = query ? query.length > 2 : false;
+    if (valid) {
+      return true;
+    }
+    inputs.forEach((input) => {
+      if (input.value ? input.value.length > 2 : false) {
+        valid = true;
+        return;
+      }
+    });
+    console.log('disabled', valid);
+    return valid;
+  }
+
   useEffect(() => {
     ElasticSearchStatsService(indexName)
       .then((res) => {
@@ -105,7 +120,11 @@ const AdvancedSearchBox = ({
               }}
               view={({ onSubmit }) => (
                 <form onSubmit={onSubmit} className="d-flex flex-gap-8 align-items-center sui-search-box ">
-                  <button type="submit" className="button sui-search-box__submit d-flex align-items-center flex-gap-8">
+                  <button
+                    disabled={!validSearch()}
+                    type="submit"
+                    className="button sui-search-box__submit d-flex align-items-center flex-gap-8"
+                  >
                     <IoSearch />
                     {t('Search')}
                   </button>
