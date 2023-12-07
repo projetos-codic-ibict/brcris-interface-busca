@@ -22,11 +22,13 @@ import { useState } from 'react';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import Loader from '../components/Loader';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewInstitutions from '../components/customResultView/CustomResultViewInstitutions';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import OrgUnitIndicators from '../components/indicators/OrgUnitIndicators';
 import styles from '../styles/Home.module.css';
+import { CustomSearchDriverOptions } from '../types/Entities';
 type Props = {
   // Add custom props here
 };
@@ -38,9 +40,10 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 });
 
 const INDEX_NAME = process.env.INDEX_ORGUNIT || '';
-const configDefault = {
+const configDefault: CustomSearchDriverOptions = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
+    index: INDEX_NAME,
     operator: 'OR',
     search_fields: {
       name_text: {},
@@ -139,6 +142,7 @@ export default function App() {
   const [config, setConfig] = useState(configDefault);
 
   function updateOpetatorConfig(op: string) {
+    //@ts-ignore
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
@@ -150,8 +154,10 @@ export default function App() {
       <div className="page-search">
         <CustomProvider>
           <SearchProvider config={config}>
-            <WithSearch mapContextToProps={({ wasSearched, results }) => ({ wasSearched, results })}>
-              {({ wasSearched, results }) => {
+            <WithSearch
+              mapContextToProps={({ wasSearched, results, isLoading }) => ({ wasSearched, results, isLoading })}
+            >
+              {({ wasSearched, results, isLoading }) => {
                 return (
                   <div className="App">
                     <div className="container page">
@@ -162,6 +168,7 @@ export default function App() {
 
                     <div className={styles.content}>
                       <div className={styles.searchLayout}>
+                        {isLoading ? <Loader /> : ''}
                         <Layout
                           header={
                             <CustomSearchBox

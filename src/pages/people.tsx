@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
@@ -21,11 +22,14 @@ import { useState } from 'react';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import DownloadModal from '../components/DownloadModal';
+import Loader from '../components/Loader';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewPeople from '../components/customResultView/CustomResultViewPeople';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import IndicatorsPeople from '../components/indicators/PeopleIndicators';
 import styles from '../styles/Home.module.css';
+import { CustomSearchDriverOptions } from '../types/Entities';
 type Props = {
   // Add custom props here
 };
@@ -37,10 +41,11 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 });
 
 const INDEX_NAME = process.env.INDEX_PERSON || '';
-const configDefault = {
+const configDefault: CustomSearchDriverOptions = {
   ...DefaultQueryConfig(INDEX_NAME),
   searchQuery: {
     operator: 'OR',
+    index: INDEX_NAME,
     search_fields: {
       name_text: {},
       lattesId: {},
@@ -137,6 +142,7 @@ export default function App() {
   const [config, setConfig] = useState(configDefault);
 
   function updateOpetatorConfig(op: string) {
+    //@ts-ignore
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
@@ -148,8 +154,10 @@ export default function App() {
       <div className="page-search">
         <CustomProvider>
           <SearchProvider config={config}>
-            <WithSearch mapContextToProps={({ wasSearched, results }) => ({ wasSearched, results })}>
-              {({ wasSearched, results }) => {
+            <WithSearch
+              mapContextToProps={({ wasSearched, results, isLoading }) => ({ wasSearched, results, isLoading })}
+            >
+              {({ wasSearched, results, isLoading }) => {
                 return (
                   <div className="App">
                     <div className="container page">
@@ -160,6 +168,7 @@ export default function App() {
 
                     <div className={styles.content}>
                       <div className={styles.searchLayout}>
+                        {isLoading ? <Loader /> : ''}
                         <Layout
                           header={
                             <CustomSearchBox
@@ -167,6 +176,7 @@ export default function App() {
                               itemLinkPrefix="pers_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
+                              //@ts-ignore
                               fieldNames={Object.keys(config.searchQuery.search_fields)}
                             />
                           }
@@ -214,7 +224,11 @@ export default function App() {
                                   <PagingInfo view={CustomViewPagingInfo} />
                                 </div>
                               )}
-                              {containsResults(wasSearched, results) && <ResultsPerPage options={[10, 20, 50]} />}
+                              {containsResults(wasSearched, results) && (
+                                <div className="d-flex gap-2  align-items-center">
+                                  <ResultsPerPage options={[10, 20, 50]} /> <DownloadModal />
+                                </div>
+                              )}
                             </ErrorBoundary>
                           }
                           // bodyFooter={<Paging />}

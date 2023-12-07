@@ -8,10 +8,10 @@ type QueryProps = {
   searchTerm: string;
   fields: string[];
   operator: QueryDslOperator;
-  filters: [];
+  filters: Filter[];
   order?: { _count?: string; _key?: string };
 };
-export default function getFormatedQuery({
+export function getAggregateQuery({
   size = 10,
   indicadorName,
   searchTerm,
@@ -21,24 +21,7 @@ export default function getFormatedQuery({
   order = { _count: 'desc' },
 }: QueryProps) {
   try {
-    let query: QueryDslQueryContainer = {};
-    if (searchTerm.indexOf('(') >= 0) {
-      query = new QueryFormat().toElasticsearch(searchTerm, fields);
-    } else {
-      query = {
-        bool: {
-          must: {
-            query_string: {
-              query: searchTerm || '*',
-              default_operator: operator,
-              fields: searchTerm ? fields : [],
-            },
-          },
-          filter: filters && filters.length > 0 ? getFormatedFilters(filters) : [],
-          // minimum_should_match: 1,
-        },
-      };
-    }
+    const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator, filters);
     return {
       track_total_hits: true,
       _source: [indicadorName],
@@ -57,6 +40,32 @@ export default function getFormatedQuery({
   } catch (err) {
     throw err;
   }
+}
+
+export function formatedQuery(
+  searchTerm: string,
+  fields: string[],
+  operator: QueryDslOperator,
+  filters: Filter[]
+): QueryDslQueryContainer {
+  let query: QueryDslQueryContainer = {};
+  if (searchTerm.indexOf('(') >= 0) {
+    query = new QueryFormat().toElasticsearch(searchTerm, fields);
+  } else {
+    query = {
+      bool: {
+        must: {
+          query_string: {
+            query: searchTerm || '*',
+            default_operator: operator,
+            fields: searchTerm ? fields : [],
+          },
+        },
+        filter: filters && filters.length > 0 ? getFormatedFilters(filters) : [],
+      },
+    };
+  }
+  return query;
 }
 
 function getFormatedFilters(filters: Filter[]): any {

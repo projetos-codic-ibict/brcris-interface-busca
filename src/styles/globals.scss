@@ -61,6 +61,16 @@ img {
   border-color: var(--accent-color) !important;
 }
 
+.btn-outline-secondary {
+  border-color: var(--secondary-color) !important;
+  color: var(--secondary-color) !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--secondary-color) !important;
+  color: #fff !important;
+}
+
 .bg-violet {
   background: var(--dark-color);
 }
@@ -388,7 +398,10 @@ li .sui-result__key:after {
 }
 
 .page-search .sui-select__control {
-  border-color: var(--dark-color);
+  border-color: #6c757d;
+}
+.btn-header {
+  padding: 4px 8px;
 }
 
 .page-search .sui-result__header {

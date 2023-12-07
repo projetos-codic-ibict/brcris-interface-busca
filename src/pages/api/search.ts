@@ -35,7 +35,6 @@ function builConnector(index: string) {
           },
         };
       }
-      console.log('requestBody: ', JSON.stringify(requestBody.query));
       return requestBody;
     }
   );

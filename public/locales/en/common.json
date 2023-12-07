@@ -159,5 +159,7 @@
   "For example, if you want to search for publications on Computing in 2018, excluding master thesis: go to the ": "For example, if you want to search for publications on 'Computing' in 2018, excluding master thesis: go to the ",
   "index page and use the query below": "index page and use the query below",
   "See below for the full list of search fields that can be used for the index of": "See below for the full list of search fields that can be used for the index of",
-  "(all:Computing) AND (publicationDate:2018) AND NOT (type:master thesis)": "(all:Computing) AND (publicationDate:2018) AND NOT (type:master thesis)"
+  "(all:Computing) AND (publicationDate:2018) AND NOT (type:master thesis)": "(all:Computing) AND (publicationDate:2018) AND NOT (type:master thesis)",
+  "Download": "Download",
+  "Export csv": "Export csv"
 }

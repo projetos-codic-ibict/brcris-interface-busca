@@ -16,7 +16,7 @@ import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
 import IndicatorContext from '../context/CustomContext';
 import { OptionsBar, OptionsPie } from './options/ChartsOptions';
-import getFormatedQuery from './query/Query';
+import { getAggregateQuery } from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = process.env.INDEX_PATENT || '';
@@ -69,7 +69,7 @@ function PatentsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
       ? ElasticSearchService(
           [
             JSON.stringify(
-              getFormatedQuery({
+              getAggregateQuery({
                 size: 10,
                 indicadorName: 'depositDate',
                 searchTerm,
@@ -80,7 +80,7 @@ function PatentsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
               })
             ),
             JSON.stringify(
-              getFormatedQuery({
+              getAggregateQuery({
                 size: 10,
                 indicadorName: 'publicationDate',
                 searchTerm,
@@ -91,7 +91,7 @@ function PatentsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
               })
             ),
             JSON.stringify(
-              getFormatedQuery({
+              getAggregateQuery({
                 size: 10,
                 indicadorName: 'countryCode',
                 searchTerm,
@@ -101,7 +101,7 @@ function PatentsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
               })
             ),
             JSON.stringify(
-              getFormatedQuery({
+              getAggregateQuery({
                 size: 10,
                 indicadorName: 'kindCode',
                 searchTerm,

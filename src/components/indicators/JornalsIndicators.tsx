@@ -16,7 +16,7 @@ import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
 import IndicatorContext from '../context/CustomContext';
 import { OptionsBar } from './options/ChartsOptions';
-import getFormatedQuery from './query/Query';
+import { getAggregateQuery } from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = process.env.INDEX_JOURNAL || '';
@@ -45,7 +45,7 @@ function JornalsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
       ? ElasticSearchService(
           [
             JSON.stringify(
-              getFormatedQuery({
+              getAggregateQuery({
                 size: 10,
                 indicadorName: 'qualis',
                 searchTerm,

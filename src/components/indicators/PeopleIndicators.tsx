@@ -19,7 +19,7 @@ import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
 import IndicatorContext from '../context/CustomContext';
 import { OptionsPie } from './options/ChartsOptions';
-import getFormatedQuery from './query/Query';
+import { getAggregateQuery } from './query/Query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = process.env.INDEX_PERSON || '';
@@ -38,7 +38,6 @@ const headersResearchArea = [
 
 function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
   const { t } = useTranslation('common');
-
   const { driver } = useContext(SearchContext);
   const { indicators, setIndicatorsData, isEmpty } = useContext(IndicatorContext);
 
@@ -54,7 +53,7 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
         ? ElasticSearchService(
             [
               JSON.stringify(
-                getFormatedQuery({
+                getAggregateQuery({
                   size: 10,
                   indicadorName: 'nationality',
                   searchTerm,
@@ -64,7 +63,7 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
                 })
               ),
               JSON.stringify(
-                getFormatedQuery({
+                getAggregateQuery({
                   size: 10,
                   indicadorName: 'researchArea',
                   searchTerm,

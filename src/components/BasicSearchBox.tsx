@@ -27,7 +27,6 @@ const BasicSearchBox = ({
   const { t } = useTranslation('common');
   const router = useRouter();
   const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
-  console.log('indexName', indexName);
 
   useEffect(() => {
     ElasticSearchStatsService(indexName)
