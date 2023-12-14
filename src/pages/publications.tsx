@@ -22,6 +22,7 @@ import { useState } from 'react';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import DownloadModal from '../components/DownloadModal';
 import Loader from '../components/Loader';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
@@ -300,7 +301,7 @@ export default function App() {
 
                               {containsResults(wasSearched, results) && (
                                 <div className="d-flex gap-2  align-items-center">
-                                  {<ResultsPerPage options={[10, 20, 50]} /> /*  <DownloadModal /> */}
+                                  <ResultsPerPage options={[10, 20, 50]} /> <DownloadModal />
                                 </div>
                               )}
                             </ErrorBoundary>
