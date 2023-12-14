@@ -19,22 +19,13 @@ function builConnector(index: string) {
       // transforming the query before sending to Elasticsearch using the requestState and queryConfig
       const searchFields: any = queryConfig.search_fields;
       // @ts-ignore
-      if (requestState.searchTerm.indexOf('(') >= 0) {
-        const fullQuery = new QueryFormat().toElasticsearch(requestState.searchTerm, Object.keys(searchFields));
-        requestBody.query = fullQuery;
-      } else {
-        requestBody.query = {
-          multi_match: {
-            query: requestState.searchTerm,
-            // @ts-ignore
-            operator: queryConfig.operator,
-            fields: Object.keys(searchFields).map((fieldName) => {
-              const weight = searchFields[fieldName].weight || 1;
-              return `${fieldName}^${weight}`;
-            }),
-          },
-        };
+      if (requestState.searchTerm.indexOf('(') < 0) {
+        // @ts-ignore
+        requestState.searchTerm = `(all:${requestState.searchTerm})`;
       }
+      console.log('requestState.searchTerm: ', requestState.searchTerm);
+      const fullQuery = new QueryFormat().toElasticsearch(requestState.searchTerm, Object.keys(searchFields));
+      requestBody.query = fullQuery;
       return requestBody;
     }
   );

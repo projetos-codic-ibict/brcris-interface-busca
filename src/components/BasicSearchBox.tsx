@@ -41,62 +41,62 @@ const BasicSearchBox = ({
   }, []);
 
   return (
-    <SearchBox
-      autocompleteMinimumCharacters={3}
-      searchAsYouType={false}
-      autocompleteResults={{
-        linkTarget: '_blank',
-        sectionTitle: t('Open link') || '',
-        titleField: titleFieldName,
-        urlField: '',
-        shouldTrackClickThrough: true,
-      }}
-      autocompleteSuggestions={true}
-      debounceLength={0}
-      onSubmit={(searchTerm) => {
-        updateOpetatorConfig('OR');
-        router.query.q = searchTerm;
-        router.push(router);
-      }}
-      onSelectAutocomplete={(selection: any, item: any, defaultOnSelectAutocomplete: any) => {
-        if (selection.suggestion) {
-          updateOpetatorConfig('AND');
-          defaultOnSelectAutocomplete(selection);
-        } else {
-          router.push(`${VIVO_URL_ITEM_BASE}/${itemLinkPrefix}${selection.id.raw}&lang=${router.locale}`);
-        }
-      }}
-      view={({ value, onChange, onSubmit }) => (
-        <div>
-          <form
-            onSubmit={value.trim().length > 2 ? onSubmit : undefined}
-            className="d-flex flex-gap-8 align-items-center"
-          >
-            <input
-              className="sui-search-box__text-input"
-              type="text"
-              value={value}
-              placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                value: docsCount || 0,
-              })} ${t('documents')}`}
-              onChange={(e) => onChange(e.target.value)}
-            />
+    <>
+      <SearchBox
+        autocompleteMinimumCharacters={3}
+        searchAsYouType={false}
+        autocompleteResults={{
+          linkTarget: '_blank',
+          sectionTitle: t('Open link') || '',
+          titleField: titleFieldName,
+          urlField: '',
+          shouldTrackClickThrough: true,
+        }}
+        autocompleteSuggestions={true}
+        debounceLength={0}
+        onSubmit={(searchTerm) => {
+          updateOpetatorConfig('OR');
+          router.query.q = searchTerm;
+          router.push(router);
+        }}
+        onSelectAutocomplete={(selection: any, item: any, defaultOnSelectAutocomplete: any) => {
+          if (selection.suggestion) {
+            updateOpetatorConfig('AND');
+            selection.suggestion = `\"${selection.suggestion}\"`;
+            console.log('selection', selection);
+            defaultOnSelectAutocomplete(selection);
+          } else {
+            router.push(`${VIVO_URL_ITEM_BASE}/${itemLinkPrefix}${selection.id.raw}&lang=${router.locale}`);
+          }
+        }}
+        inputView={({ getAutocomplete, getInputProps, getButtonProps }) => (
+          <>
+            <div className="sui-search-box__wrapper">
+              <input
+                {...getInputProps({
+                  placeholder: `${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
+                    value: docsCount || 0,
+                  })} ${t('documents')}`,
+                })}
+              />
+              {getAutocomplete()}
+            </div>
             <button
-              disabled={value.trim().length < 3}
-              className="button sui-search-box__submit d-flex align-items-center flex-gap-8"
-              type="submit"
+              {...getButtonProps({
+                disabled: getInputProps()?.value?.trim().length < 3,
+                className: 'button sui-search-box__submit d-flex align-items-center flex-gap-8',
+              })}
             >
-              <IoSearch />
-              {t('Search')}
+              <IoSearch /> {t('Search')}
             </button>
-          </form>
-          <span onClick={() => toogleAdvancedConfig(true)} className="link-color d-flex align-items-center flex-gap-8">
-            <IoArrowRedoOutline />
-            {t('Advanced search')}
-          </span>
-        </div>
-      )}
-    ></SearchBox>
+          </>
+        )}
+      ></SearchBox>
+      <span onClick={() => toogleAdvancedConfig(true)} className="link-color d-flex align-items-center flex-gap-8">
+        <IoArrowRedoOutline />
+        {t('Advanced search')}
+      </span>
+    </>
   );
 };
 
