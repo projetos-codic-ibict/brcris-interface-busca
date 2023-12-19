@@ -22,7 +22,6 @@ const client = new Client({
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   const { query, index } = req.body;
 
-  let writeStream;
   try {
     const params: Search = {
       index: index,
@@ -35,38 +34,53 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     };
 
     const fileName = getFileName(index, JSON.stringify(query));
-    const path = `${process.env.DOWNLOAD_FOLDER_PATH}/${fileName}.csv`;
-    const createStream = fs.createWriteStream(path);
-    createStream.end();
+    const filePath = getFilePath(fileName);
+    if (fs.existsSync(filePath)) {
+      console.log('arquivo já existe em: ', filePath);
+    } else {
+      createFile(filePath);
+      await writeToFile(filePath, params);
+    }
+    res.json({ file: filePath });
+  } catch (err) {
+    console.error('ERROR::', err);
+    res.status(400).json({ error: err.message });
+  }
+};
 
-    writeStream = fs.createWriteStream(path);
-
+async function writeToFile(filePath: string, params: Search) {
+  const writeStream = fs.createWriteStream(filePath);
+  try {
     const options: Json2CsvOptions = {
       prependHeader: true,
       delimiter: { field: ';' },
     };
 
     let isFirstItem = true;
-    let c = 1;
-
+    console.log('iniciando escrita no arquivo');
     for await (const hit of scrollSearch(params)) {
       options.prependHeader = isFirstItem;
       writeStream.write(json2csv(hit._source, options));
       writeStream.write('\r\n');
       isFirstItem = false;
-      console.log(c, JSON.stringify(params));
-      c++;
     }
-    console.log('params', JSON.stringify(params));
-    res.json({ file: path });
-  } catch (err) {
-    console.error('ERROR::', err);
-    res.status(400).json({ error: err.message });
   } finally {
-    console.log('close writeStream');
     writeStream?.end();
+    console.log('encerrando escrita no arquivo e fechando-o');
   }
-};
+}
+
+function getFilePath(fileName: string) {
+  const filePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${fileName}.csv`;
+  return filePath;
+}
+
+function createFile(filePath: string) {
+  const createStream = fs.createWriteStream(filePath);
+  createStream.end();
+  console.log('arquivo criado em: ', filePath);
+  return filePath;
+}
 
 // Scroll utility
 async function* scrollSearch(params: Search) {
