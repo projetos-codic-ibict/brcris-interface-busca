@@ -22,6 +22,7 @@ import { useState } from 'react';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import DownloadModal from '../components/DownloadModal';
 import Loader from '../components/Loader';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewPrograms from '../components/customResultView/CustomResultViewPrograms';
@@ -228,7 +229,11 @@ export default function App() {
                                   <PagingInfo view={CustomViewPagingInfo} />
                                 </div>
                               )}
-                              {containsResults(wasSearched, results) && <ResultsPerPage options={[10, 20, 50]} />}
+                              {containsResults(wasSearched, results) && (
+                                <div className="d-flex gap-2  align-items-center">
+                                  <ResultsPerPage options={[10, 20, 50]} /> <DownloadModal />
+                                </div>
+                              )}
                             </ErrorBoundary>
                           }
                           // bodyFooter={<Paging />}
