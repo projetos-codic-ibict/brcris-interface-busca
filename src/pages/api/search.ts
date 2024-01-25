@@ -23,8 +23,8 @@ function builConnector(index: string) {
         // @ts-ignore
         requestState.searchTerm = `(all:${requestState.searchTerm})`;
       }
-      console.log('requestState.searchTerm: ', requestState.searchTerm);
       const fullQuery = new QueryFormat().toElasticsearch(requestState.searchTerm, Object.keys(searchFields));
+      console.log('fullQuery: ', JSON.stringify(fullQuery));
       requestBody.query = fullQuery;
       return requestBody;
     }

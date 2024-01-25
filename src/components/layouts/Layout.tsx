@@ -12,7 +12,6 @@ export default function Layout({ children }: PropsWithChildren) {
   const router = useRouter();
   const locales = router.locales;
   const defaultLocale = router.defaultLocale;
-  // Ou, alternativamente, você pode usar o objeto router
   const currentPath = router.asPath;
   console.log('router:', router);
   return (
@@ -22,8 +21,7 @@ export default function Layout({ children }: PropsWithChildren) {
           <link
             key={lang}
             rel="alternate"
-            //@ts-ignore
-            hreflang={lang}
+            hrefLang={lang}
             href={`${BRCRIS_HOST_BASE}${lang != defaultLocale ? '/' + lang : ''}${currentPath}`}
           />
         ))}
