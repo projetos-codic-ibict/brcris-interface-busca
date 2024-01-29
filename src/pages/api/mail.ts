@@ -81,7 +81,7 @@ async function sendMail(body: BodyType) {
     from: MAILSENDER,
     to: MAILRECIPIENT,
     subject: `Message from ${body.name}`,
-    text: body.message + ' | Sent from: ' + body.email,
+    text: `${body.message} | Sent from: ${body.email}`,
     html: `<div>${body.message}</div> <p>Sent from: ${body.email}</p>`,
   };
 

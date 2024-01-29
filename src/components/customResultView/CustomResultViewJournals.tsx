@@ -30,8 +30,8 @@ const CustomResultViewJournals = ({ result, onClickLink }: ResultViewProps) => {
           <ul className="sui-result__details">
             <ShowItem label={t('Qualis')} value={result.qualis?.raw} />
             <ShowItem label={t('Type')} value={result.type?.raw} />
-            <ShowItem label={t('Issn')} value={result.issn?.raw} />
-            <ShowItem label={t('Issnl')} value={result.issnl?.raw} />
+            <ShowItem label={t('ISSN')} value={result.issn?.raw} />
+            <ShowItem label={t('ISSN-L')} value={result.issnl?.raw} />
             <ShowItem label={t('Access type')} value={result.accessType?.raw} />
             <ShowItem label={t('Status')} value={result.status?.raw} />
             <ShowAuthorItem label={t('Publisher')} authors={result.publisher?.raw} />
