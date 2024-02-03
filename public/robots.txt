@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://brcris.ibict.br
+
+# Sitemaps
+Sitemap: https://brcris.ibict.br/sitemap.xml
