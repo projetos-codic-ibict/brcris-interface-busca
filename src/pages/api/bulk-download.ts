@@ -27,7 +27,7 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     const params: Search = {
       index: index,
       scroll: '30s',
-      size: 10000,
+      size: 1000,
       // _source: ['name'],
       body: {
         query: query,
@@ -47,17 +47,13 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     };
 
     let isFirstItem = true;
-    let c = 1;
 
     for await (const hit of scrollSearch(params)) {
       options.prependHeader = isFirstItem;
       writeStream.write(json2csv(hit._source, options));
       writeStream.write('\r\n');
       isFirstItem = false;
-      console.log(c, JSON.stringify(params));
-      c++;
     }
-    console.log('params', JSON.stringify(params));
     res.json({ file: path });
   } catch (err) {
     console.error('ERROR::', err);

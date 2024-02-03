@@ -87,6 +87,8 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
   const typeLabels = typeIndicators != null ? typeIndicators.map((d) => d.key) : [];
   const typeDoc_count = typeIndicators != null ? typeIndicators.map((d) => d.doc_count) : [];
 
+  yearIndicators && yearIndicators.sort((a, b) => Number(a.key) - Number(b.key));
+
   return (
     <div className={styles.charts} hidden={isEmpty()}>
       <div className={styles.chart}>

@@ -135,6 +135,9 @@ function PatentsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
   const kindCodeLabels = kindCodeIndicators != null ? kindCodeIndicators.map((d) => d.key) : [];
   const kindCodeCount = kindCodeIndicators != null ? kindCodeIndicators.map((d) => d.doc_count) : [];
 
+  depositeDateIndicators && depositeDateIndicators.sort((a, b) => Number(a.key) - Number(b.key));
+  publicationDateIndicators && publicationDateIndicators.sort((a, b) => Number(a.key) - Number(b.key));
+
   return (
     <div className={styles.charts} hidden={isEmpty()}>
       <div className={styles.chart}>

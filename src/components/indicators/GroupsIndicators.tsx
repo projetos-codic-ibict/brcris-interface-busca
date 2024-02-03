@@ -134,6 +134,8 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
   const statusLabels = statusIndicators != null ? statusIndicators.map((d) => d.key) : [];
   const statusCount = statusIndicators != null ? statusIndicators.map((d) => d.doc_count) : [];
 
+  creationYearIndicators && creationYearIndicators.sort((a, b) => Number(a.key) - Number(b.key));
+
   return (
     <div className={styles.charts} hidden={isEmpty()}>
       <div className={styles.chart} hidden={creationYearIndicators == null}>
