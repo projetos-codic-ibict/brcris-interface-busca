@@ -16,6 +16,7 @@ env:
   RECAPTCHA_SECRET_KEY: ${{secrets.RECAPTCHA_SECRET_KEY}}
   VIVO_URL_BASE: ${{secrets.VIVO_URL_BASE}}
   VIVO_URL_ITEM_BASE: ${{secrets.VIVO_URL_ITEM_BASE}}
+  BRCRIS_HOST_BASE: ${{secrets.BRCRIS_HOST_BASE}}
 
 jobs:
   test:

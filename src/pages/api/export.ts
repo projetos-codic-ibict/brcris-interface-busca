@@ -57,12 +57,12 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
 
 async function backgroundExportation(filePath: string, index: string, query: string, email: string) {
   console.log('Iniciando processamento da exportação em background.');
-  console.log('process.env.BRCRIS_HOST', process.env.BRCRIS_HOST);
+  console.log('process.env.BRCRIS_HOST_BASE', process.env.BRCRIS_HOST_BASE);
   await writeFile(filePath, index, query);
   const recipient = email;
   const subject = `Download do arquivo CSV`;
   const text = ``;
-  const link = `${process.env.BRCRIS_HOST}/api/download?fileName=${filePath}`;
+  const link = `${process.env.BRCRIS_HOST_BASE}/api/download?fileName=${filePath}`;
   const html = `<p>Prezado usuário,</p>
   <p>Seu arquivo CSV está pronto e pode ser baixado através do link <a href="${link}">${link}</a></p>
   <p>O arquivo ficará disponível para download por 24 horas.</p>
