@@ -3,6 +3,7 @@
 import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import { useContext, useRef, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -27,6 +28,7 @@ const alertOptions = {
 
 const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps) => {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const PUBLIC_RECAPTCHA_SITE_KEY = process.env.PUBLIC_RECAPTCHA_SITE_KEY || '';
   const { driver } = useContext(SearchContext);
   const [show, setShow] = useState(false);
@@ -36,7 +38,6 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
   const [email, setEmail] = useState('');
   const [captcha, setCaptcha] = useState('');
   const recaptchaRef = useRef(null);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { search_fields, operator, index } = driver.searchQuery as CustomSearchQuery;
@@ -49,9 +50,9 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
       try {
         setLoading(true);
         const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator, filters);
-        const response = await new ExportService().search(index, query, totalResults);
+        const response = await new ExportService().search(index, query, totalResults, getIndexName());
         const { file } = await response.json();
-        const nextDownloadLink = `/api/download?fileName=${file}`;
+        const nextDownloadLink = getDownloadLink(file);
         setDownloadLink(nextDownloadLink);
       } finally {
         setLoading(false);
@@ -68,11 +69,12 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
     try {
       setLoading(true);
       const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator, filters);
-      const response = await new ExportService().search(index, query, totalResults, email, captcha);
+
+      const response = await new ExportService().search(index, query, totalResults, getIndexName(), email, captcha);
       const { file } = await response.json();
       setLoading(false);
       if (file) {
-        const nextDownloadLink = `/api/download?fileName=${file}`;
+        const nextDownloadLink = getDownloadLink(file);
         setDownloadLink(nextDownloadLink);
       } else {
         if (response.status === 200) {
@@ -100,6 +102,15 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
     setCaptcha(value);
   };
 
+  function getIndexName() {
+    // remove a / do início da string
+    return router.pathname.slice(1);
+  }
+
+  function getDownloadLink(file: any) {
+    return `/api/download?fileName=${file}&indexName=${getIndexName()}`;
+  }
+
   return (
     <>
       <button
@@ -120,7 +131,7 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
           <Alert />
           {downloadLink && (
             <a href={downloadLink} target="_blank" rel="noreferrer">
-              {t('Export csv')}
+              {t('Download file')}
             </a>
           )}
           {totalResults > 1000 && !formSent && (

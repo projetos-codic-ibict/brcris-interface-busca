@@ -2,13 +2,20 @@
 import fs from 'fs';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const fileName: string = (req.query.fileName as string) || (req.query.filename as string);
-  console.log('fileName', fileName);
-  const csvFile = fs.readFileSync(fileName, 'utf-8');
-  res
-    .status(200)
-    .setHeader('Content-Type', 'text/csv')
-    .setHeader('Content-Disposition', `attachment; filename=${fileName}`)
-    .send(csvFile);
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const zipFilePath: string = (req.query.fileName as string) || (req.query.filename as string);
+  console.log('zipFilePath', zipFilePath);
+
+  // Ler o conteúdo do arquivo ZIP
+  const zipData = await fs.promises.readFile(zipFilePath);
+
+  const zipFileName = `${req.query.indexName || 'brcris'}-${new Date().toISOString()}.zip`;
+
+  // Definir headers da resposta
+  res.setHeader('Content-Type', 'application/zip');
+  res.setHeader('Content-Length', zipData.length);
+  res.setHeader('Content-Disposition', `attachment; filename="${zipFileName}"`);
+
+  // Enviar o arquivo ZIP como resposta
+  res.send(zipData);
 }

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import archiver from 'archiver';
 import crypto from 'crypto';
 import { Client } from 'es7';
 import { Search } from 'es7/api/requestParams';
@@ -24,89 +25,97 @@ const client = new Client({
 
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { query, index, totalResults } = req.body;
-
+    const { query, index, totalResults, indexName } = req.body;
     createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
-
     const fileName = getFileName(index, JSON.stringify(query));
-    const filePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${fileName}.csv`;
-
-    if (fs.existsSync(filePath)) {
+    const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${fileName}.zip`;
+    if (fs.existsSync(zipFilePath)) {
       console.log('Arquivo já existe. Retornando o caminho.');
-      return res.json({ file: filePath });
+      return res.json({ file: zipFilePath });
     }
-
     if (totalResults > 1000) {
       const { email, captcha } = req.body;
       const response = await googleCaptchaValidation(captcha);
       const captchaValidation = await response.json();
       // @ts-ignore
       if (captchaValidation.success) {
-        backgroundExportation(filePath, index, query, email);
+        backgroundExportation(zipFilePath, index, query, email, indexName);
       }
       return res.json({});
     }
-
-    await writeFile(filePath, index, query);
-    res.json({ file: filePath });
+    await writeFile(zipFilePath, index, query, indexName);
+    res.json({ file: zipFilePath });
   } catch (err) {
     console.error('ERROR::', err);
     res.status(400).json({ error: err.message });
   }
 };
 
-async function backgroundExportation(filePath: string, index: string, query: string, email: string) {
-  console.log('Iniciando processamento da exportação em background.');
-  console.log('process.env.BRCRIS_HOST_BASE', process.env.BRCRIS_HOST_BASE);
-  await writeFile(filePath, index, query);
-  const recipient = email;
-  const subject = `Download do arquivo CSV`;
-  const text = ``;
-  const link = `${process.env.BRCRIS_HOST_BASE}/api/download?fileName=${filePath}`;
-  const html = `<p>Prezado usuário,</p>
-  <p>Seu arquivo CSV está pronto e pode ser baixado através do link <a href="${link}">${link}</a></p>
-  <p>O arquivo ficará disponível para download por 24 horas.</p>
-  <p>Atenciosamente, equipe BrCris.</p>`;
-  console.log('Enviando email em background.');
-  await sendMail({ recipient, subject, text, html });
-  console.log('Exportação em background concluída com sucesso!');
+async function writeFile(zipFilePath: string, index: string, query: string, indexName: string) {
+  try {
+    const csvFilePath = await writeCsvFile(zipFilePath, index, query);
+    writeZipFile(indexName, zipFilePath, csvFilePath);
+    return zipFilePath;
+  } catch (err) {
+    throw err;
+  }
 }
 
-async function writeFile(filePath: string, index: string, query: string) {
+async function writeCsvFile(zipFilePath: string, index: string, query: string) {
+  const params: Search = {
+    index: index,
+    scroll: '30s',
+    size: 1000,
+    // _source: ['name'],
+    body: {
+      query: query,
+    },
+  };
   let writeStream;
   try {
-    const params: Search = {
-      index: index,
-      scroll: '30s',
-      size: 1000,
-      // _source: ['name'],
-      body: {
-        query: query,
-      },
-    };
-
-    writeStream = fs.createWriteStream(filePath);
-
+    const csvFilePath = zipFilePath.replace('.zip', '.csv');
+    writeStream = fs.createWriteStream(csvFilePath);
     const options: Json2CsvOptions = {
       prependHeader: true,
       delimiter: { field: ';' },
     };
-
     let isFirstItem = true;
-
     for await (const hit of scrollSearch(params)) {
       options.prependHeader = isFirstItem;
       writeStream.write(json2csv(hit._source, options));
       writeStream.write('\r\n');
       isFirstItem = false;
     }
-    return filePath;
+    return csvFilePath;
   } catch (err) {
     throw err;
   } finally {
     console.log('close writeStream');
     writeStream?.end();
   }
+}
+
+function writeZipFile(indexName: string, zipFilePath: string, csvFilePath: string) {
+  const fileName = `${indexName}-${new Date().toISOString()}.csv`;
+
+  // Crie um objeto de arquivo zip
+  const output = fs.createWriteStream(zipFilePath);
+  const archive = archiver('zip');
+  // Manipuladores de eventos para o objeto de arquivo zip
+  output.on('close', function () {
+    console.log('Arquivo zip criado com sucesso.');
+    // apaga arquivo .csv
+    fs.unlinkSync(csvFilePath);
+  });
+  archive.on('error', function (err) {
+    throw err;
+  });
+  // Pipe do arquivo de saída
+  archive.pipe(output);
+  // Adiciona o arquivo CSV ao arquivo zip com o nome que desejar
+  archive.file(csvFilePath, { name: fileName });
+  // Finaliza o processo de arquivamento
+  archive.finalize();
 }
 
 // Scroll utility
@@ -145,6 +154,28 @@ function createFolderIfNotExists(folderPath: string | undefined) {
   if (folderPath && !fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath);
   }
+}
+
+async function backgroundExportation(
+  zipFilePath: string,
+  index: string,
+  query: string,
+  email: string,
+  indexName: string
+) {
+  console.log('Iniciando processamento da exportação em background.');
+  await writeFile(zipFilePath, index, query, indexName);
+  const recipient = email;
+  const subject = `Download do arquivo CSV`;
+  const text = ``;
+  const link = `${process.env.BRCRIS_HOST_BASE}/api/download?fileName=${zipFilePath}&indexName=${indexName}`;
+  const html = `<p>Prezado usuário,</p>
+  <p>Seu arquivo CSV está pronto e pode ser baixado através do link <a href="${link}">${link}</a></p>
+  <p>O arquivo ficará disponível para download por 24 horas.</p>
+  <p>Atenciosamente, equipe BrCris.</p>`;
+  console.log('Enviando email em background.');
+  await sendMail({ recipient, subject, text, html });
+  console.log('Exportação em background concluída com sucesso!');
 }
 
 export default proxy;
