@@ -46,6 +46,7 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
 
   async function handleDownload() {
     handleShow();
+    setFormSent(false);
     if (totalResults <= 1000) {
       try {
         setLoading(true);
