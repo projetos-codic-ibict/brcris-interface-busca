@@ -26,6 +26,8 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { query, index, totalResults } = req.body;
 
+    createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
+
     const fileName = getFileName(index, JSON.stringify(query));
     const filePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${fileName}.csv`;
 
@@ -137,6 +139,12 @@ function getFileName(index: string, query: string) {
   const string = index + query;
   const hash = crypto.createHash('sha256').update(string).digest('hex');
   return hash;
+}
+
+function createFolderIfNotExists(folderPath: string | undefined) {
+  if (folderPath && !fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath);
+  }
 }
 
 export default proxy;

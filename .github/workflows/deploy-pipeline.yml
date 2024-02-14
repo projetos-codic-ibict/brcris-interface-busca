@@ -22,7 +22,7 @@ jobs:
     runs-on: [self-hosted, Linux, x64, runner-iroxa]
     environment:
       name: test
-      url: 'http://172.16.16.79:3000'
+      url: 'http://codich1.ibict.br:8086/'
 
     steps:
       - uses: actions/checkout@v3
