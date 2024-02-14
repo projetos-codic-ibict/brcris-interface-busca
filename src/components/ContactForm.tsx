@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useTranslation } from 'next-i18next';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { alertService } from '../services/AlertService';
 import MailService from '../services/MailService';
@@ -21,7 +21,7 @@ function ContactForm() {
   const [message, setMessage] = useState('');
   const [isLoading, setLoading] = useState(false);
   const [captchaCode, setCaptchaCode] = useState('');
-  const recaptchaRef = React.useRef(null);
+  const recaptchaRef = useRef(null);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {

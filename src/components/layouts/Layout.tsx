@@ -2,7 +2,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { PropsWithChildren } from 'react';
-import { Alert } from '../Alert';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import CookieConsent from '../banners/CookieConsent';
@@ -13,7 +12,6 @@ export default function Layout({ children }: PropsWithChildren) {
   const locales = router.locales;
   const defaultLocale = router.defaultLocale;
   const currentPath = router.asPath;
-  console.log('router:', router);
   return (
     <>
       <Head>
@@ -27,7 +25,7 @@ export default function Layout({ children }: PropsWithChildren) {
         ))}
       </Head>
       <Navbar />
-      <Alert />
+      {/* <Alert /> */}
       <main>{children}</main>
       <CookieConsent />
       <Footer />

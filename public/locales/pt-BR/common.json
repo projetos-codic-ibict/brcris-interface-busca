@@ -162,5 +162,8 @@
   "See below for the full list of search fields that can be used for the index of": "Veja abaixo a lista completa dos campos de pesquisa que podem ser usados para o índice de",
   "(all:Computing) AND (publicationDate:2018) AND NOT (type:master thesis)": "(all:Computação) AND (publicationDate:2018) AND NOT (type:master thesis)",
   "Download": "Baixar",
-  "Export csv": "Exportar para csv"
+  "Export csv": "Exportar para csv",
+  "For searches involving a large number of records, the export file may not be immediately available for download. In such cases, the download link for the file will be sent via email shortly.": "Para buscas que envolvem um grande volume de registros, o arquivo de exportação pode não estar prontamente disponível para download. Nessas situações, o link para baixar o arquivo será enviado por e-mail em breve.",
+  "Enter your email in the field below:": "Insira seu email no campo abaixo:",
+  "Export processing. The download link will be sent to the e-mail address provided when the file is ready.": "Exportação em processamento. O link para download será enviado para o e-mail informado quando o arquivo estiver pronto."
 }

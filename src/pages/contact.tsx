@@ -2,6 +2,7 @@ import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
+import { Alert } from '../components/Alert';
 import ContactForm from '../components/ContactForm';
 
 type Props = {
@@ -26,6 +27,7 @@ export default function Contact() {
           <div className="container page">
             <div className="row justify-content-center m-5">
               <div className="col-md-8">
+                <Alert />
                 <ContactForm />
               </div>
             </div>
