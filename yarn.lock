@@ -310,6 +310,24 @@
   resolved "https://registry.yarnpkg.com/@isaacs/string-locale-compare/-/string-locale-compare-1.1.0.tgz#291c227e93fd407a96ecd59879a35809120e432b"
   integrity sha512-SQ7Kzhh9+D+ZW9MA0zkYv3VXhIDNx+LzM6EJ+/65I3QY+enU6Itte7E5XX7EWrqLW2FN4n06GWzBnPoC3th2aQ==
 
+"@json2csv/formatters@^7.0.6":
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/@json2csv/formatters/-/formatters-7.0.6.tgz#a4f21daa9d64d6da9a297f7d7b97ba517870f780"
+  integrity sha512-hjIk1H1TR4ydU5ntIENEPgoMGW+Q7mJ+537sDFDbsk+Y3EPl2i4NfFVjw0NJRgT+ihm8X30M67mA8AS6jPidSA==
+
+"@json2csv/plainjs@^7.0.6":
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/@json2csv/plainjs/-/plainjs-7.0.6.tgz#e4149b26ec6f1c59a27c72534a91e971be397098"
+  integrity sha512-4Md7RPDCSYpmW1HWIpWBOqCd4vWfIqm53S3e/uzQ62iGi7L3r34fK/8nhOMEe+/eVfCx8+gdSCt1d74SlacQHw==
+  dependencies:
+    "@json2csv/formatters" "^7.0.6"
+    "@streamparser/json" "^0.0.20"
+
+"@json2csv/transforms@^7.0.6":
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/@json2csv/transforms/-/transforms-7.0.6.tgz#2072979fd41906db70342d6fe864cc45d4cbe5c4"
+  integrity sha512-WURhLNL4rNa3PcvXCyy5alvuthnb2Pk9SiC3S7mQZSMbwkMa2E36upoWu9QCbfUpVR6xG1S1vkSdXUAKCjfxcQ==
+
 "@next/env@12.3.1":
   version "12.3.1"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-12.3.1.tgz#18266bd92de3b4aa4037b1927aa59e6f11879260"
@@ -667,6 +685,11 @@
   dependencies:
     "@sigstore/protobuf-specs" "^0.2.0"
     tuf-js "^1.1.7"
+
+"@streamparser/json@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@streamparser/json/-/json-0.0.20.tgz#28c0255dea8d37f5d679d72c361f01edf70a770a"
+  integrity sha512-VqAAkydywPpkw63WQhPVKCD3SdwXuihCUVZbbiY3SfSTGQyHmwRoq27y4dmJdZuJwd5JIlQoMPyGvMbUPY0RKQ==
 
 "@swc/helpers@0.4.11":
   version "0.4.11"
@@ -1635,10 +1658,10 @@ debug@^3.2.7:
   dependencies:
     ms "^2.1.1"
 
-deeks@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/deeks/-/deeks-3.0.2.tgz#49d908fb2b797554a139aede17176b11679eb89f"
-  integrity sha512-c6OmjIygIB/avwXwEQOiODS+nw6fEX4cvOdDMqdL7dt3dicV/xykAJ9AeVc/8/JTVQDuacjRc9KCMmXafL1Y4A==
+deeks@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/deeks/-/deeks-3.1.0.tgz#ecc47c600bcc6dbda656c6d86bbc96cbe126fd41"
+  integrity sha512-e7oWH1LzIdv/prMQ7pmlDlaVoL64glqzvNgkgQNgyec9ORPHrT2jaOqMtRyqJuwWjtfb6v+2rk9pmaHj+F137A==
 
 deep-equal@^1.0.1:
   version "1.1.2"
@@ -1704,10 +1727,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-doc-path@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/doc-path/-/doc-path-4.0.2.tgz#157ddd33b86282bdf58cf4b9979bf9483cf9a95f"
-  integrity sha512-OqZEk7EM1aP3JpO+mq0pv1msEJWrzZVXu4q3YjEYJKc+Wt3/chac4KJdaGueK5IGemOwfptrLctG9I8xkb59qQ==
+doc-path@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/doc-path/-/doc-path-4.1.0.tgz#870d71b31dbbb54200c815e3051ba6a9c48c4a93"
+  integrity sha512-i+hXn5HFwpPOwe8JcvjjQYuUVt0p46Ybi+73g9L43zQUKR6zMyaUAKFwGBMH3NWQDugRWIwxg2+FvvxCv0IG7Q==
 
 doctrine@^2.1.0:
   version "2.1.0"
@@ -3004,13 +3027,13 @@ js-yaml@^4.1.0:
   dependencies:
     argparse "^2.0.1"
 
-json-2-csv@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/json-2-csv/-/json-2-csv-5.0.1.tgz#ffbdd597cfdcfa7ec805a039cbdba752dc3d8af4"
-  integrity sha512-rP9ChyMskS0angbvFdQ43SwEe72mEvqcY1/V2OeukQWxtlreUuZWhMlTdWjtd4L6kJxq+HPFTI06yqLvZiEVIA==
+json-2-csv@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/json-2-csv/-/json-2-csv-5.5.0.tgz#b0881aaf4b842fccc13f7972584ccea8b5a96d19"
+  integrity sha512-1Y4upYpzhoweEMkFDogMU8fKLCs+ciNKviTotrrMZ8duqlycERcB38GYXpu4xcwm6YBn86cTXd7za2yUl0GAkg==
   dependencies:
-    deeks "3.0.2"
-    doc-path "4.0.2"
+    deeks "3.1.0"
+    doc-path "4.1.0"
 
 json-buffer@3.0.1:
   version "3.0.1"

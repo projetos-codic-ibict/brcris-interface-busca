@@ -40,9 +40,11 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
   const recaptchaRef = useRef(null);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const { search_fields, operator, index } = driver.searchQuery as CustomSearchQuery;
+  const { search_fields, result_fields, operator, index } = driver.searchQuery as CustomSearchQuery;
   // @ts-ignore
   const fields = Object.keys(search_fields);
+  // @ts-ignore
+  const resultFields = Object.keys(result_fields);
 
   async function handleDownload() {
     handleShow();
@@ -51,7 +53,7 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
       try {
         setLoading(true);
         const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator, filters);
-        const response = await new ExportService().search(index, query, totalResults, getIndexName());
+        const response = await new ExportService().search(index, query, resultFields, totalResults, getIndexName());
         const { file } = await response.json();
         const nextDownloadLink = getDownloadLink(file);
         setDownloadLink(nextDownloadLink);
@@ -71,7 +73,15 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
       setLoading(true);
       const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator, filters);
 
-      const response = await new ExportService().search(index, query, totalResults, getIndexName(), email, captcha);
+      const response = await new ExportService().search(
+        index,
+        query,
+        resultFields,
+        totalResults,
+        getIndexName(),
+        email,
+        captcha
+      );
       const { file } = await response.json();
       setLoading(false);
       if (file) {

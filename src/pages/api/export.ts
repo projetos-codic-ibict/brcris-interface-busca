@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import archiver from 'archiver';
 import crypto from 'crypto';
 import { Client } from 'es7';
 import { Search } from 'es7/api/requestParams';
 import fs from 'fs';
-import { Json2CsvOptions, json2csv } from 'json-2-csv';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { csvOptions, jsonToCsv } from '../../services/JsonToCsv';
 import { googleCaptchaValidation } from './googleCaptchaValidation';
 import { sendMail } from './sendMail';
 
@@ -25,7 +26,8 @@ const client = new Client({
 
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { query, index, totalResults, indexName } = req.body;
+    const { query, index, resultFields, totalResults, indexName } = req.body;
+    console.log('resultFields:', resultFields);
     createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
     const fileName = getFileName(index, JSON.stringify(query));
     const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${fileName}.zip`;
@@ -39,11 +41,11 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
       const captchaValidation = await response.json();
       // @ts-ignore
       if (captchaValidation.success) {
-        backgroundExportation(zipFilePath, index, query, email, indexName);
+        backgroundExportation(zipFilePath, index, query, email, indexName, resultFields);
       }
       return res.json({});
     }
-    await writeFile(zipFilePath, index, query, indexName);
+    await writeFile(zipFilePath, index, query, indexName, resultFields);
     res.json({ file: zipFilePath });
   } catch (err) {
     console.error('ERROR::', err);
@@ -51,9 +53,9 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-async function writeFile(zipFilePath: string, index: string, query: string, indexName: string) {
+async function writeFile(zipFilePath: string, index: string, query: string, indexName: string, resultFields: string[]) {
   try {
-    const csvFilePath = await writeCsvFile(zipFilePath, index, query);
+    const csvFilePath = await writeCsvFile(zipFilePath, index, query, resultFields);
     writeZipFile(indexName, zipFilePath, csvFilePath);
     return zipFilePath;
   } catch (err) {
@@ -61,12 +63,13 @@ async function writeFile(zipFilePath: string, index: string, query: string, inde
   }
 }
 
-async function writeCsvFile(zipFilePath: string, index: string, query: string) {
+async function writeCsvFile(zipFilePath: string, index: string, query: string, resultFields: string[]) {
   const params: Search = {
     index: index,
     scroll: '30s',
     size: 1000,
-    // _source: ['name'],
+    _source: resultFields,
+    _source_excludes: 'id',
     body: {
       query: query,
     },
@@ -75,16 +78,16 @@ async function writeCsvFile(zipFilePath: string, index: string, query: string) {
   try {
     const csvFilePath = zipFilePath.replace('.zip', '.csv');
     writeStream = fs.createWriteStream(csvFilePath);
-    const options: Json2CsvOptions = {
-      prependHeader: true,
-      delimiter: { field: ';' },
-    };
-    let isFirstItem = true;
+
+    const csvHeaders = resultFields.join(csvOptions.delimiter);
+    writeStream.write(csvHeaders);
+    writeStream.write(csvOptions.eol);
+
     for await (const hit of scrollSearch(params)) {
-      options.prependHeader = isFirstItem;
-      writeStream.write(json2csv(hit._source, options));
-      writeStream.write('\r\n');
-      isFirstItem = false;
+      const data = jsonToCsv(hit._source, resultFields);
+      console.log('data', data);
+      writeStream.write(data);
+      writeStream.write(csvOptions.eol);
     }
     return csvFilePath;
   } catch (err) {
@@ -124,12 +127,12 @@ async function* scrollSearch(params: Search) {
 
   while (true) {
     const sourceHits = response.body.hits.hits;
-
     if (sourceHits.length === 0) {
       break;
     }
 
     for (const hit of sourceHits) {
+      // console.log('hit: ', hit);
       yield hit;
     }
 
@@ -161,10 +164,11 @@ async function backgroundExportation(
   index: string,
   query: string,
   email: string,
-  indexName: string
+  indexName: string,
+  resultFields: string[]
 ) {
   console.log('Iniciando processamento da exportação em background.');
-  await writeFile(zipFilePath, index, query, indexName);
+  await writeFile(zipFilePath, index, query, indexName, resultFields);
   const recipient = email;
   const subject = `Download do arquivo CSV`;
   const text = ``;

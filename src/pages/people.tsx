@@ -70,6 +70,9 @@ const configDefault: CustomSearchDriverOptions = {
       researchArea: {
         raw: {},
       },
+      orgunit: {
+        raw: {},
+      },
     },
     disjunctiveFacets: ['nationality', 'researchArea'],
     facets: {
