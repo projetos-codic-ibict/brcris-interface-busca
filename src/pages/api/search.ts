@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connector';
 import { NextApiRequest, NextApiResponse } from 'next';
+import logger from '../../services/Logger';
 import QueryFormat from '../../services/QueryFormat';
-
 // https://docs.elastic.co/search-ui/api/connectors/elasticsearch#customise-the-elasticsearch-request-body
 function builConnector(index: string) {
   const connector = new ElasticsearchAPIConnector(
@@ -24,7 +24,6 @@ function builConnector(index: string) {
         requestState.searchTerm = `(all:${requestState.searchTerm})`;
       }
       const fullQuery = new QueryFormat().toElasticsearch(requestState.searchTerm, Object.keys(searchFields));
-      console.log('fullQuery: ', JSON.stringify(fullQuery));
       requestBody.query = fullQuery;
       return requestBody;
     }
@@ -39,8 +38,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const connector = builConnector(queryConfig.index);
     const response = await connector.onSearch(requestState, queryConfig);
     res.json(response);
-  } catch (e) {
-    console.error('ERROR: ', e);
-    res.status(400).json({ error: e.message });
+  } catch (err) {
+    logger.error(err);
+    res.status(400).json({ error: err.message });
   }
 }

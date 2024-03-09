@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Client } from 'es7';
 import { NextApiRequest, NextApiResponse } from 'next';
-
+import logger from '../../services/Logger';
 const client = new Client({
   maxRetries: 5,
   requestTimeout: 60000,
@@ -36,7 +36,7 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.json(buckets);
   } catch (err) {
-    console.error('ERROR::::', err);
+    logger.error(err);
     res.status(400).json({ error: err.message });
   }
 };

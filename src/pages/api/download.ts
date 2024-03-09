@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import fs from 'fs';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
+import logger from '../../services/Logger';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const zipFilePath: string = (req.query.fileName as string) || (req.query.filename as string);
-  console.log('zipFilePath', zipFilePath);
+  logger.info('Download zipFilePath: ', zipFilePath);
 
   // Ler o conteúdo do arquivo ZIP
   const zipData = await fs.promises.readFile(zipFilePath);

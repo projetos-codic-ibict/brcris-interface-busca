@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { NextApiRequest, NextApiResponse } from 'next';
+import logger from '../../services/Logger';
 import { googleCaptchaValidation } from './googleCaptchaValidation';
 import { sendMail } from './sendMail';
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   const { body } = req;
@@ -33,7 +33,7 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
       message: 'Unproccesable request, Invalid captcha code',
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return res.status(422).json({ message: 'Something went wrong' });
   }
 };

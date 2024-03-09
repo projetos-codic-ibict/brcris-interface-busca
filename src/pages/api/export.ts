@@ -9,6 +9,8 @@ import { Search } from 'es7/api/requestParams';
 import fs from 'fs';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { csvOptions, jsonToCsv } from '../../services/JsonToCsv';
+import logger from '../../services/Logger';
+import { createFolderIfNotExists } from '../../services/createFolderIfNotExists';
 import { googleCaptchaValidation } from './googleCaptchaValidation';
 import { sendMail } from './sendMail';
 
@@ -27,14 +29,14 @@ const client = new Client({
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { query, index, resultFields, totalResults, indexName } = req.body;
-    console.log('resultFields:', resultFields);
     createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
     const fileName = getFileName(index, JSON.stringify(query));
     const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${fileName}.zip`;
     if (fs.existsSync(zipFilePath)) {
-      console.log('Arquivo já existe. Retornando o caminho.');
+      logger.info('Arquivo já existe: ', zipFilePath);
       return res.json({ file: zipFilePath });
     }
+    logger.info('Iniciando processamento exportação: ', 'arquivo: ', zipFilePath, 'query:', query, 'index:', index);
     if (totalResults > 1000) {
       const { email, captcha } = req.body;
       const response = await googleCaptchaValidation(captcha);
@@ -48,15 +50,17 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     await writeFile(zipFilePath, index, query, indexName, resultFields);
     res.json({ file: zipFilePath });
   } catch (err) {
-    console.error('ERROR::', err);
+    logger.error(err);
     res.status(400).json({ error: err.message });
   }
 };
 
 async function writeFile(zipFilePath: string, index: string, query: string, indexName: string, resultFields: string[]) {
   try {
+    logger.info('Iniciando writeFile: ', 'arquivo: ', zipFilePath, 'query:', query, 'index:', index);
     const csvFilePath = await writeCsvFile(zipFilePath, index, query, resultFields);
     writeZipFile(indexName, zipFilePath, csvFilePath);
+    logger.info('Arquivo criado: ', 'arquivo: ', zipFilePath, 'query:', query, 'index:', index);
     return zipFilePath;
   } catch (err) {
     throw err;
@@ -85,7 +89,6 @@ async function writeCsvFile(zipFilePath: string, index: string, query: string, r
 
     for await (const hit of scrollSearch(params)) {
       const data = jsonToCsv(hit._source, resultFields);
-      console.log('data', data);
       writeStream.write(data);
       writeStream.write(csvOptions.eol);
     }
@@ -93,12 +96,13 @@ async function writeCsvFile(zipFilePath: string, index: string, query: string, r
   } catch (err) {
     throw err;
   } finally {
-    console.log('close writeStream');
+    logger.info('close writeStream');
     writeStream?.end();
   }
 }
 
 function writeZipFile(indexName: string, zipFilePath: string, csvFilePath: string) {
+  logger.info('Iniciando writeZipFile: ', 'arquivo: ', zipFilePath);
   const fileName = `${indexName}-${new Date().toISOString()}.csv`;
 
   // Crie um objeto de arquivo zip
@@ -106,7 +110,6 @@ function writeZipFile(indexName: string, zipFilePath: string, csvFilePath: strin
   const archive = archiver('zip');
   // Manipuladores de eventos para o objeto de arquivo zip
   output.on('close', function () {
-    console.log('Arquivo zip criado com sucesso.');
     // apaga arquivo .csv
     fs.unlinkSync(csvFilePath);
   });
@@ -119,6 +122,7 @@ function writeZipFile(indexName: string, zipFilePath: string, csvFilePath: strin
   archive.file(csvFilePath, { name: fileName });
   // Finaliza o processo de arquivamento
   archive.finalize();
+  logger.info('Finalizando writeZipFile: ', 'arquivo: ', zipFilePath);
 }
 
 // Scroll utility
@@ -132,7 +136,6 @@ async function* scrollSearch(params: Search) {
     }
 
     for (const hit of sourceHits) {
-      // console.log('hit: ', hit);
       yield hit;
     }
 
@@ -153,12 +156,6 @@ function getFileName(index: string, query: string) {
   return hash;
 }
 
-function createFolderIfNotExists(folderPath: string | undefined) {
-  if (folderPath && !fs.existsSync(folderPath)) {
-    fs.mkdirSync(folderPath);
-  }
-}
-
 async function backgroundExportation(
   zipFilePath: string,
   index: string,
@@ -167,7 +164,7 @@ async function backgroundExportation(
   indexName: string,
   resultFields: string[]
 ) {
-  console.log('Iniciando processamento da exportação em background.');
+  logger.info('Exportação em background: ', 'arquivo: ', zipFilePath, 'query:', query, 'index:', index);
   await writeFile(zipFilePath, index, query, indexName, resultFields);
   const recipient = email;
   const subject = `Download do arquivo CSV`;
@@ -177,9 +174,9 @@ async function backgroundExportation(
   <p>Seu arquivo CSV está pronto e pode ser baixado através do link <a href="${link}">${link}</a></p>
   <p>O arquivo ficará disponível para download por 24 horas.</p>
   <p>Atenciosamente, equipe BrCris.</p>`;
-  console.log('Enviando email em background.');
+  logger.info('Enviando email em background: ', 'arquivo: ', zipFilePath, 'query:', query, 'index:', index);
   await sendMail({ recipient, subject, text, html });
-  console.log('Exportação em background concluída com sucesso!');
+  logger.info('Email enviado.');
 }
 
 export default proxy;
