@@ -20,6 +20,4 @@ const fileTransport = pino.transport({
 
 const logger = pino(config, fileTransport);
 
-logger.info('Hello, log');
-
 export default logger;

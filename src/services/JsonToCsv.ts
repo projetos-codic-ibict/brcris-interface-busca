@@ -21,7 +21,6 @@ export function jsonToCsv(jsonData: object, headers: string[]): string {
         if (typeof v === 'object') {
           return v.name || v.title;
         }
-        console.log('v::::', typeof v);
         return v.replaceAll(';', ',');
       });
     } else {
