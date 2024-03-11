@@ -32,7 +32,7 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
     const fileName = getFileName(index, JSON.stringify(query));
     const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${fileName}.zip`;
-    logger.info(`Iniciando exportação, arquivo: ${zipFilePath}`);
+    logger.info(`Iniciando exportação, arquivo: ${zipFilePath}, index: ${index}, query: ${JSON.stringify(query)}`);
 
     if (fs.existsSync(zipFilePath)) {
       logger.info(`Arquivo já existe: ${zipFilePath}`);
