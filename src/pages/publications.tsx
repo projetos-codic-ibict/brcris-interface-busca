@@ -29,6 +29,7 @@ import CustomViewPagingInfo from '../components/customResultView/CustomViewPagin
 import Indicators from '../components/indicators/PublicationsIndicators';
 import styles from '../styles/Home.module.css';
 import { CustomSearchDriverOptions } from '../types/Entities';
+import DownloadModal from '../components/DownloadModal';
 type Props = {
   // Add custom props here
 };
@@ -300,7 +301,11 @@ export default function App() {
 
                               {containsResults(wasSearched, results) && (
                                 <div className="d-flex gap-2  align-items-center">
-                                  {<ResultsPerPage options={[10, 20, 50]} /> /*  <DownloadModal /> */}
+                                  {
+                                    <>
+                                      <ResultsPerPage options={[10, 20, 50]} /> <DownloadModal />{' '}
+                                    </>
+                                  }
                                 </div>
                               )}
                             </ErrorBoundary>

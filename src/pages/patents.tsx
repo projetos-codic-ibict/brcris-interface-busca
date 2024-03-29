@@ -30,6 +30,7 @@ import CustomResultViewPatents from '../components/customResultView/CustomResult
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import PatentsIndicators from '../components/indicators/PatentsIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
+import DownloadModal from '../components/DownloadModal';
 type Props = {
   // Add custom props here
 };
@@ -243,7 +244,15 @@ export default function App() {
                                   <PagingInfo view={CustomViewPagingInfo} />
                                 </div>
                               )}
-                              {containsResults(wasSearched, results) && <ResultsPerPage options={[10, 20, 50]} />}
+                              {containsResults(wasSearched, results) && (
+                                <div className="d-flex gap-2  align-items-center">
+                                  {
+                                    <>
+                                      <ResultsPerPage options={[10, 20, 50]} /> <DownloadModal />{' '}
+                                    </>
+                                  }
+                                </div>
+                              )}
                             </ErrorBoundary>
                           }
                           // bodyFooter={<Paging />}
