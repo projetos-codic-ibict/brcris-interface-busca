@@ -165,6 +165,7 @@ async function backgroundExportation(
   resultFields: string[]
 ) {
   logger.info(`Exportação em background,  arquivo: ${zipFilePath}`);
+  console.log('process.env.BRCRIS_HOST_BASE:', process.env.BRCRIS_HOST_BASE);
   await writeFile(zipFilePath, index, query, indexName, resultFields);
   const recipient = email;
   const subject = `Download do arquivo CSV`;
