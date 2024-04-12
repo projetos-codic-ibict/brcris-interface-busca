@@ -2,6 +2,7 @@ import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useTranslation } from 'react-i18next';
+import Iframe from '../../components/dashboards/Iframe';
 
 type Props = {
   // Add custom props here
@@ -18,15 +19,15 @@ export default function PublicationsDashboard() {
   return (
     <>
       <Head>
-        <title>{`BrCris - ${t('Experts networks dashboard')}`}</title>
+        <title>{`BrCris - ${t('Programs dashboard')}`}</title>
       </Head>
       <div className="page-search">
         <div className="App">
           <div className="container page">
             <div className="page-title">
-              <h1>{t('Experts networks dashboard')}</h1>
+              <h1>{t('Programs dashboard')}</h1>
             </div>
-            <p>Em construção...</p>
+            <Iframe url="https://dashboardbrcris.ibict.br/app/dashboards#/view/539438f7-686a-4776-9f15-1e3c02f90045?embed=true&amp;_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" />
           </div>
         </div>
       </div>

@@ -127,37 +127,31 @@ export default function Dashboards() {
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/networks">
+              <Link href="/dashboards/institutions">
                 <a>
-                  <h2>{t('Experts networks')}</h2>
+                  <h2>{t('Institutions')}</h2>
                   <picture className="d-flex justify-content-center">
-                    <img
-                      className="img-fluid"
-                      src="/images/dashboards/networks.png"
-                      alt="ícone de redes de especialistas"
-                    />
+                    <img className="img-fluid" src="/images/dashboards/institutions.png" alt="ícone de instituições" />
                   </picture>
                   <div className="card-body">
-                    <p className="card-text">
-                      {t('Group or community of highly qualified professionals in a specific knowledge area')}
-                    </p>
+                    <p className="card-text">{t('Institutions')}</p>
                   </div>
                 </a>
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/clusters">
+              <Link href="/dashboards/programs">
                 <a>
-                  <h2>{t('Concepts clusters')}</h2>
+                  <h2>{t('Programs')}</h2>
                   <picture className="d-flex justify-content-center">
                     <img
                       className="img-fluid"
-                      src="/images/dashboards/clusters.png"
-                      alt="ícone de redes de especialistas"
+                      src="/images/dashboards/programs.png"
+                      alt="ícone de programas de pós-graduação"
                     />
                   </picture>
                   <div className="card-body">
-                    <p className="card-text">{t("Research topics obtained by grouping researchers' activities")}</p>
+                    <p className="card-text">{t('Programs')}</p>
                   </div>
                 </a>
               </Link>
