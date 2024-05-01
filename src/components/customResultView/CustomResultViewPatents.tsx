@@ -31,18 +31,20 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <ShowAuthorItem label={t('Inventor(s)')} authors={result.inventor?.raw} />
-            <li>
-              <span className="sui-result__key">{t('Applicant')}</span>
-              {result.applicant?.raw.map((applicant: OrgUnit, index: number) => (
-                <span key={index} className="sui-result__value">
-                  <ExternalLink
-                    key={applicant.id}
-                    content={applicant.name}
-                    url={`${VIVO_URL_ITEM_BASE}/org_${applicant.id}&lang=${router.locale}`}
-                  />
-                </span>
-              ))}
-            </li>
+            {result.applicant === undefined ? null : (
+              <li>
+                <span className="sui-result__key">{t('Applicant')}</span>
+                {result.applicant?.raw.map((applicant: OrgUnit, index: number) => (
+                  <span key={index} className="sui-result__value">
+                    <ExternalLink
+                      key={applicant.id}
+                      content={applicant.name}
+                      url={`${VIVO_URL_ITEM_BASE}/org_${applicant.id}&lang=${router.locale}`}
+                    />
+                  </span>
+                ))}
+              </li>
+            )}
             <ShowItem label={t('Deposit date')} value={result.depositDate?.raw} />
             <ShowItem label={t('Kind Code')} value={result.kindCode?.raw} />
             <ShowItem label={t('Country Code')} value={result.countryCode?.raw} />

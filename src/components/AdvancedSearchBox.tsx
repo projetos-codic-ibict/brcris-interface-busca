@@ -107,7 +107,7 @@ const AdvancedSearchBox = ({
                 <option value="all">{t('All fields')}</option>
                 {fieldNames.map((field) => (
                   <option key={field} value={field}>
-                    {field}
+                    {t(field)}
                   </option>
                 ))}
               </select>
@@ -159,7 +159,7 @@ const AdvancedSearchBox = ({
                   <option value="all">{t('All fields')}</option>
                   {fieldNames.map((field) => (
                     <option key={field} value={field}>
-                      {field}
+                      {t(field)}
                     </option>
                   ))}
                 </select>
