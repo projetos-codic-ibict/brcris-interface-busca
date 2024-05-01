@@ -7,7 +7,7 @@ interface ShowAuthorItemProps {
 }
 
 const ShowAuthorItem = ({ label, authors }: ShowAuthorItemProps) => {
-  return (
+  return authors === undefined || authors === null ? null : (
     <li>
       <span className="sui-result__key">{label}</span>
       <span className="sui-result__value">

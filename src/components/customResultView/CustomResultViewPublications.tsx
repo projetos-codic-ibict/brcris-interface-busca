@@ -36,42 +36,44 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
 
             <ShowItem label={t('Type')} value={result.type?.raw} />
 
-            <li>
-              <span className="sui-result__key">
-                {result.type?.raw == 'doctoral thesis' || result.type?.raw == 'master thesis'
-                  ? `${t('Institution')}`
-                  : result.type?.raw == 'conference proceedings'
-                  ? `${t('Organization')}`
-                  : `${t('Journals')}`}
-              </span>
-              <span className="sui-result__value">
-                {result.orgunit?.raw.map((org: OrgUnit) => (
-                  <ExternalLink
-                    key={org.id}
-                    content={org.name}
-                    url={`${VIVO_URL_ITEM_BASE}/org_${org.id}&lang=${router.locale}`}
-                  />
-                ))}
-
-                {result.service?.raw.map((service: Service) =>
-                  service.title?.map((title: string) => (
+            {result.orgunit === undefined && result.service === undefined && result.journal === undefined ? null : (
+              <li>
+                <span className="sui-result__key">
+                  {result.type?.raw == 'doctoral thesis' || result.type?.raw == 'master thesis'
+                    ? `${t('Institution')}`
+                    : result.type?.raw == 'conference proceedings'
+                    ? `${t('Organization')}`
+                    : `${t('Journals')}`}
+                </span>
+                <span className="sui-result__value">
+                  {result.orgunit?.raw.map((org: OrgUnit) => (
                     <ExternalLink
-                      key={title}
-                      content={title}
-                      url={`${VIVO_URL_ITEM_BASE}/serv_${service.id}&lang=${router.locale}`}
+                      key={org.id}
+                      content={org.name}
+                      url={`${VIVO_URL_ITEM_BASE}/org_${org.id}&lang=${router.locale}`}
                     />
-                  ))
-                )}
+                  ))}
 
-                {result.journal?.raw.map((journal: any, index: any) => (
-                  <ExternalLink
-                    key={index}
-                    content={journal.title ? journal.title : journal}
-                    url={`${VIVO_URL_ITEM_BASE}/journ_${journal.id}&lang=${router.locale}`}
-                  />
-                ))}
-              </span>
-            </li>
+                  {result.service?.raw.map((service: Service) =>
+                    service.title?.map((title: string) => (
+                      <ExternalLink
+                        key={title}
+                        content={title}
+                        url={`${VIVO_URL_ITEM_BASE}/serv_${service.id}&lang=${router.locale}`}
+                      />
+                    ))
+                  )}
+
+                  {result.journal?.raw.map((journal: any, index: any) => (
+                    <ExternalLink
+                      key={index}
+                      content={journal.title ? journal.title : journal}
+                      url={`${VIVO_URL_ITEM_BASE}/journ_${journal.id}&lang=${router.locale}`}
+                    />
+                  ))}
+                </span>
+              </li>
+            )}
 
             <ShowItem label={t('Language')} value={result.language?.raw} />
 

@@ -22,6 +22,7 @@ import { useState } from 'react';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import DownloadModal from '../components/DownloadModal';
 import Loader from '../components/Loader';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
@@ -29,7 +30,6 @@ import CustomViewPagingInfo from '../components/customResultView/CustomViewPagin
 import Indicators from '../components/indicators/PublicationsIndicators';
 import styles from '../styles/Home.module.css';
 import { CustomSearchDriverOptions } from '../types/Entities';
-import DownloadModal from '../components/DownloadModal';
 type Props = {
   // Add custom props here
 };
@@ -111,29 +111,29 @@ const configDefault: CustomSearchDriverOptions = {
         type: 'range',
         ranges: [
           {
-            from: '2020',
+            from: '2021',
             to: new Date().getUTCFullYear().toString(),
-            name: `2020 - ${new Date().getUTCFullYear()}`,
+            name: `2021 - ${new Date().getUTCFullYear()}`,
           },
           {
-            from: '2015',
+            from: '2016',
             to: '2020',
-            name: '2015 - 2020',
+            name: '2016 - 2020',
           },
           {
-            from: '2010',
+            from: '2011',
             to: '2015',
-            name: '2010 - 2015',
+            name: '2011 - 2015',
           },
           {
-            from: '2000',
+            from: '2001',
             to: '2010',
-            name: '2000 - 2010',
+            name: '2001 - 2010',
           },
           {
-            from: '1990',
+            from: '1991',
             to: '2000',
-            name: '1990 - 2000',
+            name: '1991 - 2000',
           },
           {
             from: '1950',

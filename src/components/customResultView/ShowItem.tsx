@@ -7,7 +7,7 @@ type ShowItemProps = {
 };
 
 const ShowItem = ({ label, value, urlLink }: ShowItemProps) => {
-  return (
+  return value === undefined || value === null || value === '' ? null : (
     <li>
       <span className="sui-result__key">{label}</span>
       <span className="sui-result__value">
