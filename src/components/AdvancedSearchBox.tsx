@@ -3,8 +3,10 @@
 import { SearchBox, withSearch } from '@elastic/react-search-ui';
 import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch';
 import { useTranslation } from 'next-i18next';
+
 import { useEffect, useState } from 'react';
 import { IoAdd, IoArrowUndoOutline, IoClose, IoSearch } from 'react-icons/io5';
+
 import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
 import styles from '../styles/AdvancedSearch.module.css';
 import { QueryItem } from '../types/Entities';
@@ -23,11 +25,13 @@ const AdvancedSearchBox = ({
   fieldNames,
   toogleAdvancedConfig,
 }: CustomSearchBoxProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['advanced', 'common']);
   const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
   const [query, setQuery] = useState(searchTerm);
   const [queryField, setQueryField] = useState('all');
   const [inputs, setInputs] = useState<QueryItem[]>([]);
+
+  fieldNames = fieldNames.map((field) => t(field));
 
   const addInput = () => {
     setInputs([...inputs, { value: '', field: 'all', operator: 'AND' }]);
@@ -104,10 +108,10 @@ const AdvancedSearchBox = ({
               ></textarea>
               <HelpModal fields={fieldNames} />
               <select className="form-select" value={queryField} onChange={(e) => setQueryField(e.target.value)}>
-                <option value="all">{t('All fields')}</option>
+                <option value="all">{t('all')}</option>
                 {fieldNames.map((field) => (
                   <option key={field} value={field}>
-                    {t(field)}
+                    {field}
                   </option>
                 ))}
               </select>
@@ -156,10 +160,10 @@ const AdvancedSearchBox = ({
                   onChange={(e) => handleChange({ field: e.target.value }, indice)}
                   className="form-select"
                 >
-                  <option value="all">{t('All fields')}</option>
+                  <option value="all">{t('all')}</option>
                   {fieldNames.map((field) => (
                     <option key={field} value={field}>
-                      {t(field)}
+                      {field}
                     </option>
                   ))}
                 </select>

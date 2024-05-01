@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connector';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { untranslatedFieldsNames } from '../../components/SearchSanitization';
 import logger from '../../services/Logger';
 import QueryFormat from '../../services/QueryFormat';
 // https://docs.elastic.co/search-ui/api/connectors/elasticsearch#customise-the-elasticsearch-request-body
@@ -23,7 +24,10 @@ function builConnector(index: string) {
         // @ts-ignore
         requestState.searchTerm = `(all:${requestState.searchTerm})`;
       }
-      const fullQuery = new QueryFormat().toElasticsearch(requestState.searchTerm, Object.keys(searchFields));
+      console.log('requestState.searchTerm', requestState.searchTerm);
+      const query = untranslatedFieldsNames(requestState.searchTerm);
+      console.log('query', query);
+      const fullQuery = new QueryFormat().toElasticsearch(query, Object.keys(searchFields));
       requestBody.query = fullQuery;
       return requestBody;
     }

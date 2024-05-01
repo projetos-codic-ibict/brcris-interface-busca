@@ -134,7 +134,7 @@ export default function Dashboards() {
                     <img className="img-fluid" src="/images/dashboards/institutions.png" alt="ícone de instituições" />
                   </picture>
                   <div className="card-body">
-                    <p className="card-text">{t('Institutions')}</p>
+                    <p className="card-text">{t('Academic and/or research institutions')}</p>
                   </div>
                 </a>
               </Link>
@@ -151,7 +151,7 @@ export default function Dashboards() {
                     />
                   </picture>
                   <div className="card-body">
-                    <p className="card-text">{t('Programs')}</p>
+                    <p className="card-text">{t('Active postgraduate programs evaluated by CAPES')}</p>
                   </div>
                 </a>
               </Link>
