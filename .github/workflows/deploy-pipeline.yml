@@ -30,6 +30,17 @@ jobs:
       - run: |
           sh scripts/deploy.sh
 
+  homol:
+    runs-on: [self-hosted, Linux, x64, runner-homol]
+    environment:
+      name: homol
+      url: 'http://172.16.20.48:3000/'
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          sh scripts/deploy.sh
+          
   prod:
     runs-on: [self-hosted, Linux, x64, runner-pacova]
     environment:
