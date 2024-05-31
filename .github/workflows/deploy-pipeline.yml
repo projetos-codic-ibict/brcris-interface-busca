@@ -35,12 +35,13 @@ jobs:
     environment:
       name: homol
       url: 'http://172.16.20.48:3000/'
-
+    env:
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
     steps:
       - uses: actions/checkout@v3
       - run: |
           sh scripts/deploy.sh
-          
+
   prod:
     runs-on: [self-hosted, Linux, x64, runner-pacova]
     environment:
