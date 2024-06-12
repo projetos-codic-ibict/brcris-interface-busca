@@ -7,10 +7,11 @@ class ExportService {
     resultFields: string[],
     totalResults: number,
     indexName: string,
+    typeArq: string,
     email?: string,
     captcha?: string
   ) {
-    const body = JSON.stringify({ query, index, resultFields, totalResults, indexName, email, captcha });
+    const body = JSON.stringify({ query, index, resultFields, totalResults, indexName, typeArq, email, captcha });
     const response = await fetch('/api/export', {
       method: 'POST',
       headers: {

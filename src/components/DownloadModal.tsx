@@ -19,6 +19,7 @@ type DownloadModalProps = {
   filters?: any;
   searchTerm?: any;
   totalResults: number;
+  typeArq?: string;
 };
 
 const alertOptions = {
@@ -26,7 +27,7 @@ const alertOptions = {
   keepAfterRouteChange: false,
 };
 
-const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps) => {
+const DownloadModal = ({ filters, searchTerm, totalResults, typeArq }: DownloadModalProps) => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const PUBLIC_RECAPTCHA_SITE_KEY = process.env.PUBLIC_RECAPTCHA_SITE_KEY || '';
@@ -46,14 +47,28 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
   // @ts-ignore
   const resultFields = Object.keys(result_fields);
 
+  const title = typeArq === undefined ? 'csv' : typeArq;
+
   async function handleDownload() {
     handleShow();
     setFormSent(false);
     if (totalResults <= 1000) {
+      console.log('teste:: ', typeArq);
       try {
         setLoading(true);
+        if (typeArq === undefined) {
+          typeArq = 'csv';
+        }
         const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator, filters);
-        const response = await new ExportService().search(index, query, resultFields, totalResults, getIndexName());
+        const response = await new ExportService().search(
+          index,
+          query,
+          resultFields,
+          totalResults,
+          getIndexName(),
+          typeArq
+        );
+        console.log(response);
         const { file } = await response.json();
         const nextDownloadLink = getDownloadLink(file);
         setDownloadLink(nextDownloadLink);
@@ -72,6 +87,9 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
     try {
       setLoading(true);
       const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator, filters);
+      if (typeArq === undefined) {
+        typeArq = 'csv';
+      }
 
       const response = await new ExportService().search(
         index,
@@ -79,6 +97,7 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
         resultFields,
         totalResults,
         getIndexName(),
+        typeArq,
         email,
         captcha
       );
@@ -125,12 +144,12 @@ const DownloadModal = ({ filters, searchTerm, totalResults }: DownloadModalProps
   return (
     <>
       <button
-        title={t('Export csv') || 'Export csv'}
+        title={t(`Exportar ${title}`) || `Exportar ${title}`}
         className="btn-header btn btn-outline-secondary d-flex align-items-center flex-gap-8"
         onClick={handleDownload}
       >
         <FaFileExport />
-        {t('csv')}
+        {t(`${title}`)}
       </button>
       {isLoading ? <Loader /> : ''}
 

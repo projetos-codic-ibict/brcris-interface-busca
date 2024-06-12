@@ -212,7 +212,7 @@ export default function App() {
     //@ts-ignore
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
-
+  const typeArqw = 'ris';
   return (
     <div>
       <Head>
@@ -303,7 +303,10 @@ export default function App() {
                                 <div className="d-flex gap-2  align-items-center">
                                   {
                                     <>
-                                      <ResultsPerPage options={[10, 20, 50]} /> <DownloadModal />{' '}
+                                      <ResultsPerPage options={[10, 20, 50]} />
+                                      {/*@ts-ignore*/}
+                                      <DownloadModal typeArq={typeArqw} />
+                                      <DownloadModal />{' '}
                                     </>
                                   }
                                 </div>
