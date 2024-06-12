@@ -21,7 +21,8 @@ jobs:
     environment:
       name: homol
       url: 'http://codich1.ibict.br:8086/'
-
+    env:
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
     steps:
       - uses: actions/checkout@v3
       - run: |
