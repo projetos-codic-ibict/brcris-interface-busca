@@ -53,7 +53,6 @@ const DownloadModal = ({ filters, searchTerm, totalResults, typeArq }: DownloadM
     handleShow();
     setFormSent(false);
     if (totalResults <= 1000) {
-      console.log('teste:: ', typeArq);
       try {
         setLoading(true);
         if (typeArq === undefined) {

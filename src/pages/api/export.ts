@@ -32,7 +32,6 @@ if (!process.env.FIELDS_RIS) {
   throw new Error('Environment variable FIELDS_RIS is not defined');
 }
 const fieldsRis: FieldsRis = JSON.parse(process.env.FIELDS_RIS);
-console.log('2');
 
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -40,21 +39,15 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     console.log(totalResults);
     createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
     const fileName = getFileName(index, JSON.stringify(query));
-    const fileTypeName = '-' + typeArq;
-    const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${fileName}${fileTypeName}.zip`;
+    const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${typeArq}${fileName}.zip`;
+    console.log(zipFilePath);
     logger.info(`Iniciando exportação, arquivo: ${zipFilePath}, index: ${index}, query: ${JSON.stringify(query)}`);
     if (fs.existsSync(zipFilePath)) {
       logger.info(`Arquivo já existe: ${zipFilePath}`);
       return res.json({ file: zipFilePath });
     }
     if (totalResults > 1000) {
-      console.log('3');
-      //const { email, captcha } = req.body;
-      const bodyRequi = req.body;
-      const email = bodyRequi.email;
-      const captcha = bodyRequi.captcha;
-      console.log('bodyRequi: ', bodyRequi);
-      console.log('email: ', email, 'captcha: ', captcha);
+      const { email, captcha } = req.body;
       const response = await googleCaptchaValidation(captcha);
       const captchaValidation = await response.json();
       console.log('captchaValidation: ', captchaValidation);
@@ -162,8 +155,8 @@ async function writeRisFile(zipFilePath: string, index: string, query: string, r
 
 function writeZipFile(indexName: string, zipFilePath: string, csvFilePath: string, typeArq: string) {
   logger.info(`Iniciando writeZipFile, arquivo: ${zipFilePath}`);
-  const typeDot = typeArq ? '.ris' : '.csv';
-  const fileName = `${indexName}-${new Date().toISOString()}${typeDot}`;
+  const fileName = `${indexName}-${new Date().toISOString()}.${typeArq}`;
+  console.log(fileName);
 
   // Crie um objeto de arquivo zip
   const output = fs.createWriteStream(zipFilePath);
