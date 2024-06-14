@@ -49,6 +49,7 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     if (totalResults > 1000) {
       const { email, captcha } = req.body;
       const response = await googleCaptchaValidation(captcha);
+      console.log('response', JSON.stringify(response));
       const captchaValidation = await response.json();
       console.log('captchaValidation: ', captchaValidation);
       // @ts-ignore
