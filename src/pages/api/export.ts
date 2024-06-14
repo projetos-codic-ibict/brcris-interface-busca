@@ -55,8 +55,10 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
       if (captchaValidation.success) {
         console.log('capchar válido: ');
         backgroundExportation(zipFilePath, index, query, email, indexName, resultFields, typeArq);
+        return res.json({});
+      } else {
+        return res.status(400).json(captchaValidation);
       }
-      return res.json({});
     }
     await writeFile(zipFilePath, index, query, indexName, resultFields, typeArq);
     res.json({ file: zipFilePath });
