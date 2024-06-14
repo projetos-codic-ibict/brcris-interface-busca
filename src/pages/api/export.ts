@@ -223,6 +223,7 @@ async function backgroundExportation(
 ) {
   logger.info(`Exportação em background,  arquivo: ${zipFilePath}`);
   await writeFile(zipFilePath, index, query, indexName, resultFields, typeArq);
+  console.log('enviando email');
   const recipient = email;
   const subject = `Download do arquivo`;
   const text = ``;
@@ -234,6 +235,7 @@ async function backgroundExportation(
   logger.info(`Enviando email em background,  arquivo: ${zipFilePath}`);
   await sendMail({ recipient, subject, text, html });
   logger.info('Email enviado.');
+  console.log('email enviado');
 }
 
 export default proxy;
