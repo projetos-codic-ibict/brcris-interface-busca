@@ -169,5 +169,6 @@
   "Enter your email in the field below:": "Insira seu email no campo abaixo:",
   "Export processing. The download link will be sent to the e-mail address provided when the file is ready.": "Exportação em processamento. O link para download será enviado para o e-mail informado quando o arquivo estiver pronto.",
   "Academic and/or research institutions": "Instituições acadêmicas e/ou de pesquisa",
-  "Active postgraduate programs evaluated by CAPES": "Programas de pós-graduação ativos avaliados pela CAPES"
+  "Active postgraduate programs evaluated by CAPES": "Programas de pós-graduação ativos avaliados pela CAPES",
+  "Export failed, try again later": "Falha na exportação, tente novamente mais tarde."
 }

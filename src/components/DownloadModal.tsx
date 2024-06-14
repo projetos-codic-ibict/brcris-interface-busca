@@ -115,7 +115,7 @@ const DownloadModal = ({ filters, searchTerm, totalResults, typeArq }: DownloadM
             alertOptions
           );
         } else {
-          alertService.error(t('Export error'), alertOptions);
+          alertService.error(t('Export failed, try again later'), alertOptions);
         }
       }
     } finally {
