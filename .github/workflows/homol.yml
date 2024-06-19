@@ -19,7 +19,7 @@ jobs:
   deploy:
     runs-on: [self-hosted, Linux, x64, runner-iroxa]
     environment:
-      name: homol
+      name: test
       url: 'http://codich1.ibict.br:8086/'
     env:
       NODE_TLS_REJECT_UNAUTHORIZED: 0
