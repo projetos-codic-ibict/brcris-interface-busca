@@ -17,7 +17,7 @@ env:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, Linux, x64, runner-homol]
+    runs-on: [self-hosted, Linux, x64, runner-iroxa]
     environment:
       name: homol
       url: 'http://codich1.ibict.br:8086/'
