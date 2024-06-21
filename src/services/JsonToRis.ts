@@ -1,11 +1,3 @@
-export interface FieldsRis {
-  TY: string;
-  AU: string;
-  PY: string;
-  TI: string;
-  LA: string;
-  JO: string;
-}
 interface risFormat {
   delimiter: string;
   endLine: string;
@@ -14,9 +6,8 @@ const risFormatAux: risFormat = {
   delimiter: '  -  ',
   endLine: '\n',
 };
-export function jsonToRis(jsonData: object, fieldsRis: FieldsRis): string {
+export function jsonToRis(jsonData: object, fieldsRis: object): string {
   let ris = '';
-  ris += risFormatAux.endLine;
   for (const [risKey, risValues] of Object.entries(fieldsRis)) {
     for (const [jsonKey, jsonValues] of Object.entries(jsonData)) {
       if (jsonKey === risValues) {
@@ -43,5 +34,6 @@ export function jsonToRis(jsonData: object, fieldsRis: FieldsRis): string {
     }
   }
   ris += 'ER  -';
+  ris += risFormatAux.endLine;
   return ris;
 }

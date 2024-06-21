@@ -9,7 +9,7 @@ import { Search } from 'es7/api/requestParams';
 import fs from 'fs';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { csvOptions, jsonToCsv } from '../../services/JsonToCsv';
-import { FieldsRis, jsonToRis } from '../../services/JsonToRis';
+import { jsonToRis } from '../../services/JsonToRis';
 import logger from '../../services/Logger';
 import { createFolderIfNotExists } from '../../services/createFolderIfNotExists';
 import { googleCaptchaValidation } from './googleCaptchaValidation';
@@ -31,7 +31,7 @@ console.log('1');
 if (!process.env.FIELDS_RIS) {
   throw new Error('Environment variable FIELDS_RIS is not defined');
 }
-const fieldsRis: FieldsRis = JSON.parse(process.env.FIELDS_RIS);
+const fieldsRis = JSON.parse(process.env.FIELDS_RIS);
 
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
