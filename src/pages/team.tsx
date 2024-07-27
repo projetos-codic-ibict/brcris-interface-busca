@@ -3,14 +3,15 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import membersData from '../../team/members.json';
+import currentMembersData from '../../team/current.json';
+import egressMembersData from '../../team/egress.json';
 import Member from '../components/team/Member';
 import { MemberType } from '../types/Entities';
 
 type Props = {
   // Add custom props here
 };
-// or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
+
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale ?? 'en', ['navbar', 'common'])),
@@ -26,14 +27,16 @@ const shuffle = (array: MemberType[]) => {
 };
 
 export default function Team() {
-  const { t } = useTranslation(['navbar', 'common']);
+  const { t } = useTranslation(['common']);
 
-  const [members, setMembers] = useState<MemberType[]>([]);
+  const [currentMembers, setCurrentMembers] = useState<MemberType[]>([]);
+  const [egressMembers, setEgessMembers] = useState<MemberType[]>([]);
 
   useEffect(() => {
-    const result = JSON.stringify(membersData);
-    const members = JSON.parse(result);
-    setMembers(members);
+    const currentMembersDataStr = JSON.stringify(currentMembersData);
+    setCurrentMembers(JSON.parse(currentMembersDataStr));
+    const egressMembersDataStr = JSON.stringify(egressMembersData);
+    setEgessMembers(JSON.parse(egressMembersDataStr));
   }, []);
 
   return (
@@ -42,14 +45,68 @@ export default function Team() {
         <title>{`BrCris - ${t('Team')}`}</title>
       </Head>
       <div className="App">
-        <div className="container page d-flex align-content-center flex-column">
+        <div className="container page tablist d-flex align-content-center flex-column">
           <div className="page-title">
             <h1>{t('Team')}</h1>
           </div>
-          <div className="team">
-            {shuffle(members).map((member: MemberType, index: number) => (
-              <Member key={index} image={member.image} name={member.name} lattes={member.lattes} />
-            ))}
+          <ul className="nav nav-tabs d-flex justify-content-center" id="teamTab" role="tablist">
+            <li className="nav-item" role="presentation">
+              <button
+                className="nav-link active"
+                id="current-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#current"
+                type="button"
+                role="tab"
+                aria-controls="current"
+                aria-selected="true"
+              >
+                {t('Current')}
+              </button>
+            </li>
+            <li className="nav-item" role="presentation">
+              <button
+                className="nav-link"
+                id="egress-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#egress"
+                type="button"
+                role="tab"
+                aria-controls="egress"
+                aria-selected="false"
+              >
+                {t('Egress')}
+              </button>
+            </li>
+          </ul>
+
+          <div className="tab-content">
+            <div className="tab-pane active" id="current" role="tabpanel" aria-labelledby="current-tab">
+              <div className="team">
+                {shuffle(currentMembers).map((member: MemberType, index: number) => (
+                  <Member
+                    key={index}
+                    image={member.image}
+                    name={member.name}
+                    lattes={member.lattes}
+                    period={member.period}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="tab-pane" id="egress" role="tabpanel" aria-labelledby="egress-tab">
+              <div className="team">
+                {shuffle(egressMembers).map((member: MemberType, index: number) => (
+                  <Member
+                    key={index}
+                    image={member.image}
+                    name={member.name}
+                    lattes={member.lattes}
+                    period={member.period}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

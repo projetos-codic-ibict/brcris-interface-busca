@@ -24,6 +24,7 @@ export type MemberType = {
   name: string;
   image: string;
   lattes: string;
+  period: string;
 };
 
 export interface CustomSearchQuery extends SearchQuery {

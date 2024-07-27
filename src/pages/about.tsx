@@ -27,7 +27,7 @@ export default function About() {
         <title>{`BrCris - ${t('About')}`}</title>
       </Head>
       <div className="App">
-        <div className="container page about d-flex align-content-center flex-column">
+        <div className="container page about tablist d-flex align-content-center flex-column">
           <div className="page-title">
             <h1>{t('About')}</h1>
           </div>

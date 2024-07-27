@@ -3,7 +3,7 @@ import Script from 'next/script';
 
 export default function Barra() {
   const barraStyle: CSSProperties = {
-    // background: '#7F7F7F',
+    background: '#7F7F7F',
     height: '20px',
     padding: '0 0 0 10px',
     display: 'none',
