@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Running yarn install"
-yarn
 echo "Node version"
 node -v
+echo "Running yarn install"
+yarn
 echo "Running pm2 stop brcris-nextjs"
 pm2 stop brcris-nextjs || true
 echo "copy env"
