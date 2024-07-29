@@ -2,7 +2,9 @@
 set -e
 
 echo "Running yarn install"
-yarn 
+yarn
+echo "Node version"
+node -v
 echo "Running pm2 stop brcris-nextjs"
 pm2 stop brcris-nextjs || true
 echo "copy env"
