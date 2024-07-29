@@ -26,7 +26,7 @@ jobs:
       url: 'http://codich1.ibict.br:8086/'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           sh scripts/deploy.sh
 
@@ -49,6 +49,6 @@ jobs:
       url: 'https://brcris.ibict.br'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           sh scripts/deploy.sh
