@@ -1,4 +1,4 @@
-name: Deploy Test & Homol
+name: Deploy Homol
 
 on: workflow_dispatch
 
