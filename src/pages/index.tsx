@@ -30,7 +30,7 @@ export default function App() {
     { text: 'Patents', page: 'patents', name: process.env.INDEX_PATENT || '' },
     { text: 'Programs', page: 'programs', name: process.env.INDEX_PROGRAM || '' },
     { text: 'Research Groups', page: 'groups', name: process.env.INDEX_GROUP || '' },
-    { text: 'Software', page: 'software', name: process.env.INDEX_SOFTWARE || '' },
+    { text: 'Softwares', page: 'softwares', name: process.env.INDEX_SOFTWARE || '' },
   ];
   const partners = [
     {

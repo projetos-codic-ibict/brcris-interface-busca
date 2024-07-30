@@ -1,7 +1,69 @@
+import Publication from './Publication';
+
 const Publications = () => {
   return (
     <>
       <h3>2023</h3>
+      <Publication
+        authors="MENDES, W.; GRANDO, R. L.; DIAS, T. M. R.; JORGE, V. A.; CARVALHO SEGUNDO, W. L. R."
+        title="Criação de indicadores cientometricos: Estudo de caso da integração do Observatório Ciência, Tecnologia & Inovação em Saúde da Fiocruz ao Sistema BrCris/IBICT."
+        link="http://www.revistacientifica.uem.mz/revista/index.php/lcs/article/view/246"
+        journal="Revista Científica da UEM: Série Letras e Ciências Sociais, [s. l.], v. 4, n. 1, p. 29-34, 2 jun. 2023."
+      />
+      <Publication
+        authors="SILVA, R. R.; DIAS, T. M. R.; CARVALHO SEGUNDO, W. L. R."
+        title="Estratégia para certificação de patentes em repositórios internacionais. "
+        link="https://doi.org/10.22477/vi.widat.34"
+        journal="In: WORKSHOP DE INFORMAÇÃO, DADOS E TECNOLOGIA - WIDaT, 6., 2023, Brasília, DF. Anais [...]. Brasília, DF: [s. n.], 2023. DOI: 10.22477/vi.widat.34."
+      />
+      <Publication
+        authors="DIAS, T. M. R.; CARVALHO SEGUNDO, W. L. R.; MENA CHALCO, J. P.; SILVA, V. S.; MOREIRA, T. H. J."
+        title="A Plataforma BrCris como ferramenta para certificação de Teses e Dissertações no Brasil."
+        link="https://doi.org/10.22477/vi.widat.53"
+        journal="In: WORKSHOP DE INFORMAÇÃO, DADOS E TECNOLOGIA - WIDaT, 6., 2023, Brasília, DF. Anais [...]. Brasília, DF: [s. n.], 2023. DOI: 10.22477/vi.widat.53."
+      />
+      <Publication
+        authors="SEGUNDO, W. L. R.; NÓBREGA, T.; SILVA FILHO, J. E.; MATAS, L.; MENA-CHALCO, J. P."
+        title="dARK: uma implementação descentralizada de identificadores persistentes ARK baseada em blockchain."
+        link="https://periodicos.ufrn.br/bibliocanto/article/view/33759"
+        journal="BiblioCanto, Natal, v. 9, n. 2, p. 147–158, 4 dez. 2023. DOI: 10.21680/2447-7842.2023v9n2ID33759."
+      />
+      <Publication
+        authors="DIAS, Thiago et al."
+        title="O BrCris como ferramenta para acesso e avaliação da ciência."
+        link="https://periodicos.ufrn.br/bibliocanto/article/view/33838"
+        journal=" BiblioCanto, Natal, v. 9, n. 2, p. 172–181, 4 dez. 2023. DOI: 10.21680/2447-7842.2023v9n2ID33838."
+      />
+      <Publication
+        authors="CARVALHO SEGUNDO, W. L. R.; DIAS, T. M. R.; MOREIRA, T. H. J.; SILVA, V. S.; MENA-CHALCO, J. P."
+        title="Integração de repositórios de dados abertos para certificação de produção científica. "
+        link="https://periodicos.ufrn.br/bibliocanto/article/view/33837"
+        journal="BiblioCanto, Natal, v. 9, n. 2, p. 12–16, 4 dez. 2023. DOI: 10.21680/2447-7842.2023v9n2ID33837."
+      />
+      <Publication
+        authors="SILVA, V. S.; SILVA, J. V.; DIAS, T. M. R.; GABRIEL JUNIOR, R. F.; CARVALHO SEGUNDO, W. L. R. "
+        title="BrCris: desenvolvimento de ferramentas no tratamento, análise e disseminação da informação em apoio à ciência aberta no Brasil."
+        link="https://periodicos.sbu.unicamp.br/ojs/index.php/rdbci/article/view/8673171"
+        journal="RDBCI: Revista Digital de Biblioteconomia e Ciência da Informação, Campinas, SP, v. 21, n. 00, p. e023027, 2023. DOI: 10.20396/rdbci.v21i00.8673171."
+      />
+      <Publication
+        authors="CARVALHO SEGUNDO, W. L. R.; DIAS, T. M. R.; SILVA, V. S.; MOREIRA, T. H. J.; SILVA, J. V.; MENA CHALCO, J."
+        title="Certificación de tesis: El rol de BrCris en la integración y gestión de la producción académica en Brasil."
+        link="https://www.raco.cat/index.php/Hipertext/article/view/419511"
+        journal="Hipertext.net, [s. l.], n. 27, p. 121-128, nov. 2023. DOI: https://doi.org/10.31009/hipertext.net.2023.i27.13."
+      />
+      <Publication
+        authors="SILVA, R. R.; DIAS, T.M.R.; CARVALHO SEGUNDO, W.L.R."
+        title="Collection and Integration of Patent Data for Analysis and Validation of Brazilian Technical Production."
+        link="https://link.springer.com/article/10.1007/s11036-023-02234-3"
+        journal="Mobile Netw Appl, [s. l.], 7 ago. 2023. DOI: https://doi.org/10.1007/s11036-023-02234-3."
+      />
+      <Publication
+        authors="MENNIELLI, M.; IVANOVIC, D.; CARVALHO SEGUNDO, W. L. R.; CANTO, F. L."
+        title="Supporting the Latin American VIVO Users Through Targeted Outrearch and Educational Activities."
+        link="https://openreview.net/forum?id=AEjxi9IQPz"
+        journal="OpenReview.net, [s. l.], 28 jul. 2023."
+      />
       <p>
         Mendes, W., Grando, R. L., Dias, T. M. R., Jorge, V. A., Carvalho Segundo, W. L. R. (2023).{' '}
         <a

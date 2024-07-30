@@ -119,7 +119,7 @@ const nodes: IndexNode[] = [
   {
     id: 8,
     index: process.env.INDEX_SOFTWARE || '',
-    label: 'Software',
+    label: 'Softwares',
     title: '100 ',
     level: 8,
     shape: 'circle',
@@ -138,7 +138,7 @@ const keysLanguage = [
   'Patents',
   'PPGs',
   'Research Groups',
-  'Software',
+  'Softwares',
 ];
 
 const edges: Edge = [

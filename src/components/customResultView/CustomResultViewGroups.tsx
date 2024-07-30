@@ -71,7 +71,7 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
               </li>
 
               <ShowAuthorItem label={t('Member')} authors={result.member?.raw} />
-              <ShowItem label={t('Software')} value={result.software?.raw} />
+              <ShowItem label={t('Softwares')} value={result.software?.raw} />
               <ShowItem label={t('Equipment')} value={result.equipment?.raw} />
             </ReadMoreCollapse>
           </ul>
