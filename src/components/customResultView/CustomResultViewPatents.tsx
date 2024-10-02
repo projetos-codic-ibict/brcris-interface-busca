@@ -20,7 +20,7 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_ITEM_BASE}/pat_${result.id.raw}&lang=${router.locale}`}
+              href={`${VIVO_URL_ITEM_BASE}/pat_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.espacenetTitle?.raw}
@@ -39,7 +39,7 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
                     <ExternalLink
                       key={applicant.id}
                       content={applicant.name}
-                      url={`${VIVO_URL_ITEM_BASE}/org_${applicant.id}&lang=${router.locale}`}
+                      url={`${VIVO_URL_ITEM_BASE}/org_${applicant.id}?lang=${router.locale}`}
                     />
                   </span>
                 ))}

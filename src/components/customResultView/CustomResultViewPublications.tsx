@@ -20,7 +20,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_ITEM_BASE}/publ_${result.id.raw}&lang=${router.locale}`}
+              href={`${VIVO_URL_ITEM_BASE}/publ_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.title.raw}
@@ -50,7 +50,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                     <ExternalLink
                       key={org.id}
                       content={org.name}
-                      url={`${VIVO_URL_ITEM_BASE}/org_${org.id}&lang=${router.locale}`}
+                      url={`${VIVO_URL_ITEM_BASE}/org_${org.id}?lang=${router.locale}`}
                     />
                   ))}
 
@@ -59,7 +59,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                       <ExternalLink
                         key={title}
                         content={title}
-                        url={`${VIVO_URL_ITEM_BASE}/serv_${service.id}&lang=${router.locale}`}
+                        url={`${VIVO_URL_ITEM_BASE}/serv_${service.id}?lang=${router.locale}`}
                       />
                     ))
                   )}
@@ -68,7 +68,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                     <ExternalLink
                       key={index}
                       content={journal.title ? journal.title : journal}
-                      url={`${VIVO_URL_ITEM_BASE}/journ_${journal.id}&lang=${router.locale}`}
+                      url={`${VIVO_URL_ITEM_BASE}/journ_${journal.id}?lang=${router.locale}`}
                     />
                   ))}
                 </span>

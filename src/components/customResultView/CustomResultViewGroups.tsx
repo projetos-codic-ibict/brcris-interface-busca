@@ -20,7 +20,7 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_ITEM_BASE}/resgr_${result.id.raw}&lang=${router.locale}`}
+              href={`${VIVO_URL_ITEM_BASE}/resgr_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.name.raw}
@@ -42,7 +42,7 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
                   <ExternalLink
                     key={orgunit.id}
                     content={orgunit.name}
-                    url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}&lang=${router.locale}`}
+                    url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}?lang=${router.locale}`}
                   />
                 </span>
               ))}
