@@ -66,7 +66,7 @@ const BasicSearchBox = ({
             console.log('selection', selection);
             defaultOnSelectAutocomplete(selection);
           } else {
-            router.push(`${VIVO_URL_ITEM_BASE}/${itemLinkPrefix}${selection.id.raw}&lang=${router.locale}`);
+            router.push(`${VIVO_URL_ITEM_BASE}/${itemLinkPrefix}${selection.id.raw}?lang=${router.locale}`);
           }
         }}
         inputView={({ getAutocomplete, getInputProps, getButtonProps }) => (

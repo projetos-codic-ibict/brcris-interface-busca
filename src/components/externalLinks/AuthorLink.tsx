@@ -7,7 +7,7 @@ function AuthorLink({ id, name, idLattes, nationality }: Author) {
   const router = useRouter();
   return (
     <>
-      <a key={id} target="_blank" href={`${VIVO_URL_ITEM_BASE}/pers_${id}&lang=${router.locale}`} rel="noreferrer">
+      <a key={id} target="_blank" href={`${VIVO_URL_ITEM_BASE}/pers_${id}?lang=${router.locale}`} rel="noreferrer">
         {name}
       </a>
       {nationality ? <sub>({nationality})</sub> : ''}
