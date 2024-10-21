@@ -270,6 +270,21 @@ a.nav-link {
   content: '';
 }
 
+.sui-result {
+  font-family: inherit !important;
+}
+
+li .sui-result__key {
+  font-weight: bold;
+  font-size: 1rem;
+  color: inherit;
+  font-family: inherit;
+}
+
+li .sui-result__value {
+  font-size: 1rem;
+}
+
 li .sui-result__key:before {
   content: '';
 }
@@ -375,6 +390,7 @@ li .sui-result__key:after {
 .page-search,
 .page-search .sui-multi-checkbox-facet {
   color: #210d41;
+  font-size: 0.9rem;
 }
 
 .sui-search-box__autocomplete-container li[aria-selected='true'] {
