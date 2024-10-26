@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
 export default function App() {
   // const [config, setConfig] = useState(configDefault)
   const router = useRouter();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common']);
 
   const indexes = [
     { text: 'Publications', page: 'publications', name: process.env.INDEX_PUBLICATION || '' },
@@ -85,6 +85,14 @@ export default function App() {
     <>
       <Head>
         <title>{`BrCris - ${t('Home')}`}</title>
+        <meta
+          name="description"
+          content={
+            t(
+              'The Brazilian Scientific Research Information Ecosystem, BrCris, is an aggregator platform that allows retrieving, certifying and visualizing data and information related to the various actors who work in scientific research in the Brazilian context.'
+            ) || ''
+          }
+        />
       </Head>
       <div className={styles.home}>
         <div className={styles.textWhite}>
