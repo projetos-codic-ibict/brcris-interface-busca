@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import styles from '../styles/Home.module.css';
 
@@ -75,6 +75,7 @@ export default function App() {
       // class: 'hilight',
     },
   ];
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [term, setTerm] = useState('');
   const [searchPage, setSearchPage] = useState('publications');
   const [selectedIndex, setSelectedIndex] = useState(process.env.INDEX_PUBLICATION || '');
@@ -89,6 +90,7 @@ export default function App() {
   };
 
   useEffect(() => {
+    inputRef?.current?.focus();
     setDocsCount(localStorage.getItem(selectedIndex) || '');
   }, [selectedIndex]);
 
@@ -101,27 +103,29 @@ export default function App() {
         <div className="search-card">
           <h1>{t('Search in the Brazilian Scientific Research Information Ecosystem')} (BrCris)</h1>
           <form className="form-search" action={`/${router.locale}/${searchPage}`}>
-            <select id="index-select" onChange={handleSelectChange} title={t('Select an entity') || ''}>
-              {indexes.map((index) => (
-                <option key={index.name} value={index.name}>
-                  {t(index.text)}
-                </option>
-              ))}
-            </select>
-            <input
-              className=""
-              name="q"
-              title={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                value: docsCount,
-              })} ${t(searchPage)}`}
-              type="text"
-              value={term}
-              onChange={(e) => setTerm(e.target.value)}
-              placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                value: docsCount,
-              })} ${t(searchPage)}`}
-            />
-
+            <div>
+              <select id="index-select" onChange={handleSelectChange} title={t('Select an entity') || ''}>
+                {indexes.map((index) => (
+                  <option key={index.name} value={index.name}>
+                    {t(index.text)}
+                  </option>
+                ))}
+              </select>
+              <input
+                ref={inputRef}
+                name="q"
+                autoFocus
+                title={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
+                  value: docsCount,
+                })} ${t(searchPage)}`}
+                type="text"
+                value={term}
+                onChange={(e) => setTerm(e.target.value)}
+                placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
+                  value: docsCount,
+                })} ${t(searchPage)}`}
+              />
+            </div>
             <button disabled={term?.trim().length < 3} className="btn btn-primary" title={t('Search') || 'Search'}>
               <IoSearch /> {t('Search')}
             </button>
