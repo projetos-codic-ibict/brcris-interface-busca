@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import Analytics from '../components/analytics';
 import Layout from '../components/layouts/Layout';
 import '../styles/globals.scss';
-import Barra from '../components/gov/barra';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -13,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
   return (
     <>
-      <Barra />
+      {/* <Barra /> */}
       <Analytics />
       <Layout>
         <Component {...pageProps} />

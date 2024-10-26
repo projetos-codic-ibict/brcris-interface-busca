@@ -157,7 +157,7 @@ const options: Options = {
   height: '100%',
   width: '100%',
   edges: {
-    color: '#fff',
+    color: '#210d41',
     smooth: {
       enabled: true,
       type: 'continuous',

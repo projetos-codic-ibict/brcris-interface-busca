@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import AllIndexVisNetwork from '../components/AllIndexVisNetwork';
 import styles from '../styles/Home.module.css';
 
 type Props = {
@@ -28,54 +28,64 @@ export default function App() {
     { text: 'Journals', page: 'journals', name: process.env.INDEX_JOURNAL || '' },
     { text: 'Institutions', page: 'institutions', name: process.env.INDEX_ORGUNIT || '' },
     { text: 'Patents', page: 'patents', name: process.env.INDEX_PATENT || '' },
-    { text: 'Programs', page: 'programs', name: process.env.INDEX_PROGRAM || '' },
+    { text: 'PPGs', page: 'programs', name: process.env.INDEX_PROGRAM || '' },
     { text: 'Research Groups', page: 'groups', name: process.env.INDEX_GROUP || '' },
     { text: 'Softwares', page: 'softwares', name: process.env.INDEX_SOFTWARE || '' },
   ];
   const partners = [
     {
       url: 'https://www.gov.br/ibict/pt-br',
-      path: '/logos/logo-ibict-pb.png',
+      path: '/logos/ibict.png',
       description: 'Logo do IBICT',
-      class: 'hilight',
+      // class: 'hilight',
     },
     {
       url: 'http://www.finep.gov.br/',
-      path: '/logos/finep-pb.png',
+      path: '/logos/finep.png',
       description: 'Logo do Finep',
     },
     {
       url: 'https://www.fap.df.gov.br/',
-      path: '/logos/Extensa_Branca1_FAPDF.png',
+      path: '/logos/fapdf.png',
       description: 'Logo do fapdf',
+      class: 'minus',
     },
     {
       url: 'https://portal.fiocruz.br/',
-      path: '/logos/logo-fiocruz-pb.png',
+      path: '/logos/fiocruz.png',
       description: 'Logo da Fiocruz',
-      class: 'hilight',
+      // class: 'hilight',
     },
     {
       url: 'https://www.gov.br/cnpq/pt-br',
-      path: '/logos/cnpq-logo.png',
+      path: '/logos/cnpq.png',
       description: 'Logo do CNPq',
     },
     {
       url: 'https://www.fundep.ufmg.br/',
-      path: '/logos/FUNDEP-PB.png',
+      path: '/logos/fundep.png',
       description: ' Logo do FUNDEP',
+      class: 'minus',
     },
     {
       url: 'https://www.lareferencia.info/pt/',
-      path: '/logos/la_referencia_pb.png',
-      description: ' Logo do LA Referencia',
-      class: 'hilight',
+      path: '/logos/lareferencia.png',
+      description: 'Logo do LA Referencia',
+      // class: 'hilight',
     },
   ];
   const [term, setTerm] = useState('');
   const [searchPage, setSearchPage] = useState('publications');
   const [selectedIndex, setSelectedIndex] = useState(process.env.INDEX_PUBLICATION || '');
   const [docsCount, setDocsCount] = useState('');
+
+  const handleSelectChange = (event: any) => {
+    const selectedOption = indexes.find((item) => item.name === event.target.value);
+    if (selectedOption) {
+      setSearchPage(selectedOption.page);
+      setSelectedIndex(selectedOption.name);
+    }
+  };
 
   useEffect(() => {
     setDocsCount(localStorage.getItem(selectedIndex) || '');
@@ -87,87 +97,47 @@ export default function App() {
         <title>{`BrCris - ${t('Home')}`}</title>
       </Head>
       <div className={styles.home}>
-        <div className={styles.textWhite}>
-          <div className={`container page ${styles.main}`}>
-            <div className={`card search-card ${styles.cardHome}`}>
-              <div className="card-body">
-                <ul className="nav nav-tabs" role="tablist">
-                  {indexes.map((indice, index) => (
-                    <li key={index} className="nav-item" role="presentation">
-                      <button
-                        className={index === 0 ? 'nav-link active' : 'nav-link'}
-                        data-bs-toggle="tab"
-                        data-bs-target="#tabForm"
-                        type="button"
-                        role="tab"
-                        aria-controls="form"
-                        aria-selected="true"
-                        onClick={() => {
-                          setSearchPage(indice.page);
-                          setSelectedIndex(indice.name);
-                        }}
-                      >
-                        {t(indice.text)}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-                <div className="tab-content" id="tabContent">
-                  <div className="tab-pane fade active show" id="tabForm" role="tabpanel" aria-labelledby="form-tab">
-                    <form className="g-3 mb-3 d-flex gap-2" action={`/${router.locale}/${searchPage}`}>
-                      <div className="col-full">
-                        <input
-                          className="form-control search-box"
-                          name="q"
-                          type="text"
-                          value={term}
-                          onChange={(e) => setTerm(e.target.value)}
-                          placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                            value: docsCount,
-                          })} ${t(searchPage)}`}
-                        />
-                      </div>
-                      <div className="col-auto">
-                        <button disabled={term?.trim().length < 3} className="btn btn-secondary search-btn col-auto">
-                          {t('Search')}
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.info}>
-              <section>
-                <AllIndexVisNetwork />
-              </section>
-              <section>
-                <div className="mt-5">
-                  <p>
-                    {t(
-                      'The Brazilian Scientific Research Information Ecosystem, BrCris, is an aggregator platform that allows retrieving, certifying and visualizing data and information related to the various actors who work in scientific research in the Brazilian context.'
-                    )}
-                  </p>
-                </div>
-              </section>
-            </div>
-          </div>
-        </div>
+        <div className="search-card">
+          <h1>{t('Search in the Brazilian Scientific Research Information Ecosystem')} (BrCris)</h1>
+          <form className="form-search" action={`/${router.locale}/${searchPage}`}>
+            <select id="index-select" onChange={handleSelectChange}>
+              {indexes.map((index) => (
+                <option key={index.name} value={index.name}>
+                  {t(index.text)}
+                </option>
+              ))}
+            </select>
+            <input
+              className=""
+              name="q"
+              type="text"
+              value={term}
+              onChange={(e) => setTerm(e.target.value)}
+              placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
+                value: docsCount,
+              })} ${t(searchPage)}`}
+            />
 
-        <div className="container-fluid page px-5 mb-5">
-          <div className="partners">
-            {partners.map((partner, index) => (
-              <div key={index} className={partner.class}>
-                <a href={partner.url} target="_blank" rel="noreferrer">
-                  <picture>
-                    <img src={partner.path} alt={partner.description} />
-                  </picture>
-                </a>
-              </div>
-            ))}
-          </div>
+            <button disabled={term?.trim().length < 3} className="btn btn-primary">
+              {t('Search')}
+            </button>
+          </form>
         </div>
       </div>
+      <section id="partners" className="container-fluid">
+        <h2 className="text-center">{t('BrCris Partners')}</h2>
+        <div className="partners">
+          {partners.map((partner, index) => (
+            <div key={index} className={partner.class}>
+              <a href={partner.url} target="_blank" rel="noreferrer">
+                <picture>
+                  <img src={partner.path} alt={partner.description} />
+                </picture>
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
     </>
   );
 }

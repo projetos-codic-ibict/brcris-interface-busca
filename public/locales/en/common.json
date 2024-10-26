@@ -7,7 +7,7 @@
   "Institutions": "Institutions",
   "Patents": "Patents",
   "Programs": "Graduate Programs",
-  "PPGs": "Graduate Programs",
+  "PPGs": "Graduate programs",
   "Research Groups": "Research Groups",
   "Softwares": "Softwares",
   "publications": "publications",
@@ -173,5 +173,7 @@
   "Export failed, try again later": "Export failed, try again later.",
   "Information about data sources": "Information about data sources",
   "Current": "Current",
-  "Egress": "Egress"
+  "Egress": "Egress",
+  "Search in the Brazilian Scientific Research Information Ecosystem": "Search in the Brazilian Scientific Research Information Ecosystem",
+  "BrCris Partners": "BrCris Partners"
 }
