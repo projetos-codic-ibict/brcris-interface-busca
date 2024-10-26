@@ -101,7 +101,7 @@ const AdvancedSearchBox = ({
                 value={query}
                 placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
                   value: docsCount || 0,
-                })} ${t('documents')}`}
+                })} ${t('records')}`}
                 onChange={(e) => setQuery(e.target.value)}
                 rows={1}
                 className="sui-search-box__text-input"

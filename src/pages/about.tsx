@@ -31,6 +31,11 @@ export default function About() {
           <div className="page-title">
             <h1>{t('About')}</h1>
           </div>
+          <p className="text-justify">
+            {t(
+              'The Brazilian Scientific Research Information Ecosystem, BrCris, is an aggregator platform that allows retrieving, certifying and visualizing data and information related to the various actors who work in scientific research in the Brazilian context.'
+            )}
+          </p>
           <ul className="nav nav-tabs d-flex justify-content-center" id="myTab" role="tablist">
             <li className="nav-item" role="presentation">
               <button

@@ -43,7 +43,6 @@
   "Export to csv": "Exportar para csv",
   "Documents by type": "Documentos por tipo",
   "Documents by year": "Documentos por ano",
-  "The Brazilian Scientific Research Information Ecosystem, BrCris, is an aggregator platform that allows retrieving, certifying and visualizing data and information related to the various actors who work in scientific research in the Brazilian context.": "O Ecossistema de Informação da Pesquisa Científica Brasileira, BrCris, é uma plataforma agregadora que permite recuperar, certificar e visualizar dados e informações relativas aos diversos atores que atuam na pesquisa científica do contexto brasileiro.",
   "BrCris offers a unified interface for searching information, visualization of collaboration networks and dashboards of indicators in science, technology and innovation.": "O BrCris oferece uma interface unificada de busca de informações, a visualização de redes de colaboração e painéis de indicadores em ciência, tecnologia e inovação.",
   "Nacionality": "Nacionalidade",
   "CNPq research area": "Área do conhecimento CNPq",
@@ -175,5 +174,7 @@
   "Current": "Atuais",
   "Egress": "Egressos",
   "Search in the Brazilian Scientific Research Information Ecosystem": "Pesquise no Ecossistema de Informação da Pesquisa Científica Brasileira",
-  "BrCris Partners": "Parceiros do BrCris"
+  "BrCris Partners": "Parceiros do BrCris",
+  "Select an entity": "Selecione uma entidade",
+  "records": "registros"
 }
