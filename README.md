@@ -24,23 +24,25 @@ Passo a Passo
 Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/interface-busca-brcris.git
-cd interface-busca-brcris
+git clone https://github.com/projetos-codic-ibict/brcris-interface-busca.git
 ```
 
 Instale as dependências:
 
 ```bash
+cd brcris-interface-busca
 yarn install
-Crie um arquivo .env na raiz do projeto e configure as variáveis de ambiente necessárias de acordo com o .env.example.
 ```
+
+Crie um arquivo .env na raiz do projeto e configure as variáveis de ambiente necessárias de acordo com o .env.example.
 
 Inicie o servidor de desenvolvimento:
 
 ```bash
 yarn dev
-Acesse o projeto em http://localhost:3000.
 ```
+
+Acesse o projeto em http://localhost:3000.
 
 ## 🔍 Uso
 
