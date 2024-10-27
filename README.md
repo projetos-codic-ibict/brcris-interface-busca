@@ -20,7 +20,6 @@ O BrCris (Ecossistema de Informação da Pesquisa Científica Brasileira) é uma
 Pré-requisitos
 Certifique-se de ter o Node.js e o Yarn instalados em sua máquina.
 
-Passo a Passo
 Clone o repositório:
 
 ```bash
