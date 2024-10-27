@@ -1,13 +1,66 @@
-# Brazilian Scientific Research Information Ecosystem (BrCris)
+# Interface de Busca do BrCris
 
-BrCris offers a unified interface for searching information, visualization of collaboration networks and dashboards of indicators in science, technology and innovation.
+Uma interface de busca para o Ecossistema de Informação da Pesquisa Científica Brasileira (BrCris), construída com Next.js para proporcionar uma experiência rápida, responsiva e intuitiva na pesquisa de informações científicas no Brasil.
 
-## Getting Started
+## 📝 Sobre o Projeto
 
-First, run the development server:
+A Interface de Busca do BrCris é uma aplicação web desenvolvida em Next.js com o objetivo de facilitar o acesso e a análise de dados da pesquisa científica brasileira. A interface permite realizar buscas e filtrar informações de forma eficiente, contribuindo para o acesso e a disseminação de conhecimento científico.
+
+O BrCris (Ecossistema de Informação da Pesquisa Científica Brasileira) é uma plataforma agregadora que permite recuperar, certificar e visualizar dados e informações relativas aos diversos atores que atuam na pesquisa científica do contexto brasileiro.
+
+## 🚀 Tecnologias Utilizadas
+
+- Next.js: Framework React para desenvolvimento de aplicações web rápidas e escaláveis.
+- React: Biblioteca JavaScript para construção de interfaces de usuário.
+- @elastic/react-search-ui: Biblioteca de UI para implementar buscas avançadas usando Elasticsearch.
+- @elastic/search-ui-elasticsearch-connector: Conector para integrar o Search UI ao Elasticsearch, permitindo buscas rápidas e personalizáveis.
+
+## 📦 Instalação e Configuração
+
+Pré-requisitos
+Certifique-se de ter o Node.js e o Yarn instalados em sua máquina.
+
+Passo a Passo
+Clone o repositório:
+
+```bash
+git clone https://github.com/seu-usuario/interface-busca-brcris.git
+cd interface-busca-brcris
+```
+
+Instale as dependências:
+
+```bash
+yarn install
+Crie um arquivo .env na raiz do projeto e configure as variáveis de ambiente necessárias de acordo com o .env.example.
+```
+
+Inicie o servidor de desenvolvimento:
 
 ```bash
 yarn dev
+Acesse o projeto em http://localhost:3000.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔍 Uso
+
+Insira um termo de pesquisa na barra de busca para iniciar uma consulta no sistema do BrCris.
+Utilize filtros e opções avançadas para refinar os resultados.
+Clique em um resultado para ver mais detalhes sobre a pesquisa.
+
+## 📁 Estrutura do Projeto
+
+```plaintext
+.
+├── components      # Componentes reutilizáveis da interface
+├── pages           # Páginas da aplicação (estrutura de rotas do Next.js)
+├── public          # Arquivos públicos (imagens, fontes, etc.)
+├── styles          # Estilos globais e tema
+├── utils           # Utilitários e helpers
+├── .env.local      # Arquivo de configuração de variáveis de ambiente
+└── README.md       # Documentação do projeto
+```
+
+## 📄 Licença
+
+Este projeto é licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
