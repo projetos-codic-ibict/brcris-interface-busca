@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer role="contentinfo">
+    <footer id="more" role="contentinfo">
       <div className="social-media-icons">
         <a href="https://www.youtube.com/user/IBICTbr/" target="_blank" rel="noreferrer">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

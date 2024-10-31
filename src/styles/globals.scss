@@ -68,19 +68,14 @@ img {
 }
 
 .form-search {
-  gap: 8px;
-}
-
-.form-search,
-.form-search div {
+  gap: 0;
   display: flex;
-  width: 100%;
 }
 
 .form-search select,
 .form-search input,
 .form-search button {
-  padding: 8px 4px;
+  padding: 10px 8px;
 }
 
 .form-search select,
@@ -89,16 +84,44 @@ img {
   color: var(--dark-color);
 }
 
+.custom-select {
+  position: relative;
+}
+
 .form-search select {
-  border-right: none;
-  border-radius: 24px 0 0 24px;
   padding-left: 8px;
-  max-width: 33%;
+  appearance: none;
+  padding-right: 32px;
+  background: #f3f3f3;
+  border-radius: 24px 0 0 24px;
+  border-right: none;
+}
+
+.custom-select::before,
+.custom-select::after {
+  --size: 0.3rem;
+  content: '';
+  position: absolute;
+  right: 1rem;
+  pointer-events: none;
+}
+
+.custom-select::before {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-bottom: var(--size) solid black;
+  top: 40%;
+}
+
+.custom-select::after {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-top: var(--size) solid black;
+  top: 55%;
 }
 
 .form-search input {
   width: 100%;
-  border-radius: 0 24px 24px 0;
   padding-left: 8px;
 }
 
@@ -108,12 +131,12 @@ img {
 }
 
 .form-search button {
-  border-radius: 24px;
   padding: 8px;
   display: flex;
   align-items: center;
   gap: 4px;
   justify-content: center;
+  border-radius: 0 24px 24px 0;
 }
 
 .form-search button:disabled {
@@ -203,7 +226,7 @@ a {
 
 .navbar {
   margin: 0;
-  height: 108px;
+  height: 90px;
 }
 
 .navbar .navbar-brand {
@@ -813,7 +836,11 @@ legend {
 }
 
 #partners {
-  padding: 4px;
+  padding: 4px 0;
+}
+
+#partners h2 {
+  margin: 2rem 0;
 }
 
 footer {
