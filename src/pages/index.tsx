@@ -127,7 +127,7 @@ export default function App() {
               title={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
                 value: docsCount,
               })} ${t(searchPage)}`}
-              type="text"
+              type="search"
               value={term}
               onChange={(e) => setTerm(e.target.value)}
               placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
