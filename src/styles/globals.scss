@@ -917,5 +917,17 @@ footer {
   }
   .form-search {
     flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-search select{
+    border-right: 1px solid #ccc;
+  }
+
+  .form-search select,
+  .form-search input,
+  .form-search button {
+    width: 100%;
+    border-radius: 24px;
   }
 }
