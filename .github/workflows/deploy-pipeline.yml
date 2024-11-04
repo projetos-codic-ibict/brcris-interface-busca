@@ -20,10 +20,10 @@ env:
   BRCRIS_HOST_BASE: ${{vars.BRCRIS_HOST_BASE}}
 
 jobs:
-  test:
+  dev:
     runs-on: [self-hosted, Linux, x64, runner-iroxa]
     environment:
-      name: test
+      name: dev
       url: 'http://codich1.ibict.br:8086/'
 
     steps:

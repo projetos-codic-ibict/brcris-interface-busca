@@ -16,14 +16,13 @@ env:
   BRCRIS_HOST_BASE: ${{vars.BRCRIS_HOST_BASE}}
 
 jobs:
-  homol:
-    runs-on: [self-hosted, Linux, x64, runner-homol]
+  prod:
+    runs-on: [self-hosted, Linux, x64, runner-pacova]
     environment:
-      name: homol
-      url: 'http://172.16.20.48:3000/'
-    env:
-      NODE_TLS_REJECT_UNAUTHORIZED: 0
+      name: prod
+      url: 'https://brcris.ibict.br'
+
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - run: |
           sh scripts/deploy.sh
