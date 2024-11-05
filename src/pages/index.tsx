@@ -111,29 +111,31 @@ export default function App() {
         <div className="search-card">
           <h1>{t('Search in the Brazilian Scientific Research Information Ecosystem')} (BrCris)</h1>
           <form className="form-search" action={`/${router.locale}/${searchPage}`}>
-            <div className="custom-select">
-              <select id="index-select" onChange={handleSelectChange} title={t('Select an entity') || ''}>
-                {indexes.map((index) => (
-                  <option key={index.name} value={index.name}>
-                    {t(index.text)}
-                  </option>
-                ))}
-              </select>
+            <div className="form-group">
+              <div className="custom-select">
+                <select id="index-select" onChange={handleSelectChange} title={t('Select an entity') || ''}>
+                  {indexes.map((index) => (
+                    <option key={index.name} value={index.name}>
+                      {t(index.text)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <input
+                ref={inputRef}
+                name="q"
+                autoFocus
+                title={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
+                  value: docsCount,
+                })} ${t(searchPage)}`}
+                type="search"
+                value={term}
+                onChange={(e) => setTerm(e.target.value)}
+                placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
+                  value: docsCount,
+                })} ${t(searchPage)}`}
+              />
             </div>
-            <input
-              ref={inputRef}
-              name="q"
-              autoFocus
-              title={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                value: docsCount,
-              })} ${t(searchPage)}`}
-              type="search"
-              value={term}
-              onChange={(e) => setTerm(e.target.value)}
-              placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                value: docsCount,
-              })} ${t(searchPage)}`}
-            />
             <button disabled={term?.trim().length < 3} className="btn btn-primary" title={t('Search') || 'Search'}>
               <IoSearch /> {t('Search')}
             </button>
