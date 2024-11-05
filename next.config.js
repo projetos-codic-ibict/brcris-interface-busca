@@ -21,7 +21,7 @@ const nextConfig = {
     BRCRIS_HOST_BASE: process.env.BRCRIS_HOST_BASE,
   },
   i18n,
-  webpack5: true,
+  // webpack5: true,
   webpack: (config) => {
     config.resolve.fallback = {
       fs: false,
