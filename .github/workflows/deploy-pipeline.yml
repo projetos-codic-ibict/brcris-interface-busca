@@ -27,10 +27,7 @@ jobs:
       url: 'http://codich1.ibict.br:8086/'
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+      - uses: actions/checkout@v4
       - run: |
           sh scripts/deploy.sh
 
@@ -42,7 +39,7 @@ jobs:
     env:
       NODE_TLS_REJECT_UNAUTHORIZED: 0
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           sh scripts/deploy.sh
 
@@ -53,6 +50,6 @@ jobs:
       url: 'https://brcris.ibict.br'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           sh scripts/deploy.sh
