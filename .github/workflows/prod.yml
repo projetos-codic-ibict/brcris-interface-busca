@@ -1,4 +1,4 @@
-name: Deploy Homol
+name: Deploy Prod
 
 on: workflow_dispatch
 
