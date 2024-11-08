@@ -1,4 +1,4 @@
-name: Deploy Brcris-Nextjs
+name: Deploy dev-homol-prod
 
 on:
   push:
