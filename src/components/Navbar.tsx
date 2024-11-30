@@ -11,7 +11,7 @@ function Navbar() {
   const changeTo = (lang: string) => lang;
 
   return (
-    <nav className="navbar navbar-dark navbar-expand-lg bg-violet px-5 py-0">
+    <nav className="navbar navbar-dark bg-violet py-0">
       <div className="container-fluid d-flex">
         <div className="flex-nowrap d-flex align-items-center flex-justify-content-between">
           <Link href="/">
