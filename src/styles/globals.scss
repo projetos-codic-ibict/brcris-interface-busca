@@ -46,6 +46,98 @@ img {
   max-height: 100%;
 }
 
+.navbar-expand-lg {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.search-card {
+  width: 100%;
+  max-width: 900px;
+}
+
+.form-search {
+  gap: 0.5rem;
+  display: flex;
+}
+
+.form-search .form-group {
+  display: flex;
+  width: 100%;
+}
+
+.form-search select,
+.form-search input,
+.form-search button {
+  padding: 10px 8px;
+}
+
+.form-search select,
+.form-search input {
+  border: 1px solid #bbb;
+  color: var(--dark-color);
+}
+
+.custom-select {
+  position: relative;
+}
+
+.form-search select {
+  padding-left: 8px;
+  appearance: none;
+  padding-right: 32px;
+  background: #f3f3f3;
+  border-radius: 24px 0 0 24px;
+  border-right: none;
+}
+
+.custom-select::before,
+.custom-select::after {
+  --size: 0.3rem;
+  content: '';
+  position: absolute;
+  right: 1rem;
+  pointer-events: none;
+}
+
+.custom-select::before {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-bottom: var(--size) solid black;
+  top: 40%;
+}
+
+.custom-select::after {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-top: var(--size) solid black;
+  top: 55%;
+}
+
+.form-search input {
+  width: 100%;
+  padding-left: 8px;
+  border-radius: 0 24px 24px 0;
+}
+
+.form-search input:focus-visible,
+.form-search select:focus-visible {
+  outline: none;
+}
+
+.form-search button {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+  border-radius: 24px;
+}
+
+.form-search button:disabled {
+  opacity: 0.85;
+}
+
 .btn-primary {
   background-color: var(--dark-color) !important;
   border-color: #290043 !important;
