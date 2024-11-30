@@ -1,4 +1,4 @@
-name: Deploy Homol
+name: Deploy Dev
 
 on: workflow_dispatch
 
@@ -16,14 +16,17 @@ env:
   BRCRIS_HOST_BASE: ${{vars.BRCRIS_HOST_BASE}}
 
 jobs:
-  homol:
-    runs-on: [self-hosted, Linux, x64, runner-homol]
+  dev:
+    runs-on: [self-hosted, Linux, x64, runner-iroxa]
     environment:
-      name: homol
-      url: 'http://172.16.20.48:3000/'
+      name: dev
+      url: 'http://codich1.ibict.br:8086/'
     env:
       NODE_TLS_REJECT_UNAUTHORIZED: 0
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - run: |
           sh scripts/deploy.sh

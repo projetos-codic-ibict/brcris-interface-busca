@@ -1,9 +1,10 @@
-name: Deploy Brcris-Nextjs
+name: Deploy dev-homol-prod
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 env:
   HOST_ELASTIC: ${{secrets.HOST_ELASTIC}}
@@ -19,14 +20,14 @@ env:
   BRCRIS_HOST_BASE: ${{vars.BRCRIS_HOST_BASE}}
 
 jobs:
-  test:
+  dev:
     runs-on: [self-hosted, Linux, x64, runner-iroxa]
     environment:
-      name: test
+      name: dev
       url: 'http://codich1.ibict.br:8086/'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           sh scripts/deploy.sh
 
@@ -38,7 +39,7 @@ jobs:
     env:
       NODE_TLS_REJECT_UNAUTHORIZED: 0
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           sh scripts/deploy.sh
 
@@ -49,6 +50,6 @@ jobs:
       url: 'https://brcris.ibict.br'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           sh scripts/deploy.sh
