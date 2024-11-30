@@ -762,6 +762,10 @@ footer {
 }
 
 @media (max-width: 800px) {
+  .nav .nav-item {
+    justify-content: flex-start;
+  }
+
   .sui-result__value {
     word-break: break-all;
   }
