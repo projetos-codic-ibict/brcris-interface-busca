@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ErrorBoundary,
   Facet,
@@ -30,6 +28,8 @@ import CustomViewPagingInfo from '../components/customResultView/CustomViewPagin
 import SoftwaresIndicators from '../components/indicators/SoftwaresIndicators';
 import styles from '../styles/Home.module.css';
 import { CustomSearchDriverOptions } from '../types/Entities';
+
+// @ts-ignore
 type Props = {
   // Add custom props here
 };

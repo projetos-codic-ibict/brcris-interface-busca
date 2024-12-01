@@ -1,31 +1,31 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/router'
-import PropTypes from 'prop-types'
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import { useEffect, useRef, useState } from 'react';
 
-import { alertService, AlertType } from '../services/AlertService'
+import { alertService, AlertType } from '../services/AlertService';
 
-export { Alert }
+export { Alert };
 
 Alert.propTypes = {
   id: PropTypes.string,
   fade: PropTypes.bool,
-}
+};
 
 Alert.defaultProps = {
   id: 'default-alert',
   fade: true,
-}
+};
 
 function Alert({ id, fade }: any) {
-  const mounted = useRef(false)
-  const router = useRouter()
-  const [alerts, setAlerts] = useState([])
+  const mounted = useRef(false);
+  const router = useRouter();
+  const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
-    mounted.current = true
+    mounted.current = true;
 
     // subscribe to new alert notifications
     const subscription = alertService.onAlert(id).subscribe((alert: any) => {
@@ -34,110 +34,100 @@ function Alert({ id, fade }: any) {
         setAlerts((alerts) => {
           // filter out alerts without 'keepAfterRouteChange' flag
           // @ts-ignore
-          const filteredAlerts = alerts.filter((x) => x.keepAfterRouteChange)
+          const filteredAlerts = alerts.filter((x) => x.keepAfterRouteChange);
 
           // remove 'keepAfterRouteChange' flag on the rest
-          return omit(filteredAlerts, 'keepAfterRouteChange')
-        })
+          return omit(filteredAlerts, 'keepAfterRouteChange');
+        });
       } else {
         // add alert to array with unique id
-        alert.itemId = Math.random()
+        alert.itemId = Math.random();
         // @ts-ignore
-        setAlerts((alerts) => [...alerts, alert])
+        setAlerts((alerts) => [...alerts, alert]);
 
         // auto close alert if required
         if (alert.autoClose) {
-          setTimeout(() => removeAlert(alert), 5000)
+          setTimeout(() => removeAlert(alert), 5000);
         }
       }
-    })
+    });
 
     // clear alerts on location change
-    const clearAlerts = () => alertService.clear(id)
-    router.events.on('routeChangeStart', clearAlerts)
+    const clearAlerts = () => alertService.clear(id);
+    router.events.on('routeChangeStart', clearAlerts);
 
     // clean up function that runs when the component unmounts
     return () => {
-      mounted.current = false
+      mounted.current = false;
 
       // unsubscribe to avoid memory leaks
-      subscription.unsubscribe()
-      router.events.off('routeChangeStart', clearAlerts)
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+      subscription.unsubscribe();
+      router.events.off('routeChangeStart', clearAlerts);
+    };
+  }, []);
 
   function omit(arr: any, key: any) {
     return arr.map((obj: any) => {
-      const { [key]: omitted, ...rest } = obj
-      return rest
-    })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [key]: omitted, ...rest } = obj;
+      return rest;
+    });
   }
 
   function removeAlert(alert: any) {
-    if (!mounted.current) return
+    if (!mounted.current) return;
 
     if (fade) {
       // fade out alert
-      setAlerts((alerts: any) =>
-        alerts.map((x: any) =>
-          x.itemId === alert.itemId ? { ...x, fade: true } : x
-        )
-      )
+      setAlerts((alerts: any) => alerts.map((x: any) => (x.itemId === alert.itemId ? { ...x, fade: true } : x)));
 
       // remove alert after faded out
       setTimeout(() => {
         // @ts-ignore
-        setAlerts((alerts) => alerts.filter((x) => x.itemId !== alert.itemId))
-      }, 250)
+        setAlerts((alerts) => alerts.filter((x) => x.itemId !== alert.itemId));
+      }, 250);
     } else {
       // remove alert
       // @ts-ignore
-      setAlerts((alerts) => alerts.filter((x) => x.itemId !== alert.itemId))
+      setAlerts((alerts) => alerts.filter((x) => x.itemId !== alert.itemId));
     }
   }
 
   function cssClasses(alert: any) {
-    if (!alert) return
+    if (!alert) return;
 
-    const classes = ['alert', 'alert-dismissible']
+    const classes = ['alert', 'alert-dismissible'];
 
     const alertTypeClass = {
       [AlertType.Success]: 'alert-success',
       [AlertType.Error]: 'alert-danger',
       [AlertType.Info]: 'alert-info',
       [AlertType.Warning]: 'alert-warning',
-    }
+    };
 
-    classes.push(alertTypeClass[alert.type])
+    classes.push(alertTypeClass[alert.type]);
 
     if (alert.fade) {
-      classes.push('fade')
+      classes.push('fade');
     }
 
-    return classes.join(' ')
+    return classes.join(' ');
   }
 
-  if (!alerts.length) return null
+  if (!alerts.length) return null;
 
   type Alert = {
-    message: string
-  }
+    message: string;
+  };
 
   return (
     <div className="alert-container">
       {alerts.map((alert: Alert, index) => (
         <div key={index} className={cssClasses(alert)}>
           <div dangerouslySetInnerHTML={{ __html: alert.message }}></div>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
+          <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       ))}
     </div>
-  )
+  );
 }

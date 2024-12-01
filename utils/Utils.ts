@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const CHART_BACKGROUD_COLORS = [
   'rgba(255,0,0, 0.2)',
   'rgba(54, 162, 235, 0.2)',

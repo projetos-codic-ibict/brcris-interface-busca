@@ -1,6 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SearchBox } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';

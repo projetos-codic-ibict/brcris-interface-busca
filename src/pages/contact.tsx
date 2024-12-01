@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { Alert } from '../components/Alert';
 import ContactForm from '../components/ContactForm';
 
+//@ts-ignore
 type Props = {
   // Add custom props here
 };

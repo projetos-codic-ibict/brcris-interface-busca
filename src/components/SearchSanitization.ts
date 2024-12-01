@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
-
-import en from 'public/locales/en/advanced.json';
+import en from '../../public/locales/en/advanced.json';
 // @ts-ignore
-import ptBr from 'public/locales/pt-BR/advanced.json';
+import ptBr from '../../public/locales/pt-BR/advanced.json';
 
 export function findPropertyByValue(value: string) {
   for (const property in ptBr) {

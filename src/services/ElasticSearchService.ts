@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const proxy = async (querys: string[], index: string) => {
-  const body = JSON.stringify({ querys, index })
+  const body = JSON.stringify({ querys, index });
   const response = await fetch('/api/indicators', {
     method: 'POST',
 
     body: body,
-  })
-  return response.json()
-}
+  });
+  return response.json();
+};
 
-export default proxy
+export default proxy;

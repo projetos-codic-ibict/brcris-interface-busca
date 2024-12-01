@@ -40,8 +40,11 @@ const CookieConsent = () => {
           <div className="">
             <p className="">
               {t('privacy policy message')}{' '}
-              <Link href={`${process.env.VIVO_URL_BASE}/about?lang=${router.locale}`}>
-                <a className="text-sm underline hover:text-lightAccent">{t('privacy policy')}</a>
+              <Link
+                href={`${process.env.VIVO_URL_BASE}/about?lang=${router.locale}`}
+                className="text-sm underline hover:text-lightAccent"
+              >
+                {t('privacy policy')}
               </Link>
               .
             </p>

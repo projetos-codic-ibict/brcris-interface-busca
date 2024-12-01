@@ -1,9 +1,12 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { NextApiRequest, NextApiResponse } from 'next';
 import logger from '../../services/Logger';
 import { googleCaptchaValidation } from './googleCaptchaValidation';
 import { sendMail } from './sendMail';
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
+type CaptchaValidation = {
+  success: boolean;
+};
+
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   const { body } = req;
 
@@ -17,8 +20,7 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // Ping the google recaptcha verify API to verify the captcha code you received
     const response = await googleCaptchaValidation(captcha);
-    const captchaValidation = await response.json();
-    // @ts-ignore
+    const captchaValidation: CaptchaValidation = (await response.json()) as CaptchaValidation;
     if (captchaValidation.success) {
       const recipient = process.env.MAIL_RECIPIENT || '';
       const { name, email, message } = body;

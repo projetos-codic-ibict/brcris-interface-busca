@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ErrorBoundary,
   Facet,
@@ -17,6 +14,7 @@ import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import { useState } from 'react';
 import styles from '../styles/Home.module.css';
 /* import IndicatorsPeople from '../components/IndicatorsPeople' */
+import { QueryDslOperator } from 'es7/api/types';
 import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -24,13 +22,13 @@ import Head from 'next/head';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import DownloadModal from '../components/DownloadModal';
 import Loader from '../components/Loader';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewPatents from '../components/customResultView/CustomResultViewPatents';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import PatentsIndicators from '../components/indicators/PatentsIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
-import DownloadModal from '../components/DownloadModal';
 type Props = {
   // Add custom props here
 };
@@ -157,8 +155,7 @@ export default function App() {
 
   const [config, setConfig] = useState(configDefault);
 
-  function updateOpetatorConfig(op: string) {
-    //@ts-ignore
+  function updateOpetatorConfig(op: QueryDslOperator) {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
@@ -192,8 +189,7 @@ export default function App() {
                               itemLinkPrefix="pat_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
-                              //@ts-ignore
-                              fieldNames={Object.keys(config.searchQuery.search_fields)}
+                              fieldNames={Object.keys(config.searchQuery.search_fields as object)}
                             />
                           }
                           sideContent={

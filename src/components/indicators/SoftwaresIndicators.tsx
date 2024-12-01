@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useContext, useEffect } from 'react';
@@ -45,9 +44,7 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading }: IndicatorsProps
 
   useEffect(() => {
     // tradução
-    // @ts-ignore
     optPubDate.plugins.title.text = t(optPubDate.title);
-    // @ts-ignore
     optknowledgeAreas.plugins.title.text = t(optknowledgeAreas.title);
 
     isLoading

@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { SearchBox, withSearch } from '@elastic/react-search-ui';
 import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch';
 import { useTranslation } from 'next-i18next';

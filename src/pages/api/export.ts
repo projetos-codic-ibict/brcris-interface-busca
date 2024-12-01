@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import archiver from 'archiver';
 import crypto from 'crypto';
 import { Client } from 'es7';

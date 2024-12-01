@@ -23,7 +23,6 @@ function ContactForm() {
   const [captchaCode, setCaptchaCode] = useState('');
   const recaptchaRef = useRef(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (!captchaCode) {

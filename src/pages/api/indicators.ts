@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Client } from 'es7';
 import { NextApiRequest, NextApiResponse } from 'next';
 import logger from '../../services/Logger';
@@ -18,7 +16,6 @@ type RequestData = {
   index: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const data: RequestData = JSON.parse(req.body);

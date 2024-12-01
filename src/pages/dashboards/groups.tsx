@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import Iframe from '../../components/dashboards/Iframe';
 
+//@ts-ignore
 type Props = {
   // Add custom props here
 };

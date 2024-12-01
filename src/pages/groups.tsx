@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ErrorBoundary,
   Facet,
@@ -20,6 +17,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
+import { QueryDslOperator } from 'es7/api/types';
 import { useState } from 'react';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
@@ -167,8 +165,7 @@ export default function App() {
   // tradução
   SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
 
-  function updateOpetatorConfig(op: string) {
-    //@ts-ignore
+  function updateOpetatorConfig(op: QueryDslOperator) {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
@@ -202,8 +199,7 @@ export default function App() {
                               itemLinkPrefix="group_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
-                              //@ts-ignore
-                              fieldNames={Object.keys(config.searchQuery.search_fields)}
+                              fieldNames={Object.keys(config.searchQuery.search_fields as object)}
                             />
                           }
                           sideContent={

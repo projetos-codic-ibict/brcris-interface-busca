@@ -9,7 +9,6 @@ function builConnector(index: string) {
   });
   return connector;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { requestState, queryConfig } = req.body;
   const connector = builConnector(queryConfig.index);

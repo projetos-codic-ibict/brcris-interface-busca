@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ErrorBoundary,
   Facet,
@@ -14,6 +11,7 @@ import {
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
+import { QueryDslOperator } from 'es7/api/types';
 import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -141,8 +139,7 @@ export default function App() {
 
   const [config, setConfig] = useState(configDefault);
 
-  function updateOpetatorConfig(op: string) {
-    //@ts-ignore
+  function updateOpetatorConfig(op: QueryDslOperator) {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
 
@@ -176,8 +173,7 @@ export default function App() {
                               itemLinkPrefix="gprog_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
-                              //@ts-ignore
-                              fieldNames={Object.keys(config.searchQuery.search_fields)}
+                              fieldNames={Object.keys(config.searchQuery.search_fields as object)}
                             />
                           }
                           sideContent={

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -42,8 +41,8 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                   {result.type?.raw == 'doctoral thesis' || result.type?.raw == 'master thesis'
                     ? `${t('Institution')}`
                     : result.type?.raw == 'conference proceedings'
-                    ? `${t('Organization')}`
-                    : `${t('Journals')}`}
+                      ? `${t('Organization')}`
+                      : `${t('Journals')}`}
                 </span>
                 <span className="sui-result__value">
                   {result.orgunit?.raw.map((org: OrgUnit) => (

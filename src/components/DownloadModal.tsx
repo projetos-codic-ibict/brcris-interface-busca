@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
+import { QueryDslOperator, QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -58,7 +57,7 @@ const DownloadModal = ({ filters, searchTerm, totalResults, typeArq }: DownloadM
         if (typeArq === undefined) {
           typeArq = 'csv';
         }
-        const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator, filters);
+        const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator as QueryDslOperator, filters);
         const response = await new ExportService().search(
           index,
           query,
@@ -85,7 +84,7 @@ const DownloadModal = ({ filters, searchTerm, totalResults, typeArq }: DownloadM
 
     try {
       setLoading(true);
-      const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator, filters);
+      const query: QueryDslQueryContainer = formatedQuery(searchTerm, fields, operator as QueryDslOperator, filters);
       if (typeArq === undefined) {
         typeArq = 'csv';
       }

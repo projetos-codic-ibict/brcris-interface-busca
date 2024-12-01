@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const proxy = async (body: string) => {
   const response = await fetch('/api/mail', {
     method: 'POST',
@@ -7,8 +6,8 @@ const proxy = async (body: string) => {
       'Content-Type': 'application/json',
     },
     body: body,
-  })
-  return response
-}
+  });
+  return response;
+};
 
-export default proxy
+export default proxy;

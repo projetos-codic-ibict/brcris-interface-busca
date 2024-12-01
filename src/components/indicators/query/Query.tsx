@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { QueryDslOperator, QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 import { Filter, FilterValue } from '@elastic/search-ui';
 import QueryFormat from '../../../services/QueryFormat';

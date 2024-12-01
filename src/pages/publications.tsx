@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   ErrorBoundary,
   Facet,
@@ -14,6 +13,7 @@ import {
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
+import { QueryDslOperator } from 'es7/api/types';
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -200,7 +200,6 @@ const SORT_OPTIONS: SortOptionsType[] = [
     ],
   },
 ];
-const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 export default function App() {
   const { t } = useTranslation('common');
   // tradução
@@ -208,8 +207,7 @@ export default function App() {
 
   const [config, setConfig] = useState(configDefault);
 
-  function updateOpetatorConfig(op: string) {
-    //@ts-ignore
+  function updateOpetatorConfig(op: QueryDslOperator) {
     setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
   }
   const typeArqw = 'ris';
@@ -242,8 +240,7 @@ export default function App() {
                               itemLinkPrefix="publ_"
                               updateOpetatorConfig={updateOpetatorConfig}
                               indexName={INDEX_NAME}
-                              //@ts-ignore
-                              fieldNames={Object.keys(config.searchQuery.search_fields)}
+                              fieldNames={Object.keys(config.searchQuery.search_fields as object)}
                             />
                           }
                           sideContent={
@@ -304,7 +301,7 @@ export default function App() {
                                   {
                                     <>
                                       <ResultsPerPage options={[10, 20, 50]} />
-                                      {/*@ts-ignore*/}
+                                      {/* @ts-ignore */}
                                       <DownloadModal typeArq={typeArqw} />
                                       <DownloadModal />{' '}
                                     </>

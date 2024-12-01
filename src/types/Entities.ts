@@ -1,4 +1,5 @@
 import type { SearchDriverOptions, SearchQuery } from '@elastic/search-ui';
+import { QueryDslOperator } from 'es7/api/types';
 export type Author = {
   id: string;
   name: string;
@@ -28,7 +29,7 @@ export type MemberType = {
 };
 
 export interface CustomSearchQuery extends SearchQuery {
-  operator: 'and' | 'AND' | 'or' | 'OR';
+  operator: QueryDslOperator;
   index: string;
 }
 

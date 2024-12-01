@@ -1,9 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { i18n } = require('./next-i18next.config.js');
 
 const nextConfig = {
+  eslint: {
+    dirs: ['pages'],
+  },
   reactStrictMode: true,
-  swcMinify: false,
+  // swcMinify: false,
   env: {
     VIVO_URL_BASE: process.env.VIVO_URL_BASE,
     VIVO_URL_ITEM_BASE: process.env.VIVO_URL_ITEM_BASE,
@@ -21,14 +23,28 @@ const nextConfig = {
     BRCRIS_HOST_BASE: process.env.BRCRIS_HOST_BASE,
   },
   i18n,
-  // webpack5: true,
-  webpack: (config) => {
-    config.resolve.fallback = {
-      fs: false,
-    };
+
+  webpack: (config, { webpack, isServer }) => {
+    config.experiments = { ...config.experiments, topLevelAwait: true };
+    config.externals["node:fs"] = "commonjs node:fs";
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+      };
+    }
+
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(
+        /^node:/,
+        (resource) => {
+          resource.request = resource.request.replace(/^node:/, '');
+        },
+      ),
+    );
 
     return config;
   },
+
 };
 
 module.exports = nextConfig;

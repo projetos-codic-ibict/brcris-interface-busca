@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react/jsx-no-comment-textnodes */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';

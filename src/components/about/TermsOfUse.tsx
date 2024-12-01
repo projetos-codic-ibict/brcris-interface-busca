@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-
+import { useTranslation } from 'next-i18next';
+//@ts-ignore
 type Props = {
   // Add custom props here
 };

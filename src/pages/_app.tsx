@@ -8,6 +8,7 @@ import '../styles/globals.scss';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('bootstrap/dist/js/bootstrap.bundle.min.js');
   }, []);
   return (

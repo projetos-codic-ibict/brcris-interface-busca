@@ -14,12 +14,10 @@ function Navbar() {
     <nav className="navbar navbar-dark navbar-expand-lg bg-violet py-0">
       <div className="container-fluid d-flex">
         <div className="flex-nowrap d-flex align-items-end flex-justify-content-between">
-          <Link href="/">
-            <a className="navbar-brand">
-              <picture className="navbar-logo">
-                <img className="img-fluid brcris" src="/logos/logo-brcris-pb.png" alt="logo do brcris" />
-              </picture>
-            </a>
+          <Link href="/" className="navbar-brand">
+            <picture className="navbar-logo">
+              <img className="img-fluid brcris" src="/logos/logo-brcris-pb.png" alt="logo do brcris" />
+            </picture>
           </Link>
           <a className="navbar-brand" href="https://www.gov.br/ibict/pt-br" target="_blank" rel="noreferrer">
             <picture className="navbar-logo">
@@ -44,14 +42,14 @@ function Navbar() {
 
           <ul className="navbar-nav nav nav-tabs" role="tablist">
             <li className="nav-item me-5" role="presentation">
-              <Link href="/">
-                <a className="nav-link">{t('Home')}</a>
+              <Link href="/" className="nav-link">
+                {t('Home')}
               </Link>
             </li>
 
             <li className="nav-item me-5" role="presentation">
-              <Link href="/dashboards">
-                <a className="nav-link">{t('Dashboards')}</a>
+              <Link href="/dashboards" className="nav-link">
+                {t('Dashboards')}
               </Link>
             </li>
             <li className="nav-item me-5" role="presentation">
@@ -90,18 +88,18 @@ function Navbar() {
             </li>
 
             <li className="nav-item me-5" role="presentation">
-              <Link href="/team">
-                <a className="nav-link">{t('Team')}</a>
+              <Link href="/team" className="nav-link">
+                {t('Team')}
               </Link>
             </li>
             <li className="nav-item me-5" role="presentation">
-              <Link href="/about">
-                <a className="nav-link">{t('About')}</a>
+              <Link href="/about" className="nav-link">
+                {t('About')}
               </Link>
             </li>
             <li className="nav-item me-5" role="presentation">
-              <Link href="/contact">
-                <a className="nav-link">{t('Contact')}</a>
+              <Link href="/contact" className="nav-link">
+                {t('Contact')}
               </Link>
             </li>
             <li className="nav-item me-5" role="presentation">

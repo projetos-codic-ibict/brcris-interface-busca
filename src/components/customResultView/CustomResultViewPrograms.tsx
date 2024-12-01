@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';

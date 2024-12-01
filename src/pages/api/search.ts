@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connector';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { untranslatedFieldsNames } from '../../components/SearchSanitization';
@@ -35,7 +34,6 @@ function builConnector(index: string) {
   return connector;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { requestState, queryConfig } = req.body;

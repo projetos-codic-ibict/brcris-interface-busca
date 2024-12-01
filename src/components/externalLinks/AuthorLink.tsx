@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useRouter } from 'next/router';
 import { Author } from '../../types/Entities';
 import LattesLink from './LattesLink';

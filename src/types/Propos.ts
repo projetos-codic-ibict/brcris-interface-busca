@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChartOptions } from 'chart.js';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type IndicatorsProps = {
   filters?: any;
   searchTerm?: any;

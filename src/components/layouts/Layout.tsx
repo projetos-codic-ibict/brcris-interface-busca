@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { PropsWithChildren } from 'react';

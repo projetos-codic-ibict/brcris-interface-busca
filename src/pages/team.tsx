@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import currentMembersData from '../../team/current.json';
 import egressMembersData from '../../team/egress.json';
 import Member from '../components/team/Member';
 import { MemberType } from '../types/Entities';
 
+// @ts-ignore
 type Props = {
   // Add custom props here
 };
