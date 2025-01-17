@@ -25,19 +25,19 @@ import Head from 'next/head';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import DownloadModal from '../components/DownloadModal';
 import Loader from '../components/Loader';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import JornalsIndicators from '../components/indicators/JornalsIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
-import DownloadModal from '../components/DownloadModal';
 type Props = {
   // Add custom props here
 };
 // or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar', 'advanced'])),
   },
 });
 

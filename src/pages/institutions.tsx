@@ -22,6 +22,7 @@ import { useState } from 'react';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
+import DownloadModal from '../components/DownloadModal';
 import Loader from '../components/Loader';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomResultViewInstitutions from '../components/customResultView/CustomResultViewInstitutions';
@@ -29,14 +30,13 @@ import CustomViewPagingInfo from '../components/customResultView/CustomViewPagin
 import OrgUnitIndicators from '../components/indicators/OrgUnitIndicators';
 import styles from '../styles/Home.module.css';
 import { CustomSearchDriverOptions } from '../types/Entities';
-import DownloadModal from '../components/DownloadModal';
 type Props = {
   // Add custom props here
 };
 // or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar', 'advanced'])),
   },
 });
 
