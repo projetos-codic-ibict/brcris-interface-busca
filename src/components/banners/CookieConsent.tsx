@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { MouseEvent, useEffect, useState } from 'react';
 import style from '../../styles/Cookie.module.css';
 
@@ -10,7 +9,6 @@ const USER_CONSENT_COOKIE_EXPIRE_DATE = new Date().getTime() + 365 * 24 * 60 * 6
 
 const CookieConsent = () => {
   const [cookieConsentIsTrue, setCookieConsentIsTrue] = useState(true);
-  const router = useRouter();
   const { t } = useTranslation('common');
 
   useEffect(() => {
@@ -40,10 +38,7 @@ const CookieConsent = () => {
           <div className="">
             <p className="">
               {t('privacy policy message')}{' '}
-              <Link
-                href={`${process.env.VIVO_URL_BASE}/about?lang=${router.locale}`}
-                className="text-sm underline hover:text-lightAccent"
-              >
+              <Link href="/about" className="text-sm underline hover:text-lightAccent">
                 {t('privacy policy')}
               </Link>
               .
