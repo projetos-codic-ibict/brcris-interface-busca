@@ -9,7 +9,8 @@ export type CustomSearchBoxProps = {
   itemLinkPrefix: string;
   indexName: string;
   fieldNames: string[];
-  updateOpetatorConfig: (operator: string) => void;
+  setSearchTerm: (searchTerm: string) => void;
+  handleSelectIndex: (event: any) => void;
 };
 
 const CustomSearchBox = ({
@@ -17,7 +18,8 @@ const CustomSearchBox = ({
   itemLinkPrefix,
   indexName,
   fieldNames,
-  updateOpetatorConfig,
+  setSearchTerm,
+  handleSelectIndex,
 }: CustomSearchBoxProps) => {
   const { advanced, setAdvanced } = useContext(CustomContext);
 
@@ -28,7 +30,8 @@ const CustomSearchBox = ({
     <BasicSearchBox
       titleFieldName={titleFieldName}
       itemLinkPrefix={itemLinkPrefix}
-      updateOpetatorConfig={updateOpetatorConfig}
+      setSearchTerm={setSearchTerm}
+      handleSelectIndex={handleSelectIndex}
       indexName={indexName}
       toogleAdvancedConfig={setAdvanced}
     />

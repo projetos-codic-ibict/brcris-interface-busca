@@ -23,7 +23,6 @@ const client = new Client({
     apiKey: process.env.API_KEY!,
   },
 });
-console.log('1');
 
 if (!process.env.FIELDS_RIS) {
   throw new Error('Environment variable FIELDS_RIS is not defined');
@@ -33,11 +32,9 @@ const fieldsRis = JSON.parse(process.env.FIELDS_RIS);
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { query, index, resultFields, totalResults, indexName, typeArq } = req.body;
-    console.log(totalResults);
     createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
     const fileName = getFileName(index, JSON.stringify(query));
     const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${typeArq}${fileName}.zip`;
-    console.log(zipFilePath);
     logger.info(`Iniciando exportação, arquivo: ${zipFilePath}, index: ${index}, query: ${JSON.stringify(query)}`);
     if (fs.existsSync(zipFilePath)) {
       logger.info(`Arquivo já existe: ${zipFilePath}`);
@@ -46,12 +43,9 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     if (totalResults > 1000) {
       const { email, captcha } = req.body;
       const response = await googleCaptchaValidation(captcha);
-      console.log('response', JSON.stringify(response));
       const captchaValidation = await response.json();
-      console.log('captchaValidation: ', captchaValidation);
       // @ts-ignore
       if (captchaValidation.success) {
-        console.log('capchar válido: ');
         backgroundExportation(zipFilePath, index, query, email, indexName, resultFields, typeArq);
         return res.json({});
       } else {
@@ -156,7 +150,6 @@ async function writeRisFile(zipFilePath: string, index: string, query: string, r
 function writeZipFile(indexName: string, zipFilePath: string, csvFilePath: string, typeArq: string) {
   logger.info(`Iniciando writeZipFile, arquivo: ${zipFilePath}`);
   const fileName = `${indexName}-${new Date().toISOString()}.${typeArq}`;
-  console.log(fileName);
 
   // Crie um objeto de arquivo zip
   const output = fs.createWriteStream(zipFilePath);

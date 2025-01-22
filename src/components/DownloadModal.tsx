@@ -66,7 +66,6 @@ const DownloadModal = ({ filters, searchTerm, totalResults, typeArq }: DownloadM
           getIndexName(),
           typeArq
         );
-        console.log(response);
         const { file } = await response.json();
         const nextDownloadLink = getDownloadLink(file);
         setDownloadLink(nextDownloadLink);

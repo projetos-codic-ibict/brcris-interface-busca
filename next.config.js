@@ -4,7 +4,7 @@ const nextConfig = {
   eslint: {
     dirs: ['pages'],
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   // swcMinify: false,
   env: {
     VIVO_URL_BASE: process.env.VIVO_URL_BASE,

@@ -13,221 +13,74 @@ import {
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-import { QueryDslOperator } from 'es7/api/types';
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
-import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import DownloadModal from '../components/DownloadModal';
 import Loader from '../components/Loader';
 import { CustomProvider } from '../components/context/CustomContext';
-import CustomResultViewPublications from '../components/customResultView/CustomResultViewPublications';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
-import Indicators from '../components/indicators/PublicationsIndicators';
+import People from '../configs/People';
+import Publications from '../configs/Publications';
 import styles from '../styles/Home.module.css';
-import { CustomSearchDriverOptions } from '../types/Entities';
-type Props = {
-  // Add custom props here
-};
-export const getServerSideProps: GetServerSideProps<Props> = async ({ locale }) => ({
+import { Index } from '../types/Propos';
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar', 'advanced'])),
   },
 });
 
-const INDEX_NAME = process.env.INDEX_PUBLICATION || '';
-const configDefault: CustomSearchDriverOptions = {
-  ...DefaultQueryConfig(INDEX_NAME),
-  searchQuery: {
-    operator: 'OR',
-    index: INDEX_NAME,
-    search_fields: {
-      title_text: {
-        weight: 3,
-      },
-      publicationDate: {},
-      'author.name': {},
-      language: {},
-      type: {},
-      'orgunit.name': {},
-      keyword_text: {},
-    },
-    result_fields: {
-      title: {
-        snippet: {},
-      },
-      publicationDate: {
-        snippet: {},
-      },
-      author: {
-        raw: [],
-      },
-      keyword: {
-        snippet: {},
-      },
-      journal: {
-        raw: {},
-      },
-      type: {
-        raw: {},
-      },
-      orgunit: {
-        snippet: {},
-      },
-      service: {
-        raw: {},
-      },
-      vivo_link: {
-        raw: {},
-      },
-      language: {
-        raw: [],
-      },
-      cnpqResearchArea: {
-        raw: [],
-      },
-    },
-    disjunctiveFacets: [
-      'language.type',
-      'author.name',
-      'keyword.type',
-      'cnpqResearchArea.type',
-      'publicationDate.type',
-    ],
+const indexes: Index[] = [Publications, People];
 
-    facets: {
-      language: { type: 'value' },
-      'author.name': { type: 'value' },
-      keyword: { type: 'value' },
-      'orgunit.name': { type: 'value' },
-      'journal.title': { type: 'value' },
-      type: { type: 'value' },
-      cnpqResearchArea: { type: 'value' },
-      publicationDate: {
-        type: 'range',
-        ranges: [
-          {
-            from: '2021',
-            to: new Date().getUTCFullYear().toString(),
-            name: `2021 - ${new Date().getUTCFullYear()}`,
-          },
-          {
-            from: '2016',
-            to: '2020',
-            name: '2016 - 2020',
-          },
-          {
-            from: '2011',
-            to: '2015',
-            name: '2011 - 2015',
-          },
-          {
-            from: '2001',
-            to: '2010',
-            name: '2001 - 2010',
-          },
-          {
-            from: '1991',
-            to: '2000',
-            name: '1991 - 2000',
-          },
-          {
-            from: '1950',
-            to: '1990',
-            name: '1950 - 1990',
-          },
-        ],
-      },
-    },
-  },
-  autocompleteQuery: {
-    results: {
-      resultsPerPage: 5,
-      search_fields: {
-        title_suggest: {
-          weight: 3,
-        },
-      },
-      result_fields: {
-        title: {
-          snippet: {
-            size: 100,
-            fallback: true,
-          },
-        },
-        vivo_link: {
-          raw: {},
-        },
-      },
-    },
-    suggestions: {
-      types: {
-        results: { fields: ['title_completion'] },
-      },
-      size: 5,
-    },
-  },
-};
-type SortOptionsType = {
-  name: string;
-  value: any[];
-};
-const SORT_OPTIONS: SortOptionsType[] = [
-  {
-    name: 'Relevance',
-    value: [],
-  },
-  {
-    name: 'Ano ASC',
-    value: [
-      {
-        field: 'publicationDate',
-        direction: 'asc',
-      },
-    ],
-  },
-  {
-    name: 'Ano DESC',
-    value: [
-      {
-        field: 'publicationDate',
-        direction: 'desc',
-      },
-    ],
-  },
-];
 export default function App() {
   const { t } = useTranslation('common');
+  const searchParams = useSearchParams();
+
+  const indexParam = searchParams.get('index');
+
+  const activeIndex = indexes.find((item) => item.text === indexParam) || indexes[0];
+  const [index, setIndex] = useState<Index>(activeIndex);
+
   // tradução
-  SORT_OPTIONS.forEach((option) => (option.name = t(option.name)));
+  index.sortOptions.forEach((option) => (option.name = t(option.name)));
 
-  const [config, setConfig] = useState(configDefault);
+  const handleSelectIndex = (event: any) => {
+    const selectedOption = indexes.find((item) => item.name === event.target.value);
+    if (selectedOption) {
+      const selectedIndex = indexes.find((item) => item.name === selectedOption.name);
+      setIndex(selectedIndex!);
+    }
+  };
 
-  function updateOpetatorConfig(op: QueryDslOperator) {
-    setConfig({ ...config, searchQuery: { ...config.searchQuery, operator: op } });
-  }
   const typeArqw = 'ris';
   return (
     <div>
       <Head>
-        <title>{`BrCris - ${t('Publications')}`}</title>
+        <title>{`BrCris - ${t(index.text)}`}</title>
       </Head>
       <div className="page-search">
         <CustomProvider>
-          <SearchProvider config={config}>
+          <SearchProvider config={index.config}>
             <WithSearch
-              mapContextToProps={({ wasSearched, results, isLoading }) => ({ wasSearched, results, isLoading })}
+              mapContextToProps={({ wasSearched, results, isLoading, setSearchTerm }) => ({
+                wasSearched,
+                results,
+                isLoading,
+                setSearchTerm,
+              })}
             >
-              {({ wasSearched, results, isLoading }) => {
+              {({ wasSearched, results, isLoading, setSearchTerm }) => {
                 return (
                   <div className="App">
                     <div className="container page">
                       <div className="page-title">
-                        <h1>{t('Publications')}</h1>
+                        <h1>{t(index.text)}</h1>
                       </div>
                     </div>
                     <div className={styles.content}>
@@ -237,17 +90,18 @@ export default function App() {
                           header={
                             <CustomSearchBox
                               titleFieldName="title"
-                              itemLinkPrefix="publ_"
-                              updateOpetatorConfig={updateOpetatorConfig}
-                              indexName={INDEX_NAME}
-                              fieldNames={Object.keys(config.searchQuery.search_fields as object)}
+                              itemLinkPrefix={index.vivoIndexPrefix}
+                              setSearchTerm={setSearchTerm}
+                              handleSelectIndex={handleSelectIndex}
+                              indexName={index.name}
+                              fieldNames={Object.keys(index.config.searchQuery.search_fields as object)}
                             />
                           }
                           sideContent={
                             <ErrorBoundary className={styles.searchErrorHidden}>
                               {containsResults(wasSearched, results) && (
                                 <>
-                                  <Sorting label={t('Sort by') || ''} sortOptions={SORT_OPTIONS} />
+                                  <Sorting label={t('Sort by') || ''} sortOptions={index.sortOptions} />
                                   <div className="filters">
                                     <span className="sui-sorting__label">{t('Filters')}</span>
                                   </div>
@@ -279,9 +133,9 @@ export default function App() {
                                   {!error && (
                                     <>
                                       <div className="result">
-                                        <Results resultView={CustomResultViewPublications} /> <Paging />
+                                        <Results resultView={index.customView} /> <Paging />
                                       </div>
-                                      <Indicators />
+                                      <index.indicators />
                                     </>
                                   )}
                                 </>

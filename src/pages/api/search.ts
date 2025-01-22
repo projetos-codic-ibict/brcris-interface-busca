@@ -16,6 +16,9 @@ function builConnector(index: string) {
       requestBody.track_total_hits = true;
       if (!requestState.searchTerm) return requestBody;
 
+      // remove dois pontos do termo de busca
+      requestState.searchTerm = requestState.searchTerm.replaceAll(': ', ' ');
+
       // transforming the query before sending to Elasticsearch using the requestState and queryConfig
       const searchFields: any = queryConfig.search_fields;
       // @ts-ignore
@@ -23,7 +26,6 @@ function builConnector(index: string) {
         // @ts-ignore
         requestState.searchTerm = `(all:${requestState.searchTerm})`;
       }
-      console.log('requestState.searchTerm', requestState.searchTerm);
       const query = untranslatedFieldsNames(requestState.searchTerm);
       console.log('query', query);
       const fullQuery = new QueryFormat().toElasticsearch(query, Object.keys(searchFields));
@@ -38,6 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const { requestState, queryConfig } = req.body;
     const connector = builConnector(queryConfig.index);
+    console.log('queryConfig', queryConfig);
     const response = await connector.onSearch(requestState, queryConfig);
     res.json(response);
   } catch (err) {

@@ -31,15 +31,12 @@ export function untranslatedFieldsNames(fullQuery: string) {
 
   const map = new Map();
   names.forEach((name) => {
-    console.log('name', name);
     const untranslated = findPropertyByValue(name);
-    console.log('untranslated', untranslated);
     map.set(name, untranslated);
   });
 
   for (const [key, value] of map) {
     fullQuery = fullQuery.replaceAll(key, value);
   }
-  console.log('fullQuery', fullQuery);
   return fullQuery;
 }

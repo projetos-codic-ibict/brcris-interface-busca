@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { IoArrowDown, IoSearch } from 'react-icons/io5';
+import indexes from '../configs/Indexes';
 import styles from '../styles/Home.module.css';
 
 type Props = {
@@ -22,16 +23,6 @@ export default function App() {
   const router = useRouter();
   const { t } = useTranslation(['common']);
 
-  const indexes = [
-    { text: 'Publications', page: 'publications', name: process.env.INDEX_PUBLICATION || '' },
-    { text: 'People', page: 'people', name: process.env.INDEX_PERSON || '' },
-    { text: 'Journals', page: 'journals', name: process.env.INDEX_JOURNAL || '' },
-    { text: 'Institutions', page: 'institutions', name: process.env.INDEX_ORGUNIT || '' },
-    { text: 'Patents', page: 'patents', name: process.env.INDEX_PATENT || '' },
-    { text: 'PPGs', page: 'programs', name: process.env.INDEX_PROGRAM || '' },
-    { text: 'Research Groups', page: 'groups', name: process.env.INDEX_GROUP || '' },
-    { text: 'Softwares', page: 'softwares', name: process.env.INDEX_SOFTWARE || '' },
-  ];
   const partners = [
     {
       url: 'https://www.gov.br/ibict/pt-br',
@@ -76,15 +67,15 @@ export default function App() {
   ];
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [term, setTerm] = useState('');
-  const [searchPage, setSearchPage] = useState('publications');
-  const [selectedIndex, setSelectedIndex] = useState(process.env.INDEX_PUBLICATION || '');
+  const [selectedIndex, setSelectedIndex] = useState(indexes[0].name);
+  const [indexText, setIndexText] = useState(indexes[0].text);
   const [docsCount, setDocsCount] = useState('');
 
   const handleSelectChange = (event: any) => {
     const selectedOption = indexes.find((item) => item.name === event.target.value);
     if (selectedOption) {
-      setSearchPage(selectedOption.page);
       setSelectedIndex(selectedOption.name);
+      setIndexText(selectedOption.text);
     }
   };
 
@@ -109,7 +100,7 @@ export default function App() {
       <div className={styles.home}>
         <div className="search-card">
           <h1>{t('Search in the Brazilian Scientific Research Information Ecosystem')} (BrCris)</h1>
-          <form className="form-search" action={`/${router.locale}/${searchPage}`}>
+          <form className="form-search" action={`/${router.locale}/search`}>
             <div className="form-group">
               <div className="custom-select">
                 <select id="index-select" onChange={handleSelectChange} title={t('Select an entity') || ''}>
@@ -126,13 +117,13 @@ export default function App() {
                 autoFocus
                 title={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
                   value: docsCount,
-                })} ${t(searchPage)}`}
+                })} ${t(indexText)}`}
                 type="search"
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
                 placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
                   value: docsCount,
-                })} ${t(searchPage)}`}
+                })} ${t(indexText)}`}
               />
             </div>
             <button disabled={term?.trim().length < 3} className="btn btn-primary" title={t('Search') || 'Search'}>

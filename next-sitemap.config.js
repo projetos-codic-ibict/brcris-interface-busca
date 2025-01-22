@@ -27,7 +27,6 @@ module.exports = {
         config.alternateRefs.map((alternate) => {
           // Ex: try to find '/en/'
           const hasPathLocale = path.substring(1, 3) === 'en';
-          console.log('path', path);
 
           //  Only fix alternateRefs if path has a locale en
           return hasPathLocale

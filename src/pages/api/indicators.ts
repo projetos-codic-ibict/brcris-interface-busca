@@ -30,7 +30,6 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     const buckets = body.responses.map((resp: any) => resp.aggregations?.aggregate.buckets);
-
     res.json(buckets);
   } catch (err) {
     logger.error(err);

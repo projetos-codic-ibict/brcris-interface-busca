@@ -22,7 +22,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
               href={`${VIVO_URL_ITEM_BASE}/publ_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.title.raw}
+              {result.title?.raw}
             </a>
           </h6>
         </div>

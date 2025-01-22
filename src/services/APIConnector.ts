@@ -1,8 +1,4 @@
 class APIConnector {
-  index: string;
-  constructor(index: string) {
-    this.index = index;
-  }
   onResultClick() {
     // optional. Called when a result has been clicked
   }
@@ -11,7 +7,6 @@ class APIConnector {
   }
 
   async onSearch(requestState: any, queryConfig: any) {
-    queryConfig.index = this.index;
     const response = await fetch('/api/search', {
       method: 'POST',
       headers: {
@@ -26,8 +21,7 @@ class APIConnector {
   }
 
   async onAutocomplete(requestState: any, queryConfig: any) {
-    // requestState.searchTerm = requestState.searchTerm.trim();
-    queryConfig.index = this.index;
+    queryConfig.index = queryConfig.results.index;
     const response = await fetch('/api/autocomplete', {
       method: 'POST',
       headers: {
