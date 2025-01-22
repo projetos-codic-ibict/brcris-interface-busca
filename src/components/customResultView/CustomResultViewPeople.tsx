@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-non-null-asserted-optional-chain */
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import AuthorLink from '../externalLinks/AuthorLink';
@@ -14,7 +15,7 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
               key={result.id.raw}
               id={result.id.raw}
               name={result.name?.raw}
-              idLattes={result.lattesId.raw!}
+              idLattes={result.lattesId?.raw!}
             />
           </h6>
         </div>
