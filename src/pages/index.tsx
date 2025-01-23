@@ -103,9 +103,14 @@ export default function App() {
           <form className="form-search" action={`/${router.locale}/search`}>
             <div className="form-group">
               <div className="custom-select">
-                <select id="index-select" onChange={handleSelectChange} title={t('Select an entity') || ''}>
+                <select
+                  name="index"
+                  id="index-select"
+                  onChange={handleSelectChange}
+                  title={t('Select an entity') || ''}
+                >
                   {indexes.map((index) => (
-                    <option key={index.name} value={index.name}>
+                    <option key={index.name} value={index.text}>
                       {t(index.text)}
                     </option>
                   ))}
