@@ -27,6 +27,7 @@ import { CustomProvider } from '../components/context/CustomContext';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import People from '../configs/People';
 import Publications from '../configs/Publications';
+import Journals from '../configs/Journals';
 import styles from '../styles/Home.module.css';
 import { Index } from '../types/Propos';
 
@@ -36,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   },
 });
 
-const indexes: Index[] = [Publications, People];
+const indexes: Index[] = [Publications, People, Journals];
 
 export default function App() {
   const { t } = useTranslation('common');
