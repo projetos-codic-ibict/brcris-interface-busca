@@ -28,6 +28,11 @@ import CustomViewPagingInfo from '../components/customResultView/CustomViewPagin
 import People from '../configs/People';
 import Publications from '../configs/Publications';
 import Journals from '../configs/Journals';
+import Institutions from '../configs/Institutions';
+import Patents from '../configs/Patents';
+import Programs from '../configs/Programs';
+import Groups from '../configs/Groups';
+import Softwares from '../configs/Softwares';
 import styles from '../styles/Home.module.css';
 import { Index } from '../types/Propos';
 
@@ -37,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   },
 });
 
-const indexes: Index[] = [Publications, People, Journals];
+const indexes: Index[] = [Publications, People, Journals, Institutions, Patents, Programs, Groups, Softwares];
 
 export default function App() {
   const { t } = useTranslation('common');
