@@ -52,7 +52,7 @@ function Navbar() {
                 {t('Dashboards')}
               </Link>
             </li>
-            <li className="nav-item me-5" role="presentation">
+            {/* <li className="nav-item me-5" role="presentation">
               <div className={dropdownStyle.dropdown}>
                 <div className={dropdownStyle.flexCenter}>
                   <a href="#" className="nav-link">
@@ -85,7 +85,7 @@ function Navbar() {
                   </a>
                 </div>
               </div>
-            </li>
+            </li> */}
 
             <li className="nav-item me-5" role="presentation">
               <Link href="/team" className="nav-link">

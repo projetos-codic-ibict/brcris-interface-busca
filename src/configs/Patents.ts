@@ -5,6 +5,7 @@ import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import PatentsIndicators from '../components/indicators/PatentsIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
 import { Index, SortOptionsType } from '../types/Propos';
+import indexes from './Indexes';
 
 const indexName = process.env.INDEX_PATENT || '';
 
@@ -116,7 +117,7 @@ const index: Index = {
   config,
   sortOptions,
   name: indexName,
-  text: 'Patents',
+  text: indexes.find((i) => i.name === indexName)?.text || '',
   customView: CustomResultViewPatents,
   indicators: PatentsIndicators,
   vivoIndexPrefix: 'pat_',

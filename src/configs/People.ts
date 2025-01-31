@@ -5,6 +5,7 @@ import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import PeopleIndicators from '../components/indicators/PeopleIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
 import { Index, SortOptionsType } from '../types/Propos';
+import indexes from './Indexes';
 
 const indexName = process.env.INDEX_PERSON || '';
 
@@ -107,7 +108,7 @@ const index: Index = {
   config,
   sortOptions,
   name: indexName,
-  text: 'People',
+  text: indexes.find((i) => i.name === indexName)?.text || '',
   customView: CustomResultViewPeople,
   indicators: PeopleIndicators,
   vivoIndexPrefix: 'pers_',

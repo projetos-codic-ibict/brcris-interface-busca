@@ -5,6 +5,7 @@ import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import GroupsIndicators from '../components/indicators/GroupsIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
 import { Index, SortOptionsType } from '../types/Propos';
+import indexes from './Indexes';
 
 const indexName = process.env.INDEX_GROUP || '';
 
@@ -127,7 +128,7 @@ const index: Index = {
   config,
   sortOptions,
   name: indexName,
-  text: 'Programs',
+  text: indexes.find((i) => i.name === indexName)?.text || '',
   customView: CustomResultViewGroups,
   indicators: GroupsIndicators,
   vivoIndexPrefix: 'resgr_',

@@ -5,6 +5,7 @@ import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import OrgUnitIndicators from '../components/indicators/OrgUnitIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
 import { Index, SortOptionsType } from '../types/Propos';
+import indexes from './Indexes';
 
 const indexName = process.env.INDEX_ORGUNIT || '';
 
@@ -103,7 +104,7 @@ const index: Index = {
   config,
   sortOptions,
   name: indexName,
-  text: 'Institutions',
+  text: indexes.find((i) => i.name === indexName)?.text || '',
   customView: CustomResultViewPeople,
   indicators: OrgUnitIndicators,
   vivoIndexPrefix: 'insti_',

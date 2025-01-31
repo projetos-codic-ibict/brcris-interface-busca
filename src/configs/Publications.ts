@@ -5,6 +5,7 @@ import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import PublicationsIndicators from '../components/indicators/PublicationsIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
 import { Index, SortOptionsType } from '../types/Propos';
+import indexes from './Indexes';
 
 const indexName = process.env.INDEX_PUBLICATION || '';
 
@@ -172,7 +173,7 @@ const index: Index = {
   config,
   sortOptions,
   name: indexName,
-  text: 'Publications',
+  text: indexes.find((i) => i.name === indexName)?.text || '',
   customView: CustomResultViewPublications,
   indicators: PublicationsIndicators,
   vivoIndexPrefix: 'publ_',

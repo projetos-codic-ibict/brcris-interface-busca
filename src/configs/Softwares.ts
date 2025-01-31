@@ -5,6 +5,7 @@ import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import SoftwaresIndicators from '../components/indicators/SoftwaresIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
 import { Index, SortOptionsType } from '../types/Propos';
+import indexes from './Indexes';
 
 const indexName = process.env.INDEX_SOFTWARE || '';
 
@@ -130,7 +131,7 @@ const index: Index = {
   config,
   sortOptions,
   name: indexName,
-  text: 'Softwares',
+  text: indexes.find((i) => i.name === indexName)?.text || '',
   customView: CustomResultViewSoftwares,
   indicators: SoftwaresIndicators,
   vivoIndexPrefix: 'softw_',

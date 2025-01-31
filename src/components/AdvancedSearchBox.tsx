@@ -128,7 +128,7 @@ const AdvancedSearchBox = ({
                   <button
                     disabled={!validSearch()}
                     type="submit"
-                    className="button sui-search-box__submit d-flex align-items-center flex-gap-8"
+                    className="button sui-search-box__submit d-flex align-items-center"
                   >
                     <IoSearch />
                     {t('Search')}

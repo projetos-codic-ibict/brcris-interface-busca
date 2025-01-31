@@ -5,6 +5,7 @@ import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import JornalsIndicators from '../components/indicators/JornalsIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
 import { Index, SortOptionsType } from '../types/Propos';
+import indexes from './Indexes';
 
 const indexName = process.env.INDEX_JOURNAL || '';
 
@@ -124,7 +125,7 @@ const index: Index = {
   config,
   sortOptions,
   name: indexName,
-  text: 'Journals',
+  text: indexes.find((i) => i.name === indexName)?.text || '',
   customView: CustomResultViewJournals,
   indicators: JornalsIndicators,
   vivoIndexPrefix: 'journ_',
