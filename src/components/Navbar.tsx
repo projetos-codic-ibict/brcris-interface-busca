@@ -13,7 +13,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-dark navbar-expand-lg bg-violet py-0">
       <div className="container-fluid d-flex">
-        <div className="flex-nowrap d-flex align-items-end flex-justify-content-between">
+        <div className="flex-nowrap d-flex align-items-center flex-justify-content-between">
           <Link href="/" className="navbar-brand">
             <picture className="navbar-logo">
               <img className="img-fluid brcris" src="/logos/logo-brcris-pb.png" alt="logo do brcris" />
