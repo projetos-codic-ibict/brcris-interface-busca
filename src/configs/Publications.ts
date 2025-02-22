@@ -15,7 +15,7 @@ const config: CustomSearchDriverOptions = {
     operator: 'OR',
     index: indexName,
     search_fields: {
-      title_text: {
+      title: {
         weight: 3,
       },
       publicationDate: {},
@@ -23,7 +23,7 @@ const config: CustomSearchDriverOptions = {
       language: {},
       type: {},
       'orgunit.name': {},
-      keyword_text: {},
+      keyword: {},
     },
     result_fields: {
       title: {
@@ -62,7 +62,7 @@ const config: CustomSearchDriverOptions = {
     },
     disjunctiveFacets: [
       'language.type',
-      'author.name',
+      'author.name_keyword',
       'keyword.type',
       'cnpqResearchArea.type',
       'publicationDate.type',
@@ -70,10 +70,10 @@ const config: CustomSearchDriverOptions = {
 
     facets: {
       language: { type: 'value' },
-      'author.name': { type: 'value' },
-      keyword: { type: 'value' },
-      'orgunit.name': { type: 'value' },
-      'journal.title': { type: 'value' },
+      'author.name_keyword': { type: 'value' },
+      keyword_keyword: { type: 'value' },
+      'orgunit.name_keyword': { type: 'value' },
+      'journal.title_keyword': { type: 'value' },
       type: { type: 'value' },
       cnpqResearchArea: { type: 'value' },
       publicationDate: {

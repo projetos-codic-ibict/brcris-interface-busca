@@ -25,13 +25,13 @@ import DownloadModal from '../components/DownloadModal';
 import Loader from '../components/Loader';
 import { CustomProvider } from '../components/context/CustomContext';
 import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
-import People from '../configs/People';
-import Publications from '../configs/Publications';
-import Journals from '../configs/Journals';
-import Institutions from '../configs/Institutions';
-import Patents from '../configs/Patents';
-import Programs from '../configs/Programs';
 import Groups from '../configs/Groups';
+import Institutions from '../configs/Institutions';
+import Journals from '../configs/Journals';
+import Patents from '../configs/Patents';
+import People from '../configs/People';
+import Programs from '../configs/Programs';
+import Publications from '../configs/Publications';
 import Softwares from '../configs/Softwares';
 import styles from '../styles/Home.module.css';
 import { Index } from '../types/Propos';
@@ -115,14 +115,9 @@ export default function App() {
                               )}
                               {containsResults(wasSearched, results) && (
                                 <>
-                                  <Facet key={'1'} field={'language'} label={t('Language')} />
-                                  <Facet key={'2'} field={'author.name'} label={t('Authors')} />
-                                  <Facet key={'3'} field={'keyword'} label={t('Keyword')} />
-                                  <Facet key={'4'} field={'orgunit.name'} label={t('Institution')} />
-                                  <Facet key={'5'} field={'journal.title'} label={t('Journal')} />
-                                  <Facet key={'6'} field={'type'} label={t('Type')} />
-                                  <Facet key={'7'} field={'cnpqResearchArea'} label={t('CNPq research area')} />
-                                  <Facet key={'8'} field={'publicationDate'} filterType={'none'} label={t('Year')} />
+                                  {Object.keys(index.config.searchQuery.facets!).map((facet, i) => (
+                                    <Facet key={i} field={facet} label={t(facet)} />
+                                  ))}
                                 </>
                               )}
                             </ErrorBoundary>
