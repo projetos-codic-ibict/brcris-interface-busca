@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useTranslation } from 'next-i18next';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { alertService } from '../services/AlertService';
 import MailService from '../services/MailService';
@@ -113,13 +113,13 @@ function ContactForm() {
           </div>
 
           <div className="submit-btn col-sm-12 mt-2 d-flex justify-content-between align-items-center">
+            {/* @ts-ignore */}
             <ReCAPTCHA
               size="normal"
               ref={recaptchaRef}
               sitekey={PUBLIC_RECAPTCHA_SITE_KEY}
               onChange={onReCAPTCHAChange}
             />
-
             <button
               disabled={!(captchaCode !== '' && name !== '' && email !== '' && message !== '')}
               className="btn btn-primary px-4 py-2"
