@@ -74,9 +74,14 @@ const BasicSearchBox = ({
           <div className="form-search">
             <div className="form-group">
               <div className="custom-select">
-                <select id="index-select" onChange={handleSelectIndex} title={t('Select an entity') || ''}>
+                <select
+                  defaultValue={indexName}
+                  id="index-select"
+                  onChange={handleSelectIndex}
+                  title={t('Select an entity') || ''}
+                >
                   {indexes.map((index) => (
-                    <option selected={index.name === indexName} key={index.name} value={index.name}>
+                    <option key={index.name} value={index.name}>
                       {t(index.text)}
                     </option>
                   ))}

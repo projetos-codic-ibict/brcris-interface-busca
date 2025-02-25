@@ -15,7 +15,7 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      title_text: {},
+      title: {},
       issn: {},
       issnl: {},
       status: {},
@@ -64,7 +64,7 @@ const config: CustomSearchDriverOptions = {
       qualis: { type: 'value' },
       status: { type: 'value' },
       type: { type: 'value' },
-      'publisher.name': { type: 'value' },
+      'publisher.name_keyword': { type: 'value' },
     },
   },
   autocompleteQuery: {

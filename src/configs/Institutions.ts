@@ -15,7 +15,7 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      name_text: {},
+      name: {},
       country: {},
       state: {},
       city: {},

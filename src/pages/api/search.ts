@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const response = await connector.onSearch(requestState, queryConfig);
     res.json(response);
   } catch (err) {
-    logger.error(err);
+    logger.error('ERROR::', err);
     res.status(400).json({ error: err.message });
   }
 }

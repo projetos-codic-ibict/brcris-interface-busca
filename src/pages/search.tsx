@@ -38,14 +38,14 @@ import { Index } from '../types/Propos';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar', 'advanced'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar', 'advanced', 'facets'])),
   },
 });
 
 const indexes: Index[] = [Publications, People, Journals, Institutions, Patents, Programs, Groups, Softwares];
 
 export default function App() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['facets', 'common']);
   const searchParams = useSearchParams();
 
   const indexParam = searchParams.get('index');
@@ -116,7 +116,7 @@ export default function App() {
                               {containsResults(wasSearched, results) && (
                                 <>
                                   {Object.keys(index.config.searchQuery.facets!).map((facet, i) => (
-                                    <Facet key={i} field={facet} label={t(facet)} />
+                                    <Facet key={i} field={facet} label={t(facet.toLowerCase())} />
                                   ))}
                                 </>
                               )}

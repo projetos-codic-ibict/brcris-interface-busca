@@ -15,10 +15,10 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      name_text: {
+      name: {
         weight: 3,
       },
-      keyword_text: {},
+      keyword: {},
       // creationYear: {}, dá erro na busca simples por causo do tipo long
       status: {},
       'leader.name': {},
@@ -88,11 +88,11 @@ const config: CustomSearchDriverOptions = {
       creationYear: { type: 'value' },
       researchLine: { type: 'value' },
       knowledgeArea: { type: 'value' },
-      'orgunit.name': { type: 'value' },
-      keyword: { type: 'value' },
+      'orgunit.name_keyword': { type: 'value' },
+      keyword_keyword: { type: 'value' },
       status: { type: 'value' },
-      'leader.name': { type: 'value' },
-      'partner.name': { type: 'value' },
+      'leader.name_keyword': { type: 'value' },
+      'partner.name_keyword': { type: 'value' },
       member: { type: 'value' },
       applicationSector: { type: 'value' },
     },

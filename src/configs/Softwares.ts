@@ -15,10 +15,10 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      name_text: {
+      name: {
         weight: 3,
       },
-      keyword_text: {},
+      keyword: {},
       depositDate: {},
       releaseYear: {},
       registrationCountry: {},

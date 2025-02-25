@@ -15,7 +15,7 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      espacenetTitle_text: {},
+      espacenetTitle: {},
       publicationDate: {},
       'inventor.name': {},
       depositDate: {},
@@ -51,12 +51,19 @@ const config: CustomSearchDriverOptions = {
         raw: [],
       },
     },
-    disjunctiveFacets: ['countryCode', 'publicationDate', 'depositDate', 'inventor', 'espacenetTitle', 'inventor.name'],
+    disjunctiveFacets: [
+      'countryCode',
+      'publicationDate',
+      'depositDate',
+      'inventor',
+      'espacenetTitle_keyword',
+      'inventor.name_keyword',
+    ],
     facets: {
       countryCode: { type: 'value' },
       publicationDate: { type: 'value' },
       depositDate: { type: 'value' },
-      'inventor.name': { type: 'value' },
+      'inventor.name_keyword': { type: 'value' },
     },
   },
   autocompleteQuery: {

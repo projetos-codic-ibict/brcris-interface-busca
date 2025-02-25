@@ -28,13 +28,13 @@ const AdvancedSearchBox = ({
   const { t } = useTranslation(['advanced', 'common']);
   const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
   const [query, setQuery] = useState(searchTerm);
-  const [queryField, setQueryField] = useState('all');
+  const [queryField, setQueryField] = useState(t('all'));
   const [inputs, setInputs] = useState<QueryItem[]>([]);
 
   fieldNames = fieldNames.map((field) => t(field));
 
   const addInput = () => {
-    setInputs([...inputs, { value: '', field: 'all', operator: 'AND' }]);
+    setInputs([...inputs, { value: '', field: t('all'), operator: 'AND' }]);
   };
 
   const removeInput = (indice: number) => {
@@ -59,6 +59,8 @@ const AdvancedSearchBox = ({
     //@ts-ignore
     const isAdvancedQuery = query?.indexOf('(') >= 0 && query?.indexOf(':') >= 0;
     let fullQuery = isAdvancedQuery ? query?.trim() : `(${queryField}:${query})`;
+    console.log('inputs', inputs);
+    console.log('fullQuery', fullQuery);
     fullQuery = fullQuery + inputs.map((campo) => ` ${campo.operator} (${campo.field}:${campo.value})`).join(' ');
     setQuery(fullQuery);
     setInputs([]);
@@ -108,7 +110,7 @@ const AdvancedSearchBox = ({
               ></textarea>
               <HelpModal fields={fieldNames} />
               <select className="form-select" value={queryField} onChange={(e) => setQueryField(e.target.value)}>
-                <option value="all">{t('all')}</option>
+                <option value={t('all')}>{t('all')}</option>
                 {fieldNames.map((field) => (
                   <option key={field} value={field}>
                     {field}

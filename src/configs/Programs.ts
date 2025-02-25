@@ -15,7 +15,7 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      name_text: {},
+      name: {},
       'orgunit.name': {},
     },
     result_fields: {
@@ -35,12 +35,11 @@ const config: CustomSearchDriverOptions = {
         raw: {},
       },
     },
-    disjunctiveFacets: ['name', 'capesResearchArea'],
+    disjunctiveFacets: ['cnpqResearchArea', 'capesResearchArea'],
     facets: {
-      name: { type: 'value' },
       capesResearchArea: { type: 'value' },
       cnpqResearchArea: { type: 'value' },
-      'orgunit.name': { type: 'value' },
+      'orgunit.name_keyword': { type: 'value' },
       evaluationArea: { type: 'value' },
     },
   },
