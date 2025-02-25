@@ -185,6 +185,7 @@ const DownloadModal = ({ filters, searchTerm, totalResults, typeArq }: DownloadM
                   }}
                 />
                 <div className="submit-btn col-sm-12 mt-2 d-flex justify-content-between align-items-center">
+                  {/* @ts-ignore */}
                   <ReCAPTCHA
                     size="normal"
                     ref={recaptchaRef}
