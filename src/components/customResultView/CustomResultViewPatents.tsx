@@ -37,7 +37,7 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
                   <span key={index} className="sui-result__value">
                     <ExternalLink
                       key={applicant.id}
-                      content={applicant.name}
+                      content={applicant.name_keyword!}
                       url={`${VIVO_URL_ITEM_BASE}/org_${applicant.id}?lang=${router.locale}`}
                     />
                   </span>

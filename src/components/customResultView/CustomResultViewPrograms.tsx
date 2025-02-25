@@ -34,7 +34,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
                 {result.orgunit?.raw.map((org: OrgUnit) => (
                   <ExternalLink
                     key={org.id}
-                    content={org.name}
+                    content={org.name_keyword!}
                     url={`${VIVO_URL_ITEM_BASE}/org_${org.id}?lang=${router.locale}`}
                   />
                 ))}
