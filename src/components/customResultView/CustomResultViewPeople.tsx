@@ -14,7 +14,7 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
             <AuthorLink
               key={result.id.raw}
               id={result.id.raw}
-              name={result.name?.raw}
+              name={result.name_keyword?.raw}
               idLattes={result.lattesId?.raw!}
             />
           </h6>
@@ -28,7 +28,7 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
               value={result.orcid ? `https://orcid.org/${result.orcid?.raw}` : ''}
               urlLink={result.orcid ? `https://orcid.org/${result.orcid?.raw}` : ''}
             />
-            <ShowItem label={t('Research area(s)')} value={result.researchArea?.name?.raw} />
+            <ShowItem label={t('Research area(s)')} value={result.researchArea?.name_keyword?.raw} />
           </ul>
         </div>
       </div>

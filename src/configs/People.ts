@@ -23,7 +23,7 @@ const config: CustomSearchDriverOptions = {
       id: {
         raw: {},
       },
-      name: {
+      name_keyword: {
         raw: {},
       },
       lattesId: {

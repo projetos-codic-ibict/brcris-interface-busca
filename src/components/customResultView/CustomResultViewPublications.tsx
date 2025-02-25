@@ -48,13 +48,13 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                   {result.orgunit?.raw.map((org: OrgUnit) => (
                     <ExternalLink
                       key={org.id}
-                      content={org.name}
+                      content={org.name_keyword!}
                       url={`${VIVO_URL_ITEM_BASE}/org_${org.id}?lang=${router.locale}`}
                     />
                   ))}
 
                   {result.service?.raw.map((service: Service) =>
-                    service.title?.map((title: string) => (
+                    service.title_keyword?.map((title: string) => (
                       <ExternalLink
                         key={title}
                         content={title}
@@ -66,7 +66,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                   {result.journal?.raw.map((journal: any, index: any) => (
                     <ExternalLink
                       key={index}
-                      content={journal.title ? journal.title : journal}
+                      content={journal.title_keyword ? journal.title_keyword : journal}
                       url={`${VIVO_URL_ITEM_BASE}/journ_${journal.id}?lang=${router.locale}`}
                     />
                   ))}

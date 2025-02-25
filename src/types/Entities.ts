@@ -2,18 +2,21 @@ import type { SearchDriverOptions, SearchQuery } from '@elastic/search-ui';
 import { QueryDslOperator } from 'es7/api/types';
 export type Author = {
   id: string;
-  name: string;
+  name?: string;
+  name_keyword?: string;
   idLattes?: string;
   nationality?: string;
 };
 export type OrgUnit = {
   id: string;
-  name: string;
+  name?: string;
+  name_keyword?: string;
 };
 
 export type Service = {
   id: string;
   title: string[];
+  title_keyword: string[];
 };
 
 export type IndicatorType = {
