@@ -91,6 +91,7 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
   return (
     <div className={styles.charts} hidden={isEmpty()}>
       <div className={styles.chart}>
+        {/* @ts-ignore */}
         <CSVLink
           className={styles.download}
           title="Export to csv"
@@ -121,6 +122,7 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
       </div>
 
       <div className={styles.chart}>
+        {/* @ts-ignore */}
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}

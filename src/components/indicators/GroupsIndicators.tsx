@@ -138,6 +138,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
   return (
     <div className={styles.charts} hidden={isEmpty()}>
       <div className={styles.chart} hidden={creationYearIndicators == null}>
+        {/* @ts-ignore */}
         <CSVLink
           className={styles.download}
           title="Export to csv"
@@ -168,6 +169,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
       </div>
 
       <div className={styles.chart} hidden={researchLineIndicators == null}>
+        {/* @ts-ignore */}
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
@@ -198,6 +200,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
       </div>
 
       <div className={styles.chart} hidden={knowledgeAreaIndicators == null}>
+        {/* @ts-ignore */}
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}
@@ -228,6 +231,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
       </div>
 
       <div className={styles.chart} hidden={statusIndicators == null}>
+        {/* @ts-ignore */}
         <CSVLink
           className={styles.download}
           title={t('Export to csv') || ''}

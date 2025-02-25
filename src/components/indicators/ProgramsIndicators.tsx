@@ -67,6 +67,7 @@ function ProgramsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps)
   return (
     <div className={styles.charts} hidden={isEmpty()}>
       <div className={styles.chart}>
+        {/* @ts-ignore */}
         <CSVLink
           className={styles.download}
           title="Export to csv"
