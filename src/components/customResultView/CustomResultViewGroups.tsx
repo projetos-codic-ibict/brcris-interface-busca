@@ -40,7 +40,7 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
                 <span key={index} className="sui-result__value">
                   <ExternalLink
                     key={orgunit.id}
-                    content={orgunit.name}
+                    content={orgunit.name_keyword!}
                     url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}?lang=${router.locale}`}
                   />
                 </span>

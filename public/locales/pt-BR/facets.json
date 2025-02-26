@@ -4,5 +4,6 @@
   "keyword_keyword": "Palavra-chave",
   "journal.title_keyword": "Revista",
   "type": "Tipo",
-  "publicationdate": "Ano de publicação"
+  "publicationdate": "Ano de publicação",
+  "orgunit.name_keyword": "Instituição"
 }

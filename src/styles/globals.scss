@@ -117,6 +117,7 @@ nav.navbar-expand-lg {
   background: #f3f3f3;
   border-radius: 24px 0 0 24px;
   border-right: none;
+  text-transform: capitalize;
 }
 
 .custom-select::before,
@@ -417,6 +418,10 @@ li .sui-result__key:after {
   border-radius: 4px;
   height: 100%;
   margin-bottom: 16px;
+}
+
+.page-title h1 {
+  text-transform: capitalize;
 }
 
 .page-title h1::after {

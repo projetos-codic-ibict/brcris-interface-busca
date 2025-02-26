@@ -4,5 +4,6 @@
   "keyword_keyword": "Keyword",
   "journal.title_keyword": "Journal",
   "type": "Type",
-  "publicationdate": "Publication year"
+  "publicationdate": "Publication year",
+  "orgunit.name_keyword": "Institution"
 }

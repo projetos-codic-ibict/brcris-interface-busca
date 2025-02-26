@@ -41,6 +41,9 @@ const config: CustomSearchDriverOptions = {
       orgunit: {
         raw: {},
       },
+      community: {
+        raw: {},
+      },
     },
     disjunctiveFacets: ['nationality', 'researchArea'],
     facets: {

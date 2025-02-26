@@ -18,7 +18,8 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { memo, useEffect, useState } from 'react';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DownloadModal from '../components/DownloadModal';
@@ -33,6 +34,7 @@ import People from '../configs/People';
 import Programs from '../configs/Programs';
 import Publications from '../configs/Publications';
 import Softwares from '../configs/Softwares';
+import { useNextRouting } from '../configs/useNextRouting';
 import styles from '../styles/Home.module.css';
 import { Index } from '../types/Propos';
 
@@ -45,7 +47,9 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
 const indexes: Index[] = [Publications, People, Journals, Institutions, Patents, Programs, Groups, Softwares];
 
 export default function App() {
-  const { t } = useTranslation(['facets', 'common']);
+  const { t } = useTranslation(['common', 'facets']);
+  const router = useRouter();
+
   const searchParams = useSearchParams();
 
   const indexParam = searchParams.get('index');
@@ -56,6 +60,14 @@ export default function App() {
   // tradução
   index.sortOptions.forEach((option) => (option.name = t(option.name)));
 
+  const updateIndexParam = () => {
+    console.log('updateIndexParam');
+    router.push({
+      pathname: router.pathname,
+      query: { ...router.query, index: index.text },
+    });
+  };
+
   const handleSelectIndex = (event: any) => {
     const selectedOption = indexes.find((item) => item.name === event.target.value);
     if (selectedOption) {
@@ -64,6 +76,21 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    updateIndexParam();
+  }, [index]);
+
+  // const combinedConfig = useNextRouting(index.config, '/');
+  return <Search index={index} t={t} handleSelectIndex={handleSelectIndex} />;
+}
+
+interface SearchProps {
+  index: Index;
+  t: (key: string, options?: { ns?: string }) => string;
+  handleSelectIndex: (event: any) => void;
+}
+
+const Search = memo(({ index, t, handleSelectIndex }: SearchProps) => {
   const typeArqw = 'ris';
   return (
     <div>
@@ -72,7 +99,7 @@ export default function App() {
       </Head>
       <div className="page-search">
         <CustomProvider>
-          <SearchProvider config={index.config}>
+          <SearchProvider config={useNextRouting(index.config, '/')}>
             <WithSearch
               mapContextToProps={({ wasSearched, results, isLoading, setSearchTerm }) => ({
                 wasSearched,
@@ -116,7 +143,7 @@ export default function App() {
                               {containsResults(wasSearched, results) && (
                                 <>
                                   {Object.keys(index.config.searchQuery.facets!).map((facet, i) => (
-                                    <Facet key={i} field={facet} label={t(facet.toLowerCase())} />
+                                    <Facet key={i} field={facet} label={t(facet.toLowerCase(), { ns: 'facets' })} />
                                   ))}
                                 </>
                               )}
@@ -178,4 +205,5 @@ export default function App() {
       </div>
     </div>
   );
-}
+});
+Search.displayName = 'Search';
