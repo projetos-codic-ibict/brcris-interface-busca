@@ -64,7 +64,7 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
               JSON.stringify(
                 getAggregateQuery({
                   size: 10,
-                  indicadorName: 'researchArea',
+                  indicadorName: 'researchArea.name_keyword',
                   searchTerm,
                   fields,
                   operator,

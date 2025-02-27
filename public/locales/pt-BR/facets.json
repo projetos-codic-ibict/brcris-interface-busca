@@ -5,5 +5,7 @@
   "journal.title_keyword": "Revista",
   "type": "Tipo",
   "publicationdate": "Ano de publicação",
-  "orgunit.name_keyword": "Instituição"
+  "orgunit.name_keyword": "Instituição",
+  "researcharea.name_keyword": "Área de pesquisa",
+  "community.name_keyword": "Comunidade"
 }

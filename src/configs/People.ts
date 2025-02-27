@@ -48,7 +48,9 @@ const config: CustomSearchDriverOptions = {
     disjunctiveFacets: ['nationality', 'researchArea'],
     facets: {
       nationality: { type: 'value' },
-      researchArea: { type: 'value' },
+      'researchArea.name_keyword': { type: 'value' },
+      'orgunit.name_keyword': { type: 'value' },
+      'community.name_keyword': { type: 'value' },
     },
   },
   autocompleteQuery: {
