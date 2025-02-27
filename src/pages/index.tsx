@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { IoArrowDown, IoSearch } from 'react-icons/io5';
 import indexes from '../configs/Indexes';
+import { getIndexStats } from '../services/ElasticSearchStatsService';
 import styles from '../styles/Home.module.css';
 
 type Props = {
@@ -73,7 +74,7 @@ export default function App() {
   const [docsCount, setDocsCount] = useState('');
 
   const handleSelectChange = (event: any) => {
-    const selectedOption = indexes.find((item) => item.name === event.target.value);
+    const selectedOption = indexes.find((item) => item.text === event.target.value);
     if (selectedOption) {
       setSelectedIndex(selectedOption.name);
       setIndexText(selectedOption.text);
@@ -82,7 +83,7 @@ export default function App() {
 
   useEffect(() => {
     inputRef?.current?.focus();
-    setDocsCount(localStorage.getItem(selectedIndex) || '');
+    getIndexStats(indexText, setDocsCount, selectedIndex);
   }, [selectedIndex]);
 
   return (

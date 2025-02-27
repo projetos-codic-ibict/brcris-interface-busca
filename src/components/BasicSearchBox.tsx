@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IoArrowRedoOutline, IoSearch } from 'react-icons/io5';
 import indexes from '../configs/Indexes';
-import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
+import { getIndexStats } from '../services/ElasticSearchStatsService';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
@@ -31,15 +31,8 @@ const BasicSearchBox = ({
   const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
 
   useEffect(() => {
-    ElasticSearchStatsService(indexName)
-      .then((res) => {
-        const count = res['docs.count'];
-        localStorage.setItem(indexName, count);
-        setDocsCount(count);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const index = indexes.find((item) => item.name === indexName);
+    getIndexStats(index!.text, setDocsCount, indexName);
   }, []);
 
   return (
