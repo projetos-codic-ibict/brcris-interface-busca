@@ -5,7 +5,11 @@ import Footer from '../Footer';
 import Navbar from '../Navbar';
 import CookieConsent from '../banners/CookieConsent';
 
-export default function Layout({ children }: PropsWithChildren) {
+interface LayoutProps extends PropsWithChildren {
+  fontFamily: string;
+}
+
+export default function Layout({ children, fontFamily }: LayoutProps) {
   const BRCRIS_HOST_BASE = process.env.BRCRIS_HOST_BASE || 'https://brcris.ibict.br';
   const router = useRouter();
   const locales = router.locales;
@@ -25,7 +29,7 @@ export default function Layout({ children }: PropsWithChildren) {
       </Head>
       <Navbar />
       {/* <Alert /> */}
-      <main>{children}</main>
+      <main className={fontFamily}>{children}</main>
       <CookieConsent />
       <Footer />
     </>

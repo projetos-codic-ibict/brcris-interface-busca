@@ -6,6 +6,14 @@ import Analytics from '../components/analytics';
 import Layout from '../components/layouts/Layout';
 import '../styles/globals.scss';
 
+import { Roboto } from 'next/font/google';
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '500', '700', '900'],
+  style: ['normal', 'italic'],
+});
+
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -15,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       {/* <Barra /> */}
       <Analytics />
-      <Layout>
+      <Layout fontFamily={roboto.className}>
         <Component {...pageProps} />
       </Layout>
     </>
