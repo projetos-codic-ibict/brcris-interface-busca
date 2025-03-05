@@ -22,42 +22,63 @@ const config: CustomSearchDriverOptions = {
       'author.name': {},
       language: {},
       type: {},
-      'orgunit.name': {},
-      keyword: {},
+      // 'orgunit.name': {},
+      // keyword: {},
     },
     result_fields: {
-      title: {
+      advisor: {
+        raw: {},
+      },
+      author: {
+        raw: [],
+      },
+      coadvisor: {
+        raw: {},
+      },
+      conference: {
+        raw: {},
+      },
+      course: {
+        raw: {},
+      },
+      doi: {
+        raw: {},
+      },
+      journal: {
+        raw: {},
+      },
+      keyword_keyword: {
+        snippet: {},
+      },
+      language: {
+        raw: [],
+      },
+      openalexId: {
+        raw: [],
+      },
+      orgunit: {
+        snippet: {},
+      },
+      program: {
         snippet: {},
       },
       publicationDate: {
         snippet: {},
       },
-      author: {
+      researchArea: {
         raw: [],
-      },
-      keyword: {
-        snippet: {},
-      },
-      journal: {
-        raw: {},
-      },
-      type: {
-        raw: {},
-      },
-      orgunit: {
-        snippet: {},
       },
       service: {
         raw: {},
       },
-      vivo_link: {
+      title: {
+        snippet: {},
+      },
+      type: {
         raw: {},
       },
-      language: {
-        raw: [],
-      },
-      cnpqResearchArea: {
-        raw: [],
+      year: {
+        raw: {},
       },
     },
     disjunctiveFacets: [
@@ -66,6 +87,9 @@ const config: CustomSearchDriverOptions = {
       'keyword.type',
       'cnpqResearchArea.type',
       'publicationDate.type',
+      'course.name_keyword',
+      'program.name_keyword',
+      'conference.name_keyword',
     ],
 
     facets: {
@@ -75,14 +99,22 @@ const config: CustomSearchDriverOptions = {
       'orgunit.name_keyword': { type: 'value' },
       'journal.title_keyword': { type: 'value' },
       type: { type: 'value' },
-      cnpqResearchArea: { type: 'value' },
+      'course.name_keyword': { type: 'value' },
+      'program.name_keyword': { type: 'value' },
+      'conference.name_keyword': { type: 'value' },
+      researchArea: { type: 'value' },
       publicationDate: {
         type: 'range',
         ranges: [
           {
-            from: '2021',
+            from: '2024',
             to: new Date().getUTCFullYear().toString(),
-            name: `2021 - ${new Date().getUTCFullYear()}`,
+            name: `2024 - ${new Date().getUTCFullYear()}`,
+          },
+          {
+            from: '2021',
+            to: '2023',
+            name: '2021 - 2023',
           },
           {
             from: '2016',

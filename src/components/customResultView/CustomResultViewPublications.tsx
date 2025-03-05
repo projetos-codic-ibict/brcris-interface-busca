@@ -29,10 +29,8 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
 
         <div className="sui-result__body">
           <ul className="sui-result__details">
-            <ShowItem label={t('Year')} value={result.publicationDate?.raw} />
-
             <ShowAuthorItem label={t('Author')} authors={result.author?.raw} />
-
+            <ShowItem label={t('Year')} value={result.publicationDate?.raw} />
             <ShowItem label={t('Type')} value={result.type?.raw} />
 
             {result.orgunit === undefined && result.service === undefined && result.journal === undefined ? null : (
@@ -76,9 +74,50 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
 
             <ShowItem label={t('Language')} value={result.language?.raw} />
 
-            <ShowItem label={t('Research area(s)')} value={result.cnpqResearchArea?.raw} />
+            <ShowItem label={t('Keywords')} value={result.keyword_keyword?.raw} />
+            <ShowAuthorItem label={t('Advisor')} authors={result.advisor?.raw} />
+            <ShowAuthorItem label={t('Coadvisor')} authors={result.coadvisor?.raw} />
+            <ShowItem label={t('Year 2')} value={result.year?.raw} />
+            <ShowItem label={t('DOI')} value={result.doi?.raw} />
+            <ShowItem label={t('OpenalexId')} value={result.openalexId?.raw} />
 
-            <ShowItem label={t('Keywords')} value={result.keyword?.raw} />
+            <ShowItem
+              label={t('Research field')}
+              value={result.researchArea?.raw.map((researchArea: any, index: any) => (
+                <span key={index}>{researchArea.name_keyword}</span>
+              ))}
+            />
+            <ShowItem
+              label={t('Conference')}
+              value={result.conference?.raw.map((conference: any, index: any) => (
+                <span key={index}>{conference.name_keyword}</span>
+              ))}
+            />
+
+            <ShowItem
+              label={t('Program')}
+              value={result.program?.raw.map((program: any, index: any) => (
+                <span key={index} className="sui-result__value">
+                  <ExternalLink
+                    key={program.id}
+                    content={program.name_keyword!}
+                    url={`${VIVO_URL_ITEM_BASE}/org_${program.id}?lang=${router.locale}`}
+                  />
+                </span>
+              ))}
+            />
+            <ShowItem
+              label={t('Course')}
+              value={result.course?.raw.map((course: any, index: any) => (
+                <span key={index} className="sui-result__value">
+                  <ExternalLink
+                    key={course.id}
+                    content={course.name_keyword!}
+                    url={`${VIVO_URL_ITEM_BASE}/org_${course.id}?lang=${router.locale}`}
+                  />
+                </span>
+              ))}
+            />
           </ul>
         </div>
       </div>

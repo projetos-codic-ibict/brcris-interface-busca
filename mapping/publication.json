@@ -1,0 +1,237 @@
+{
+  "release3-publication": {
+    "mappings": {
+      "properties": {
+        "advisor": {
+          "properties": {
+            "id": {
+              "type": "keyword"
+            },
+            "idLattes": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            },
+            "name_keyword": {
+              "type": "keyword"
+            },
+            "nationality": {
+              "type": "keyword"
+            }
+          }
+        },
+        "author": {
+          "properties": {
+            "id": {
+              "type": "keyword"
+            },
+            "idLattes": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            },
+            "name_keyword": {
+              "type": "keyword"
+            },
+            "nationality": {
+              "type": "keyword"
+            }
+          }
+        },
+        "coadvisor": {
+          "properties": {
+            "id": {
+              "type": "keyword"
+            },
+            "idLattes": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            },
+            "name_keyword": {
+              "type": "keyword"
+            },
+            "nationality": {
+              "type": "keyword"
+            }
+          }
+        },
+        "conference": {
+          "properties": {
+            "acronym": {
+              "type": "keyword"
+            },
+            "id": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            },
+            "name_keyword": {
+              "type": "keyword"
+            },
+            "type": {
+              "type": "keyword"
+            }
+          }
+        },
+        "course": {
+          "properties": {
+            "degree": {
+              "type": "keyword"
+            },
+            "id": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            },
+            "name_keyword": {
+              "type": "keyword"
+            },
+            "type": {
+              "type": "keyword"
+            }
+          }
+        },
+        "doi": {
+          "type": "keyword"
+        },
+        "id": {
+          "type": "keyword"
+        },
+        "journal": {
+          "properties": {
+            "acronym": {
+              "type": "keyword"
+            },
+            "id": {
+              "type": "keyword"
+            },
+            "title": {
+              "type": "text"
+            },
+            "title_keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "keyword": {
+          "type": "text"
+        },
+        "keyword_completion": {
+          "type": "completion",
+          "analyzer": "simple",
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_length": 50
+        },
+        "keyword_keyword": {
+          "type": "keyword"
+        },
+        "keyword_suggest": {
+          "type": "search_as_you_type",
+          "doc_values": false,
+          "max_shingle_size": 3
+        },
+        "language": {
+          "type": "keyword"
+        },
+        "openalexId": {
+          "type": "keyword"
+        },
+        "orgunit": {
+          "properties": {
+            "acronym": {
+              "type": "keyword"
+            },
+            "id": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            },
+            "name_keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "program": {
+          "properties": {
+            "id": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            },
+            "name_keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "publicationDate": {
+          "type": "keyword"
+        },
+        "researchArea": {
+          "properties": {
+            "id": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            },
+            "name_keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "service": {
+          "properties": {
+            "acronym": {
+              "type": "keyword"
+            },
+            "id": {
+              "type": "keyword"
+            },
+            "title": {
+              "type": "text"
+            },
+            "title_keyword": {
+              "type": "keyword"
+            },
+            "type": {
+              "type": "keyword"
+            }
+          }
+        },
+        "title": {
+          "type": "text"
+        },
+        "title_completion": {
+          "type": "completion",
+          "analyzer": "simple",
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_length": 50
+        },
+        "title_keyword": {
+          "type": "keyword"
+        },
+        "title_suggest": {
+          "type": "search_as_you_type",
+          "doc_values": false,
+          "max_shingle_size": 3
+        },
+        "type": {
+          "type": "keyword"
+        },
+        "year": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
