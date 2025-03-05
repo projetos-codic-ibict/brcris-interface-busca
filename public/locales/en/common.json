@@ -99,6 +99,8 @@
   "Country": "Country",
   "State": "State",
   "City": "City",
+  "Conference": "Conference",
+  "Course": "Course",
   "Release year": "Release year",
   "Registration institution": "Registration institution",
   "Platform": "Platform",

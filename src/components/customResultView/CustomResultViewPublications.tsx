@@ -77,7 +77,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
             <ShowItem label={t('Keywords')} value={result.keyword_keyword?.raw} />
             <ShowAuthorItem label={t('Advisor')} authors={result.advisor?.raw} />
             <ShowAuthorItem label={t('Coadvisor')} authors={result.coadvisor?.raw} />
-            <ShowItem label={t('Year 2')} value={result.year?.raw} />
+            {/* <ShowItem label={t('Year 2')} value={result.year?.raw} /> */}
             <ShowItem label={t('DOI')} value={result.doi?.raw} />
             <ShowItem label={t('OpenalexId')} value={result.openalexId?.raw} />
 

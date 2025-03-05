@@ -7,5 +7,8 @@
   "publicationdate": "Publication year",
   "orgunit.name_keyword": "Institution",
   "researcharea.name_keyword": "Research field",
-  "community.name_keyword": "community"
+  "community.name_keyword": "community",
+  "course.name_keyword": "Course",
+  "program.name_keyword": "Program",
+  "conference.name_keyword": "Conference"
 }
