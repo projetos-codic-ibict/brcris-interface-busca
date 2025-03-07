@@ -26,7 +26,7 @@ const config: CustomSearchDriverOptions = {
       id: {
         raw: {},
       },
-      espacenetTitle: {
+      espacenetTitle_keyword: {
         raw: {},
       },
       applicant: {
@@ -75,7 +75,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        espacenetTitle: {
+        espacenetTitle_keyword: {
           snippet: {
             size: 100,
             fallback: true,

@@ -64,7 +64,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        name: {
+        name_keyword: {
           snippet: {
             size: 100,
             fallback: true,

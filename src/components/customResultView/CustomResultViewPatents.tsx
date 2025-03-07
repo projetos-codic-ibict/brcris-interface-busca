@@ -22,7 +22,7 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
               href={`${VIVO_URL_ITEM_BASE}/pat_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.espacenetTitle?.raw}
+              {result.espacenetTitle_keyword?.raw}
             </a>
           </h6>
         </div>

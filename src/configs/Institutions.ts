@@ -24,7 +24,7 @@ const config: CustomSearchDriverOptions = {
       id: {
         raw: {},
       },
-      name: {
+      name_keyword: {
         raw: {},
       },
       country: {
@@ -55,7 +55,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        name: {
+        name_keyword: {
           snippet: {
             size: 100,
             fallback: true,

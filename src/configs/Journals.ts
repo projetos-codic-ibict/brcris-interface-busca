@@ -27,7 +27,7 @@ const config: CustomSearchDriverOptions = {
       id: {
         raw: {},
       },
-      title: {
+      title_keyword: {
         raw: {},
       },
       accessType: {
@@ -76,7 +76,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        title: {
+        title_keyword: {
           snippet: {
             size: 100,
             fallback: true,

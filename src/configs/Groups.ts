@@ -26,7 +26,7 @@ const config: CustomSearchDriverOptions = {
       'orgunit.name': {},
     },
     result_fields: {
-      name: {
+      name_keyword: {
         raw: {},
       },
       creationYear: {

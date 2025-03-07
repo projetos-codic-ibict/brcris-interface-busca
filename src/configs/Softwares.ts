@@ -28,7 +28,7 @@ const config: CustomSearchDriverOptions = {
       id: {
         raw: {},
       },
-      name: {
+      name_keyword: {
         raw: {},
       },
       description: {
@@ -82,7 +82,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        name: {
+        name_keyword: {
           snippet: {
             size: 100,
             fallback: true,

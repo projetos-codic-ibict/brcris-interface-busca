@@ -21,7 +21,7 @@ const CustomResultViewSoftwares = ({ result, onClickLink }: ResultViewProps) => 
               href={`${VIVO_URL_ITEM_BASE}/softw_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.name?.raw}
+              {result.name_keyword?.raw}
             </a>
           </h6>
         </div>

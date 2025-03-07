@@ -20,7 +20,7 @@ const CustomResultViewJournals = ({ result, onClickLink }: ResultViewProps) => {
               href={`${VIVO_URL_ITEM_BASE}/journ_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.title?.raw}
+              {result.title_keyword?.raw}
             </a>
           </h6>
         </div>
