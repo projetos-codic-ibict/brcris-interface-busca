@@ -5,7 +5,6 @@ import { MouseEvent, useEffect, useState } from 'react';
 import style from '../../styles/Cookie.module.css';
 
 const USER_CONSENT_COOKIE_KEY = 'cookie_consent_is_true';
-const USER_CONSENT_COOKIE_EXPIRE_DATE = new Date().getTime() + 365 * 24 * 60 * 60;
 
 const CookieConsent = () => {
   const [cookieConsentIsTrue, setCookieConsentIsTrue] = useState(true);
@@ -20,8 +19,11 @@ const CookieConsent = () => {
     e.preventDefault();
 
     if (!cookieConsentIsTrue) {
+      const TEN_YEARS = 3650;
       Cookies.set(USER_CONSENT_COOKIE_KEY, 'true', {
-        expires: USER_CONSENT_COOKIE_EXPIRE_DATE,
+        expires: TEN_YEARS,
+        secure: process.env.BRCRIS_HOST_BASE?.startsWith('https') ? true : false,
+        sameSite: process.env.BRCRIS_HOST_BASE?.startsWith('https') ? 'none' : 'strict',
       });
       setCookieConsentIsTrue(true);
     }
