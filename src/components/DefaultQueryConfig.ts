@@ -15,6 +15,7 @@ const DefaultQueryConfig = () => {
     },
     apiConnector: new Connector(),
     initialState: {
+      searchTerm: '',
       resultsPerPage: 10,
     },
   };

@@ -101,14 +101,15 @@ const Search = memo(({ index, t, handleSelectIndex }: SearchProps) => {
         <CustomProvider>
           <SearchProvider config={useNextRouting(index.config, '/')}>
             <WithSearch
-              mapContextToProps={({ wasSearched, results, isLoading, setSearchTerm }) => ({
+              mapContextToProps={({ wasSearched, results, isLoading, setSearchTerm, resultSearchTerm }) => ({
                 wasSearched,
                 results,
                 isLoading,
                 setSearchTerm,
+                resultSearchTerm,
               })}
             >
-              {({ wasSearched, results, isLoading, setSearchTerm }) => {
+              {({ wasSearched, results, isLoading, setSearchTerm, resultSearchTerm }) => {
                 return (
                   <div className="App">
                     <div className="container page">
@@ -155,7 +156,7 @@ const Search = memo(({ index, t, handleSelectIndex }: SearchProps) => {
                               view={({ className, error }) => (
                                 <>
                                   {error && <p className={`sui-search-error ${className}`}>{t(error.trim())}</p>}
-                                  {!error && wasSearched && results.length == 0 && (
+                                  {!error && wasSearched && results.length == 0 && resultSearchTerm && (
                                     <strong>{t('No documents were found for your search')}</strong>
                                   )}
                                   {!error && (
