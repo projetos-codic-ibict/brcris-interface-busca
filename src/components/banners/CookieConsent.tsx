@@ -19,7 +19,9 @@ const CookieConsent = () => {
     e.preventDefault();
 
     if (!cookieConsentIsTrue) {
-      Cookies.set(USER_CONSENT_COOKIE_KEY, 'true');
+      Cookies.set(USER_CONSENT_COOKIE_KEY, 'true', {
+        expires: 3650,
+      });
       setCookieConsentIsTrue(true);
     }
   };
