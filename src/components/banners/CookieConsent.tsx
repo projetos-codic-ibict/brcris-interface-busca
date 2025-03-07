@@ -19,8 +19,9 @@ const CookieConsent = () => {
     e.preventDefault();
 
     if (!cookieConsentIsTrue) {
+      const TEN_YEARS = 3650;
       Cookies.set(USER_CONSENT_COOKIE_KEY, 'true', {
-        expires: 3650,
+        expires: TEN_YEARS,
       });
       setCookieConsentIsTrue(true);
     }
