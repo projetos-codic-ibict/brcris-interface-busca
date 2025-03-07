@@ -13,10 +13,22 @@ const ShowAuthorItem = ({ label, authors }: ShowAuthorItemProps) => {
       <span className="sui-result__value">
         {Array.isArray(authors) ? (
           authors?.map((author: Author) => (
-            <AuthorLink key={author.id} id={author.id} name={author.name_keyword} idLattes={author.idLattes} />
+            <AuthorLink
+              key={author.id}
+              id={author.id}
+              name={author.name_keyword}
+              idLattes={author.idLattes}
+              nationality={author.nationality}
+            />
           ))
         ) : (
-          <AuthorLink key={authors?.id} id={authors?.id} name={authors?.name_keyword} idLattes={authors?.idLattes} />
+          <AuthorLink
+            key={authors?.id}
+            id={authors?.id}
+            name={authors?.name_keyword}
+            idLattes={authors?.idLattes}
+            nationality={authors?.nationality}
+          />
         )}
       </span>
     </li>

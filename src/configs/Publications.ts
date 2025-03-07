@@ -71,7 +71,7 @@ const config: CustomSearchDriverOptions = {
       service: {
         raw: {},
       },
-      title: {
+      title_keyword: {
         snippet: {},
       },
       type: {
