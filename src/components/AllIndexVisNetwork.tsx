@@ -2,16 +2,16 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
+import { useTranslation } from 'next-i18next';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { Edge, Node, Options } from 'vis';
 import 'vis-network/styles/vis-network.css';
+import indexes from '../configs/Indexes';
+import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
 // @ts-ignore
 const Graph = dynamic(import('react-graph-vis'), { ssr: false });
-// import { Edge, Node, Options } from 'vis-network'/
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
-import { Edge, Node, Options } from 'vis';
-import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
 
 type IndexStat = {
   index: string;
@@ -20,6 +20,7 @@ type IndexStat = {
 
 interface IndexNode extends Node {
   index: string;
+  indexText: string;
 }
 
 // Exemplo https://codesandbox.io/s/vis-test-fhir-test-2-forked-0m1l1x?file=/src/index.js:1774-1820
@@ -27,118 +28,124 @@ const nodes: IndexNode[] = [
   {
     id: 1,
     index: process.env.INDEX_PUBLICATION || '',
-    label: 'Publications',
+    indexText: indexes.find((i) => i.name === process.env.INDEX_PUBLICATION)?.text || '',
+    label: '',
     title: '100',
-    widthConstraint: 100,
+    widthConstraint: 130,
     level: 1,
     shape: 'circle',
-    color: '#cc7c06',
+    color: 'orange',
     font: {
-      color: '#ffffff',
-      size: 13,
+      color: '#fff',
+      size: 14,
     },
   },
   {
     id: 2,
     index: process.env.INDEX_PERSON || '',
-    label: 'People',
+    indexText: indexes.find((i) => i.name === process.env.INDEX_PERSON)?.text || '',
+    label: '',
     size: 200,
     title: '100',
+    widthConstraint: 100,
     level: 2,
     shape: 'circle',
-    color: '#CB6CE6',
+    color: '#009688',
     font: {
-      color: '#ffffff',
-      size: 13,
+      color: '#fff',
+      size: 14,
     },
   },
   {
     id: 3,
     index: process.env.INDEX_JOURNAL || '',
-    label: 'Journals',
+    indexText: indexes.find((i) => i.name === process.env.INDEX_JOURNAL)?.text || '',
+    label: '',
     title: '100',
+    widthConstraint: 80,
     level: 3,
     shape: 'circle',
     color: '#FF5757',
     font: {
-      color: '#ffffff',
-      size: 13,
+      color: '#fff',
+      size: 14,
     },
   },
   {
     id: 4,
     index: process.env.INDEX_ORGUNIT || '',
-    label: 'Institutions',
+    indexText: indexes.find((i) => i.name === process.env.INDEX_ORGUNIT)?.text || '',
+    label: '',
     title: '100',
+    widthConstraint: 60,
     level: 4,
     shape: 'circle',
-    color: '#03a9f4',
+    color: '#960080',
     font: {
-      color: '#ffffff',
-      size: 11,
+      color: '#fff',
+      size: 14,
     },
   },
   {
     id: 5,
     index: process.env.INDEX_PATENT || '',
-    label: 'Patentes',
+    indexText: indexes.find((i) => i.name === process.env.INDEX_PATENT)?.text || '',
+    label: '',
     title: '100',
+    widthConstraint: 85,
     level: 5,
     shape: 'circle',
-    color: '#960080',
+    color: '#03a9f4',
     font: {
-      color: '#ffffff',
-      size: 13,
+      color: '#fff',
+      size: 14,
     },
   },
   {
     id: 6,
     index: process.env.INDEX_PROGRAM || '',
-    label: 'PPGs',
+    indexText: indexes.find((i) => i.name === process.env.INDEX_PROGRAM)?.text || '',
+    label: '',
     title: '100',
+    widthConstraint: 70,
     level: 6,
     shape: 'circle',
-    color: '#009688',
+    color: '#CB6CE6',
     font: {
-      color: '#ffffff',
-      size: 11,
+      color: '#fff',
+      size: 14,
     },
   },
   {
     id: 7,
     index: process.env.INDEX_GROUP || '',
-    label: 'Research Groups',
+    indexText: indexes.find((i) => i.name === process.env.INDEX_GROUP)?.text || '',
+    label: '',
     title: '100',
+    widthConstraint: 70,
     level: 7,
     shape: 'circle',
     color: '#6610f2',
     font: {
-      color: '#ffffff',
+      color: '#fff',
+      size: 14,
     },
   },
   {
     id: 8,
     index: process.env.INDEX_SOFTWARE || '',
-    label: 'Softwares',
+    indexText: indexes.find((i) => i.name === process.env.INDEX_SOFTWARE)?.text || '',
+    label: '',
     title: '100 ',
+    widthConstraint: 70,
     level: 8,
     shape: 'circle',
     color: '#6f42c1',
     font: {
-      color: '#ffffff',
+      color: '#fff',
+      size: 14,
     },
   },
-];
-
-const keysLanguage = [
-  'Publications',
-  'People',
-  'Journals',
-  'Institutions',
-  'Patents',
-  'PPGs',
-  'Research Groups',
-  'Softwares',
 ];
 
 const edges: Edge = [
@@ -151,11 +158,12 @@ const edges: Edge = [
   { from: 8, to: 2, id: 15 },
   { from: 2, to: 3, id: 16 },
   { from: 2, to: 6, id: 17 },
+  { from: 1, to: 4, id: 18 },
 ];
 
 const options: Options = {
-  height: '100%',
   width: '100%',
+  height: '100%',
   edges: {
     color: '#210d41',
     smooth: {
@@ -184,15 +192,17 @@ const options: Options = {
   },
 };
 
-function getSizeOfNode(maxSize: number, sizeOfDocsOfNode: number) {
-  const originalSizeOfNode = (sizeOfDocsOfNode / maxSize) * 100;
-  const minValue = 70;
-  const maxValue = 100;
-  const totalDifference = maxValue - minValue;
-  const scaleFactor = originalSizeOfNode / maxValue;
-  const adjustedValue = scaleFactor * totalDifference + minValue;
-  return adjustedValue;
-}
+// function getSizeOfNode(maxSize: number, sizeOfDocsOfNode: number) {
+//   console.log('maxSize', maxSize, 'sizeOfDocsOfNode', sizeOfDocsOfNode);
+//   const originalSizeOfNode = (sizeOfDocsOfNode / maxSize) * 100;
+//   const minValue = 60;
+//   const maxValue = 100;
+//   const totalDifference = maxValue - minValue;
+//   const scaleFactor = originalSizeOfNode / maxValue;
+//   const adjustedValue = scaleFactor * totalDifference + minValue;
+//   console.log('adjustedValue', adjustedValue);
+//   return adjustedValue;
+// }
 
 function VisGraph() {
   const router = useRouter();
@@ -201,21 +211,15 @@ function VisGraph() {
   const { t } = useTranslation('common');
   const numberFormat = new Intl.NumberFormat('pt-BR');
 
-  const pages = [
-    `/${router.locale}/publications`,
-    `/${router.locale}/people`,
-    `/${router.locale}/journals`,
-    `/${router.locale}/institutions`,
-    `/${router.locale}/patents`,
-    `/${router.locale}/programs`,
-    `/${router.locale}/groups`,
-    `/${router.locale}/software`,
-  ];
-
   const events = {
     click: function (event: any) {
-      if (event.nodes[0] && pages[event.nodes[0] - 1]) {
-        window.location.href = pages[event.nodes[0] - 1];
+      console.log('event.nodes', nodes[event.nodes[0] - 1].indexText);
+      if (event.nodes[0]) {
+        const index = nodes[event.nodes[0] - 1].indexText;
+        router.push({
+          pathname: '/search',
+          query: { index: index },
+        });
       }
     },
   };
@@ -232,16 +236,16 @@ function VisGraph() {
 
   useEffect(() => {
     const newNodes: IndexNode[] = [];
-    const maxSizeOfNode = Math.max(...indexesStats.map((item) => item['docs.count']));
-    for (let i = 0; i < keysLanguage.length; i++) {
+    // const maxSizeOfNode = Math.max(...indexesStats.map((item) => item['docs.count']));
+    for (let i = 0; i < nodes.length; i++) {
       const indexStat = indexesStats.find((item) => item.index === nodes[i].index);
       if (indexStat) {
         localStorage.setItem(nodes[i].index, `${indexStat['docs.count']}`);
         nodes[i].title = `${numberFormat.format(indexStat['docs.count'])} `;
-        nodes[i].widthConstraint = getSizeOfNode(maxSizeOfNode, indexStat['docs.count']);
+        // nodes[i].widthConstraint = getSizeOfNode(maxSizeOfNode, indexStat['docs.count']);
       }
       // @ts-ignore
-      nodes[i].label = t(keysLanguage[i]);
+      nodes[i].label = t(nodes[i].indexText);
       // @ts-ignore
       if (!nodes[i].title?.includes(nodes[i].label)) {
         // @ts-ignore

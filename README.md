@@ -6,7 +6,7 @@ Uma interface de busca para o Ecossistema de Informação da Pesquisa Científic
 
 A Interface de Busca do BrCris é uma aplicação web desenvolvida em Next.js com o objetivo de facilitar o acesso e a análise de dados da pesquisa científica brasileira. A interface permite realizar buscas e filtrar informações de forma eficiente, contribuindo para o acesso e a disseminação de conhecimento científico.
 
-O BrCris (Ecossistema de Informação da Pesquisa Científica Brasileira) é uma plataforma agregadora que permite recuperar, certificar e visualizar dados e informações relativas aos diversos atores que atuam na pesquisa científica do contexto brasileiro.
+O BrCris (Ecossistema de Informação da Pesquisa Científica Brasileira) é uma plataforma agregadora que permite recuperar, certificar e visualizar dados e informações relativas aos diversos atores que atuam na pesquisa científica no contexto brasileiro.
 
 ## 🚀 Tecnologias Utilizadas
 

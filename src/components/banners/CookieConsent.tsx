@@ -23,7 +23,7 @@ const CookieConsent = () => {
       Cookies.set(USER_CONSENT_COOKIE_KEY, 'true', {
         expires: TEN_YEARS,
         secure: process.env.BRCRIS_HOST_BASE?.startsWith('https') ? true : false,
-        sameSite: process.env.BRCRIS_HOST_BASE?.startsWith('https') ? 'none' : 'strict',
+        sameSite: process.env.BRCRIS_HOST_BASE?.startsWith('https') ? 'none' : 'Lax',
       });
       setCookieConsentIsTrue(true);
     }

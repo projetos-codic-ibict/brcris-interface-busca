@@ -5,7 +5,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import { IoArrowDown, IoSearch } from 'react-icons/io5';
+import { IoSearch } from 'react-icons/io5';
+import AllIndexVisNetwork from '../components/AllIndexVisNetwork';
 import indexes from '../configs/Indexes';
 import { getIndexStats } from '../services/ElasticSearchStatsService';
 import styles from '../styles/Home.module.css';
@@ -139,37 +140,20 @@ export default function App() {
           </form>
         </div>
       </div>
-      <section className={styles.informations}>
-        <div className={styles.more}>
-          <a href="#more">
-            <IoArrowDown />
-            Saiba mais
-          </a>
-        </div>
+      <section className={`container ${styles.informations}`}>
         <section className={styles.about}>
-          <div className="card text-center p-2">
-            <h2>{t('BrCris')}</h2>
-            <div className="card-body">
-              <p className="card-text text-left">
-                {t(
-                  'The Brazilian Scientific Research Information Ecosystem, BrCris, is an aggregator platform that allows retrieving, certifying and visualizing data and information related to the various actors who work in scientific research in the Brazilian context.'
-                )}
-              </p>
-              <div className="text-right">
-                <Link href="/about">{t('About BrCris')}</Link>
-              </div>
-            </div>
+          <div className={styles.graph}>
+            <AllIndexVisNetwork />
           </div>
-          <div className="card text-center p-2">
-            <h2>{t('Data Sources')}</h2>
-            <div className="card-body">
-              <p className="card-text">{t('lorem ipsum')}</p>
-            </div>
-          </div>
-          <div className="card text-center p-2">
-            <h2>{t('Open Science')}</h2>
-            <div className="card-body">
-              <p className="card-text">{t('lorem ipsum')}</p>
+          <div className={styles.info}>
+            <h1>{t('BrCris')}</h1>
+            <p className="card-text text-left">
+              {t(
+                'The Brazilian Scientific Research Information Ecosystem, BrCris, is an aggregator platform that allows retrieving, certifying and visualizing data and information related to the various actors who work in scientific research in the Brazilian context.'
+              )}
+            </p>
+            <div className="text-right">
+              <Link href="/about">{t('Learn more about BrCris')}</Link>
             </div>
           </div>
         </section>

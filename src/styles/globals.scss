@@ -288,7 +288,7 @@ a.nav-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 250px);
+  min-height: 50vh;
 }
 
 .btn-picti {
