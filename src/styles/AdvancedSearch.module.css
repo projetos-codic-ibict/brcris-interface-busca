@@ -23,7 +23,7 @@
 .group {
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 4px 8px;
+  padding: 0;
   width: 100%;
   margin-right: 8px;
   position: relative;
@@ -32,8 +32,12 @@
 
 .group input,
 .group textarea {
-  padding: 6px 8px !important;
+  padding: 10px 8px !important;
   z-index: 1;
+}
+
+.group textarea {
+  border-radius: 24px 0 0 24px;
 }
 
 .group input:focus,
@@ -48,7 +52,7 @@
 
 .group select {
   border-left: 1px solid #ccc;
-  border-radius: 0;
+  border-radius: 0 24px 24px 0;
   padding: 4px 8px !important;
   min-width: 12em;
 }
@@ -76,9 +80,9 @@
   font-size: 0.9em;
   top: 5px;
   left: 4px;
-  background: var(--accent-color);
+  background: var(--tabs-color);
   color: #fff;
-  padding: 0 4px;
+  padding: 0 4px 8px 4px;
   border-radius: 4px 4px 0 0;
   transition:
     all 0.5s ease-out,

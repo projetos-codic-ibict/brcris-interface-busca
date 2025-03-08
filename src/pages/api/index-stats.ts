@@ -1,6 +1,15 @@
 import { Client } from 'es7';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+export type IndexStats = {
+  health: string;
+  status: string;
+  index: string;
+  'docs.count': string;
+  'docs.deleted': string;
+  'store.size': string;
+};
+
 const client = new Client({
   maxRetries: 5,
   requestTimeout: 60000,
@@ -11,23 +20,22 @@ const client = new Client({
   },
 });
 
-const indexesNames: string[] = [
-  process.env.INDEX_PUBLICATION!,
-  process.env.INDEX_PERSON!,
-  process.env.INDEX_ORGUNIT!,
-  process.env.INDEX_JOURNAL!,
-  process.env.INDEX_PROGRAM!,
-  process.env.INDEX_PATENT!,
-  process.env.INDEX_GROUP!,
-  process.env.INDEX_SOFTWARE!,
-];
-
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   const { body } = await client.cat.indices({
     format: 'json',
-    index: req.query.indexName || indexesNames,
+    index: req.query.indexesName,
   });
-  res.json(body.length == 1 ? body[0] : body);
+
+  const filteredData = body.map((item: IndexStats) => ({
+    health: item.health,
+    status: item.status,
+    index: item.index,
+    'docs.count': item['docs.count'],
+    'docs.deleted': item['docs.deleted'],
+    'store.size': item['store.size'],
+  }));
+
+  res.json(filteredData.length == 1 ? filteredData[0] : filteredData);
 };
 
 export default proxy;

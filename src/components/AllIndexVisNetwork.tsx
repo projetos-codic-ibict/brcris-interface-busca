@@ -225,8 +225,16 @@ function VisGraph() {
   };
 
   useEffect(() => {
-    ElasticSearchStatsService()
+    const localIndexesStats = localStorage.getItem('indexesStats');
+    if (localIndexesStats) {
+      setIndexesStats(JSON.parse(localIndexesStats));
+      return;
+    }
+    const indexesName = nodes.map((node) => node.index);
+    ElasticSearchStatsService(indexesName)
       .then((res) => {
+        console.log('res', res);
+        localStorage.setItem('indexesStats', JSON.stringify(res));
         setIndexesStats(res);
       })
       .catch((err) => {
@@ -240,7 +248,6 @@ function VisGraph() {
     for (let i = 0; i < nodes.length; i++) {
       const indexStat = indexesStats.find((item) => item.index === nodes[i].index);
       if (indexStat) {
-        localStorage.setItem(nodes[i].index, `${indexStat['docs.count']}`);
         nodes[i].title = `${numberFormat.format(indexStat['docs.count'])} `;
         // nodes[i].widthConstraint = getSizeOfNode(maxSizeOfNode, indexStat['docs.count']);
       }

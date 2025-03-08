@@ -15,8 +15,8 @@ export function getIndexStats(indexText: string, setDocsCount: (count: string) =
         });
 }
 
-const proxy = async (indexName = '') => {
-  const response = await fetch(`/api/index-stats?indexName=${indexName}`);
+const proxy = async (indexesName: string | string[]) => {
+  const response = await fetch(`/api/index-stats?indexesName=${indexesName}`);
   return response.json();
 };
 

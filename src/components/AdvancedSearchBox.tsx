@@ -7,7 +7,8 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import { IoAdd, IoArrowUndoOutline, IoClose, IoSearch } from 'react-icons/io5';
 
-import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
+import indexes from '../configs/Indexes';
+import { getIndexStats } from '../services/ElasticSearchStatsService';
 import styles from '../styles/AdvancedSearch.module.css';
 import { QueryItem } from '../types/Entities';
 import HelpModal from './HelpModal';
@@ -82,15 +83,8 @@ const AdvancedSearchBox = ({
   }
 
   useEffect(() => {
-    ElasticSearchStatsService(indexName)
-      .then((res) => {
-        const count = res['docs.count'];
-        localStorage.setItem(indexName, count);
-        setDocsCount(count);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const index = indexes.find((item) => item.name === indexName);
+    getIndexStats(index!.text, setDocsCount, indexName);
   }, []);
 
   return (
@@ -101,9 +95,13 @@ const AdvancedSearchBox = ({
             <div className={`d-flex flex-gap-0 ${styles.group}`}>
               <textarea
                 value={query}
-                placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                  value: docsCount || 0,
-                })} ${t('records')}`}
+                placeholder={`${t('Enter at least 3 characters and search among', { ns: 'common' })} ${t(
+                  'numberFormat',
+                  {
+                    value: docsCount || 0,
+                    ns: 'common',
+                  }
+                )} ${t('records', { ns: 'common' })}`}
                 onChange={(e) => setQuery(e.target.value)}
                 rows={1}
                 className="sui-search-box__text-input"
@@ -133,7 +131,7 @@ const AdvancedSearchBox = ({
                     className="button sui-search-box__submit d-flex align-items-center"
                   >
                     <IoSearch />
-                    {t('Search')}
+                    {t('Search', { ns: 'common' })}
                   </button>
                 </form>
               )}
@@ -185,7 +183,7 @@ const AdvancedSearchBox = ({
 
         <span onClick={() => toogleAdvancedConfig(false)} className="link-color d-flex align-items-center flex-gap-8">
           <IoArrowUndoOutline />
-          {t('Basic search')}
+          {t('Basic search', { ns: 'common' })}
         </span>
       </div>
     </>
