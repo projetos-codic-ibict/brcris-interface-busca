@@ -26,6 +26,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
 
         <div className="sui-result__body">
           <ul className="sui-result__details">
+            <ShowItem value={result.acronym?.raw} label={t('Acronym')} />
             <ShowItem value={result.country?.raw} label={t('Country')} />
             <ShowItem value={result.state?.raw} label={t('State')} />
             <ShowItem value={result.city?.raw} label={t('City')} />

@@ -15,19 +15,19 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      title: {},
+      title: {
+        weight: 3,
+      },
+      keywords: {},
       issn: {},
       issnl: {},
-      status: {},
-      qualis: {},
-      type: {},
     },
 
     result_fields: {
       id: {
         raw: {},
       },
-      title_keyword: {
+      H5index: {
         raw: {},
       },
       accessType: {
@@ -42,20 +42,26 @@ const config: CustomSearchDriverOptions = {
       keywords: {
         raw: {},
       },
-      status: {
+      language: {
+        raw: {},
+      },
+      publisher: {
         raw: {},
       },
       qualis: {
         raw: {},
       },
+      researchArea: {
+        raw: {},
+      },
+      status: {
+        raw: {},
+      },
+      title_keyword: {
+        raw: {},
+      },
       type: {
         raw: {},
-      },
-      H5index: {
-        raw: {},
-      },
-      publisher: {
-        raw: [],
       },
     },
     disjunctiveFacets: ['status', 'publisher.name'],

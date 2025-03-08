@@ -1,0 +1,103 @@
+{
+  "release3-journal": {
+    "mappings": {
+      "properties": {
+        "H5index": {
+          "type": "keyword"
+        },
+        "accessType": {
+          "type": "keyword"
+        },
+        "acronym": {
+          "type": "keyword"
+        },
+        "id": {
+          "type": "keyword"
+        },
+        "issn": {
+          "type": "keyword"
+        },
+        "issnl": {
+          "type": "keyword"
+        },
+        "keywords": {
+          "type": "text"
+        },
+        "keywords_completion": {
+          "type": "completion",
+          "analyzer": "simple",
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_length": 50
+        },
+        "keywords_keyword": {
+          "type": "keyword"
+        },
+        "keywords_suggest": {
+          "type": "search_as_you_type",
+          "doc_values": false,
+          "max_shingle_size": 3
+        },
+        "language": {
+          "type": "keyword"
+        },
+        "publisher": {
+          "properties": {
+            "acronym": {
+              "type": "keyword"
+            },
+            "id": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            },
+            "name_keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "qualis": {
+          "type": "keyword"
+        },
+        "researchArea": {
+          "properties": {
+            "id": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            },
+            "name_keyword": {
+              "type": "keyword"
+            }
+          }
+        },
+        "status": {
+          "type": "keyword"
+        },
+        "title": {
+          "type": "text"
+        },
+        "title_completion": {
+          "type": "completion",
+          "analyzer": "simple",
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_length": 50
+        },
+        "title_keyword": {
+          "type": "keyword"
+        },
+        "title_suggest": {
+          "type": "search_as_you_type",
+          "doc_values": false,
+          "max_shingle_size": 3
+        },
+        "type": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}

@@ -15,7 +15,10 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      name: {},
+      name: {
+        weight: 3,
+      },
+      acronym: {},
       country: {},
       state: {},
       city: {},
@@ -27,6 +30,9 @@ const config: CustomSearchDriverOptions = {
       name_keyword: {
         raw: {},
       },
+      acronym: {
+        raw: {},
+      },
       country: {
         raw: {},
       },
@@ -34,9 +40,6 @@ const config: CustomSearchDriverOptions = {
         raw: {},
       },
       city: {
-        raw: {},
-      },
-      vivo_link: {
         raw: {},
       },
     },

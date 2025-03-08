@@ -30,5 +30,6 @@
   "orcid": "Orcid",
   "releaseYear": "Ano de lançamento",
   "registrationCountry": "País de registro",
-  "platform": "Plataforma"
+  "platform": "Plataforma",
+  "nationality": "Nacionalidade"
 }

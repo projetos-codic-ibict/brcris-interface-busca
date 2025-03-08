@@ -14,16 +14,17 @@ const config: CustomSearchDriverOptions = {
   searchQuery: {
     operator: 'OR',
     index: indexName,
+    advanced_fields: {
+      publicationDate: {},
+      language: {},
+      type: {},
+      'orgunit.name': {},
+    },
     search_fields: {
       title: {
         weight: 3,
       },
-      publicationDate: {},
       'author.name': {},
-      language: {},
-      type: {},
-      // 'orgunit.name': {},
-      // keyword: {},
     },
     result_fields: {
       advisor: {

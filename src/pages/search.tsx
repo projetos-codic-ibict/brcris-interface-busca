@@ -128,7 +128,9 @@ const Search = memo(({ index, t, handleSelectIndex }: SearchProps) => {
                               setSearchTerm={setSearchTerm}
                               handleSelectIndex={handleSelectIndex}
                               indexName={index.name}
-                              fieldNames={Object.keys(index.config.searchQuery.search_fields as object)}
+                              fieldNames={Object.keys(index.config.searchQuery.search_fields as object).concat(
+                                Object.keys(index.config.searchQuery.advanced_fields || ([] as object))
+                              )}
                             />
                           }
                           sideContent={

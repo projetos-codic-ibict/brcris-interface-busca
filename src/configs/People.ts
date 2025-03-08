@@ -14,10 +14,12 @@ const config: CustomSearchDriverOptions = {
   searchQuery: {
     operator: 'OR',
     index: indexName,
+    advanced_fields: {
+      'orgunit.name': {},
+      nationality: {},
+    },
     search_fields: {
       name: {},
-      lattesId: {},
-      orcid: {},
     },
     result_fields: {
       id: {

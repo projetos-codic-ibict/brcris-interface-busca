@@ -1,4 +1,4 @@
-import type { SearchDriverOptions, SearchQuery } from '@elastic/search-ui';
+import type { SearchDriverOptions, SearchFieldConfiguration, SearchQuery } from '@elastic/search-ui';
 import { QueryDslOperator } from 'es7/api/types';
 export type Author = {
   id: string;
@@ -34,6 +34,7 @@ export type MemberType = {
 export interface CustomSearchQuery extends SearchQuery {
   operator: QueryDslOperator;
   index: string;
+  advanced_fields?: Record<string, SearchFieldConfiguration>;
 }
 
 export interface CustomSearchDriverOptions extends SearchDriverOptions {

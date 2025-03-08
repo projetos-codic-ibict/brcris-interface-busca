@@ -28,6 +28,7 @@ const CustomResultViewJournals = ({ result, onClickLink }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <ShowItem label={t('Qualis')} value={result.qualis?.raw} />
+            <ShowItem label={t('H5index')} value={result.H5index?.raw} />
             <ShowItem label={t('Type')} value={result.type?.raw} />
             <ShowItem label={t('ISSN')} value={result.issn?.raw} />
             <ShowItem label={t('ISSN-L')} value={result.issnl?.raw} />
@@ -35,6 +36,12 @@ const CustomResultViewJournals = ({ result, onClickLink }: ResultViewProps) => {
             <ShowItem label={t('Status')} value={result.status?.raw} />
             <ShowAuthorItem label={t('Publisher')} authors={result.publisher?.raw} />
             <ShowItem label={t('Keywords')} value={result.keywords?.raw} />
+            <ShowItem
+              label={t('Research field')}
+              value={result.researchArea?.raw.map((researchArea: any, index: any) => (
+                <span key={index}>{researchArea.name_keyword}</span>
+              ))}
+            />
           </ul>
         </div>
       </div>
