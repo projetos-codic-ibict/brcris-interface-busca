@@ -69,9 +69,10 @@
   border: 0 !important;
   border-right: 1px solid #ccc !important;
   min-width: 7em !important;
+  border-radius: 24px 0 0 24px !important;
 }
 
-.op:focus {
+.group select.op:focus {
   border-right: 1px solid #ccc !important;
 }
 
