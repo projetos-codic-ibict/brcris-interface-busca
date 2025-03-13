@@ -19,7 +19,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { containsResults } from '../../utils/Utils';
 import CustomSearchBox from '../components/CustomSearchBox';
 import DownloadModal from '../components/DownloadModal';
@@ -34,7 +34,6 @@ import People from '../configs/People';
 import Programs from '../configs/Programs';
 import Publications from '../configs/Publications';
 import Softwares from '../configs/Softwares';
-import { useNextRouting } from '../configs/useNextRouting';
 import styles from '../styles/Home.module.css';
 import { Index } from '../types/Propos';
 
@@ -80,17 +79,6 @@ export default function App() {
     updateIndexParam();
   }, [index]);
 
-  // const combinedConfig = useNextRouting(index.config, '/');
-  return <Search index={index} t={t} handleSelectIndex={handleSelectIndex} />;
-}
-
-interface SearchProps {
-  index: Index;
-  t: (key: string, options?: { ns?: string }) => string;
-  handleSelectIndex: (event: any) => void;
-}
-
-const Search = memo(({ index, t, handleSelectIndex }: SearchProps) => {
   const typeArqw = 'ris';
   return (
     <div>
@@ -99,7 +87,7 @@ const Search = memo(({ index, t, handleSelectIndex }: SearchProps) => {
       </Head>
       <div className="page-search">
         <CustomProvider>
-          <SearchProvider config={useNextRouting(index.config, '/')}>
+          <SearchProvider config={index.config}>
             <WithSearch
               mapContextToProps={({ wasSearched, results, isLoading, setSearchTerm, resultSearchTerm }) => ({
                 wasSearched,
@@ -208,5 +196,4 @@ const Search = memo(({ index, t, handleSelectIndex }: SearchProps) => {
       </div>
     </div>
   );
-});
-Search.displayName = 'Search';
+}
