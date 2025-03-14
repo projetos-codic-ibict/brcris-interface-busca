@@ -1,0 +1,19 @@
+{
+  "Information about data sources": "Informações sobre as Fonte de Dados",
+  "User Profile Description": "Descrição do Perfil de Usuário",
+  "Data extracted from curriculums registered on the Lattes Platform": "Dados extraídos dos currículos cadastrados na Plataforma Lattes",
+  "Research Areas": "Áreas de Investigação",
+  "Areas of expertise extracted from curriculums registered on the Lattes Platform": "Áreas de atuação extraídas dos currículos cadastrados na Plataforma Lattes",
+  "Production Statistics": "Estatísticas de Produção",
+  "Data extracted from curriculums registered on the Lattes Platform, OpenAlex, and Capes Open Data": "Dados extraídos dos currículos cadastrados na Plataforma Lattes, OpenAlex e Dados Abertos da Capes",
+  "Scientific Collaborations": "Colaborações Científicas",
+  "Collaborations identified in articles registered in curriculums on the Lattes Platform, OpenAlex, and Capes Open Data": "Colaborações identificadas nos artigos cadastrados nos currículos da Plataforma Lattes, OpenAlex e Dados Abertos da Capes",
+  "Classification by Major Areas and Fields of Knowledge": "Classificação por Grandes Áreas e Áreas do Conhecimento",
+  "Major areas and fields of knowledge extracted from articles registered in curriculums on the Lattes Platform": "Grandes áreas e áreas do conhecimento extraídas dos artigos registrados nos currículos da Plataforma Lattes",
+  "Academic Supervision": "Orientações Acadêmicas",
+  "Supervision data extracted from curriculums registered on the Lattes Platform": "Orientações extraídas dos currículos cadastrados na Plataforma Lattes",
+  "Research Groups": "Grupos de Pesquisa",
+  "Data extracted from the CNPq Research Groups Directory": "Dados extraídos do Diretório de Grupos de Pesquisa do CNPq",
+  "Identifiers and Metadata": "Identificadores e Metadados",
+  "Data extracted from curriculums registered on the Lattes Platform, OpenAlex, Capes Open Data, and OasisBr": "Dados extraídos dos currículos cadastrados na Plataforma Lattes, OpenAlex, Dados Abertos da Capes e OasisBr"
+}

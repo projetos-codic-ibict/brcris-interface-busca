@@ -9,12 +9,12 @@ type Props = {
 
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['navbar', 'common'])),
+    ...(await serverSideTranslations(locale ?? 'en', ['navbar', 'datasource'])),
   },
 });
 
 export default function DataSourceInfo() {
-  const { t } = useTranslation(['navbar', 'common']);
+  const { t } = useTranslation(['datasource', 'navbar', 'common']);
 
   return (
     <>
@@ -24,14 +24,45 @@ export default function DataSourceInfo() {
       <div className="App">
         <div className="container page d-flex align-content-center flex-column">
           <div className="page-title">
-            <h1>{t('Information about data sources')}</h1>
+            <h1 style={{ textTransform: 'none' }}>{t('Information about data sources')}</h1>
           </div>
           <main>
+            <h2>{t('User Profile Description')}</h2>
+            <p>{t('Data extracted from curriculums registered on the Lattes Platform')}</p>
+
+            <h2>{t('Research Areas')}</h2>
+            <p>{t('Areas of expertise extracted from curriculums registered on the Lattes Platform')}</p>
+
+            <h2>{t('Production Statistics')}</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat nulla pariatur.
+              {t('Data extracted from curriculums registered on the Lattes Platform, OpenAlex, and Capes Open Data')}
+            </p>
+
+            <h2>{t('Scientific Collaborations')}</h2>
+            <p>
+              {t(
+                'Collaborations identified in articles registered in curriculums on the Lattes Platform, OpenAlex, and Capes Open Data'
+              )}
+            </p>
+
+            <h2>{t('Classification by Major Areas and Fields of Knowledge')}</h2>
+            <p>
+              {t(
+                'Major areas and fields of knowledge extracted from articles registered in curriculums on the Lattes Platform'
+              )}
+            </p>
+
+            <h2>{t('Academic Supervision')}</h2>
+            <p>{t('Supervision data extracted from curriculums registered on the Lattes Platform')}</p>
+
+            <h2>{t('Research Groups')}</h2>
+            <p>{t('Data extracted from the CNPq Research Groups Directory')}</p>
+
+            <h2>{t('Identifiers and Metadata')}</h2>
+            <p>
+              {t(
+                'Data extracted from curriculums registered on the Lattes Platform, OpenAlex, Capes Open Data, and OasisBr'
+              )}
             </p>
           </main>
         </div>
