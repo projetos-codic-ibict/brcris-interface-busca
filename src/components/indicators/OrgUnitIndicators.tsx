@@ -20,8 +20,8 @@ import { getAggregateQuery } from './query/Query';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = process.env.INDEX_ORGUNIT || '';
 
-const options = new OptionsBar('Institutions by country');
-const optionsState = new OptionsBar('Institutions by state');
+const options = new OptionsBar('Organizations by country');
+const optionsState = new OptionsBar('Organizations by state');
 
 const headersOrgUnit = [
   { label: 'Country', key: 'key' },
@@ -96,7 +96,7 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          /** 
+          /**
       // @ts-ignore */
           options={options}
           width="500"
@@ -105,7 +105,7 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
             datasets: [
               {
                 data: countryIndicators,
-                label: t('Institutions') || '',
+                label: t('Organizations') || '',
                 backgroundColor: CHART_BACKGROUD_COLORS,
                 borderColor: CHART_BORDER_COLORS,
                 borderWidth: 1,
@@ -127,7 +127,7 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          /** 
+          /**
       // @ts-ignore */
           options={optionsState}
           width="500"
@@ -136,7 +136,7 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
             datasets: [
               {
                 data: stateIndicators,
-                label: t('Institutions') || '',
+                label: t('Organizations') || '',
                 backgroundColor: CHART_BACKGROUD_COLORS,
                 borderColor: CHART_BORDER_COLORS,
                 borderWidth: 1,

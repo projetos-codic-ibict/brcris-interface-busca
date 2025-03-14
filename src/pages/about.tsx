@@ -14,7 +14,6 @@ import TermsOfUse from '../components/about/TermsOfUse';
 type Props = {
   // Add custom props here
 };
-// or getServerSideProps: GetServerSideProps<Props> = async ({ locale })
 export const getStaticProps: GetStaticProps<Props> = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale ?? 'en', ['about', 'navbar', 'common'])),

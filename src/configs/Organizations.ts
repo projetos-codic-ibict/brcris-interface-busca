@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import CustomResultViewPeople from '../components/customResultView/CustomResultViewInstitutions';
+import CustomResultViewOrganizations from '../components/customResultView/CustomResultViewOrganizations';
 import DefaultQueryConfig from '../components/DefaultQueryConfig';
 import OrgUnitIndicators from '../components/indicators/OrgUnitIndicators';
 import { CustomSearchDriverOptions } from '../types/Entities';
@@ -108,7 +108,7 @@ const index: Index = {
   sortOptions,
   name: indexName,
   text: indexes.find((i) => i.name === indexName)?.text || '',
-  customView: CustomResultViewPeople,
+  customView: CustomResultViewOrganizations,
   indicators: OrgUnitIndicators,
   vivoIndexPrefix: 'insti_',
 };

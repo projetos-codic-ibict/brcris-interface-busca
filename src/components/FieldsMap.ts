@@ -4,7 +4,7 @@ englishFieldsMaps.set('publicationDate', 'Year');
 englishFieldsMaps.set('author.name', 'Autor');
 englishFieldsMaps.set('language', 'Language');
 englishFieldsMaps.set('type', 'Type');
-englishFieldsMaps.set('orgunit.name', 'Institution');
+englishFieldsMaps.set('orgunit.name', 'Organization');
 englishFieldsMaps.set('keyword_text', 'Keyword');
 englishFieldsMaps.set('name_text', 'Name');
 englishFieldsMaps.set('status', 'Status');

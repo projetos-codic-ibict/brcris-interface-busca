@@ -37,7 +37,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
               <li>
                 <span className="sui-result__key">
                   {result.type?.raw == 'doctoral thesis' || result.type?.raw == 'master thesis'
-                    ? `${t('Institution')}`
+                    ? `${t('Organization')}`
                     : result.type?.raw == 'conference proceedings'
                       ? `${t('Organization')}`
                       : `${t('Journals')}`}

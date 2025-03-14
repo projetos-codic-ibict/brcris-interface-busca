@@ -1,6 +1,13 @@
+User-agent: PetalBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
 # *
 User-agent: *
 Allow: /
+
 
 # Host
 Host: https://brcris.ibict.br

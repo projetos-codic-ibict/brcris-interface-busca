@@ -20,7 +20,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { containsResults } from '../../utils/Utils';
 import Groups from '../configs/Groups';
-import Institutions from '../configs/Institutions';
 import Journals from '../configs/Journals';
 import Patents from '../configs/Patents';
 import People from '../configs/People';
@@ -34,6 +33,7 @@ import DownloadModal from './DownloadModal';
 import Loader from './Loader';
 import { CustomProvider } from './context/CustomContext';
 import CustomViewPagingInfo from './customResultView/CustomViewPagingInfo';
+import Organizations from '../configs/Organizations';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   },
 });
 
-const indexes: Index[] = [Publications, People, Journals, Institutions, Patents, Programs, Groups, Softwares];
+const indexes: Index[] = [Publications, People, Journals, Organizations, Patents, Programs, Groups, Softwares];
 
 export type SearchProps = {
   index: Index;

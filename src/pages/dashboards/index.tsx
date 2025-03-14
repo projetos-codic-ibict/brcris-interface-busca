@@ -115,13 +115,13 @@ export default function Dashboards() {
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/institutions">
-                <h2>{t('Institutions')}</h2>
+              <Link href="/dashboards/organizations">
+                <h2>{t('Organizations')}</h2>
                 <picture className="d-flex justify-content-center">
-                  <img className="img-fluid" src="/images/dashboards/institutions.png" alt="ícone de instituições" />
+                  <img className="img-fluid" src="/images/dashboards/organizations.png" alt="ícone de organizations" />
                 </picture>
                 <div className="card-body">
-                  <p className="card-text">{t('Academic and/or research institutions')}</p>
+                  <p className="card-text">{t('Academic and/or research organizations')}</p>
                 </div>
               </Link>
             </div>
