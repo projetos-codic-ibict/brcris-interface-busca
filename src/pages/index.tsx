@@ -87,6 +87,10 @@ export default function App() {
     getIndexStats(indexText, setDocsCount, selectedIndex);
   }, [selectedIndex]);
 
+  function getURLFromIndex(text: string) {
+    return text.replace(' ', '-');
+  }
+
   return (
     <>
       <Head>
@@ -103,15 +107,10 @@ export default function App() {
       <div className={styles.home}>
         <div className="search-card">
           <h1>{t('Search in the Brazilian Scientific Research Information Ecosystem')} (BrCris)</h1>
-          <form className="form-search" action={`/${router.locale}/search`}>
+          <form className="form-search" action={`/${router.locale}/${getURLFromIndex(indexText)}`}>
             <div className="form-group">
               <div className="custom-select">
-                <select
-                  name="index"
-                  id="index-select"
-                  onChange={handleSelectChange}
-                  title={t('Select an entity') || ''}
-                >
+                <select id="index-select" onChange={handleSelectChange} title={t('Select an entity') || ''}>
                   {indexes.map((index) => (
                     <option key={index.name} value={index.text}>
                       {t(index.text)}

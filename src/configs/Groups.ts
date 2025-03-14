@@ -14,13 +14,14 @@ const config: CustomSearchDriverOptions = {
   searchQuery: {
     index: indexName,
     operator: 'OR',
+    advanced_fields: {
+      creationYear: {},
+      status: {},
+    },
     search_fields: {
       name: {
         weight: 3,
       },
-      keyword: {},
-      // creationYear: {}, dá erro na busca simples por causo do tipo long
-      status: {},
       'leader.name': {},
       'member.name': {},
       'orgunit.name': {},

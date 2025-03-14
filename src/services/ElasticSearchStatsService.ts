@@ -1,6 +1,5 @@
 export function getIndexStats(indexText: string, setDocsCount: (count: string) => void, indexName: string) {
   const indexCount = localStorage.getItem(indexText);
-  console.log('indexCount', indexCount);
   indexCount
     ? setDocsCount(indexCount)
     : proxy(indexName)

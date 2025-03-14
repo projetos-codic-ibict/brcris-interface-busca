@@ -17,15 +17,8 @@ import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { containsResults } from '../../utils/Utils';
-import CustomSearchBox from '../components/CustomSearchBox';
-import DownloadModal from '../components/DownloadModal';
-import Loader from '../components/Loader';
-import { CustomProvider } from '../components/context/CustomContext';
-import CustomViewPagingInfo from '../components/customResultView/CustomViewPagingInfo';
 import Groups from '../configs/Groups';
 import Institutions from '../configs/Institutions';
 import Journals from '../configs/Journals';
@@ -36,6 +29,11 @@ import Publications from '../configs/Publications';
 import Softwares from '../configs/Softwares';
 import styles from '../styles/Home.module.css';
 import { Index } from '../types/Propos';
+import CustomSearchBox from './CustomSearchBox';
+import DownloadModal from './DownloadModal';
+import Loader from './Loader';
+import { CustomProvider } from './context/CustomContext';
+import CustomViewPagingInfo from './customResultView/CustomViewPagingInfo';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
@@ -45,39 +43,26 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
 
 const indexes: Index[] = [Publications, People, Journals, Institutions, Patents, Programs, Groups, Softwares];
 
-export default function App() {
+export type SearchProps = {
+  index: Index;
+};
+
+export default function Search({ index }: SearchProps) {
   const { t } = useTranslation(['common', 'facets']);
   const router = useRouter();
-
-  const searchParams = useSearchParams();
-
-  const indexParam = searchParams.get('index');
-
-  const activeIndex = indexes.find((item) => item.text === indexParam) || indexes[0];
-  const [index, setIndex] = useState<Index>(activeIndex);
-
-  // tradução
-  index.sortOptions.forEach((option) => (option.name = t(option.name)));
-
-  const updateIndexParam = () => {
-    console.log('updateIndexParam');
-    router.push({
-      pathname: router.pathname,
-      query: { ...router.query, index: index.text },
-    });
-  };
 
   const handleSelectIndex = (event: any) => {
     const selectedOption = indexes.find((item) => item.name === event.target.value);
     if (selectedOption) {
-      const selectedIndex = indexes.find((item) => item.name === selectedOption.name);
-      setIndex(selectedIndex!);
+      // @ts-ignore
+      const queryString = new URLSearchParams(router.query).toString();
+      router.push(`/${getURLFromIndex(selectedOption.text)}?${queryString}`);
     }
   };
 
-  useEffect(() => {
-    updateIndexParam();
-  }, [index]);
+  function getURLFromIndex(text: string) {
+    return text.replace(' ', '-');
+  }
 
   const typeArqw = 'ris';
   return (
