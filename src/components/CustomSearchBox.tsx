@@ -7,7 +7,7 @@ import CustomContext from './context/CustomContext';
 export type CustomSearchBoxProps = {
   titleFieldName: string;
   itemLinkPrefix: string;
-  indexName: string;
+  indexLabel: string;
   fieldNames: string[];
   setSearchTerm: (searchTerm: string) => void;
   handleSelectIndex: (event: any) => void;
@@ -16,7 +16,7 @@ export type CustomSearchBoxProps = {
 const CustomSearchBox = ({
   titleFieldName,
   itemLinkPrefix,
-  indexName,
+  indexLabel,
   fieldNames,
   setSearchTerm,
   handleSelectIndex,
@@ -25,14 +25,14 @@ const CustomSearchBox = ({
 
   return advanced ? (
     //@ts-ignore
-    <AdvancedSearchBox indexName={indexName} fieldNames={fieldNames} toogleAdvancedConfig={setAdvanced} />
+    <AdvancedSearchBox indexName={indexLabel} fieldNames={fieldNames} toogleAdvancedConfig={setAdvanced} />
   ) : (
     <BasicSearchBox
       titleFieldName={titleFieldName}
       itemLinkPrefix={itemLinkPrefix}
       setSearchTerm={setSearchTerm}
       handleSelectIndex={handleSelectIndex}
-      indexName={indexName}
+      indexLabel={indexLabel}
       toogleAdvancedConfig={setAdvanced}
     />
   );

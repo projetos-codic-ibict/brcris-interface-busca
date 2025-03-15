@@ -1,17 +1,24 @@
-export function getIndexStats(indexText: string, setDocsCount: (count: string) => void, indexName: string) {
-  const indexCount = localStorage.getItem(indexText);
-  indexCount
-    ? setDocsCount(indexCount)
-    : proxy(indexName)
+import indexes from '../configs/Indexes';
+
+export function getIndexStats(indexLabel: string, setDocsCount: (count: string) => void) {
+  const indexCount = localStorage.getItem(indexLabel);
+  if (indexCount) {
+    setDocsCount(indexCount);
+  } else {
+    const index = indexes.find((item) => item.label === indexLabel);
+    if (index) {
+      proxy(index?.name)
         .then((res) => {
           console.log('buscando remoto');
           const count = res['docs.count'];
-          localStorage.setItem(indexText, count);
+          localStorage.setItem(indexLabel, count);
           setDocsCount(count);
         })
         .catch((err) => {
           console.error(err);
         });
+    }
+  }
 }
 
 const proxy = async (indexesName: string | string[]) => {

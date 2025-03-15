@@ -58,7 +58,7 @@ export default function Home() {
           <div key={index} className="col-md-6 col-lg-4 mb-4">
             <div className="card shadow-sm">
               <div className="card-header d-flex justify-content-between align-items-center">
-                <h5 className="card-title mb-0 text-capitalize">{indexes.find((i) => i.name === item.index)?.text}</h5>
+                <h5 className="card-title mb-0 text-capitalize">{indexes.find((i) => i.name === item.index)?.label}</h5>
                 <span className={`badge ${getHealthColor(item.health)} text-white`}>{item.health}</span>
               </div>
               <div className="card-body">

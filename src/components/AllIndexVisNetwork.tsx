@@ -10,6 +10,7 @@ import { Edge, Node, Options } from 'vis';
 import 'vis-network/styles/vis-network.css';
 import indexes from '../configs/Indexes';
 import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
+import { replaceSpacesWithHyphens } from '../../utils/Utils';
 // @ts-ignore
 const Graph = dynamic(import('react-graph-vis'), { ssr: false });
 
@@ -20,7 +21,7 @@ type IndexStat = {
 
 interface IndexNode extends Node {
   index: string;
-  indexText: string;
+  indexLabel: string;
 }
 
 // Exemplo https://codesandbox.io/s/vis-test-fhir-test-2-forked-0m1l1x?file=/src/index.js:1774-1820
@@ -28,7 +29,7 @@ const nodes: IndexNode[] = [
   {
     id: 1,
     index: process.env.INDEX_PUBLICATION || '',
-    indexText: indexes.find((i) => i.name === process.env.INDEX_PUBLICATION)?.text || '',
+    indexLabel: indexes.find((i) => i.name === process.env.INDEX_PUBLICATION)?.label || '',
     label: '',
     title: '100',
     widthConstraint: 130,
@@ -43,7 +44,7 @@ const nodes: IndexNode[] = [
   {
     id: 2,
     index: process.env.INDEX_PERSON || '',
-    indexText: indexes.find((i) => i.name === process.env.INDEX_PERSON)?.text || '',
+    indexLabel: indexes.find((i) => i.name === process.env.INDEX_PERSON)?.label || '',
     label: '',
     size: 200,
     title: '100',
@@ -59,7 +60,7 @@ const nodes: IndexNode[] = [
   {
     id: 3,
     index: process.env.INDEX_JOURNAL || '',
-    indexText: indexes.find((i) => i.name === process.env.INDEX_JOURNAL)?.text || '',
+    indexLabel: indexes.find((i) => i.name === process.env.INDEX_JOURNAL)?.label || '',
     label: '',
     title: '100',
     widthConstraint: 80,
@@ -74,7 +75,7 @@ const nodes: IndexNode[] = [
   {
     id: 4,
     index: process.env.INDEX_ORGUNIT || '',
-    indexText: indexes.find((i) => i.name === process.env.INDEX_ORGUNIT)?.text || '',
+    indexLabel: indexes.find((i) => i.name === process.env.INDEX_ORGUNIT)?.label || '',
     label: '',
     title: '100',
     widthConstraint: 60,
@@ -89,7 +90,7 @@ const nodes: IndexNode[] = [
   {
     id: 5,
     index: process.env.INDEX_PATENT || '',
-    indexText: indexes.find((i) => i.name === process.env.INDEX_PATENT)?.text || '',
+    indexLabel: indexes.find((i) => i.name === process.env.INDEX_PATENT)?.label || '',
     label: '',
     title: '100',
     widthConstraint: 85,
@@ -104,7 +105,7 @@ const nodes: IndexNode[] = [
   {
     id: 6,
     index: process.env.INDEX_PROGRAM || '',
-    indexText: indexes.find((i) => i.name === process.env.INDEX_PROGRAM)?.text || '',
+    indexLabel: indexes.find((i) => i.name === process.env.INDEX_PROGRAM)?.label || '',
     label: '',
     title: '100',
     widthConstraint: 70,
@@ -119,7 +120,7 @@ const nodes: IndexNode[] = [
   {
     id: 7,
     index: process.env.INDEX_GROUP || '',
-    indexText: indexes.find((i) => i.name === process.env.INDEX_GROUP)?.text || '',
+    indexLabel: indexes.find((i) => i.name === process.env.INDEX_GROUP)?.label || '',
     label: '',
     title: '100',
     widthConstraint: 70,
@@ -134,7 +135,7 @@ const nodes: IndexNode[] = [
   {
     id: 8,
     index: process.env.INDEX_SOFTWARE || '',
-    indexText: indexes.find((i) => i.name === process.env.INDEX_SOFTWARE)?.text || '',
+    indexLabel: indexes.find((i) => i.name === process.env.INDEX_SOFTWARE)?.label || '',
     label: '',
     title: '100 ',
     widthConstraint: 70,
@@ -213,13 +214,9 @@ function VisGraph() {
 
   const events = {
     click: function (event: any) {
-      console.log('event.nodes', nodes[event.nodes[0] - 1].indexText);
       if (event.nodes[0]) {
-        const index = nodes[event.nodes[0] - 1].indexText;
-        router.push({
-          pathname: '/search',
-          query: { index: index },
-        });
+        const indexLabel = nodes[event.nodes[0] - 1].indexLabel;
+        router.push(`/${replaceSpacesWithHyphens(indexLabel)}`);
       }
     },
   };
@@ -233,7 +230,6 @@ function VisGraph() {
     const indexesName = nodes.map((node) => node.index);
     ElasticSearchStatsService(indexesName)
       .then((res) => {
-        console.log('res', res);
         localStorage.setItem('indexesStats', JSON.stringify(res));
         setIndexesStats(res);
       })
@@ -252,7 +248,7 @@ function VisGraph() {
         // nodes[i].widthConstraint = getSizeOfNode(maxSizeOfNode, indexStat['docs.count']);
       }
       // @ts-ignore
-      nodes[i].label = t(nodes[i].indexText);
+      nodes[i].label = t(nodes[i].indexLabel);
       // @ts-ignore
       if (!nodes[i].title?.includes(nodes[i].label)) {
         // @ts-ignore

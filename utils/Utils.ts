@@ -26,3 +26,7 @@ export const CHART_BORDER_COLORS = [
 export function containsResults(wasSearched: any, results: any) {
   return wasSearched && results.length > 0;
 }
+
+export function replaceSpacesWithHyphens(text: string) {
+  return text.replace(' ', '-');
+}

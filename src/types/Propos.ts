@@ -22,7 +22,7 @@ export type Index = {
   config: CustomSearchDriverOptions;
   sortOptions: SortOptionsType[];
   name: string;
-  text: string;
+  label: string;
   customView: ComponentType<ResultViewProps>;
   indicators: ComponentType<any>;
   vivoIndexPrefix: string;

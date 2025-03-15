@@ -12,7 +12,7 @@ const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 export type BasicSearchBoxProps = {
   titleFieldName: string;
   itemLinkPrefix: string;
-  indexName: string;
+  indexLabel: string;
   setSearchTerm: (searchTerm: string) => void;
   handleSelectIndex: (event: any) => void;
   toogleAdvancedConfig: (advanced: boolean) => void;
@@ -21,18 +21,19 @@ export type BasicSearchBoxProps = {
 const BasicSearchBox = ({
   titleFieldName,
   itemLinkPrefix,
-  indexName,
+  indexLabel,
   setSearchTerm,
   handleSelectIndex,
   toogleAdvancedConfig,
 }: BasicSearchBoxProps) => {
   const { t } = useTranslation('common');
   const router = useRouter();
-  const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
+  const [docsCount, setDocsCount] = useState(localStorage.getItem(indexLabel));
+
+  console.log('indexLabel', indexLabel);
 
   useEffect(() => {
-    const index = indexes.find((item) => item.name === indexName);
-    getIndexStats(index!.text, setDocsCount, indexName);
+    getIndexStats(indexLabel, setDocsCount);
   }, []);
 
   return (
@@ -51,9 +52,6 @@ const BasicSearchBox = ({
         debounceLength={0}
         onSubmit={(searchTerm) => {
           setSearchTerm(searchTerm);
-          // updateOpetatorConfig('OR');
-          // router.query.q = searchTerm;
-          // router.push(router);
         }}
         onSelectAutocomplete={(selection: any, item: any, defaultOnSelectAutocomplete: any) => {
           if (selection.suggestion) {
@@ -68,22 +66,19 @@ const BasicSearchBox = ({
             <div className="form-group">
               <div className="custom-select">
                 <select
-                  defaultValue={indexName}
+                  defaultValue={indexLabel}
                   id="index-select"
                   onChange={handleSelectIndex}
                   title={t('Select an entity') || ''}
                 >
                   {indexes.map((index) => (
-                    <option key={index.name} value={index.name}>
-                      {t(index.text)}
+                    <option key={index.label} value={index.label}>
+                      {t(index.label)}
                     </option>
                   ))}
                 </select>
               </div>
               <input
-                // placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
-                //   value: docsCount || 0,
-                // })} ${t('records')}`}
                 {...getInputProps({
                   placeholder: `${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
                     value: docsCount || 0,
@@ -93,14 +88,7 @@ const BasicSearchBox = ({
               {getAutocomplete()}
             </div>
 
-            <button
-              disabled={getInputProps()?.value?.trim().length < 3}
-              className="btn btn-primary"
-              // {...getButtonProps({
-              //   disabled: getInputProps()?.value?.trim().length < 3,
-              //   className: 'btn btn-primary',
-              // })}
-            >
+            <button disabled={getInputProps()?.value?.trim().length < 3} className="btn btn-primary">
               <IoSearch /> {t('Search')}
             </button>
           </div>

@@ -131,7 +131,7 @@ const index: Index = {
   config,
   sortOptions,
   name: indexName,
-  text: indexes.find((i) => i.name === indexName)?.text || '',
+  label: indexes.find((i) => i.name === indexName)?.label || '',
   customView: CustomResultViewJournals,
   indicators: JornalsIndicators,
   vivoIndexPrefix: 'journ_',

@@ -10,6 +10,7 @@ import AllIndexVisNetwork from '../components/AllIndexVisNetwork';
 import indexes from '../configs/Indexes';
 import { getIndexStats } from '../services/ElasticSearchStatsService';
 import styles from '../styles/Home.module.css';
+import { replaceSpacesWithHyphens } from '../../utils/Utils';
 
 type Props = {
   // Add custom props here
@@ -70,26 +71,13 @@ export default function App() {
   ];
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [term, setTerm] = useState('');
-  const [selectedIndex, setSelectedIndex] = useState(indexes[0].name);
-  const [indexText, setIndexText] = useState(indexes[0].text);
   const [docsCount, setDocsCount] = useState('');
-
-  const handleSelectChange = (event: any) => {
-    const selectedOption = indexes.find((item) => item.text === event.target.value);
-    if (selectedOption) {
-      setSelectedIndex(selectedOption.name);
-      setIndexText(selectedOption.text);
-    }
-  };
+  const [indexLabel, setIndexLabel] = useState(indexes[0].label);
 
   useEffect(() => {
     inputRef?.current?.focus();
-    getIndexStats(indexText, setDocsCount, selectedIndex);
-  }, [selectedIndex]);
-
-  function getURLFromIndex(text: string) {
-    return text.replace(' ', '-');
-  }
+    getIndexStats(indexLabel, setDocsCount);
+  }, [indexLabel]);
 
   return (
     <>
@@ -107,13 +95,17 @@ export default function App() {
       <div className={styles.home}>
         <div className="search-card">
           <h1>{t('Search in the Brazilian Scientific Research Information Ecosystem')} (BrCris)</h1>
-          <form className="form-search" action={`/${router.locale}/${getURLFromIndex(indexText)}`}>
+          <form className="form-search" action={`/${router.locale}/${replaceSpacesWithHyphens(indexLabel)}`}>
             <div className="form-group">
               <div className="custom-select">
-                <select id="index-select" onChange={handleSelectChange} title={t('Select an entity') || ''}>
+                <select
+                  id="index-select"
+                  onChange={(e) => setIndexLabel(e.target.value)}
+                  title={t('Select an entity') || ''}
+                >
                   {indexes.map((index) => (
-                    <option key={index.name} value={index.text}>
-                      {t(index.text)}
+                    <option key={index.label} value={index.label}>
+                      {t(index.label)}
                     </option>
                   ))}
                 </select>
@@ -124,13 +116,13 @@ export default function App() {
                 autoFocus
                 title={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
                   value: docsCount,
-                })} ${t(indexText)}`}
+                })} ${t(indexLabel)}`}
                 type="search"
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
                 placeholder={`${t('Enter at least 3 characters and search among')} ${t('numberFormat', {
                   value: docsCount,
-                })} ${t(indexText)}`}
+                })} ${t(indexLabel)}`}
               />
             </div>
             <button disabled={term?.trim().length < 3} className="btn btn-primary" title={t('Search') || 'Search'}>

@@ -206,7 +206,7 @@ const index: Index = {
   config,
   sortOptions,
   name: indexName,
-  text: indexes.find((i) => i.name === indexName)?.text || '',
+  label: indexes.find((i) => i.name === indexName)?.label || '',
   customView: CustomResultViewPublications,
   indicators: PublicationsIndicators,
   vivoIndexPrefix: 'publ_',

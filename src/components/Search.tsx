@@ -18,14 +18,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { containsResults } from '../../utils/Utils';
-import Groups from '../configs/Groups';
-import Journals from '../configs/Journals';
-import Patents from '../configs/Patents';
-import People from '../configs/People';
-import Programs from '../configs/Programs';
-import Publications from '../configs/Publications';
-import Softwares from '../configs/Softwares';
+import { containsResults, replaceSpacesWithHyphens } from '../../utils/Utils';
 import styles from '../styles/Home.module.css';
 import { Index } from '../types/Propos';
 import CustomSearchBox from './CustomSearchBox';
@@ -33,15 +26,12 @@ import DownloadModal from './DownloadModal';
 import Loader from './Loader';
 import { CustomProvider } from './context/CustomContext';
 import CustomViewPagingInfo from './customResultView/CustomViewPagingInfo';
-import Organizations from '../configs/Organizations';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar', 'advanced', 'facets'])),
   },
 });
-
-const indexes: Index[] = [Publications, People, Journals, Organizations, Patents, Programs, Groups, Softwares];
 
 export type SearchProps = {
   index: Index;
@@ -52,23 +42,15 @@ export default function Search({ index }: SearchProps) {
   const router = useRouter();
 
   const handleSelectIndex = (event: any) => {
-    const selectedOption = indexes.find((item) => item.name === event.target.value);
-    if (selectedOption) {
-      // @ts-ignore
-      const queryString = new URLSearchParams(router.query).toString();
-      router.push(`/${getURLFromIndex(selectedOption.text)}?${queryString}`);
-    }
+    const params = new URLSearchParams(window.location.search);
+    router.push(`/${replaceSpacesWithHyphens(event.target.value)}?${params.toString()}`);
   };
-
-  function getURLFromIndex(text: string) {
-    return text.replace(' ', '-');
-  }
 
   const typeArqw = 'ris';
   return (
     <div>
       <Head>
-        <title>{`BrCris - ${t(index.text)}`}</title>
+        <title>{`BrCris - ${t(index.label)}`}</title>
       </Head>
       <div className="page-search">
         <CustomProvider>
@@ -87,7 +69,7 @@ export default function Search({ index }: SearchProps) {
                   <div className="App">
                     <div className="container page">
                       <div className="page-title">
-                        <h1>{t(index.text)}</h1>
+                        <h1>{t(index.label)}</h1>
                       </div>
                     </div>
                     <div className={styles.content}>
@@ -100,7 +82,7 @@ export default function Search({ index }: SearchProps) {
                               itemLinkPrefix={index.vivoIndexPrefix}
                               setSearchTerm={setSearchTerm}
                               handleSelectIndex={handleSelectIndex}
-                              indexName={index.name}
+                              indexLabel={index.label}
                               fieldNames={Object.keys(index.config.searchQuery.search_fields as object).concat(
                                 Object.keys(index.config.searchQuery.advanced_fields || ([] as object))
                               )}

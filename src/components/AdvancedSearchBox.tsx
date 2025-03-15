@@ -3,18 +3,15 @@
 import { SearchBox, withSearch } from '@elastic/react-search-ui';
 import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch';
 import { useTranslation } from 'next-i18next';
-
 import { useEffect, useState } from 'react';
 import { IoAdd, IoArrowUndoOutline, IoClose, IoSearch } from 'react-icons/io5';
-
-import indexes from '../configs/Indexes';
 import { getIndexStats } from '../services/ElasticSearchStatsService';
 import styles from '../styles/AdvancedSearch.module.css';
 import { QueryItem } from '../types/Entities';
 import HelpModal from './HelpModal';
 
 interface CustomSearchBoxProps extends SearchContextState {
-  indexName: string;
+  indexLabel: string;
   fieldNames: string[];
   toogleAdvancedConfig: (advanced: boolean) => void;
 }
@@ -22,12 +19,12 @@ interface CustomSearchBoxProps extends SearchContextState {
 const AdvancedSearchBox = ({
   searchTerm,
   setSearchTerm,
-  indexName,
+  indexLabel,
   fieldNames,
   toogleAdvancedConfig,
 }: CustomSearchBoxProps) => {
   const { t } = useTranslation(['advanced', 'common']);
-  const [docsCount, setDocsCount] = useState(localStorage.getItem(indexName));
+  const [docsCount, setDocsCount] = useState(localStorage.getItem(indexLabel));
   const [query, setQuery] = useState(searchTerm);
   const [queryField, setQueryField] = useState(t('all'));
   const [inputs, setInputs] = useState<QueryItem[]>([]);
@@ -83,8 +80,7 @@ const AdvancedSearchBox = ({
   }
 
   useEffect(() => {
-    const index = indexes.find((item) => item.name === indexName);
-    getIndexStats(index!.text, setDocsCount, indexName);
+    getIndexStats(indexLabel, setDocsCount);
   }, []);
 
   return (
