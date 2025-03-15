@@ -31,5 +31,13 @@
   "releaseYear": "Release year",
   "registrationCountry": "Registration country",
   "platform": "Platform",
-  "nationality": "Nationality"
+  "nationality": "Nationality",
+  "registrationcountry": "Registration country",
+  "releaseyear": "Release year",
+  "kind": "Kind",
+  "creationyear": "Creation year",
+  "researchline": "Research line",
+  "leader.name_keyword": "Leader",
+  "applicationsector": "Application sector",
+  "countrycode": "Country code"
 }

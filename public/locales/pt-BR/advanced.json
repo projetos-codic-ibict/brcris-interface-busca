@@ -31,5 +31,13 @@
   "releaseYear": "Ano de lançamento",
   "registrationCountry": "País de registro",
   "platform": "Plataforma",
-  "nationality": "Nacionalidade"
+  "nationality": "Nacionalidade",
+  "registrationcountry": "País de registro",
+  "releaseyear": "Ano de lançamento",
+  "kind": "Tipo",
+  "creationyear": "Ano de criação",
+  "researchline": "Linha de pesquisa",
+  "leader.name_keyword": "Líder",
+  "applicationsector": "Setor de aplicação",
+  "countrycode": "Código do país"
 }

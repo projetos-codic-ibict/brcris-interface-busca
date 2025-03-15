@@ -31,14 +31,15 @@ const CustomResultViewSoftwares = ({ result, onClickLink }: ResultViewProps) => 
             <ShowItem label={t('Description')} value={result.description?.raw} />
             <ShowAuthorItem label={t('Creator(s)')} authors={result.creator?.raw} />
             <ShowItem label={t('Release year')} value={result.releaseYear?.raw} />
+            <ShowItem label={t('Registration country')} value={result.registrationCountry?.raw} />
             <ShowItem label={t('Platform')} value={result.platform?.raw} />
+            <ShowItem label={t('Kind')} value={result.kind?.raw} />
 
             <ReadMoreCollapse id={result.id?.raw}>
               <ShowItem label={t('Deposit date')} value={result.depositDate?.raw} />
-              <ShowItem label={t('Registration country')} value={result.registrationCountry?.raw} />
               <ShowItem label={t('Activity sector')} value={result.activitySector?.raw} />
               <ShowItem label={t('Knowledge areas')} value={result.knowledgeAreas?.raw} />
-              <ShowItem label={t('Keywords')} value={result.keyword?.raw} />
+              <ShowItem label={t('Keywords')} value={result.keyword_keyword?.raw} />
               <ShowItem label={t('Language')} value={result.language?.raw} />
             </ReadMoreCollapse>
           </ul>

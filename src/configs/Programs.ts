@@ -25,20 +25,15 @@ const config: CustomSearchDriverOptions = {
       orgunit: {
         raw: [],
       },
-      capesResearchArea: {
-        raw: {},
-      },
-      cnpqResearchArea: {
+      researchArea: {
         raw: {},
       },
       evaluationArea: {
         raw: {},
       },
     },
-    disjunctiveFacets: ['cnpqResearchArea', 'capesResearchArea'],
     facets: {
-      capesResearchArea: { type: 'value' },
-      cnpqResearchArea: { type: 'value' },
+      researchArea: { type: 'value' },
       'orgunit.name_keyword': { type: 'value' },
       evaluationArea: { type: 'value' },
     },

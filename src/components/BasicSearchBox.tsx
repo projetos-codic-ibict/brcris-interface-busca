@@ -30,8 +30,6 @@ const BasicSearchBox = ({
   const router = useRouter();
   const [docsCount, setDocsCount] = useState(localStorage.getItem(indexLabel));
 
-  console.log('indexLabel', indexLabel);
-
   useEffect(() => {
     getIndexStats(indexLabel, setDocsCount);
   }, []);

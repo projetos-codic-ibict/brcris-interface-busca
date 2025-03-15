@@ -104,10 +104,10 @@ export default function Dashboards() {
               </Link>
             </div>
             <div className="card text-center p-2">
-              <Link href="/dashboards/softwares">
-                <h2>{t('Softwares')}</h2>
+              <Link href="/dashboards/software">
+                <h2>{t('Software')}</h2>
                 <picture className="d-flex justify-content-center">
-                  <img className="img-fluid" src="/images/dashboards/softwares.png" alt="ícone de softwares" />
+                  <img className="img-fluid" src="/images/dashboards/softwares.png" alt="ícone de software" />
                 </picture>
                 <div className="card-body">
                   <p className="card-text">{t('Set of computer programs registered by the researchers')}</p>

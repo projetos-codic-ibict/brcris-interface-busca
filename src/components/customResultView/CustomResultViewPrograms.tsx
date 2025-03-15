@@ -40,8 +40,12 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
                 ))}
               </span>
             </li>
-            <ShowItem label={t('Capes research area')} value={result.capesResearchArea?.raw} />
-            <ShowItem label={t('CNPq research area')} value={result.cnpqResearchArea?.raw} />
+            <ShowItem
+              label={t('Research field')}
+              value={result.researchArea?.raw.map((researchArea: any, index: any) => (
+                <span key={index}>{researchArea.name_keyword}</span>
+              ))}
+            />
             <ShowItem label={t('Evaluation area')} value={result.evaluationArea?.raw} />
           </ul>
         </div>

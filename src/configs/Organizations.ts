@@ -45,7 +45,7 @@ const config: CustomSearchDriverOptions = {
     },
     facets: {
       country: { type: 'value' },
-      state: { type: 'value' },
+      state: { type: 'value', size: 27 },
       city: { type: 'value' },
     },
   },

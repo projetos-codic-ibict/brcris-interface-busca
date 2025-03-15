@@ -6,7 +6,7 @@ const indexes = [
   { label: 'patents', name: process.env.INDEX_PATENT || '' },
   { label: 'programs', name: process.env.INDEX_PROGRAM || '' },
   { label: 'research groups', name: process.env.INDEX_GROUP || '' },
-  { label: 'softwares', name: process.env.INDEX_SOFTWARE || '' },
+  { label: 'software', name: process.env.INDEX_SOFTWARE || '' },
 ];
 
 export default indexes;

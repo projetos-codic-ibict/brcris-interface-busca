@@ -45,7 +45,7 @@ const config: CustomSearchDriverOptions = {
       applicationSector: {
         raw: {},
       },
-      keyword: {
+      keyword_keyword: {
         raw: [],
       },
       URL: {

@@ -26,6 +26,7 @@ import DownloadModal from './DownloadModal';
 import Loader from './Loader';
 import { CustomProvider } from './context/CustomContext';
 import CustomViewPagingInfo from './customResultView/CustomViewPagingInfo';
+import { useCallback } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
@@ -41,10 +42,10 @@ export default function Search({ index }: SearchProps) {
   const { t } = useTranslation(['common', 'facets']);
   const router = useRouter();
 
-  const handleSelectIndex = (event: any) => {
+  const handleSelectIndex = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const params = new URLSearchParams(window.location.search);
     router.push(`/${replaceSpacesWithHyphens(event.target.value)}?${params.toString()}`);
-  };
+  }, []);
 
   const typeArqw = 'ris';
   return (

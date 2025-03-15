@@ -20,8 +20,8 @@ import { getAggregateQuery } from './query/Query';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = process.env.INDEX_SOFTWARE || '';
 
-const optPubDate = new OptionsBar('Softwares by release year');
-const optknowledgeAreas = new OptionsPie('Softwares by knowledge area');
+const optPubDate = new OptionsBar('Software by release year');
+const optknowledgeAreas = new OptionsPie('Software by knowledge area');
 
 const headersByReleaseYear = [
   { label: 'Release year', key: 'key' },
@@ -104,7 +104,7 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading }: IndicatorsProps
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          /** 
+          /**
       // @ts-ignore */
           options={optPubDate}
           width="500"
@@ -135,7 +135,7 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading }: IndicatorsProps
           <IoCloudDownloadOutline />
         </CSVLink>
         <Pie
-          /** 
+          /**
       // @ts-ignore */
           options={optknowledgeAreas}
           width="500"

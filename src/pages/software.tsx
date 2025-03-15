@@ -1,5 +1,5 @@
 import Search from '../components/Search';
-import Softwares from '../configs/Softwares';
+import Software from '../configs/Software';
 
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -11,5 +11,5 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
 });
 
 export default function App() {
-  return <Search index={Softwares} />;
+  return <Search index={Software} />;
 }

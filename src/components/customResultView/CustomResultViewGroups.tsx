@@ -30,48 +30,47 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <ShowItem label={t('Creation year')} value={result.creationYear?.raw} />
-
             <ShowItem label={t('Research line')} value={result.researchLine?.raw} />
             <ShowAuthorItem label={t('Leader')} authors={result.leader?.raw} />
-
-            <li>
-              <span className="sui-result__key">{t('Organization')}</span>
-              {result.orgunit?.raw.map((orgunit: any, index: any) => (
-                <span key={index} className="sui-result__value">
-                  <ExternalLink
-                    key={orgunit.id}
-                    content={orgunit.name_keyword!}
-                    url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}?lang=${router.locale}`}
-                  />
-                </span>
-              ))}
-            </li>
-
-            <ShowItem label={t('Status')} value={result.status?.raw} />
-
-            <ReadMoreCollapse id={result.id?.raw}>
-              <ShowItem label={t('Description')} value={result.description?.raw} />
-
-              <ShowItem label={t('Knowledge area')} value={result.knowledgeArea?.raw} />
-
-              <ShowItem label={t('Application sector')} value={result.applicationSector?.raw} />
-
-              <ShowItem label={t('Keywords')} value={result.keyword?.raw} />
-
-              <ShowItem label={t('URL')} value={result.URL?.raw} />
-
+            {result.orgunit && (
+              <li>
+                <span className="sui-result__key">{t('Organization')}</span>
+                {result.orgunit?.raw.map((orgunit: any, index: any) => (
+                  <span key={index} className="sui-result__value">
+                    <ExternalLink
+                      key={orgunit.id}
+                      content={orgunit.name_keyword!}
+                      url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}?lang=${router.locale}`}
+                    />
+                  </span>
+                ))}
+              </li>
+            )}
+            {result.partner && (
               <li>
                 <span className="sui-result__key">{t('Partner')}</span>
                 {result.partner?.raw.map((partner: any, index: any) => (
                   <span key={index} className="sui-result__value">
-                    {partner.name}
+                    <ExternalLink
+                      key={partner.id}
+                      content={partner.name_keyword!}
+                      url={`${VIVO_URL_ITEM_BASE}/org_${partner.id}?lang=${router.locale}`}
+                    />
                   </span>
                 ))}
               </li>
+            )}
+            <ShowItem label={t('URL')} value={result.URL?.raw} urlLink={result.URL?.raw} />
+            <ShowItem label={t('Status')} value={result.status?.raw} />
+            <ShowItem label={t('Application sector')} value={result.applicationSector?.raw} />
 
+            <ReadMoreCollapse id={result.id?.raw}>
               <ShowAuthorItem label={t('Member')} authors={result.member?.raw} />
-              <ShowItem label={t('Softwares')} value={result.software?.raw} />
+              <ShowItem label={t('Knowledge area')} value={result.knowledgeArea?.raw} />
+              <ShowItem label={t('Keywords')} value={result.keyword_keyword?.raw} />
+              <ShowItem label={t('Software')} value={result.software?.raw} />
               <ShowItem label={t('Equipment')} value={result.equipment?.raw} />
+              <ShowItem label={t('Description')} value={result.description?.raw} />
             </ReadMoreCollapse>
           </ul>
         </div>

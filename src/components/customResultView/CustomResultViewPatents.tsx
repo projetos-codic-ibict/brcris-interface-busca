@@ -47,7 +47,7 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
             <ShowItem label={t('Deposit date')} value={result.depositDate?.raw} />
             <ShowItem label={t('Kind Code')} value={result.kindCode?.raw} />
             <ShowItem label={t('Country Code')} value={result.countryCode?.raw} />
-            <ShowItem label={t('Lattes Title')} value={result.lattesTitle?.raw} />
+            <ShowItem label={t('Lattes Title')} value={result.lattesTitle_keyword?.raw} />
             <ShowItem label={t('Publication date')} value={result.publicationDate?.raw} />
           </ul>
         </div>

@@ -14,13 +14,15 @@ const config: CustomSearchDriverOptions = {
   searchQuery: {
     index: indexName,
     operator: 'OR',
-    search_fields: {
-      espacenetTitle: {},
+    advanced_fields: {
       publicationDate: {},
-      'inventor.name': {},
       depositDate: {},
       kindCode: {},
       countryCode: {},
+    },
+    search_fields: {
+      espacenetTitle: {},
+      'inventor.name': {},
     },
     result_fields: {
       id: {

@@ -19,13 +19,13 @@ export default function PublicationsDashboard() {
   return (
     <>
       <Head>
-        <title>{`BrCris - ${t('Softwares dashboard')}`}</title>
+        <title>{`BrCris - ${t('Software dashboard')}`}</title>
       </Head>
       <div className="page-search">
         <div className="App">
           <div className="container page">
             <div className="page-title">
-              <h1>{t('Softwares dashboard')}</h1>
+              <h1>{t('Software dashboard')}</h1>
             </div>
             <Iframe url="https://dashboardbrcris.ibict.br/app/dashboards#/view/dec137e0-d734-11ee-99d5-5b22668b83a8?embed=true&amp;_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" />
           </div>

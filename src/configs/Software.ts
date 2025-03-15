@@ -14,15 +14,15 @@ const config: CustomSearchDriverOptions = {
   searchQuery: {
     index: indexName,
     operator: 'OR',
+    advanced_fields: {
+      releaseYear: {},
+      registrationCountry: {},
+      kind: {},
+    },
     search_fields: {
       name: {
         weight: 3,
       },
-      keyword: {},
-      depositDate: {},
-      releaseYear: {},
-      registrationCountry: {},
-      platform: {},
     },
     result_fields: {
       id: {
@@ -44,7 +44,9 @@ const config: CustomSearchDriverOptions = {
       releaseYear: {
         raw: {},
       },
-
+      kind: {
+        raw: {},
+      },
       platform: {
         raw: {},
       },
@@ -57,7 +59,7 @@ const config: CustomSearchDriverOptions = {
       knowledgeAreas: {
         raw: {},
       },
-      keyword: {
+      keyword_keyword: {
         raw: {},
       },
       language: {
@@ -70,6 +72,8 @@ const config: CustomSearchDriverOptions = {
       registrationCountry: { type: 'value' },
       releaseYear: { type: 'value' },
       knowledgeAreas: { type: 'value' },
+      kind: { type: 'value' },
+      platform: { type: 'value' },
       language: { type: 'value' },
     },
   },
