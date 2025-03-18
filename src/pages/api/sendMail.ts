@@ -24,7 +24,7 @@ export async function sendMail({ recipient, subject, text, html }: BodyType) {
       console.log('Variáveis de ambiente faltando ou indefinidas');
       throw new Error('Variáveis de ambiente faltando ou indefinidas');
     }
-
+    logger.info(`MAILHOST: ${process.env.MAILHOST}`);
     const transporter = nodemailer.createTransport({
       port: Number(MAILPORT),
       host: MAILHOST,
@@ -33,7 +33,7 @@ export async function sendMail({ recipient, subject, text, html }: BodyType) {
         pass: PASSWORD,
       },
       tls: {
-        rejectUnauthorized: false, // quando resolver o problema de DNS remover esta configuração
+        rejectUnauthorized: true, // quando resolver o problema de DNS remover esta configuração
       },
       logger: true,
       debug: true,
