@@ -33,7 +33,7 @@ export async function sendMail({ recipient, subject, text, html }: BodyType) {
         pass: PASSWORD,
       },
       tls: {
-        rejectUnauthorized: true, // quando resolver o problema de DNS remover esta configuração
+        rejectUnauthorized: false, // quando resolver o problema de DNS remover esta configuração
       },
       logger: true,
       debug: true,
