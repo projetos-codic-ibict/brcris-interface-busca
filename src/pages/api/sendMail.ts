@@ -10,7 +10,9 @@ export type BodyType = {
 
 export async function sendMail({ recipient, subject, text, html }: BodyType) {
   try {
-    logger.info('enviando email para', recipient);
+    logger.info(`enviando email para: ${recipient}`);
+    logger.info(`process.env.MAIL_HOST: ${process.env.MAIL_HOST}`);
+
     const MAILPORT = process.env.MAIL_PORT;
     const MAILHOST = process.env.MAIL_HOST;
     const MAILSENDER = process.env.MAIL_SENDER;
