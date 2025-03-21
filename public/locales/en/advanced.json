@@ -26,7 +26,7 @@
   "depositDate": "Deposit year",
   "kindCode": "Kind Code",
   "countryCode": "Country code",
-  "lattesId": "Lattes",
+  "lattesId": "Lattes ID",
   "orcid": "Orcid",
   "releaseYear": "Release year",
   "registrationCountry": "Registration country",

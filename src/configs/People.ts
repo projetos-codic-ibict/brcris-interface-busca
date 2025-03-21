@@ -16,7 +16,7 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     advanced_fields: {
       'orgunit.name': {},
-      nationality: {},
+      lattesId: {},
     },
     search_fields: {
       name: {},
