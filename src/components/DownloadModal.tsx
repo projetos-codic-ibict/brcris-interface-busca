@@ -112,6 +112,7 @@ const DownloadModal = ({ filters, searchTerm, totalResults, typeArq }: DownloadM
             ),
             alertOptions
           );
+        } else if (response.status === 507) {
         } else {
           alertService.error(t('Export failed, try again later'), alertOptions);
         }

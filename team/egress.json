@@ -2,55 +2,51 @@
   {
     "image": "/images/team/andre-correa.png",
     "name": "André da Silva",
-    "lattes": "http://lattes.cnpq.br/7541182802224042",
-    "period": "2021 - 2024"
+    "lattes": "http://lattes.cnpq.br/7541182802224042"
   },
   {
     "image": "/images/team/jose-edilson.png",
     "name": "José Filho",
-    "lattes": "http://lattes.cnpq.br/3222974341657135",
-    "period": "2022 - 2023"
+    "lattes": "http://lattes.cnpq.br/3222974341657135"
   },
   {
     "image": "/images/team/leonardo.png",
     "name": "Leonardo Vitoriano",
-    "lattes": "http://lattes.cnpq.br/7005579044768503",
-    "period": "2022 - 2023"
+    "lattes": "http://lattes.cnpq.br/7005579044768503"
   },
   {
     "image": "/images/team/lilian.png",
     "name": "Lillian Alvares",
-    "lattes": "http://lattes.cnpq.br/5541636086123721",
-    "period": "2014 - 2018"
+    "lattes": "http://lattes.cnpq.br/5541636086123721"
   },
   {
     "image": "/images/team/lucca.png",
     "name": "Lucca Ramalho",
-    "lattes": "http://lattes.cnpq.br/6421832972643821",
-    "period": "2018 - 2023"
+    "lattes": "http://lattes.cnpq.br/6421832972643821"
   },
   {
     "image": "/images/team/marco-faria.png",
     "name": "Marcos Faria",
-    "lattes": "http://lattes.cnpq.br/1599452098018232",
-    "period": "2020 - 2023"
+    "lattes": "http://lattes.cnpq.br/1599452098018232"
   },
   {
     "image": "/images/team/nayara.png",
     "name": "Nayara Gonzaga",
-    "lattes": "http://lattes.cnpq.br/9037144618891265",
-    "period": "2022 -  2024"
+    "lattes": "http://lattes.cnpq.br/9037144618891265"
   },
   {
     "image": "/images/team/rafael-ramos.png",
     "name": "Rafael Ramos",
-    "lattes": "https://lattes.cnpq.br/3870168115650458",
-    "period": "2022 - 2024"
+    "lattes": "https://lattes.cnpq.br/3870168115650458"
   },
   {
     "image": "/images/team/ulisses-argileu.png",
     "name": "Ulisses Silva",
-    "lattes": "http://lattes.cnpq.br/1845547421522138",
-    "period": "2022 - 2023"
+    "lattes": "http://lattes.cnpq.br/1845547421522138"
+  },
+  {
+    "image": "/images/team/vg.jpeg",
+    "name": "Victor Gabriel",
+    "lattes": "http://lattes.cnpq.br/0647540220826462"
   }
 ]

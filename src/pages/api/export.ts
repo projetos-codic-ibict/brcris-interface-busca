@@ -32,6 +32,11 @@ const fieldsRis = JSON.parse(process.env.FIELDS_RIS);
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { query, index, resultFields, totalResults, indexName, typeArq } = req.body;
+
+    if (totalResults > 100000) {
+      return res.status(507).json('Downloading more than 100000 items is not permitted');
+    }
+
     createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
     const fileName = getFileName(index, JSON.stringify(query));
     const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${typeArq}${fileName}.zip`;
