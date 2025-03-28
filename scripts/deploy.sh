@@ -11,6 +11,6 @@ echo "copy env"
 cp .env.example  .env
 echo "yarn deploy"
 yarn deploy
-echo "pm2 save"
+echo "pm2 save --force"
 pm2 save --force
 echo "finished!"
