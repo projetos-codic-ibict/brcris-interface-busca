@@ -5,7 +5,6 @@ import { Client } from 'es7';
 import { Search } from 'es7/api/requestParams';
 import fs from 'fs';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { MAX_DOWNLOAD_PERMITED } from '../../../utils/Utils';
 import { csvOptions, jsonToCsv } from '../../services/JsonToCsv';
 import { jsonToRis } from '../../services/JsonToRis';
 import logger from '../../services/Logger';
@@ -34,8 +33,8 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { query, index, resultFields, totalResults, indexName, typeArq } = req.body;
 
-    if (totalResults > MAX_DOWNLOAD_PERMITED) {
-      return res.status(507).json(`Downloading more than ${MAX_DOWNLOAD_PERMITED} items is not permitted`);
+    if (totalResults > (process.env.MAX_DOWNLOAD_PERMITED || 100000)) {
+      return res.status(507).json(`Downloading more than ${process.env.MAX_DOWNLOAD_PERMITED} items is not permitted`);
     }
 
     createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
