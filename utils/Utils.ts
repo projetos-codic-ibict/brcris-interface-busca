@@ -30,3 +30,5 @@ export function containsResults(wasSearched: any, results: any) {
 export function replaceSpacesWithHyphens(text: string) {
   return text.replace(' ', '-');
 }
+
+export const MAX_DOWNLOAD_PERMITED = 10000000;
