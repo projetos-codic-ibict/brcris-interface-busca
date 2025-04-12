@@ -18,6 +18,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 import { containsResults, replaceSpacesWithHyphens } from '../../utils/Utils';
 import styles from '../styles/Home.module.css';
 import { Index } from '../types/Propos';
@@ -26,7 +27,6 @@ import DownloadModal from './DownloadModal';
 import Loader from './Loader';
 import { CustomProvider } from './context/CustomContext';
 import CustomViewPagingInfo from './customResultView/CustomViewPagingInfo';
-import { useCallback } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
@@ -44,7 +44,7 @@ export default function Search({ index }: SearchProps) {
 
   const handleSelectIndex = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const params = new URLSearchParams(window.location.search);
-    router.push(`/${replaceSpacesWithHyphens(event.target.value)}?${params.toString()}`);
+    router.push(`/${replaceSpacesWithHyphens(event.target.value.toLowerCase())}?${params.toString()}`);
   }, []);
 
   const typeArqw = 'ris';
