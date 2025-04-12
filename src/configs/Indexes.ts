@@ -1,12 +1,12 @@
 const indexes = [
-  { label: 'publications', name: process.env.INDEX_PUBLICATION || '' },
-  { label: 'people', name: process.env.INDEX_PERSON || '' },
-  { label: 'journals', name: process.env.INDEX_JOURNAL || '' },
-  { label: 'organizations', name: process.env.INDEX_ORGUNIT || '' },
-  { label: 'patents', name: process.env.INDEX_PATENT || '' },
-  { label: 'programs', name: process.env.INDEX_PROGRAM || '' },
-  { label: 'research groups', name: process.env.INDEX_GROUP || '' },
-  { label: 'software', name: process.env.INDEX_SOFTWARE || '' },
+  { label: 'Publications', name: process.env.INDEX_PUBLICATION || '' },
+  { label: 'People', name: process.env.INDEX_PERSON || '' },
+  { label: 'Journals', name: process.env.INDEX_JOURNAL || '' },
+  { label: 'Organizations', name: process.env.INDEX_ORGUNIT || '' },
+  { label: 'Patents', name: process.env.INDEX_PATENT || '' },
+  { label: 'Programs', name: process.env.INDEX_PROGRAM || '' },
+  { label: 'Research groups', name: process.env.INDEX_GROUP || '' },
+  { label: 'Software', name: process.env.INDEX_SOFTWARE || '' },
 ];
 
 export default indexes;

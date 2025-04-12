@@ -8,9 +8,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Edge, Node, Options } from 'vis';
 import 'vis-network/styles/vis-network.css';
+import { replaceSpacesWithHyphens } from '../../utils/Utils';
 import indexes from '../configs/Indexes';
 import ElasticSearchStatsService from '../services/ElasticSearchStatsService';
-import { replaceSpacesWithHyphens } from '../../utils/Utils';
 // @ts-ignore
 const Graph = dynamic(import('react-graph-vis'), { ssr: false });
 
@@ -48,7 +48,7 @@ const nodes: IndexNode[] = [
     label: '',
     size: 200,
     title: '100',
-    widthConstraint: 100,
+    widthConstraint: 110,
     level: 2,
     shape: 'circle',
     color: '#009688',
@@ -63,7 +63,7 @@ const nodes: IndexNode[] = [
     indexLabel: indexes.find((i) => i.name === process.env.INDEX_JOURNAL)?.label || '',
     label: '',
     title: '100',
-    widthConstraint: 80,
+    widthConstraint: 95,
     level: 3,
     shape: 'circle',
     color: '#FF5757',
@@ -78,7 +78,7 @@ const nodes: IndexNode[] = [
     indexLabel: indexes.find((i) => i.name === process.env.INDEX_ORGUNIT)?.label || '',
     label: '',
     title: '100',
-    widthConstraint: 60,
+    widthConstraint: 95,
     level: 4,
     shape: 'circle',
     color: '#960080',
@@ -93,7 +93,7 @@ const nodes: IndexNode[] = [
     indexLabel: indexes.find((i) => i.name === process.env.INDEX_PATENT)?.label || '',
     label: '',
     title: '100',
-    widthConstraint: 85,
+    widthConstraint: 100,
     level: 5,
     shape: 'circle',
     color: '#03a9f4',
@@ -108,7 +108,7 @@ const nodes: IndexNode[] = [
     indexLabel: indexes.find((i) => i.name === process.env.INDEX_PROGRAM)?.label || '',
     label: '',
     title: '100',
-    widthConstraint: 70,
+    widthConstraint: 95,
     level: 6,
     shape: 'circle',
     color: '#CB6CE6',
@@ -123,7 +123,7 @@ const nodes: IndexNode[] = [
     indexLabel: indexes.find((i) => i.name === process.env.INDEX_GROUP)?.label || '',
     label: '',
     title: '100',
-    widthConstraint: 70,
+    widthConstraint: 95,
     level: 7,
     shape: 'circle',
     color: '#6610f2',
@@ -138,7 +138,7 @@ const nodes: IndexNode[] = [
     indexLabel: indexes.find((i) => i.name === process.env.INDEX_SOFTWARE)?.label || '',
     label: '',
     title: '100 ',
-    widthConstraint: 70,
+    widthConstraint: 95,
     level: 8,
     shape: 'circle',
     color: '#6f42c1',
@@ -216,7 +216,7 @@ function VisGraph() {
     click: function (event: any) {
       if (event.nodes[0]) {
         const indexLabel = nodes[event.nodes[0] - 1].indexLabel;
-        router.push(`/${replaceSpacesWithHyphens(indexLabel)}`);
+        router.push(`/${replaceSpacesWithHyphens(indexLabel.toLowerCase())}`);
       }
     },
   };

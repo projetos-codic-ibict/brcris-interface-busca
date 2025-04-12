@@ -349,11 +349,13 @@ button[disabled]:hover {
   display: inline;
 }
 
-.sui-result__value div:after {
+.sui-result__value div:after,
+.sui-result__value a:after {
   content: ', ';
 }
 
-.sui-result__value div:last-child:after {
+.sui-result__value div:last-child:after,
+.sui-result__value a:last-child:after {
   content: '';
 }
 
@@ -419,10 +421,6 @@ li .sui-result__key:after {
   border-radius: 4px;
   height: 100%;
   margin-bottom: 16px;
-}
-
-.page-title h1 {
-  text-transform: capitalize;
 }
 
 .page-title h1::after {

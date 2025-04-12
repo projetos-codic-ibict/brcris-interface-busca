@@ -6,11 +6,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
+import { replaceSpacesWithHyphens } from '../../utils/Utils';
 import AllIndexVisNetwork from '../components/AllIndexVisNetwork';
 import indexes from '../configs/Indexes';
 import { getIndexStats } from '../services/ElasticSearchStatsService';
 import styles from '../styles/Home.module.css';
-import { replaceSpacesWithHyphens } from '../../utils/Utils';
 
 type Props = {
   // Add custom props here
@@ -95,7 +95,10 @@ export default function App() {
       <div className={styles.home}>
         <div className="search-card">
           <h1>{t('Search in the Brazilian Scientific Research Information Ecosystem')} (BrCris)</h1>
-          <form className="form-search" action={`/${router.locale}/${replaceSpacesWithHyphens(indexLabel)}`}>
+          <form
+            className="form-search"
+            action={`/${router.locale}/${replaceSpacesWithHyphens(indexLabel.toLowerCase())}`}
+          >
             <div className="form-group">
               <div className="custom-select">
                 <select
