@@ -30,6 +30,7 @@ function builConnector(index: string) {
       console.log('query', query);
       const fullQuery = new QueryFormat().toElasticsearch(query, Object.keys(searchFields));
       requestBody.query = fullQuery;
+      console.log('fullQuery:', JSON.stringify(fullQuery));
       return requestBody;
     }
   );
