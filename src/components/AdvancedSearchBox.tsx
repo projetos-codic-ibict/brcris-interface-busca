@@ -57,8 +57,6 @@ const AdvancedSearchBox = ({
     //@ts-ignore
     const isAdvancedQuery = query?.indexOf('(') >= 0 && query?.indexOf(':') >= 0;
     let fullQuery = isAdvancedQuery ? query?.trim() : `(${queryField}:${query})`;
-    console.log('inputs', inputs);
-    console.log('fullQuery', fullQuery);
     fullQuery = fullQuery + inputs.map((campo) => ` ${campo.operator} (${campo.field}:${campo.value})`).join(' ');
     setQuery(fullQuery);
     setInputs([]);

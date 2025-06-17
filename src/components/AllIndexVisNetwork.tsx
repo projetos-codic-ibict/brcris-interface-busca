@@ -193,18 +193,6 @@ const options: Options = {
   },
 };
 
-// function getSizeOfNode(maxSize: number, sizeOfDocsOfNode: number) {
-//   console.log('maxSize', maxSize, 'sizeOfDocsOfNode', sizeOfDocsOfNode);
-//   const originalSizeOfNode = (sizeOfDocsOfNode / maxSize) * 100;
-//   const minValue = 60;
-//   const maxValue = 100;
-//   const totalDifference = maxValue - minValue;
-//   const scaleFactor = originalSizeOfNode / maxValue;
-//   const adjustedValue = scaleFactor * totalDifference + minValue;
-//   console.log('adjustedValue', adjustedValue);
-//   return adjustedValue;
-// }
-
 function VisGraph() {
   const router = useRouter();
   const [graph, setGraph] = useState({ nodes, edges });

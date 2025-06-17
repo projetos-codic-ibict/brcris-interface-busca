@@ -40,7 +40,6 @@ function builConnector(index: string) {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { requestState, queryConfig } = req.body;
-    console.log('process.env.API_KEY: ', process.env.API_KEY);
     const connector = builConnector(queryConfig.index);
     console.log('queryConfig', queryConfig);
     const response = await connector.onSearch(requestState, queryConfig);
