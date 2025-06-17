@@ -15,10 +15,10 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      name: {
+      name_text: {
         weight: 3,
       },
-      acronym: {},
+      acronym_text: {},
       country: {},
       state: {},
       city: {},
@@ -27,7 +27,7 @@ const config: CustomSearchDriverOptions = {
       id: {
         raw: {},
       },
-      name_keyword: {
+      name: {
         raw: {},
       },
       acronym: {
@@ -58,7 +58,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        name_keyword: {
+        name: {
           snippet: {
             size: 100,
             fallback: true,

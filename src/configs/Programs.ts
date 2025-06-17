@@ -15,11 +15,11 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      name: {},
-      'orgunit.name': {},
+      name_text: {},
+      'orgunit.name_text': {},
     },
     result_fields: {
-      name_keyword: {
+      name: {
         raw: {},
       },
       orgunit: {
@@ -34,7 +34,7 @@ const config: CustomSearchDriverOptions = {
     },
     facets: {
       researchArea: { type: 'value' },
-      'orgunit.name_keyword': { type: 'value' },
+      'orgunit.name': { type: 'value' },
       evaluationArea: { type: 'value' },
     },
   },
@@ -47,7 +47,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        name_keyword: {
+        name: {
           snippet: {
             size: 100,
             fallback: true,

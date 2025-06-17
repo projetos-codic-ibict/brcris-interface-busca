@@ -19,7 +19,7 @@ const CustomResultViewOrganizations = ({ result, onClickLink }: ResultViewProps)
               href={`${VIVO_URL_ITEM_BASE}/org_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.name_keyword?.raw}
+              {result.name?.raw}
             </a>
           </h6>
         </div>

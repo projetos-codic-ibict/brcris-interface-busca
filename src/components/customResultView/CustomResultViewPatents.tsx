@@ -22,7 +22,7 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
               href={`${VIVO_URL_ITEM_BASE}/pat_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.espacenetTitle_keyword?.raw}
+              {result.espacenetTitle?.raw}
             </a>
           </h6>
         </div>
@@ -37,7 +37,7 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
                   <span key={index} className="sui-result__value">
                     <ExternalLink
                       key={applicant.id}
-                      content={applicant.name_keyword!}
+                      content={applicant.name!}
                       url={`${VIVO_URL_ITEM_BASE}/org_${applicant.id}?lang=${router.locale}`}
                     />
                   </span>
@@ -47,7 +47,7 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
             <ShowItem label={t('Deposit date')} value={result.depositDate?.raw} />
             <ShowItem label={t('Kind Code')} value={result.kindCode?.raw} />
             <ShowItem label={t('Country Code')} value={result.countryCode?.raw} />
-            <ShowItem label={t('Lattes Title')} value={result.lattesTitle_keyword?.raw} />
+            <ShowItem label={t('Lattes Title')} value={result.lattesTitle?.raw} />
             <ShowItem label={t('Publication date')} value={result.publicationDate?.raw} />
           </ul>
         </div>

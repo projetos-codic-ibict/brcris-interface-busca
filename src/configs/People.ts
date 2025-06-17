@@ -15,18 +15,18 @@ const config: CustomSearchDriverOptions = {
     operator: 'OR',
     index: indexName,
     advanced_fields: {
-      'orgunit.name': {},
+      'orgunit.name_text': {},
       nationality: {},
       lattesId: {},
     },
     search_fields: {
-      name: {},
+      name_text: {},
     },
     result_fields: {
       id: {
         raw: {},
       },
-      name_keyword: {
+      name: {
         raw: {},
       },
       lattesId: {
@@ -51,9 +51,9 @@ const config: CustomSearchDriverOptions = {
     disjunctiveFacets: ['nationality', 'researchArea'],
     facets: {
       nationality: { type: 'value' },
-      'researchArea.name_keyword': { type: 'value' },
-      'orgunit.name_keyword': { type: 'value' },
-      'community.name_keyword': { type: 'value' },
+      'researchArea.name': { type: 'value' },
+      'orgunit.name': { type: 'value' },
+      'community.name': { type: 'value' },
     },
   },
   autocompleteQuery: {
@@ -67,7 +67,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        name_keyword: {
+        name: {
           snippet: {
             size: 100,
             fallback: true,

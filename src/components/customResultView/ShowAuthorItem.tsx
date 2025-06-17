@@ -16,7 +16,7 @@ const ShowAuthorItem = ({ label, authors }: ShowAuthorItemProps) => {
             <AuthorLink
               key={author.id}
               id={author.id}
-              name={author.name_keyword}
+              name={author.name}
               idLattes={author.idLattes}
               nationality={author.nationality}
             />
@@ -25,7 +25,7 @@ const ShowAuthorItem = ({ label, authors }: ShowAuthorItemProps) => {
           <AuthorLink
             key={authors?.id}
             id={authors?.id}
-            name={authors?.name_keyword}
+            name={authors?.name}
             idLattes={authors?.idLattes}
             nationality={authors?.nationality}
           />

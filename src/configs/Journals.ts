@@ -15,7 +15,7 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     operator: 'OR',
     search_fields: {
-      title: {
+      title_text: {
         weight: 3,
       },
       keywords: {},
@@ -57,7 +57,7 @@ const config: CustomSearchDriverOptions = {
       status: {
         raw: {},
       },
-      title_keyword: {
+      title: {
         raw: {},
       },
       type: {
@@ -70,7 +70,7 @@ const config: CustomSearchDriverOptions = {
       qualis: { type: 'value' },
       status: { type: 'value' },
       type: { type: 'value' },
-      'publisher.name_keyword': { type: 'value' },
+      'publisher.name': { type: 'value' },
     },
   },
   autocompleteQuery: {
@@ -82,7 +82,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        title_keyword: {
+        title: {
           snippet: {
             size: 100,
             fallback: true,

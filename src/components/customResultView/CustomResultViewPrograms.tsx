@@ -21,7 +21,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
               href={`${VIVO_URL_ITEM_BASE}/gprog_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.name_keyword?.raw}
+              {result.name?.raw}
             </a>
           </h6>
         </div>
@@ -34,7 +34,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
                 {result.orgunit?.raw.map((org: OrgUnit) => (
                   <ExternalLink
                     key={org.id}
-                    content={org.name_keyword!}
+                    content={org.name!}
                     url={`${VIVO_URL_ITEM_BASE}/org_${org.id}?lang=${router.locale}`}
                   />
                 ))}
@@ -43,7 +43,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
             <ShowItem
               label={t('Research field')}
               value={result.researchArea?.raw.map((researchArea: any, index: any) => (
-                <span key={index}>{researchArea.name_keyword}</span>
+                <span key={index}>{researchArea.name}</span>
               ))}
             />
             <ShowItem label={t('Evaluation area')} value={result.evaluationArea?.raw} />

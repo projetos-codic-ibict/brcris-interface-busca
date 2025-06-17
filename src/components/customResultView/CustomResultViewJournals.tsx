@@ -20,7 +20,7 @@ const CustomResultViewJournals = ({ result, onClickLink }: ResultViewProps) => {
               href={`${VIVO_URL_ITEM_BASE}/journ_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.title_keyword?.raw}
+              {result.title?.raw}
             </a>
           </h6>
         </div>
@@ -39,7 +39,7 @@ const CustomResultViewJournals = ({ result, onClickLink }: ResultViewProps) => {
             <ShowItem
               label={t('Research field')}
               value={result.researchArea?.raw.map((researchArea: any, index: any) => (
-                <span key={index}>{researchArea.name_keyword}</span>
+                <span key={index}>{researchArea.name}</span>
               ))}
             />
           </ul>

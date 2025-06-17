@@ -21,14 +21,14 @@ const config: CustomSearchDriverOptions = {
       countryCode: {},
     },
     search_fields: {
-      espacenetTitle: {},
-      'inventor.name': {},
+      espacenetTitle_text: {},
+      'inventor.name_text': {},
     },
     result_fields: {
       id: {
         raw: {},
       },
-      espacenetTitle_keyword: {
+      espacenetTitle: {
         raw: {},
       },
       applicant: {
@@ -53,19 +53,12 @@ const config: CustomSearchDriverOptions = {
         raw: [],
       },
     },
-    disjunctiveFacets: [
-      'countryCode',
-      'publicationDate',
-      'depositDate',
-      'inventor',
-      'espacenetTitle_keyword',
-      'inventor.name_keyword',
-    ],
+    disjunctiveFacets: ['countryCode', 'publicationDate', 'depositDate', 'inventor', 'espacenetTitle', 'inventor.name'],
     facets: {
       countryCode: { type: 'value' },
       publicationDate: { type: 'value' },
       depositDate: { type: 'value' },
-      'inventor.name_keyword': { type: 'value' },
+      'inventor.name': { type: 'value' },
     },
   },
   autocompleteQuery: {
@@ -77,7 +70,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        espacenetTitle_keyword: {
+        espacenetTitle: {
           snippet: {
             size: 100,
             fallback: true,

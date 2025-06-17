@@ -19,15 +19,15 @@ const config: CustomSearchDriverOptions = {
       status: {},
     },
     search_fields: {
-      name: {
+      name_text: {
         weight: 3,
       },
-      'leader.name': {},
-      'member.name': {},
-      'orgunit.name': {},
+      'leader.name_text': {},
+      'member.name_text': {},
+      'orgunit.name_text': {},
     },
     result_fields: {
-      name_keyword: {
+      name: {
         raw: {},
       },
       creationYear: {
@@ -45,7 +45,7 @@ const config: CustomSearchDriverOptions = {
       applicationSector: {
         raw: {},
       },
-      keyword_keyword: {
+      keyword: {
         raw: [],
       },
       URL: {
@@ -89,11 +89,11 @@ const config: CustomSearchDriverOptions = {
       creationYear: { type: 'value' },
       researchLine: { type: 'value' },
       knowledgeArea: { type: 'value' },
-      'orgunit.name_keyword': { type: 'value' },
-      keyword_keyword: { type: 'value' },
+      'orgunit.name': { type: 'value' },
+      keyword: { type: 'value' },
       status: { type: 'value' },
-      'leader.name_keyword': { type: 'value' },
-      'partner.name_keyword': { type: 'value' },
+      'leader.name': { type: 'value' },
+      'partner.name': { type: 'value' },
       member: { type: 'value' },
       applicationSector: { type: 'value' },
     },

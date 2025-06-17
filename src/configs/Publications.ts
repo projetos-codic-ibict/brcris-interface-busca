@@ -18,13 +18,13 @@ const config: CustomSearchDriverOptions = {
       publicationDate: {},
       language: {},
       type: {},
-      'orgunit.name': {},
+      'orgunit.name_text': {},
     },
     search_fields: {
-      title: {
+      title_text: {
         weight: 3,
       },
-      'author.name': {},
+      'author.name_text': {},
     },
     result_fields: {
       advisor: {
@@ -48,7 +48,7 @@ const config: CustomSearchDriverOptions = {
       journal: {
         raw: {},
       },
-      keyword_keyword: {
+      keyword: {
         snippet: {},
       },
       language: {
@@ -72,7 +72,7 @@ const config: CustomSearchDriverOptions = {
       service: {
         raw: {},
       },
-      title_keyword: {
+      title: {
         snippet: {},
       },
       type: {
@@ -84,25 +84,25 @@ const config: CustomSearchDriverOptions = {
     },
     disjunctiveFacets: [
       'language.type',
-      'author.name_keyword',
+      'author.name',
       'keyword.type',
       'cnpqResearchArea.type',
       'publicationDate.type',
-      'course.name_keyword',
-      'program.name_keyword',
-      'conference.name_keyword',
+      'course.name',
+      'program.name',
+      'conference.name',
     ],
 
     facets: {
       language: { type: 'value' },
-      'author.name_keyword': { type: 'value' },
-      keyword_keyword: { type: 'value' },
-      'orgunit.name_keyword': { type: 'value' },
-      'journal.title_keyword': { type: 'value' },
+      'author.name': { type: 'value' },
+      keyword: { type: 'value' },
+      'orgunit.name': { type: 'value' },
+      'journal.title': { type: 'value' },
       type: { type: 'value' },
-      'course.name_keyword': { type: 'value' },
-      'program.name_keyword': { type: 'value' },
-      'conference.name_keyword': { type: 'value' },
+      'course.name': { type: 'value' },
+      'program.name': { type: 'value' },
+      'conference.name': { type: 'value' },
       researchArea: { type: 'value' },
       publicationDate: {
         type: 'range',
@@ -157,7 +157,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        title_keyword: {
+        title: {
           snippet: {
             size: 100,
             fallback: true,

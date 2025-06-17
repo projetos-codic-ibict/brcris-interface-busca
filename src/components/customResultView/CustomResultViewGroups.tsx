@@ -22,7 +22,7 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
               href={`${VIVO_URL_ITEM_BASE}/resgr_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.name_keyword?.raw}
+              {result.name?.raw}
             </a>
           </h6>
         </div>
@@ -39,7 +39,7 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
                   <span key={index} className="sui-result__value">
                     <ExternalLink
                       key={orgunit.id}
-                      content={orgunit.name_keyword!}
+                      content={orgunit.name!}
                       url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}?lang=${router.locale}`}
                     />
                   </span>
@@ -53,7 +53,7 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
                   <span key={index} className="sui-result__value">
                     <ExternalLink
                       key={partner.id}
-                      content={partner.name_keyword!}
+                      content={partner.name!}
                       url={`${VIVO_URL_ITEM_BASE}/org_${partner.id}?lang=${router.locale}`}
                     />
                   </span>
@@ -67,7 +67,7 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
             <ReadMoreCollapse id={result.id?.raw}>
               <ShowAuthorItem label={t('Member')} authors={result.member?.raw} />
               <ShowItem label={t('Knowledge area')} value={result.knowledgeArea?.raw} />
-              <ShowItem label={t('Keywords')} value={result.keyword_keyword?.raw} />
+              <ShowItem label={t('Keywords')} value={result.keyword?.raw} />
               <ShowItem label={t('Software')} value={result.software?.raw} />
               <ShowItem label={t('Equipment')} value={result.equipment?.raw} />
               <ShowItem label={t('Description')} value={result.description?.raw} />

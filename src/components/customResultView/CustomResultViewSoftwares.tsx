@@ -21,7 +21,7 @@ const CustomResultViewSoftwares = ({ result, onClickLink }: ResultViewProps) => 
               href={`${VIVO_URL_ITEM_BASE}/softw_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.name_keyword?.raw}
+              {result.name?.raw}
             </a>
           </h6>
         </div>
@@ -39,7 +39,7 @@ const CustomResultViewSoftwares = ({ result, onClickLink }: ResultViewProps) => 
               <ShowItem label={t('Deposit date')} value={result.depositDate?.raw} />
               <ShowItem label={t('Activity sector')} value={result.activitySector?.raw} />
               <ShowItem label={t('Knowledge areas')} value={result.knowledgeAreas?.raw} />
-              <ShowItem label={t('Keywords')} value={result.keyword_keyword?.raw} />
+              <ShowItem label={t('Keywords')} value={result.keyword?.raw} />
               <ShowItem label={t('Language')} value={result.language?.raw} />
             </ReadMoreCollapse>
           </ul>

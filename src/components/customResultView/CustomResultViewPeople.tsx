@@ -19,7 +19,7 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
             <AuthorLink
               key={result.id.raw}
               id={result.id.raw}
-              name={result.name_keyword?.raw}
+              name={result.name?.raw}
               idLattes={result.lattesId?.raw!}
             />
           </h6>
@@ -52,7 +52,7 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
                 <span key={index} className="sui-result__value">
                   <ExternalLink
                     key={orgunit.id}
-                    content={orgunit.name_keyword!}
+                    content={orgunit.name!}
                     url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}?lang=${router.locale}`}
                   />
                 </span>
@@ -61,15 +61,13 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
             <ShowItem
               label={t('Research field')}
               value={result.researchArea?.raw.map((researchArea: any, index: any) => (
-                <span key={index}>{researchArea.name_keyword}</span>
+                <span key={index}>{researchArea.name}</span>
               ))}
             />
             <li>
               <span className="sui-result__key">{t('Community')}</span>
               <span className="sui-result__value">
-                {result.community?.raw.map((community: any, index: any) => (
-                  <span key={index}>{community.name_keyword}</span>
-                ))}
+                {result.community?.raw.map((community: any, index: any) => <span key={index}>{community.name}</span>)}
               </span>
             </li>
           </ul>

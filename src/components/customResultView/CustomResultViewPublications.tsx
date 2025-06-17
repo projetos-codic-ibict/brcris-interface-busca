@@ -22,7 +22,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
               href={`${VIVO_URL_ITEM_BASE}/publ_${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
-              {result.title_keyword?.raw}
+              {result.title?.raw}
             </a>
           </h6>
         </div>
@@ -46,13 +46,13 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                   {result.orgunit?.raw.map((org: OrgUnit) => (
                     <ExternalLink
                       key={org.id}
-                      content={org.name_keyword!}
+                      content={org.name!}
                       url={`${VIVO_URL_ITEM_BASE}/org_${org.id}?lang=${router.locale}`}
                     />
                   ))}
 
                   {result.service?.raw.map((service: Service) =>
-                    service.title_keyword?.map((title: string) => (
+                    service.title?.map((title: string) => (
                       <ExternalLink
                         key={title}
                         content={title}
@@ -64,7 +64,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                   {result.journal?.raw.map((journal: any, index: any) => (
                     <ExternalLink
                       key={index}
-                      content={journal.title_keyword ? journal.title_keyword : journal}
+                      content={journal.title ? journal.title : journal}
                       url={`${VIVO_URL_ITEM_BASE}/journ_${journal.id}?lang=${router.locale}`}
                     />
                   ))}
@@ -74,7 +74,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
 
             <ShowItem label={t('Language')} value={result.language?.raw} />
 
-            <ShowItem label={t('Keywords')} value={result.keyword_keyword?.raw} />
+            <ShowItem label={t('Keywords')} value={result.keyword?.raw} />
             <ShowAuthorItem label={t('Advisor')} authors={result.advisor?.raw} />
             <ShowAuthorItem label={t('Coadvisor')} authors={result.coadvisor?.raw} />
             {/* <ShowItem label={t('Year 2')} value={result.year?.raw} /> */}
@@ -84,13 +84,13 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
             <ShowItem
               label={t('Research field')}
               value={result.researchArea?.raw.map((researchArea: any, index: any) => (
-                <span key={index}>{researchArea.name_keyword}</span>
+                <span key={index}>{researchArea.name}</span>
               ))}
             />
             <ShowItem
               label={t('Conference')}
               value={result.conference?.raw.map((conference: any, index: any) => (
-                <span key={index}>{conference.name_keyword}</span>
+                <span key={index}>{conference.name}</span>
               ))}
             />
 
@@ -100,7 +100,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                 <span key={index} className="sui-result__value">
                   <ExternalLink
                     key={program.id}
-                    content={program.name_keyword!}
+                    content={program.name!}
                     url={`${VIVO_URL_ITEM_BASE}/org_${program.id}?lang=${router.locale}`}
                   />
                 </span>
@@ -112,7 +112,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                 <span key={index} className="sui-result__value">
                   <ExternalLink
                     key={course.id}
-                    content={course.name_keyword!}
+                    content={course.name!}
                     url={`${VIVO_URL_ITEM_BASE}/org_${course.id}?lang=${router.locale}`}
                   />
                 </span>

@@ -20,7 +20,7 @@ const config: CustomSearchDriverOptions = {
       kind: {},
     },
     search_fields: {
-      name: {
+      name_text: {
         weight: 3,
       },
     },
@@ -28,7 +28,7 @@ const config: CustomSearchDriverOptions = {
       id: {
         raw: {},
       },
-      name_keyword: {
+      name: {
         raw: {},
       },
       description: {
@@ -59,7 +59,7 @@ const config: CustomSearchDriverOptions = {
       knowledgeAreas: {
         raw: {},
       },
-      keyword_keyword: {
+      keyword: {
         raw: {},
       },
       language: {
@@ -86,7 +86,7 @@ const config: CustomSearchDriverOptions = {
         },
       },
       result_fields: {
-        name_keyword: {
+        name: {
           snippet: {
             size: 100,
             fallback: true,
