@@ -102,7 +102,12 @@ export default function Search({ index }: SearchProps) {
                               {containsResults(wasSearched, results) && (
                                 <>
                                   {Object.keys(index.config.searchQuery.facets!).map((facet, i) => (
-                                    <Facet key={i} field={facet} label={t(facet.toLowerCase(), { ns: 'facets' })} />
+                                    <Facet
+                                      className={`facet-${facet}`}
+                                      key={i}
+                                      field={facet}
+                                      label={t(facet.toLowerCase(), { ns: 'facets' })}
+                                    />
                                   ))}
                                 </>
                               )}

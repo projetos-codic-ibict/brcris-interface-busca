@@ -7,6 +7,7 @@ import styles from '../styles/AdvancedSearch.module.css';
 
 type HelpModalProps = {
   fields: string[];
+  test: (value: string) => void;
 };
 
 const HelpModal = ({ fields }: HelpModalProps) => {

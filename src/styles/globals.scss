@@ -492,6 +492,14 @@ li .sui-result__key:after {
   padding: 8px;
 }
 
+.sui-facet label {
+  text-transform: capitalize;
+}
+
+.facet-state label {
+  text-transform: uppercase;
+}
+
 .page-search .sui-facet__title,
 .page-search .sui-sorting__label,
 .page-search .sui-multi-checkbox-facet__option-count {
