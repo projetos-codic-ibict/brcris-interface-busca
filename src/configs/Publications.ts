@@ -24,6 +24,7 @@ const config: CustomSearchDriverOptions = {
       title_text: {
         weight: 3,
       },
+      type: {},
       'author.name_text': {},
     },
     result_fields: {

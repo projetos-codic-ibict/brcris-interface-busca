@@ -61,10 +61,10 @@ export function formatedQuery(
             fields: searchTerm ? fields : [],
           },
         },
-        filter: filters && filters.length > 0 ? getFormatedFilters(filters) : [],
       },
     };
   }
+  query.bool!.filter = filters && filters.length > 0 ? getFormatedFilters(filters) : [];
   return query;
 }
 
