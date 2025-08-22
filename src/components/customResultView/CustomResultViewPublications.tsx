@@ -5,10 +5,11 @@ import { OrgUnit, Service } from '../../types/Entities';
 import ExternalLink from '../externalLinks';
 import ShowAuthorItem from './ShowAuthorItem';
 import ShowItem from './ShowItem';
+import Link from 'next/link';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
-const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) => {
+const CustomResultViewPublications = ({ result }: ResultViewProps) => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
@@ -16,14 +17,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
       <div>
         <div className="sui-result__header">
           <h6>
-            <a
-              onClick={onClickLink}
-              target="_blank"
-              href={`${VIVO_URL_ITEM_BASE}/publ_${result.id.raw}?lang=${router.locale}`}
-              rel="noreferrer"
-            >
-              {result.title?.raw}
-            </a>
+            <Link href={`/publications/${result.id.raw}`}>{result.title?.raw}</Link>
           </h6>
         </div>
 

@@ -1,5 +1,5 @@
-import Search from '../components/Search';
-import Publications from '../configs/Publications';
+import Search from '../../components/Search';
+import Publications from '../../configs/Publications';
 
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
