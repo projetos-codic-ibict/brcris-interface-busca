@@ -5,7 +5,6 @@ import { OrgUnit, Service } from '../../types/Entities';
 import ExternalLink from '../externalLinks';
 import ShowAuthorItem from './ShowAuthorItem';
 import ShowItem from './ShowItem';
-import Link from 'next/link';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
@@ -17,7 +16,7 @@ const CustomResultViewPublications = ({ result }: ResultViewProps) => {
       <div>
         <div className="sui-result__header">
           <h6>
-            <Link href={`/publications/${result.id.raw}`}>{result.title?.raw}</Link>
+            <a href={`/publications/${result.id.raw}`}>{result.title?.raw}</a>
           </h6>
         </div>
 

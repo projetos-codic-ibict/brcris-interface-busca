@@ -14,6 +14,7 @@ function builConnector(index: string) {
     },
     (requestBody, requestState, queryConfig) => {
       requestBody.track_total_hits = true;
+
       if (!requestState.searchTerm) return requestBody;
 
       // remove dois pontos do termo de busca
@@ -41,7 +42,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const { requestState, queryConfig } = req.body;
     const connector = builConnector(queryConfig.index);
-    console.log('queryConfig', queryConfig);
+    console.log('queryConfig>>', queryConfig);
+    console.log('requestState>>', requestState);
     const response = await connector.onSearch(requestState, queryConfig);
     res.json(response);
   } catch (err) {
