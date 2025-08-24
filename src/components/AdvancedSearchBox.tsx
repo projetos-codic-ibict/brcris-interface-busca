@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { SearchBox, withSearch } from '@elastic/react-search-ui';
-import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import { IoAdd, IoArrowUndoOutline, IoClose, IoSearch } from 'react-icons/io5';
@@ -9,6 +8,7 @@ import { getIndexStats } from '../services/ElasticSearchStatsService';
 import styles from '../styles/AdvancedSearch.module.css';
 import { QueryItem } from '../types/Entities';
 import HelpModal from './HelpModal';
+import { SearchContextState } from '@elastic/search-ui';
 
 interface CustomSearchBoxProps extends SearchContextState {
   indexLabel: string;
