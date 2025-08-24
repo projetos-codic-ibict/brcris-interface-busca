@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { withSearch } from '@elastic/react-search-ui';
-import { SearchContextState } from '@elastic/react-search-ui/lib/esm/withSearch';
+import { SearchContextState } from '@elastic/search-ui';
 import { useTranslation } from 'next-i18next';
 
 function ClearFilters({ filters, searchTerm, resultSearchTerm, setSearchTerm, clearFilters }: SearchContextState) {
