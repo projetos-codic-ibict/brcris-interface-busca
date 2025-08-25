@@ -2,12 +2,12 @@
 import { useRouter } from 'next/router';
 import { CustomProvider } from '../../components/context/CustomContext';
 import { SearchProvider } from '@elastic/react-search-ui';
-import PublicationDetails from '../../components/details/PublicationDetails';
 import APIConnector from '../../services/APIConnector';
 import { RequestState, SearchDriverOptions } from '@elastic/search-ui';
 import Loader from '../../components/Loader';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import PeopleDetails from '../../components/details/PeopleDetails';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
@@ -15,7 +15,9 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   },
 });
 
-const indexName = process.env.INDEX_PUBLICATION || '';
+const indexName = process.env.INDEX_PERSON || '';
+
+console.log('indexName', indexName);
 
 const routingOptions = {
   readUrl: () => '',
@@ -46,58 +48,28 @@ export default function PublicationDetailsPage() {
         _id: {},
       },
       result_fields: {
-        advisor: {
+        id: {
           raw: {},
         },
-        author: {
-          raw: [],
-        },
-        coadvisor: {
+        name: {
           raw: {},
         },
-        conference: {
+        lattesId: {
           raw: {},
         },
-        course: {
+        nationality: {
           raw: {},
         },
-        doi: {
+        orcid: {
           raw: {},
-        },
-        journal: {
-          raw: {},
-        },
-        keyword: {
-          snippet: {},
-        },
-        language: {
-          raw: [],
-        },
-        openalexId: {
-          raw: [],
-        },
-        orgunit: {
-          snippet: {},
-        },
-        program: {
-          snippet: {},
-        },
-        publicationDate: {
-          snippet: {},
         },
         researchArea: {
-          raw: [],
-        },
-        service: {
           raw: {},
         },
-        title: {
-          snippet: {},
-        },
-        type: {
+        orgunit: {
           raw: {},
         },
-        year: {
+        community: {
           raw: {},
         },
       },
@@ -111,7 +83,7 @@ export default function PublicationDetailsPage() {
     <div className="container details-page">
       <CustomProvider>
         <SearchProvider config={config}>
-          <PublicationDetails />
+          <PeopleDetails />
         </SearchProvider>
       </CustomProvider>
     </div>

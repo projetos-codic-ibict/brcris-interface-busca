@@ -900,6 +900,10 @@ button.rc-pagination-item-link[disabled] {
   padding: 0;
 }
 
+.details-page ul li {
+  margin-bottom: 8px;
+}
+
 @media (max-width: 800px) {
   .nav .nav-item {
     justify-content: flex-start;
