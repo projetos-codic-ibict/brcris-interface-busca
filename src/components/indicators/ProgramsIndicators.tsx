@@ -56,7 +56,7 @@ function ProgramsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps)
           ],
           INDEX_NAME
         ).then((data) => {
-          setIndicatorsData(data);
+          setIndicatorsData(data.buckets);
         })
       : null;
   }, [filters, searchTerm, isLoading]);
@@ -78,7 +78,7 @@ function ProgramsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps)
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          /** 
+          /**
       // @ts-ignore */
           options={options}
           width="500"

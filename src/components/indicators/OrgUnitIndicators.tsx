@@ -71,7 +71,7 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
     );
     isLoading
       ? ElasticSearchService([countryQuery, stateQuery], INDEX_NAME).then((data) => {
-          setIndicatorsData(data);
+          setIndicatorsData(data.buckets);
         })
       : null;
   }, [filters, searchTerm, isLoading]);

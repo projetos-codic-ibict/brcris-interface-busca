@@ -74,7 +74,7 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
             ],
             INDEX_NAME
           ).then((data) => {
-            setIndicatorsData(data);
+            setIndicatorsData(data.buckets);
           })
         : null;
     } catch (err) {
@@ -108,7 +108,7 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           <IoCloudDownloadOutline />
         </CSVLink>
         <Pie
-          /** 
+          /**
         // @ts-ignore */
           options={optionsResearchArea}
           data={{

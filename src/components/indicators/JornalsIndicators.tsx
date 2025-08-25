@@ -56,7 +56,7 @@ function JornalsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           ],
           INDEX_NAME
         ).then((data) => {
-          setIndicatorsData(data);
+          setIndicatorsData(data.buckets);
         })
       : null;
   }, [filters, searchTerm, isLoading]);
@@ -79,7 +79,7 @@ function JornalsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          /** 
+          /**
       // @ts-ignore */
           options={optQualis}
           width="500"

@@ -41,9 +41,13 @@ function builConnector(index: string) {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { requestState, queryConfig } = req.body;
+
+    if (!requestState.searchTerm && (!requestState.filters || requestState.filters.length === 0)) {
+      return res.status(400).json({ error: 'Search term or filters are required' });
+    }
+
     const connector = builConnector(queryConfig.index);
-    console.log('queryConfig>>', queryConfig);
-    console.log('requestState>>', requestState);
+
     const response = await connector.onSearch(requestState, queryConfig);
     res.json(response);
   } catch (err) {

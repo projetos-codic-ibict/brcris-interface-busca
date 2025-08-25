@@ -7,8 +7,6 @@ class APIConnector {
   }
 
   async onSearch(requestState: any, queryConfig: any) {
-    const { searchTerm } = requestState;
-    if (!searchTerm) return requestState; // evita busca vazia
     const response = await fetch('/api/search', {
       method: 'POST',
       headers: {

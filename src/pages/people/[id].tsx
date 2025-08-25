@@ -39,14 +39,10 @@ export default function PublicationDetailsPage() {
     initialState: {
       filters: [{ field: '_id', type: 'all', values: [id!] }],
       resultsPerPage: 1,
-      searchTerm: id as string,
     },
     searchQuery: {
       // @ts-ignore
       index: indexName,
-      search_fields: {
-        _id: {},
-      },
       result_fields: {
         id: {
           raw: {},

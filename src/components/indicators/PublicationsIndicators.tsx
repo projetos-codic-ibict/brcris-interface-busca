@@ -71,7 +71,7 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
       );
       isLoading
         ? ElasticSearchService([pdQuery, typeQuery], INDEX_NAME).then((data) => {
-            setIndicatorsData(data);
+            setIndicatorsData(data.buckets);
           })
         : null;
     } catch (err) {
@@ -102,7 +102,7 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          /** 
+          /**
       // @ts-ignore */
           options={options}
           width="500"
@@ -133,7 +133,7 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
           <IoCloudDownloadOutline />
         </CSVLink>
         <Pie
-          /** 
+          /**
       // @ts-ignore */
           options={optionsType}
           width="500"

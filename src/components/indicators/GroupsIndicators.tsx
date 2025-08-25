@@ -109,7 +109,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           ],
           INDEX_NAME
         ).then((data) => {
-          setIndicatorsData(data);
+          setIndicatorsData(data.buckets);
         })
       : null;
   }, [filters, searchTerm, isLoading]);
@@ -149,7 +149,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          /** 
+          /**
       // @ts-ignore */
           options={optCreatYear}
           width="500"
@@ -180,7 +180,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           <IoCloudDownloadOutline />
         </CSVLink>
         <Pie
-          /** 
+          /**
       // @ts-ignore */
           options={optResearchLine}
           width="500"
@@ -211,7 +211,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           <IoCloudDownloadOutline />
         </CSVLink>
         <Pie
-          /** 
+          /**
       // @ts-ignore */
           options={optKnowledgeArea}
           width="500"
@@ -242,7 +242,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           <IoCloudDownloadOutline />
         </CSVLink>
         <Pie
-          /** 
+          /**
       // @ts-ignore */
           options={optStatus}
           width="500"

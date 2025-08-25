@@ -74,7 +74,7 @@ function SoftwaresIndicators({ filters, searchTerm, isLoading }: IndicatorsProps
           ],
           INDEX_NAME
         ).then((data) => {
-          setIndicatorsData(data);
+          setIndicatorsData(data.buckets);
         })
       : null;
   }, [filters, searchTerm, isLoading]);

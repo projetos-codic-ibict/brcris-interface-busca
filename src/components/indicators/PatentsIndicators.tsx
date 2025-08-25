@@ -112,7 +112,7 @@ function PatentsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           ],
           INDEX_NAME
         ).then((data) => {
-          setIndicatorsData(data);
+          setIndicatorsData(data.buckets);
         })
       : null;
   }, [filters, searchTerm, isLoading]);
@@ -151,7 +151,7 @@ function PatentsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          /** 
+          /**
       // @ts-ignore */
           options={optDepositDate}
           width="500"
@@ -182,7 +182,7 @@ function PatentsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           <IoCloudDownloadOutline />
         </CSVLink>
         <Bar
-          /** 
+          /**
       // @ts-ignore */
           options={optPubDate}
           width="500"
@@ -213,7 +213,7 @@ function PatentsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           <IoCloudDownloadOutline />
         </CSVLink>
         <Pie
-          /** 
+          /**
       // @ts-ignore */
           options={optCountryCode}
           width="500"
@@ -244,7 +244,7 @@ function PatentsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           <IoCloudDownloadOutline />
         </CSVLink>
         <Pie
-          /** 
+          /**
       // @ts-ignore */
           options={optKindCode}
           width="500"
