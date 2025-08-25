@@ -904,6 +904,15 @@ button.rc-pagination-item-link[disabled] {
   margin-bottom: 8px;
 }
 
+.details-content {
+  display: flex;
+  gap: 1rem;
+}
+
+.details-main {
+  width: 75%;
+}
+
 @media (max-width: 800px) {
   .nav .nav-item {
     justify-content: flex-start;
