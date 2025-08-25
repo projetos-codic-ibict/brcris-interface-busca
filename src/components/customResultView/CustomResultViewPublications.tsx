@@ -8,7 +8,7 @@ import ShowItem from './ShowItem';
 
 const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
-const CustomResultViewPublications = ({ result }: ResultViewProps) => {
+const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
@@ -16,7 +16,9 @@ const CustomResultViewPublications = ({ result }: ResultViewProps) => {
       <div>
         <div className="sui-result__header">
           <h6>
-            <a href={`/publications/${result.id.raw}`}>{result.title?.raw}</a>
+            <a onClick={onClickLink} href={`/publications/${result.id.raw}`}>
+              {result.title?.raw}
+            </a>
           </h6>
         </div>
 
