@@ -26,7 +26,7 @@ export default function PublicationDetails() {
                 </Head>
                 <h1>
                   {result.name?.raw}
-                  {result.lattesId ? <LattesLink lattesId={result.lattesId!} /> : ''}
+                  {result.lattesId ? <LattesLink lattesId={result.lattesId.raw!} /> : ''}
                 </h1>
                 <ul>
                   <ShowItem label={t('Nationality')} value={result.nationality?.raw} />
