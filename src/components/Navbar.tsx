@@ -8,6 +8,8 @@ function Navbar() {
   const router = useRouter();
   const { t } = useTranslation('navbar');
 
+  const { asPath } = router;
+
   const changeTo = (lang: string) => lang;
 
   return (
@@ -124,7 +126,7 @@ function Navbar() {
                 </div>
                 <div className={dropdownStyle.dropdownContent}>
                   {LANGUAGES?.map((lang) => (
-                    <Link href="" locale={changeTo(lang)} key={lang}>
+                    <Link href={asPath} locale={changeTo(lang)} key={lang}>
                       {t(lang)}
                     </Link>
                   ))}

@@ -3,9 +3,17 @@ import { useRouter } from 'next/router';
 import { CustomProvider } from '../../components/context/CustomContext';
 import { SearchProvider } from '@elastic/react-search-ui';
 import PublicationDetails from '../../components/customResultView/PublicationDetails';
-import Connector from '../../services/APIConnector';
+import APIConnector from '../../services/APIConnector';
 import { RequestState, SearchDriverOptions } from '@elastic/search-ui';
 import Loader from '../../components/Loader';
+import { GetServerSideProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common', 'navbar', 'advanced', 'facets'])),
+  },
+});
 
 const indexName = process.env.INDEX_PUBLICATION || '';
 
@@ -25,7 +33,7 @@ export default function PublicationDetailsPage() {
     debug: true,
     alwaysSearchOnInitialLoad: true,
     routingOptions: routingOptions,
-    apiConnector: new Connector(),
+    apiConnector: new APIConnector(),
     initialState: {
       filters: [{ field: '_id', type: 'all', values: [id!] }],
       resultsPerPage: 1,
@@ -100,7 +108,7 @@ export default function PublicationDetailsPage() {
     return <Loader />;
   }
   return (
-    <div>
+    <div className="container details-page">
       <CustomProvider>
         <SearchProvider config={config}>
           <PublicationDetails />

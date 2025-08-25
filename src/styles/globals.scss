@@ -384,7 +384,7 @@ li .sui-result__key:after {
   width: 70px;
 }
 
-.page {
+.container {
   padding-top: 2rem;
   margin-bottom: 1rem;
 }
@@ -893,6 +893,11 @@ footer {
 button.rc-pagination-item-link[disabled] {
   background-color: #eee !important;
   opacity: 0.5;
+}
+
+.details-page ul {
+  list-style: none;
+  padding: 0;
 }
 
 @media (max-width: 800px) {
