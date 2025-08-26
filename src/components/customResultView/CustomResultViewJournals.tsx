@@ -1,25 +1,16 @@
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 import ShowAuthorItem from './ShowAuthorItem';
 import ShowItem from './ShowItem';
 
-const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
-
 const CustomResultViewJournals = ({ result, onClickLink }: ResultViewProps) => {
-  const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <li className="sui-result">
       <div>
         <div className="sui-result__header">
           <h6>
-            <a
-              onClick={onClickLink}
-              target="_blank"
-              href={`/journals/${result.id.raw}?lang=${router.locale}`}
-              rel="noreferrer"
-            >
+            <a onClick={onClickLink} href={`/journals/${result.id.raw}`}>
               {result.title?.raw}
             </a>
           </h6>
