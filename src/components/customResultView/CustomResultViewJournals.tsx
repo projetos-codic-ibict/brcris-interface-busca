@@ -17,7 +17,7 @@ const CustomResultViewJournals = ({ result, onClickLink }: ResultViewProps) => {
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_ITEM_BASE}/journ_${result.id.raw}?lang=${router.locale}`}
+              href={`/journals/${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.title?.raw}

@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useTranslation } from 'next-i18next';
 import Search from '../../components/Search';
-import Publications from '../../configs/Publications';
+import Journals from '../../configs/Journals'
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { CustomProvider } from '../../components/context/CustomContext';
@@ -18,12 +18,12 @@ export default function App() {
   return (
     <div>
       <Head>
-        <title>{`${t('Publications')} | BrCris`}</title>
+        <title>{`${t('Journals')} | BrCris`}</title>
       </Head>
       <div className="page-search">
         <CustomProvider>
-          <SearchProvider config={Publications.config}>
-            <Search index={Publications} />
+          <SearchProvider config={Journals.config}>
+            <Search index={Journals} />
           </SearchProvider>
         </CustomProvider>
       </div>

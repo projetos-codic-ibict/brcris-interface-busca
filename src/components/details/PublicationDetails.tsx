@@ -52,7 +52,7 @@ export default function PublicationDetails() {
                         <ExternalLink
                           key={index}
                           content={journal.title ? journal.title : journal}
-                          url={`/journ_${journal.id}?lang=`}
+                          url={`/journals/${journal.id}?lang=`}
                         />
                       ))}
                     </span>
