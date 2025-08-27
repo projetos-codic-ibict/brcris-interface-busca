@@ -5,7 +5,7 @@ import Head from 'next/head';
 import ShowAuthorItem from '../customResultView/ShowAuthorItem';
 import ShowItem from '../customResultView/ShowItem';
 
-export default function JournalsDetails() {
+export default function JournalDetails() {
   const { wasSearched, isLoading, results } = useSearch();
   const { t } = useTranslation('common');
 
@@ -23,21 +23,21 @@ export default function JournalsDetails() {
               </Head>
               <h1 className="title">{result.title?.raw}</h1>
               <ul>
-                    <ShowItem label={t('Qualis')} value={result.qualis?.raw} />
-                    <ShowItem label={t('H5index')} value={result.H5index?.raw} />
-                    <ShowItem label={t('Type')} value={result.type?.raw} />
-                    <ShowItem label={t('ISSN')} value={result.issn?.raw} />
-                    <ShowItem label={t('ISSN-L')} value={result.issnl?.raw} />
-                    <ShowItem label={t('Access type')} value={result.accessType?.raw} />
-                    <ShowItem label={t('Status')} value={result.status?.raw} />
-                    <ShowAuthorItem label={t('Publisher')} authors={result.publisher?.raw} />
-                    <ShowItem label={t('Keywords')} value={result.keywords?.raw} />
-                    <ShowItem
-                    label={t('Research field')}
-                    value={result.researchArea?.raw.map((researchArea: any, index: any) => (
-                        <span key={index}>{researchArea.name}</span>
-                    ))}
-                    />
+                <ShowItem label={t('Qualis')} value={result.qualis?.raw} />
+                <ShowItem label={t('H5index')} value={result.H5index?.raw} />
+                <ShowItem label={t('Type')} value={result.type?.raw} />
+                <ShowItem label={t('ISSN')} value={result.issn?.raw} />
+                <ShowItem label={t('ISSN-L')} value={result.issnl?.raw} />
+                <ShowItem label={t('Access type')} value={result.accessType?.raw} />
+                <ShowItem label={t('Status')} value={result.status?.raw} />
+                <ShowAuthorItem label={t('Publisher')} authors={result.publisher?.raw} />
+                <ShowItem label={t('Keywords')} value={result.keywords?.raw} />
+                <ShowItem
+                  label={t('Research field')}
+                  value={result.researchArea?.raw.map((researchArea: any, index: any) => (
+                    <span key={index}>{researchArea.name}</span>
+                  ))}
+                />
               </ul>
             </div>
           ))}

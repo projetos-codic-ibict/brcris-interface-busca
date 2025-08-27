@@ -3,8 +3,6 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import ShowItem from './ShowItem';
 
-const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
-
 const CustomResultViewOrganizations = ({ result, onClickLink }: ResultViewProps) => {
   const router = useRouter();
   const { t } = useTranslation('common');
@@ -16,7 +14,7 @@ const CustomResultViewOrganizations = ({ result, onClickLink }: ResultViewProps)
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_ITEM_BASE}/org_${result.id.raw}?lang=${router.locale}`}
+              href={`/organizations/${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.name?.raw}

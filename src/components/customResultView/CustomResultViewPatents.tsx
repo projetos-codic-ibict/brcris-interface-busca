@@ -19,7 +19,7 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
             <a
               onClick={onClickLink}
               target="_blank"
-              href={`${VIVO_URL_ITEM_BASE}/pat_${result.id.raw}?lang=${router.locale}`}
+              href={`/patents/${result.id.raw}?lang=${router.locale}`}
               rel="noreferrer"
             >
               {result.espacenetTitle?.raw}

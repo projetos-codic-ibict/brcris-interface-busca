@@ -7,7 +7,7 @@ import { RequestState, SearchDriverOptions } from '@elastic/search-ui';
 import Loader from '../../components/Loader';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import JournalDetails from '../../components/details/JournalDetails';
+import PatentDetails from '../../components/details/PatentDetails';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   },
 });
 
-const indexName = process.env.INDEX_JOURNAL || '';
+const indexName = process.env.INDEX_PATENT || '';
 
 const routingOptions = {
   readUrl: () => '',
@@ -25,7 +25,7 @@ const routingOptions = {
   routeChangeHandler: () => () => {},
 };
 
-export default function JournalDetailsPage() {
+export default function PatentDetailsPage() {
   const router = useRouter();
   const { id } = router.query;
 
@@ -37,53 +37,41 @@ export default function JournalDetailsPage() {
     initialState: {
       filters: [{ field: '_id', type: 'all', values: [id!] }],
       resultsPerPage: 1,
-      searchTerm: id as string,
     },
     searchQuery: {
       // @ts-ignore
       index: indexName,
       search_fields: {
-        _id: {},
+        espacenetTitle_text: {},
+        'inventor.name_text': {},
       },
       result_fields: {
         id: {
           raw: {},
         },
-        H5index: {
+        espacenetTitle: {
           raw: {},
         },
-        accessType: {
+        applicant: {
+          raw: [],
+        },
+        depositDate: {
           raw: {},
         },
-        issn: {
+        kindCode: {
           raw: {},
         },
-        issnl: {
+        countryCode: {
           raw: {},
         },
-        keywords: {
-          raw: {},
+        lattesTitle: {
+          raw: [],
         },
-        language: {
-          raw: {},
+        publicationDate: {
+          raw: [],
         },
-        publisher: {
-          raw: {},
-        },
-        qualis: {
-          raw: {},
-        },
-        researchArea: {
-          raw: {},
-        },
-        status: {
-          raw: {},
-        },
-        title: {
-          raw: {},
-        },
-        type: {
-          raw: {},
+        inventor: {
+          raw: [],
         },
       },
     },
@@ -92,12 +80,11 @@ export default function JournalDetailsPage() {
   if (!id) {
     return <Loader />;
   }
-
   return (
     <div className="container details-page">
       <CustomProvider>
         <SearchProvider config={config}>
-          <JournalDetails />
+          <PatentDetails />
         </SearchProvider>
       </CustomProvider>
     </div>
