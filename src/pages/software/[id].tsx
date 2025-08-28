@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router';
 import { CustomProvider } from '../../components/context/CustomContext';
 import { SearchProvider } from '@elastic/react-search-ui';
-import ProgramDetails from '../../components/details/ProgramDetails';
+import SoftwareDetails from '../../components/details/SoftwareDetails';
 import APIConnector from '../../services/APIConnector';
 import { RequestState, SearchDriverOptions } from '@elastic/search-ui';
 import Loader from '../../components/Loader';
@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   },
 });
 
-const indexName = process.env.INDEX_PROGRAM || '';
+const indexName = process.env.INDEX_SOFTWARE || '';
 
 const routingOptions = {
   readUrl: () => '',
@@ -25,7 +25,7 @@ const routingOptions = {
   routeChangeHandler: () => () => {},
 };
 
-export default function ProgramDetailsPage() {
+export default function SoftawareDetailsPage() {
   const router = useRouter();
   const { id } = router.query;
 
@@ -42,20 +42,49 @@ export default function ProgramDetailsPage() {
       // @ts-ignore
       index: indexName,
       search_fields: {
-        name_text: {},
-        'orgunit.name_text': {},
+        name_text: {
+          weight: 3,
+        },
       },
       result_fields: {
+        id: {
+          raw: {},
+        },
         name: {
           raw: {},
         },
-        orgunit: {
-          raw: [],
-        },
-        researchArea: {
+        description: {
           raw: {},
         },
-        evaluationArea: {
+        creator: {
+          raw: {},
+        },
+
+        depositDate: {
+          raw: {},
+        },
+        releaseYear: {
+          raw: {},
+        },
+        kind: {
+          raw: {},
+        },
+        platform: {
+          raw: {},
+        },
+        registrationCountry: {
+          raw: {},
+        },
+        activitySector: {
+          raw: {},
+        },
+        knowledgeAreas: {
+          raw: {},
+        },
+        keyword: {
+          raw: {},
+        },
+        language: {
           raw: {},
         },
       },
@@ -69,7 +98,7 @@ export default function ProgramDetailsPage() {
     <div className="container details-page">
       <CustomProvider>
         <SearchProvider config={config}>
-          <ProgramDetails />
+          <SoftwareDetails />
         </SearchProvider>
       </CustomProvider>
     </div>
