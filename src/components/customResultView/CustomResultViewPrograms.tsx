@@ -5,8 +5,6 @@ import { OrgUnit } from '../../types/Entities';
 import ExternalLink from '../externalLinks';
 import ShowItem from './ShowItem';
 
-const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
-
 const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
   const router = useRouter();
   const { t } = useTranslation('common');
@@ -15,12 +13,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
       <div>
         <div className="sui-result__header">
           <h6>
-            <a
-              onClick={onClickLink}
-              target="_blank"
-              href={`${VIVO_URL_ITEM_BASE}/gprog_${result.id.raw}?lang=${router.locale}`}
-              rel="noreferrer"
-            >
+            <a onClick={onClickLink} href={`/programs/${result.id.raw}`}>
               {result.name?.raw}
             </a>
           </h6>
@@ -35,7 +28,7 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
                   <ExternalLink
                     key={org.id}
                     content={org.name!}
-                    url={`${VIVO_URL_ITEM_BASE}/org_${org.id}?lang=${router.locale}`}
+                    url={`/organizations/${org.id}?lang=${router.locale}`}
                   />
                 ))}
               </span>

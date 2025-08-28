@@ -16,12 +16,7 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
       <div>
         <div className="sui-result__header">
           <h6>
-            <a
-              onClick={onClickLink}
-              target="_blank"
-              href={`${VIVO_URL_ITEM_BASE}/resgr_${result.id.raw}?lang=${router.locale}`}
-              rel="noreferrer"
-            >
+            <a onClick={onClickLink} href={`/research-groups/${result.id.raw}`}>
               {result.name?.raw}
             </a>
           </h6>

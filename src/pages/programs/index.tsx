@@ -1,9 +1,9 @@
-import Head from 'next/head';
 import { useTranslation } from 'next-i18next';
 import Search from '../../components/Search';
-import Patents from '../../configs/Patents';
+import Programs from '../../configs/Programs';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Head from 'next/head';
 import { CustomProvider } from '../../components/context/CustomContext';
 import { SearchProvider } from '@elastic/react-search-ui';
 
@@ -18,12 +18,12 @@ export default function App() {
   return (
     <div>
       <Head>
-        <title>{`${t('Patents')} | BrCris`}</title>
+        <title>{`${t('Programs')} | BrCris`}</title>
       </Head>
       <div className="page-search">
         <CustomProvider>
-          <SearchProvider config={Patents.config}>
-            <Search index={Patents} />
+          <SearchProvider config={Programs.config}>
+            <Search index={Programs} />
           </SearchProvider>
         </CustomProvider>
       </div>
