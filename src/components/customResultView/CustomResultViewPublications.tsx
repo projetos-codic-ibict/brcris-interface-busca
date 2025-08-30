@@ -1,15 +1,10 @@
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 import { OrgUnit, Service } from '../../types/Entities';
-import ExternalLink from '../externalLinks';
 import ShowAuthorItem from './ShowAuthorItem';
 import ShowItem from './ShowItem';
 
-const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
-
 const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) => {
-  const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <li className="sui-result">
@@ -27,7 +22,6 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
             <ShowAuthorItem label={t('Author')} authors={result.author?.raw} />
             <ShowItem label={t('Year')} value={result.publicationDate?.raw} />
             <ShowItem label={t('Type')} value={result.type?.raw} />
-
             {result.orgunit === undefined && result.service === undefined && result.journal === undefined ? null : (
               <li>
                 <span className="sui-result__key">
@@ -39,29 +33,23 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
                 </span>
                 <span className="sui-result__value">
                   {result.orgunit?.raw.map((org: OrgUnit) => (
-                    <ExternalLink
-                      key={org.id}
-                      content={org.name!}
-                      url={`${VIVO_URL_ITEM_BASE}/org_${org.id}?lang=${router.locale}`}
-                    />
+                    <a key={org.id} href={`/organizations/${org.id}`}>
+                      {org.name!}
+                    </a>
                   ))}
 
                   {result.service?.raw.map((service: Service) =>
                     service.title?.map((title: string) => (
-                      <ExternalLink
-                        key={title}
-                        content={title}
-                        url={`${VIVO_URL_ITEM_BASE}/serv_${service.id}?lang=${router.locale}`}
-                      />
+                      <a key={title} href={`/serv_${service.id}`}>
+                        {title}
+                      </a>
                     ))
                   )}
 
                   {result.journal?.raw.map((journal: any, index: any) => (
-                    <ExternalLink
-                      key={index}
-                      content={journal.title ? journal.title : journal}
-                      url={`${VIVO_URL_ITEM_BASE}/journ_${journal.id}?lang=${router.locale}`}
-                    />
+                    <a key={index} href={`/journals/${journal.id}`}>
+                      {journal.title ? journal.title : journal}
+                    </a>
                   ))}
                 </span>
               </li>
@@ -93,11 +81,9 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
               label={t('Program')}
               value={result.program?.raw.map((program: any, index: any) => (
                 <span key={index} className="sui-result__value">
-                  <ExternalLink
-                    key={program.id}
-                    content={program.name!}
-                    url={`${VIVO_URL_ITEM_BASE}/org_${program.id}?lang=${router.locale}`}
-                  />
+                  <a key={program.id} href={`programs/${program.id}`}>
+                    {program.name!}
+                  </a>
                 </span>
               ))}
             />
@@ -105,11 +91,9 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
               label={t('Course')}
               value={result.course?.raw.map((course: any, index: any) => (
                 <span key={index} className="sui-result__value">
-                  <ExternalLink
-                    key={course.id}
-                    content={course.name!}
-                    url={`${VIVO_URL_ITEM_BASE}/org_${course.id}?lang=${router.locale}`}
-                  />
+                  <a key={course.id} href={`/organizations/${course.id}`}>
+                    {course.name!}
+                  </a>
                 </span>
               ))}
             />

@@ -2,11 +2,8 @@ import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { OrgUnit } from '../../types/Entities';
-import ExternalLink from '../externalLinks';
 import ShowAuthorItem from './ShowAuthorItem';
 import ShowItem from './ShowItem';
-
-const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
 
 const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
   const router = useRouter();
@@ -35,11 +32,9 @@ const CustomResultViewPatents = ({ result, onClickLink }: ResultViewProps) => {
                 <span className="sui-result__key">{t('Applicant')}</span>
                 {result.applicant?.raw.map((applicant: OrgUnit, index: number) => (
                   <span key={index} className="sui-result__value">
-                    <ExternalLink
-                      key={applicant.id}
-                      content={applicant.name!}
-                      url={`${VIVO_URL_ITEM_BASE}/org_${applicant.id}?lang=${router.locale}`}
-                    />
+                    <a key={applicant.id} href={`/organizations${applicant.id}`}>
+                      {applicant.name!}
+                    </a>
                   </span>
                 ))}
               </li>

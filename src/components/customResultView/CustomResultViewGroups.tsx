@@ -1,15 +1,10 @@
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 import ReadMoreCollapse from '../ReadMoreCollapse';
-import ExternalLink from '../externalLinks';
 import ShowAuthorItem from './ShowAuthorItem';
 import ShowItem from './ShowItem';
 
-const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
-
 const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
-  const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <li className="sui-result">
@@ -32,11 +27,9 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
                 <span className="sui-result__key">{t('Organization')}</span>
                 {result.orgunit?.raw.map((orgunit: any, index: any) => (
                   <span key={index} className="sui-result__value">
-                    <ExternalLink
-                      key={orgunit.id}
-                      content={orgunit.name!}
-                      url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}?lang=${router.locale}`}
-                    />
+                    <a key={orgunit.id} href={`/organizations/${orgunit.id}`}>
+                      {orgunit.name!}
+                    </a>
                   </span>
                 ))}
               </li>
@@ -46,11 +39,9 @@ const CustomResultViewGroups = ({ result, onClickLink }: ResultViewProps) => {
                 <span className="sui-result__key">{t('Partner')}</span>
                 {result.partner?.raw.map((partner: any, index: any) => (
                   <span key={index} className="sui-result__value">
-                    <ExternalLink
-                      key={partner.id}
-                      content={partner.name!}
-                      url={`${VIVO_URL_ITEM_BASE}/org_${partner.id}?lang=${router.locale}`}
-                    />
+                    <a key={partner.id} href={`/organizations/${partner.id}`}>
+                      {partner.name!}
+                    </a>
                   </span>
                 ))}
               </li>

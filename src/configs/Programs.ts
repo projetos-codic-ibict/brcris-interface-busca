@@ -30,6 +30,7 @@ const config: CustomSearchDriverOptions = {
       },
       evaluationArea: {
         raw: {},
+        Ppr,
       },
     },
     facets: {

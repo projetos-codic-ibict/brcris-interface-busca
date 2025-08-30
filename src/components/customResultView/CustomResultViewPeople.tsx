@@ -1,15 +1,10 @@
 /* eslint-disable  @typescript-eslint/no-non-null-asserted-optional-chain */
 import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
-import ExternalLink from '../externalLinks';
 import AuthorLink from '../externalLinks/AuthorLink';
 import ShowItem from './ShowItem';
 
-const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
-
 const CustomResultViewPeople = ({ result }: ResultViewProps) => {
-  const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <li className="sui-result">
@@ -50,11 +45,9 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
               label={t('Organization')}
               value={result.orgunit?.raw.map((orgunit: any, index: any) => (
                 <span key={index} className="sui-result__value">
-                  <ExternalLink
-                    key={orgunit.id}
-                    content={orgunit.name!}
-                    url={`${VIVO_URL_ITEM_BASE}/org_${orgunit.id}?lang=${router.locale}`}
-                  />
+                  <a key={orgunit.id} href={`/organizations/${orgunit.id}`}>
+                    {orgunit.name!}
+                  </a>
                 </span>
               ))}
             />

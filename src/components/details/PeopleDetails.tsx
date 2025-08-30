@@ -2,7 +2,6 @@ import Loader from '../Loader';
 import { useTranslation } from 'next-i18next';
 import { ErrorBoundary, useSearch } from '@elastic/react-search-ui';
 import Head from 'next/head';
-import ExternalLink from '../externalLinks';
 import LattesLink from '../externalLinks/LattesLink';
 import ShowItem from '../customResultView/ShowItem';
 import PersonProduction from './PersonProduction';
@@ -52,7 +51,9 @@ export default function PublicationDetails() {
                     label={t('Organization')}
                     value={result.orgunit?.raw.map((orgunit: any, index: any) => (
                       <span key={index} className="sui-result__value">
-                        <ExternalLink key={orgunit.id} content={orgunit.name!} url={`/org_${orgunit.id}?lang=`} />
+                        <a key={orgunit.id} href={`/organizations/${orgunit.id}`}>
+                          {orgunit.name!}
+                        </a>
                       </span>
                     ))}
                   />

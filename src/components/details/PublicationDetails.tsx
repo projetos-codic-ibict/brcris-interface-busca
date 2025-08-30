@@ -4,7 +4,6 @@ import { ErrorBoundary, useSearch } from '@elastic/react-search-ui';
 import Head from 'next/head';
 import ShowAuthorItem from '../customResultView/ShowAuthorItem';
 import ShowItem from '../customResultView/ShowItem';
-import ExternalLink from '../externalLinks';
 import { OrgUnit, Service } from '../../types/Entities';
 
 export default function PublicationDetails() {
@@ -39,21 +38,23 @@ export default function PublicationDetails() {
                     </span>
                     <span className="sui-result__value">
                       {result.orgunit?.raw.map((org: OrgUnit) => (
-                        <ExternalLink key={org.id} content={org.name!} url={`/org_${org.id}?lang=`} />
+                        <a key={org.id} href={`/organizations/${org.id}`}>
+                          {org.name!}
+                        </a>
                       ))}
 
                       {result.service?.raw.map((service: Service) =>
                         service.title?.map((title: string) => (
-                          <ExternalLink key={title} content={title} url={`/serv_${service.id}?lang=`} />
+                          <a key={title} href={`/serv_${service.id}`}>
+                            {title}
+                          </a>
                         ))
                       )}
 
                       {result.journal?.raw.map((journal: any, index: any) => (
-                        <ExternalLink
-                          key={index}
-                          content={journal.title ? journal.title : journal}
-                          url={`/journals/${journal.id}?lang=`}
-                        />
+                        <a key={index} href={`/journals/${journal.id}`}>
+                          {journal.title ? journal.title : journal}
+                        </a>
                       ))}
                     </span>
                   </li>
@@ -85,7 +86,9 @@ export default function PublicationDetails() {
                   label={t('Program')}
                   value={result.program?.raw.map((program: any, index: any) => (
                     <span key={index} className="sui-result__value">
-                      <ExternalLink key={program.id} content={program.name!} url={`programs/${program.id}?lang=`} />
+                      <a key={program.id} href={`programs/${program.id}`}>
+                        {program.name!}
+                      </a>
                     </span>
                   ))}
                 />
@@ -93,7 +96,9 @@ export default function PublicationDetails() {
                   label={t('Course')}
                   value={result.course?.raw.map((course: any, index: any) => (
                     <span key={index} className="sui-result__value">
-                      <ExternalLink key={course.id} content={course.name!} url={`/org_${course.id}?lang=`} />
+                      <a key={course.id} href={`/organizations/${course.id}`}>
+                        {course.name!}
+                      </a>
                     </span>
                   ))}
                 />
