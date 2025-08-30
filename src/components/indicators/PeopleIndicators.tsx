@@ -10,7 +10,7 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import { Pie } from 'react-chartjs-2';
 // @ts-ignore
 import { TagCloud } from 'react-tagcloud';
-import ElasticSearchService from '../../services/ElasticSearchService';
+import indicatorProxy from '../../services/IndicatorProxyService';
 
 import { useTranslation } from 'next-i18next';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
@@ -48,35 +48,36 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
     // @ts-ignore
     optionsResearchArea.plugins.title.text = t(optionsResearchArea.title);
     try {
-      isLoading
-        ? ElasticSearchService(
-            [
-              JSON.stringify(
-                getAggregateQuery({
-                  size: 10,
-                  indicadorName: 'nationality',
-                  searchTerm,
-                  fields,
-                  operator,
-                  filters,
-                })
-              ),
-              JSON.stringify(
-                getAggregateQuery({
-                  size: 10,
-                  indicadorName: 'researchArea.name',
-                  searchTerm,
-                  fields,
-                  operator,
-                  filters,
-                })
-              ),
-            ],
-            INDEX_NAME
-          ).then((data) => {
-            setIndicatorsData(data.buckets);
+      const queries = [
+        JSON.stringify(
+          getAggregateQuery({
+            size: 10,
+            indicadorName: 'nationality',
+            searchTerm,
+            fields,
+            operator,
+            filters,
           })
-        : null;
+        ),
+        JSON.stringify(
+          getAggregateQuery({
+            size: 10,
+            indicadorName: 'researchArea.name',
+            searchTerm,
+            fields,
+            operator,
+            filters,
+          })
+        ),
+      ];
+      if (isLoading) {
+        indicatorProxy.search(queries, INDEX_NAME).then((data) => {
+          setIndicatorsData(data);
+        });
+      } else {
+        const data = indicatorProxy.searchFromCacheOnly(queries, INDEX_NAME);
+        if (data) setIndicatorsData(data);
+      }
     } catch (err) {
       console.error(err);
       setIndicatorsData([]);

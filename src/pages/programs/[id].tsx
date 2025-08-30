@@ -30,7 +30,7 @@ export default function ProgramDetailsPage() {
   const { id } = router.query;
 
   const config: SearchDriverOptions = {
-    debug: true,
+    debug: false,
     alwaysSearchOnInitialLoad: true,
     routingOptions: routingOptions,
     apiConnector: new APIConnector(),

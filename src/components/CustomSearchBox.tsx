@@ -6,7 +6,6 @@ import CustomContext from './context/CustomContext';
 
 export type CustomSearchBoxProps = {
   titleFieldName: string;
-  itemLinkPrefix: string;
   indexLabel: string;
   fieldNames: string[];
   setSearchTerm: (searchTerm: string) => void;
@@ -15,7 +14,6 @@ export type CustomSearchBoxProps = {
 
 const CustomSearchBox = ({
   titleFieldName,
-  itemLinkPrefix,
   indexLabel,
   fieldNames,
   setSearchTerm,
@@ -29,7 +27,6 @@ const CustomSearchBox = ({
   ) : (
     <BasicSearchBox
       titleFieldName={titleFieldName}
-      itemLinkPrefix={itemLinkPrefix}
       setSearchTerm={setSearchTerm}
       handleSelectIndex={handleSelectIndex}
       indexLabel={indexLabel}

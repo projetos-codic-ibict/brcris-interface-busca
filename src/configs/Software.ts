@@ -38,28 +38,14 @@ const config: CustomSearchDriverOptions = {
         raw: {},
       },
 
-      depositDate: {
-        raw: {},
-      },
       releaseYear: {
         raw: {},
       },
       kind: {
         raw: {},
       },
-      platform: {
-        raw: {},
-      },
+
       registrationCountry: {
-        raw: {},
-      },
-      activitySector: {
-        raw: {},
-      },
-      knowledgeAreas: {
-        raw: {},
-      },
-      keyword: {
         raw: {},
       },
       language: {
@@ -71,9 +57,7 @@ const config: CustomSearchDriverOptions = {
       creator: { type: 'value' },
       registrationCountry: { type: 'value' },
       releaseYear: { type: 'value' },
-      knowledgeAreas: { type: 'value' },
       kind: { type: 'value' },
-      platform: { type: 'value' },
       language: { type: 'value' },
     },
   },
@@ -91,9 +75,6 @@ const config: CustomSearchDriverOptions = {
             size: 100,
             fallback: true,
           },
-        },
-        vivo_link: {
-          raw: {},
         },
       },
     },
@@ -138,7 +119,6 @@ const index: Index = {
   label: indexes.find((i) => i.name === indexName)?.label || '',
   customView: CustomResultViewSoftwares,
   indicators: SoftwaresIndicators,
-  vivoIndexPrefix: 'softw_',
 };
 
 export default index;

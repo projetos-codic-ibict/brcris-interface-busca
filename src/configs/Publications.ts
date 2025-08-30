@@ -16,70 +16,25 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     advanced_fields: {
       publicationDate: {},
-      language: {},
       type: {},
-      'orgunit.name_text': {},
     },
     search_fields: {
       title_text: {
         weight: 3,
       },
-      type: {},
       'author.name_text': {},
     },
     result_fields: {
-      advisor: {
-        raw: {},
-      },
       author: {
         raw: [],
       },
-      coadvisor: {
-        raw: {},
-      },
-      conference: {
-        raw: {},
-      },
-      course: {
-        raw: {},
-      },
-      doi: {
-        raw: {},
-      },
-      journal: {
-        raw: {},
-      },
-      keyword: {
-        snippet: {},
-      },
-      language: {
-        raw: [],
-      },
-      openalexId: {
-        raw: [],
-      },
-      orgunit: {
-        snippet: {},
-      },
-      program: {
-        snippet: {},
-      },
       publicationDate: {
         snippet: {},
-      },
-      researchArea: {
-        raw: [],
-      },
-      service: {
-        raw: {},
       },
       title: {
         snippet: {},
       },
       type: {
-        raw: {},
-      },
-      year: {
         raw: {},
       },
     },
@@ -164,9 +119,6 @@ const config: CustomSearchDriverOptions = {
             fallback: true,
           },
         },
-        vivo_link: {
-          raw: {},
-        },
       },
     },
     suggestions: {
@@ -210,6 +162,5 @@ const index: Index = {
   label: indexes.find((i) => i.name === indexName)?.label || '',
   customView: CustomResultViewPublications,
   indicators: PublicationsIndicators,
-  vivoIndexPrefix: 'publ_',
 };
 export default index;

@@ -10,7 +10,7 @@ import styles from '../../styles/Indicators.module.css';
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
-import ElasticSearchService from '../../services/ElasticSearchService';
+import indicatorProxyService from '../../services/IndicatorProxyService';
 import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
 import IndicatorContext from '../context/CustomContext';
@@ -20,7 +20,7 @@ import { getAggregateQuery } from './query/Query';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = process.env.INDEX_PROGRAM || '';
 
-export const options = new OptionsBar('Program by OrgUnit', false);
+export const options = new OptionsBar('Program by OrgUnit');
 
 const headersOrgUnit = [
   { label: 'Organization', key: 'key' },
@@ -40,25 +40,26 @@ function ProgramsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps)
     // tradução
     // @ts-ignore
     options.plugins.title.text = t(options.title);
-    isLoading
-      ? ElasticSearchService(
-          [
-            JSON.stringify(
-              getAggregateQuery({
-                size: 10,
-                indicadorName: 'orgunit.name',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-              })
-            ),
-          ],
-          INDEX_NAME
-        ).then((data) => {
-          setIndicatorsData(data.buckets);
+    const queries = [
+      JSON.stringify(
+        getAggregateQuery({
+          size: 10,
+          indicadorName: 'orgunit.acronym',
+          searchTerm,
+          fields,
+          operator,
+          filters,
         })
-      : null;
+      ),
+    ];
+    if (isLoading) {
+      indicatorProxyService.search(queries, INDEX_NAME).then((data) => {
+        setIndicatorsData(data);
+      });
+    } else {
+      const data = indicatorProxyService.searchFromCacheOnly(queries, INDEX_NAME);
+      if (data) setIndicatorsData(data);
+    }
   }, [filters, searchTerm, isLoading]);
 
   const orgUnitIndicators: IndicatorType[] = indicators ? indicators[0] : [];

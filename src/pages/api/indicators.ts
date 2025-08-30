@@ -12,27 +12,25 @@ const client = new Client({
 });
 
 type RequestData = {
-  querys: string[];
+  queries: string[];
   index: string;
 };
 
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const data: RequestData = JSON.parse(req.body);
-    const querys: any[] = [];
-    data.querys.forEach((query) => {
-      querys.push({ index: data.index });
-      querys.push(query);
-      console.log('query indicator', query);
+    const queries: any[] = [];
+    data.queries.forEach((query) => {
+      queries.push({ index: data.index });
+      queries.push(query);
     });
     // https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.17/msearch_examples.html
     const { body } = await client.msearch({
-      body: querys,
+      body: queries,
     });
 
     const buckets = body.responses.map((resp: any) => resp.aggregations?.aggregate.buckets);
-    const total = body.responses.map((resp: any) => resp.hits.total.value);
-    res.json({ buckets, total });
+    res.json(buckets);
   } catch (err) {
     logger.error(err);
     res.status(400).json({ error: err.message });

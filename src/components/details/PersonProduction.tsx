@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useTranslation } from 'next-i18next';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
+import { Filter } from '@elastic/search-ui';
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
-import ElasticSearchService from '../../services/ElasticSearchService';
+import indicatorProxyService from '../../services/IndicatorProxyService';
 import { IndicatorType } from '../../types/Entities';
 import IndicatorContext from '../context/CustomContext';
 import { OptionsBar, OptionsPie } from '../indicators/options/ChartsOptions';
 import { getAggregateQuery } from '../indicators/query/Query';
-import { Filter } from '@elastic/search-ui';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 const INDEX_NAME = process.env.INDEX_PUBLICATION || '';
@@ -35,15 +35,11 @@ export default function PersonProduction({ authorId }: { authorId: string }) {
   const { t } = useTranslation('common');
 
   const { indicators, setIndicatorsData, isEmpty } = useContext(IndicatorContext);
-  const [total, setTotal] = useState([]);
-
   // @ts-ignore
   const fields = ['author.id'];
   const searchTerm = authorId;
   const filters: Filter[] = [];
   const operator = 'AND';
-
-  console.log('searchTerm', searchTerm);
 
   useEffect(() => {
     // tradução
@@ -73,10 +69,8 @@ export default function PersonProduction({ authorId }: { authorId: string }) {
           filters,
         })
       );
-      ElasticSearchService([pdQuery, typeQuery], INDEX_NAME).then((data) => {
-        console.log('data', data);
-        setTotal(data.total);
-        setIndicatorsData(data.buckets);
+      indicatorProxyService.search([pdQuery, typeQuery], INDEX_NAME).then((data) => {
+        setIndicatorsData(data);
       });
     } catch (err) {
       console.error(err);
@@ -123,7 +117,6 @@ export default function PersonProduction({ authorId }: { authorId: string }) {
             ],
           }}
         />
-        <span>Total: {total[0]}</span>
       </div>
 
       <div className={styles.chart}>
@@ -155,7 +148,6 @@ export default function PersonProduction({ authorId }: { authorId: string }) {
             ],
           }}
         />
-        <span>Total: {total[1]}</span>
       </div>
     </div>
   );

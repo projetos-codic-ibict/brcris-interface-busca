@@ -7,8 +7,6 @@ const nextConfig = {
   reactStrictMode: false,
   // swcMinify: false,
   env: {
-    VIVO_URL_BASE: process.env.VIVO_URL_BASE,
-    VIVO_URL_ITEM_BASE: process.env.VIVO_URL_ITEM_BASE,
     LANGUAGES: process.env.LANGUAGES,
     PUBLIC_RECAPTCHA_SITE_KEY: process.env.PUBLIC_RECAPTCHA_SITE_KEY,
     INDEX_PUBLICATION: process.env.INDEX_PUBLICATION,

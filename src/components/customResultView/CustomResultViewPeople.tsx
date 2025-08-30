@@ -22,7 +22,6 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
 
         <div className="sui-result__body">
           <ul className="sui-result__details">
-            <ShowItem label={t('Nationality')} value={result.nationality?.raw} />
             <ShowItem
               label={t('Orcid')}
               value={
@@ -57,12 +56,6 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
                 <span key={index}>{researchArea.name}</span>
               ))}
             />
-            <li>
-              <span className="sui-result__key">{t('Community')}</span>
-              <span className="sui-result__value">
-                {result.community?.raw.map((community: any, index: any) => <span key={index}>{community.name}</span>)}
-              </span>
-            </li>
           </ul>
         </div>
       </div>

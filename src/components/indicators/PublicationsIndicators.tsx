@@ -10,7 +10,7 @@ import styles from '../../styles/Indicators.module.css';
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
-import ElasticSearchService from '../../services/ElasticSearchService';
+import indicatorProxyService from '../../services/IndicatorProxyService';
 import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
 import IndicatorContext from '../context/CustomContext';
@@ -69,11 +69,14 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
           filters,
         })
       );
-      isLoading
-        ? ElasticSearchService([pdQuery, typeQuery], INDEX_NAME).then((data) => {
-            setIndicatorsData(data.buckets);
-          })
-        : null;
+      if (isLoading) {
+        indicatorProxyService.search([pdQuery, typeQuery], INDEX_NAME).then((data) => {
+          setIndicatorsData(data);
+        });
+      } else {
+        const data = indicatorProxyService.searchFromCacheOnly([pdQuery, typeQuery], INDEX_NAME);
+        if (data) setIndicatorsData(data);
+      }
     } catch (err) {
       console.error(err);
       setIndicatorsData([]);

@@ -25,5 +25,4 @@ export type Index = {
   label: string;
   customView: ComponentType<ResultViewProps>;
   indicators: ComponentType<any>;
-  vivoIndexPrefix: string;
 };

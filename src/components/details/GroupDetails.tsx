@@ -1,8 +1,7 @@
-import Loader from '../Loader';
-import { useTranslation } from 'next-i18next';
 import { ErrorBoundary, useSearch } from '@elastic/react-search-ui';
+import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
-import ReadMoreCollapse from '../ReadMoreCollapse';
+import Loader from '../Loader';
 import ShowAuthorItem from '../customResultView/ShowAuthorItem';
 import ShowItem from '../customResultView/ShowItem';
 
@@ -55,14 +54,12 @@ export default function GroupDetails() {
                 <ShowItem label={t('Status')} value={result.status?.raw} />
                 <ShowItem label={t('Application sector')} value={result.applicationSector?.raw} />
 
-                <ReadMoreCollapse id={result.id?.raw}>
-                  <ShowAuthorItem label={t('Member')} authors={result.member?.raw} />
-                  <ShowItem label={t('Knowledge area')} value={result.knowledgeArea?.raw} />
-                  <ShowItem label={t('Keywords')} value={result.keyword?.raw} />
-                  <ShowItem label={t('Software')} value={result.software?.raw} />
-                  <ShowItem label={t('Equipment')} value={result.equipment?.raw} />
-                  <ShowItem label={t('Description')} value={result.description?.raw} />
-                </ReadMoreCollapse>
+                <ShowAuthorItem label={t('Member')} authors={result.member?.raw} />
+                <ShowItem label={t('Knowledge area')} value={result.knowledgeArea?.raw} />
+                <ShowItem label={t('Keywords')} value={result.keyword?.raw} />
+                <ShowItem label={t('Software')} value={result.software?.raw} />
+                <ShowItem label={t('Equipment')} value={result.equipment?.raw} />
+                <ShowItem label={t('Description')} value={result.description?.raw} />
               </ul>
             </div>
           ))}

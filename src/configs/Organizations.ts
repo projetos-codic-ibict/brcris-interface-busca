@@ -64,9 +64,6 @@ const config: CustomSearchDriverOptions = {
             fallback: true,
           },
         },
-        vivo_link: {
-          raw: {},
-        },
       },
     },
     suggestions: {
@@ -110,7 +107,6 @@ const index: Index = {
   label: indexes.find((i) => i.name === indexName)?.label || '',
   customView: CustomResultViewOrganizations,
   indicators: OrgUnitIndicators,
-  vivoIndexPrefix: 'insti_',
 };
 
 export default index;

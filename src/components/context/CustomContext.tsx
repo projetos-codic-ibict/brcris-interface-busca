@@ -21,7 +21,7 @@ export function CustomProvider(props: PropsWithChildren<object>) {
   }
 
   function isEmpty(): boolean {
-    return indicators.length < 1 || indicators[0] == null || indicators[0].length < 1;
+    return indicators?.length < 1 || indicators[0] == null || indicators[0].length < 1;
   }
 
   return (

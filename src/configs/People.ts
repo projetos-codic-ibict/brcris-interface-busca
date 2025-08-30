@@ -32,9 +32,6 @@ const config: CustomSearchDriverOptions = {
       lattesId: {
         raw: {},
       },
-      nationality: {
-        raw: {},
-      },
       orcid: {
         raw: {},
       },
@@ -44,16 +41,11 @@ const config: CustomSearchDriverOptions = {
       orgunit: {
         raw: {},
       },
-      community: {
-        raw: {},
-      },
     },
     disjunctiveFacets: ['nationality', 'researchArea'],
     facets: {
-      nationality: { type: 'value' },
       'researchArea.name': { type: 'value' },
       'orgunit.name': { type: 'value' },
-      'community.name': { type: 'value' },
     },
   },
   autocompleteQuery: {
@@ -72,9 +64,6 @@ const config: CustomSearchDriverOptions = {
             size: 100,
             fallback: true,
           },
-        },
-        vivo_link: {
-          raw: {},
         },
       },
     },
@@ -119,7 +108,6 @@ const index: Index = {
   label: indexes.find((i) => i.name === indexName)?.label || '',
   customView: CustomResultViewPeople,
   indicators: PeopleIndicators,
-  vivoIndexPrefix: 'pers_',
 };
 
 export default index;

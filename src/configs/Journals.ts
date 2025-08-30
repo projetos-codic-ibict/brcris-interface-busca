@@ -20,41 +20,19 @@ const config: CustomSearchDriverOptions = {
       },
       keywords: {},
       issn: {},
-      issnl: {},
     },
 
     result_fields: {
       id: {
         raw: {},
       },
-      H5index: {
-        raw: {},
-      },
-      accessType: {
-        raw: {},
-      },
       issn: {
-        raw: {},
-      },
-      issnl: {
-        raw: {},
-      },
-      keywords: {
-        raw: {},
-      },
-      language: {
         raw: {},
       },
       publisher: {
         raw: {},
       },
       qualis: {
-        raw: {},
-      },
-      researchArea: {
-        raw: {},
-      },
-      status: {
         raw: {},
       },
       title: {
@@ -87,9 +65,6 @@ const config: CustomSearchDriverOptions = {
             size: 100,
             fallback: true,
           },
-        },
-        vivo_link: {
-          raw: {},
         },
       },
     },
@@ -134,7 +109,6 @@ const index: Index = {
   label: indexes.find((i) => i.name === indexName)?.label || '',
   customView: CustomResultViewJournals,
   indicators: JornalsIndicators,
-  vivoIndexPrefix: 'journ_',
 };
 
 export default index;

@@ -28,7 +28,6 @@ function builConnector(index: string) {
         requestState.searchTerm = `(all:${requestState.searchTerm})`;
       }
       const query = untranslatedFieldsNames(requestState.searchTerm);
-      console.log('query', query);
       const fullQuery = new QueryFormat().toElasticsearch(query, Object.keys(searchFields));
       requestBody.query = fullQuery;
       console.log('fullQuery:', JSON.stringify(fullQuery));

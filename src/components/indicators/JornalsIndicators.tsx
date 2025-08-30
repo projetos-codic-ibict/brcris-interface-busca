@@ -10,7 +10,7 @@ import styles from '../../styles/Indicators.module.css';
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
-import ElasticSearchService from '../../services/ElasticSearchService';
+import indicatorProxy from '../../services/IndicatorProxyService';
 import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
 import IndicatorContext from '../context/CustomContext';
@@ -40,25 +40,26 @@ function JornalsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
     // tradução
     // @ts-ignore
     optQualis.plugins.title.text = t(optQualis.title);
-    isLoading
-      ? ElasticSearchService(
-          [
-            JSON.stringify(
-              getAggregateQuery({
-                size: 10,
-                indicadorName: 'qualis',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-              })
-            ),
-          ],
-          INDEX_NAME
-        ).then((data) => {
-          setIndicatorsData(data.buckets);
+    const queries = [
+      JSON.stringify(
+        getAggregateQuery({
+          size: 10,
+          indicadorName: 'qualis',
+          searchTerm,
+          fields,
+          operator,
+          filters,
         })
-      : null;
+      ),
+    ];
+    if (isLoading) {
+      indicatorProxy.search(queries, INDEX_NAME).then((data) => {
+        setIndicatorsData(data);
+      });
+    } else {
+      const data = indicatorProxy.searchFromCacheOnly(queries, INDEX_NAME);
+      if (data) setIndicatorsData(data);
+    }
   }, [filters, searchTerm, isLoading]);
 
   const qualisIndicators: IndicatorType[] = indicators ? indicators[0] : [];

@@ -30,7 +30,6 @@ const config: CustomSearchDriverOptions = {
       },
       evaluationArea: {
         raw: {},
-        Ppr,
       },
     },
     facets: {
@@ -53,9 +52,6 @@ const config: CustomSearchDriverOptions = {
             size: 100,
             fallback: true,
           },
-        },
-        vivo_link: {
-          raw: {},
         },
       },
     },
@@ -100,7 +96,6 @@ const index: Index = {
   label: indexes.find((i) => i.name === indexName)?.label || '',
   customView: CustomResultViewPeople,
   indicators: ProgramsIndicators,
-  vivoIndexPrefix: 'gprog_',
 };
 
 export default index;

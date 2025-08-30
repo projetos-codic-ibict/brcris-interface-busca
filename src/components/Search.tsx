@@ -72,7 +72,6 @@ export default function Search({ index }: SearchProps) {
                     header={
                       <CustomSearchBox
                         titleFieldName="title"
-                        itemLinkPrefix={index.vivoIndexPrefix}
                         setSearchTerm={setSearchTerm!}
                         handleSelectIndex={handleSelectIndex}
                         indexLabel={index.label}

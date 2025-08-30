@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useRouter } from 'next/router';
-import { CustomProvider } from '../../components/context/CustomContext';
 import { SearchProvider } from '@elastic/react-search-ui';
-import APIConnector from '../../services/APIConnector';
 import { RequestState, SearchDriverOptions } from '@elastic/search-ui';
-import Loader from '../../components/Loader';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useRouter } from 'next/router';
+import { CustomProvider } from '../../components/context/CustomContext';
 import PeopleDetails from '../../components/details/PeopleDetails';
+import Loader from '../../components/Loader';
+import APIConnector from '../../services/APIConnector';
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
   props: {
@@ -16,8 +16,6 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
 });
 
 const indexName = process.env.INDEX_PERSON || '';
-
-console.log('indexName', indexName);
 
 const routingOptions = {
   readUrl: () => '',
@@ -32,7 +30,7 @@ export default function PublicationDetailsPage() {
   const { id } = router.query;
 
   const config: SearchDriverOptions = {
-    debug: true,
+    debug: false,
     alwaysSearchOnInitialLoad: true,
     routingOptions: routingOptions,
     apiConnector: new APIConnector(),

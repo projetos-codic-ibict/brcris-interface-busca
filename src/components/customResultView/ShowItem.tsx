@@ -1,5 +1,3 @@
-import ExternalLink from '../externalLinks';
-
 type ShowItemProps = {
   label: string;
   value: string | string[];
@@ -13,13 +11,13 @@ const ShowItem = ({ label, value, urlLink }: ShowItemProps) => {
       <span className="sui-result__value">
         {typeof value === 'string' ? (
           urlLink ? (
-            <ExternalLink content={value} url={urlLink} />
+            <a href={urlLink}>{value}</a>
           ) : (
             value
           )
         ) : (
           value?.map((v: string, index: number) => (
-            <span key={index}>{urlLink ? <ExternalLink content={v} url={urlLink} /> : v}</span>
+            <span key={index}>{urlLink ? <a href={urlLink}>{value}</a> : v}</span>
           ))
         )}
       </span>

@@ -7,11 +7,8 @@ import { IoArrowRedoOutline, IoSearch } from 'react-icons/io5';
 import indexes from '../configs/Indexes';
 import { getIndexStats } from '../services/ElasticSearchStatsService';
 
-const VIVO_URL_ITEM_BASE = process.env.VIVO_URL_ITEM_BASE;
-
 export type BasicSearchBoxProps = {
   titleFieldName: string;
-  itemLinkPrefix: string;
   indexLabel: string;
   setSearchTerm: (searchTerm: string) => void;
   handleSelectIndex: (event: any) => void;
@@ -20,7 +17,6 @@ export type BasicSearchBoxProps = {
 
 const BasicSearchBox = ({
   titleFieldName,
-  itemLinkPrefix,
   indexLabel,
   setSearchTerm,
   handleSelectIndex,
@@ -46,7 +42,7 @@ const BasicSearchBox = ({
           urlField: '',
           shouldTrackClickThrough: true,
         }}
-        autocompleteSuggestions={true}
+        autocompleteSuggestions={false}
         debounceLength={0}
         onSubmit={(searchTerm) => {
           setSearchTerm(searchTerm);
@@ -56,7 +52,7 @@ const BasicSearchBox = ({
             selection.suggestion = `\"${selection.suggestion}\"`;
             defaultOnSelectAutocomplete(selection);
           } else {
-            router.push(`${VIVO_URL_ITEM_BASE}/${itemLinkPrefix}${selection.id.raw}?lang=${router.locale}`);
+            router.push(`${indexLabel.toLowerCase()}/${selection.id.raw}`);
           }
         }}
         inputView={({ getAutocomplete, getInputProps /** getButtonProps **/ }) => (

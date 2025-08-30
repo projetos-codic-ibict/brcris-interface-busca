@@ -10,7 +10,7 @@ import styles from '../../styles/Indicators.module.css';
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
-import ElasticSearchService from '../../services/ElasticSearchService';
+import indicatorProxyService from '../../services/IndicatorProxyService';
 import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
 import { IndicatorsProps } from '../../types/Propos';
 import IndicatorContext from '../context/CustomContext';
@@ -62,56 +62,57 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
     optResearchLine.plugins.title.text = t(optResearchLine.title);
     // @ts-ignore
     optKnowledgeArea.plugins.title.text = t(optKnowledgeArea.title);
-    isLoading
-      ? ElasticSearchService(
-          [
-            JSON.stringify(
-              getAggregateQuery({
-                size: 10,
-                indicadorName: 'creationYear',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-                order: { _key: 'desc' },
-              })
-            ),
-            JSON.stringify(
-              getAggregateQuery({
-                size: 10,
-                indicadorName: 'researchLine',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-              })
-            ),
-            JSON.stringify(
-              getAggregateQuery({
-                size: 10,
-                indicadorName: 'knowledgeArea',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-              })
-            ),
-            JSON.stringify(
-              getAggregateQuery({
-                size: 10,
-                indicadorName: 'status',
-                searchTerm,
-                fields,
-                operator,
-                filters,
-              })
-            ),
-          ],
-          INDEX_NAME
-        ).then((data) => {
-          setIndicatorsData(data.buckets);
+    const queries = [
+      JSON.stringify(
+        getAggregateQuery({
+          size: 10,
+          indicadorName: 'creationYear',
+          searchTerm,
+          fields,
+          operator,
+          filters,
+          order: { _key: 'desc' },
         })
-      : null;
+      ),
+      JSON.stringify(
+        getAggregateQuery({
+          size: 10,
+          indicadorName: 'researchLine',
+          searchTerm,
+          fields,
+          operator,
+          filters,
+        })
+      ),
+      JSON.stringify(
+        getAggregateQuery({
+          size: 10,
+          indicadorName: 'knowledgeArea',
+          searchTerm,
+          fields,
+          operator,
+          filters,
+        })
+      ),
+      JSON.stringify(
+        getAggregateQuery({
+          size: 10,
+          indicadorName: 'status',
+          searchTerm,
+          fields,
+          operator,
+          filters,
+        })
+      ),
+    ];
+    if (isLoading) {
+      indicatorProxyService.search(queries, INDEX_NAME).then((data) => {
+        setIndicatorsData(data);
+      });
+    } else {
+      const data = indicatorProxyService.searchFromCacheOnly(queries, INDEX_NAME);
+      if (data) setIndicatorsData(data);
+    }
   }, [filters, searchTerm, isLoading]);
 
   // creation year
