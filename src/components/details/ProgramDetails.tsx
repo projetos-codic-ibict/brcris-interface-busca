@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import ShowItem from '../customResultView/ShowItem';
 import Loader from '../Loader';
+import { OrgUnit } from '../../types/Entities';
 
 export default function ProgramDetails() {
   const { wasSearched, isLoading, results } = useSearch();
