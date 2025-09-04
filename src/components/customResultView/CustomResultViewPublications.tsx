@@ -9,11 +9,11 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
     <li className="sui-result">
       <div>
         <div className="sui-result__header">
-          <h6>
+          <h3>
             <a onClick={onClickLink} href={`/publications/${result.id.raw}`}>
               {result.title?.raw}
             </a>
-          </h6>
+          </h3>
         </div>
 
         <div className="sui-result__body">

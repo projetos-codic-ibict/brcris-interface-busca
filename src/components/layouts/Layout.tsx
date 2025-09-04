@@ -29,7 +29,9 @@ export default function Layout({ children, fontFamily }: LayoutProps) {
       </Head>
       <Navbar />
       {/* <Alert /> */}
-      <main className={fontFamily}>{children}</main>
+      <main style={{ paddingTop: '100px' }} className={`container  ${fontFamily}`}>
+        {children}
+      </main>
       <CookieConsent />
       <Footer />
     </>

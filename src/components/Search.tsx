@@ -80,30 +80,6 @@ export default function Search({ index }: SearchProps) {
                         )}
                       />
                     }
-                    sideContent={
-                      <ErrorBoundary className={styles.searchErrorHidden}>
-                        {containsResults(wasSearched, results) && (
-                          <>
-                            <Sorting label={t('Sort by') || ''} sortOptions={index.sortOptions} />
-                            <div className="filters">
-                              <span className="sui-sorting__label">{t('Filters')}</span>
-                            </div>
-                          </>
-                        )}
-                        {containsResults(wasSearched, results) && (
-                          <>
-                            {Object.keys(index.config.searchQuery.facets!).map((facet, i) => (
-                              <Facet
-                                className={`facet-${facet}`}
-                                key={i}
-                                field={facet}
-                                label={t(facet.toLowerCase(), { ns: 'facets' })}
-                              />
-                            ))}
-                          </>
-                        )}
-                      </ErrorBoundary>
-                    }
                     bodyContent={
                       <ErrorBoundary
                         className={styles.searchError}
@@ -115,6 +91,30 @@ export default function Search({ index }: SearchProps) {
                             )}
                             {!error && (
                               <>
+                                <div className="sui-layout-sidebar">
+                                  {' '}
+                                  {containsResults(wasSearched, results) && (
+                                    <>
+                                      <Sorting label={t('Sort by') || ''} sortOptions={index.sortOptions} />
+                                      <div className="filters">
+                                        <span className="sui-sorting__label">{t('Filters')}</span>
+                                      </div>
+                                    </>
+                                  )}
+                                  {containsResults(wasSearched, results) && (
+                                    <>
+                                      {Object.keys(index.config.searchQuery.facets!).map((facet, i) => (
+                                        <Facet
+                                          className={`facet-${facet}`}
+                                          key={i}
+                                          field={facet}
+                                          label={t(facet.toLowerCase(), { ns: 'facets' })}
+                                        />
+                                      ))}
+                                    </>
+                                  )}
+                                </div>
+
                                 <div className="result">
                                   <Results resultView={index.customView} /> <Paging />
                                 </div>

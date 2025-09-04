@@ -40,7 +40,7 @@ export interface CustomSearchDriverOptions extends SearchDriverOptions {
 }
 
 export type QueryItem = {
-  field?: string;
+  field: string;
   operator?: string;
-  value?: string;
+  value: string;
 };

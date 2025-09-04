@@ -9,11 +9,7 @@
 }
 
 .container {
-  margin-top: 12px;
-}
-
-.container:first-child {
-  margin-top: 0;
+  margin-bottom: 12px;
 }
 
 .container span {
@@ -36,8 +32,10 @@
   z-index: 1;
 }
 
-.group textarea {
+input.firstInput {
+  border: 1px solid var(--border-color);
   border-radius: 24px 0 0 24px;
+  padding-left: 16px !important;
 }
 
 .group input:focus,

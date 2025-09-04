@@ -9,11 +9,11 @@ const CustomResultViewPeople = ({ result, onClickLink }: ResultViewProps) => {
     <li className="sui-result">
       <div>
         <div className="sui-result__header">
-          <h6>
+          <h3>
             <a onClick={onClickLink} href={`/programs/${result.id.raw}`}>
               {result.name?.raw}
             </a>
-          </h6>
+          </h3>
         </div>
 
         <div className="sui-result__body">

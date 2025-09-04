@@ -10,14 +10,14 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
     <li className="sui-result">
       <div>
         <div className="sui-result__header">
-          <h6>
+          <h3>
             <AuthorLink
               key={result.id.raw}
               id={result.id.raw}
               name={result.name?.raw}
               idLattes={result.lattesId?.raw!}
             />
-          </h6>
+          </h3>
         </div>
 
         <div className="sui-result__body">

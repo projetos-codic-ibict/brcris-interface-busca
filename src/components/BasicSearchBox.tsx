@@ -3,7 +3,7 @@ import { SearchBox } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { IoArrowRedoOutline, IoSearch } from 'react-icons/io5';
+import { IoSearch } from 'react-icons/io5';
 import indexes from '../configs/Indexes';
 import { getIndexStats } from '../services/ElasticSearchStatsService';
 
@@ -12,16 +12,9 @@ export type BasicSearchBoxProps = {
   indexLabel: string;
   setSearchTerm: (searchTerm: string) => void;
   handleSelectIndex: (event: any) => void;
-  toogleAdvancedConfig: (advanced: boolean) => void;
 };
 
-const BasicSearchBox = ({
-  titleFieldName,
-  indexLabel,
-  setSearchTerm,
-  handleSelectIndex,
-  toogleAdvancedConfig,
-}: BasicSearchBoxProps) => {
+const BasicSearchBox = ({ titleFieldName, indexLabel, setSearchTerm, handleSelectIndex }: BasicSearchBoxProps) => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [docsCount, setDocsCount] = useState(localStorage.getItem(indexLabel));
@@ -82,16 +75,12 @@ const BasicSearchBox = ({
               {getAutocomplete()}
             </div>
 
-            <button disabled={getInputProps()?.value?.trim().length < 3} className="btn btn-primary">
+            <button disabled={getInputProps()?.value?.trim().length < 3} className="btn btn-primary search-button ">
               <IoSearch /> {t('Search')}
             </button>
           </div>
         )}
       ></SearchBox>
-      <span onClick={() => toogleAdvancedConfig(true)} className="link-color d-flex align-items-center flex-gap-8">
-        <IoArrowRedoOutline />
-        {t('Advanced search')}
-      </span>
     </>
   );
 };

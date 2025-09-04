@@ -13,17 +13,17 @@ function Navbar() {
   const changeTo = (lang: string) => lang;
 
   return (
-    <nav className="navbar navbar-dark navbar-expand-lg bg-violet py-0">
+    <nav className="navbar navbar-expand-lg py-0">
       <div className="container-fluid d-flex">
         <div className="flex-nowrap d-flex align-items-center flex-justify-content-between">
           <Link href="/" className="navbar-brand">
             <picture className="navbar-logo">
-              <img className="img-fluid brcris" src="/logos/logo-brcris-pb.png" alt="logo do brcris" />
+              <img className="img-fluid brcris" src="/logos/logo-brcris.jpeg" alt="logo do brcris" />
             </picture>
           </Link>
           <a className="navbar-brand" href="https://www.gov.br/ibict/pt-br" target="_blank" rel="noreferrer">
             <picture className="navbar-logo">
-              <img className="img-fluid ibict" src="/logos/logo-ibict-pb-st.png" alt="logo do ibict" />
+              <img className="img-fluid ibict" src="/logos/logo-ibict.png" alt="logo do ibict" />
             </picture>
           </a>
 

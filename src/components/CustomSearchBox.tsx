@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useContext } from 'react';
+import { useState } from 'react';
 import AdvancedSearchBox from './AdvancedSearchBox';
 import BasicSearchBox from './BasicSearchBox';
-import CustomContext from './context/CustomContext';
+
+import { useTranslation } from 'next-i18next';
+import style from '../styles/Switch.module.css';
 
 export type CustomSearchBoxProps = {
   titleFieldName: string;
@@ -19,19 +21,34 @@ const CustomSearchBox = ({
   setSearchTerm,
   handleSelectIndex,
 }: CustomSearchBoxProps) => {
-  const { advanced, setAdvanced } = useContext(CustomContext);
+  const { t } = useTranslation('common');
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  return (
+    <>
+      <div className={style['br-switch']} role="presentation" style={{ marginBottom: '10px' }}>
+        <input
+          id="switch-default"
+          type="checkbox"
+          name="switch-default"
+          checked={showAdvanced}
+          role="switch"
+          onChange={() => setShowAdvanced((prev) => !prev)}
+        />
+        <label htmlFor="switch-default">{t('Advanced search')}</label>
+      </div>
 
-  return advanced ? (
-    //@ts-ignore
-    <AdvancedSearchBox indexName={indexLabel} fieldNames={fieldNames} toogleAdvancedConfig={setAdvanced} />
-  ) : (
-    <BasicSearchBox
-      titleFieldName={titleFieldName}
-      setSearchTerm={setSearchTerm}
-      handleSelectIndex={handleSelectIndex}
-      indexLabel={indexLabel}
-      toogleAdvancedConfig={setAdvanced}
-    />
+      {showAdvanced ? (
+        //@ts-ignore
+        <AdvancedSearchBox indexName={indexLabel} fieldNames={fieldNames} />
+      ) : (
+        <BasicSearchBox
+          titleFieldName={titleFieldName}
+          setSearchTerm={setSearchTerm}
+          handleSelectIndex={handleSelectIndex}
+          indexLabel={indexLabel}
+        />
+      )}
+    </>
   );
 };
 

@@ -9,11 +9,11 @@ const CustomResultViewSoftwares = ({ result, onClickLink }: ResultViewProps) => 
     <li className="sui-result">
       <div>
         <div className="sui-result__header">
-          <h6>
+          <h3>
             <a onClick={onClickLink} href={`/software/${result.id.raw}`}>
               {result.name?.raw}
             </a>
-          </h6>
+          </h3>
         </div>
 
         <div className="sui-result__body">

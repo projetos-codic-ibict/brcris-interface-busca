@@ -30,7 +30,7 @@ export default function App() {
   const partners = [
     {
       url: 'https://www.gov.br/ibict/pt-br',
-      path: '/logos/ibict.png',
+      path: '/logos/logo-ibict.png',
       description: 'Logo do IBICT',
       // class: 'hilight',
     },
@@ -128,7 +128,11 @@ export default function App() {
                 })} ${t(indexLabel)}`}
               />
             </div>
-            <button disabled={term?.trim().length < 3} className="btn btn-primary" title={t('Search') || 'Search'}>
+            <button
+              disabled={term?.trim().length < 3}
+              className="btn btn-primary search-button"
+              title={t('Search') || 'Search'}
+            >
               <IoSearch /> {t('Search')}
             </button>
           </form>
