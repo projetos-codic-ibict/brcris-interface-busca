@@ -4,10 +4,10 @@ import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useContext, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
-import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { Download } from 'lucide-react';
 import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import indicatorProxyService from '../../services/IndicatorProxyService';
@@ -32,7 +32,7 @@ const headersOrgUnitState = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
+function OrgUnitIndicators({ filters, resultSearchTerm, isLoading }: IndicatorsProps) {
   const { t } = useTranslation('common');
 
   const { driver } = useContext(SearchContext);
@@ -53,7 +53,7 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
       getAggregateQuery({
         size: 10,
         indicadorName: 'country',
-        searchTerm,
+        searchTerm: resultSearchTerm,
         fields,
         operator,
         filters,
@@ -63,7 +63,7 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
       getAggregateQuery({
         size: 10,
         indicadorName: 'state',
-        searchTerm,
+        searchTerm: resultSearchTerm,
         fields,
         operator,
         filters,
@@ -73,11 +73,8 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
       indicatorProxyService.search([countryQuery, stateQuery], INDEX_NAME).then((data) => {
         setIndicatorsData(data);
       });
-    } else {
-      const data = indicatorProxyService.searchFromCacheOnly([countryQuery, stateQuery], INDEX_NAME);
-      setIndicatorsData(data);
     }
-  }, [filters, searchTerm, isLoading]);
+  }, [filters, resultSearchTerm, isLoading]);
 
   const countryIndicators: IndicatorType[] = indicators ? indicators[0] : [];
   const countryLabels = countryIndicators != null ? countryIndicators.map((d) => d.key) : [];
@@ -96,7 +93,7 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           filename={'arquivo.csv'}
           headers={headersOrgUnit}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Bar
           /**
@@ -127,7 +124,7 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           filename={'arquivo.csv'}
           headers={headersOrgUnitState}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Bar
           /**
@@ -153,9 +150,9 @@ function OrgUnitIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading }) => ({
+  ({ filters, resultSearchTerm, isLoading }) => ({
     filters,
-    searchTerm,
+    resultSearchTerm,
     isLoading,
   })
 )(OrgUnitIndicators);

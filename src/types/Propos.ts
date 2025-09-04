@@ -5,7 +5,7 @@ import { ComponentType } from 'react';
 import { CustomSearchDriverOptions } from './Entities';
 export type IndicatorsProps = {
   filters?: any;
-  searchTerm?: any;
+  resultSearchTerm?: any;
   isLoading?: any;
 };
 

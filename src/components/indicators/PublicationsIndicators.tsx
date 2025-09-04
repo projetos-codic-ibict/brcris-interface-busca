@@ -4,10 +4,10 @@ import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useContext, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
-import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { Download } from 'lucide-react';
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import indicatorProxyService from '../../services/IndicatorProxyService';
@@ -32,7 +32,7 @@ const headersType = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
+function PublicationsIndicators({ filters, resultSearchTerm, isLoading }: IndicatorsProps) {
   const { t } = useTranslation('common');
 
   const { driver } = useContext(SearchContext);
@@ -47,12 +47,14 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
     options.plugins.title.text = t(options.title);
     // @ts-ignore
     optionsType.plugins.title.text = t(optionsType.title);
+    console.log('resultSearchTerm', resultSearchTerm, isLoading);
+    if (!resultSearchTerm) return;
     try {
       const pdQuery = JSON.stringify(
         getAggregateQuery({
           size: 10,
           indicadorName: 'publicationDate',
-          searchTerm,
+          searchTerm: resultSearchTerm,
           fields,
           operator,
           filters,
@@ -63,25 +65,20 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
         getAggregateQuery({
           size: 10,
           indicadorName: 'type',
-          searchTerm,
+          searchTerm: resultSearchTerm,
           fields,
           operator,
           filters,
         })
       );
-      if (isLoading) {
-        indicatorProxyService.search([pdQuery, typeQuery], INDEX_NAME).then((data) => {
-          setIndicatorsData(data);
-        });
-      } else {
-        const data = indicatorProxyService.searchFromCacheOnly([pdQuery, typeQuery], INDEX_NAME);
-        if (data) setIndicatorsData(data);
-      }
+      indicatorProxyService.search([pdQuery, typeQuery], INDEX_NAME).then((data) => {
+        setIndicatorsData(data);
+      });
     } catch (err) {
       console.error(err);
       setIndicatorsData([]);
     }
-  }, [filters, searchTerm, isLoading]);
+  }, [filters, resultSearchTerm, isLoading]);
 
   const yearIndicators: IndicatorType[] = indicators ? indicators[0] : [];
   const yearLabels = yearIndicators != null ? yearIndicators.map((d) => d.key) : [];
@@ -102,7 +99,7 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
           filename={'arquivo.csv'}
           headers={headersPublicationsByYear}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Bar
           /**
@@ -133,7 +130,7 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
           filename={'arquivo.csv'}
           headers={headersType}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Pie
           /**
@@ -159,9 +156,9 @@ function PublicationsIndicators({ filters, searchTerm, isLoading }: IndicatorsPr
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading }) => ({
+  ({ filters, resultSearchTerm, isLoading }) => ({
     filters,
-    searchTerm,
+    resultSearchTerm,
     isLoading,
   })
 )(PublicationsIndicators);

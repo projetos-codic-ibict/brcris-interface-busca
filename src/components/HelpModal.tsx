@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { IoInformationCircle } from 'react-icons/io5';
 import styles from '../styles/AdvancedSearch.module.css';
+import { Info } from 'lucide-react';
 
 type HelpModalProps = {
   fields: string[];
@@ -20,7 +20,7 @@ const HelpModal = ({ fields }: HelpModalProps) => {
   return (
     <>
       <span onClick={handleShow} className={styles.help}>
-        <IoInformationCircle />
+        <Info />
       </span>
 
       <Modal show={show} onHide={handleClose} size="lg">

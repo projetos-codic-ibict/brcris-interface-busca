@@ -4,10 +4,10 @@ import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useContext, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
-import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { Download } from 'lucide-react';
 import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import indicatorProxyService from '../../services/IndicatorProxyService';
@@ -27,7 +27,7 @@ const headersOrgUnit = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-function ProgramsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
+function ProgramsIndicators({ filters, resultSearchTerm, isLoading }: IndicatorsProps) {
   const { t } = useTranslation('common');
 
   const { driver } = useContext(SearchContext);
@@ -45,7 +45,7 @@ function ProgramsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps)
         getAggregateQuery({
           size: 10,
           indicadorName: 'orgunit.acronym',
-          searchTerm,
+          searchTerm: resultSearchTerm,
           fields,
           operator,
           filters,
@@ -56,11 +56,8 @@ function ProgramsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps)
       indicatorProxyService.search(queries, INDEX_NAME).then((data) => {
         setIndicatorsData(data);
       });
-    } else {
-      const data = indicatorProxyService.searchFromCacheOnly(queries, INDEX_NAME);
-      if (data) setIndicatorsData(data);
     }
-  }, [filters, searchTerm, isLoading]);
+  }, [filters, resultSearchTerm, isLoading]);
 
   const orgUnitIndicators: IndicatorType[] = indicators ? indicators[0] : [];
   const orgUnitLabels = orgUnitIndicators != null ? orgUnitIndicators.map((d) => d.key) : [];
@@ -76,7 +73,7 @@ function ProgramsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps)
           filename={'arquivo.csv'}
           headers={headersOrgUnit}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Bar
           /**
@@ -102,9 +99,9 @@ function ProgramsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps)
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading }) => ({
+  ({ filters, resultSearchTerm, isLoading }) => ({
     filters,
-    searchTerm,
+    resultSearchTerm,
     isLoading,
   })
 )(ProgramsIndicators);

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { QueryDslOperator, QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 import { SearchContext, withSearch } from '@elastic/react-search-ui';
+import { Download } from 'lucide-react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useContext, useRef, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { FaFileExport } from 'react-icons/fa6';
 import { alertService } from '../services/AlertService';
 import ExportService from '../services/ExportService';
 import { CustomSearchQuery } from '../types/Entities';
@@ -146,7 +146,7 @@ const DownloadModal = ({ filters, searchTerm, totalResults, typeArq }: DownloadM
         className="btn-header btn btn-outline-secondary d-flex align-items-center flex-gap-8"
         onClick={handleDownload}
       >
-        <FaFileExport />
+        <Download />
         {t(`${title}`)}
       </button>
       {isLoading ? <Loader /> : ''}

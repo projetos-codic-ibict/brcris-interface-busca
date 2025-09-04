@@ -4,10 +4,10 @@ import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useContext, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
-import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { Download } from 'lucide-react';
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import indicatorProxyService from '../../services/IndicatorProxyService';
@@ -43,7 +43,7 @@ const headersStatus = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
+function GroupsIndicators({ filters, resultSearchTerm, isLoading }: IndicatorsProps) {
   const { t } = useTranslation('common');
 
   const { driver } = useContext(SearchContext);
@@ -67,7 +67,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
         getAggregateQuery({
           size: 10,
           indicadorName: 'creationYear',
-          searchTerm,
+          searchTerm: resultSearchTerm,
           fields,
           operator,
           filters,
@@ -78,7 +78,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
         getAggregateQuery({
           size: 10,
           indicadorName: 'researchLine',
-          searchTerm,
+          searchTerm: resultSearchTerm,
           fields,
           operator,
           filters,
@@ -88,7 +88,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
         getAggregateQuery({
           size: 10,
           indicadorName: 'knowledgeArea',
-          searchTerm,
+          searchTerm: resultSearchTerm,
           fields,
           operator,
           filters,
@@ -98,7 +98,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
         getAggregateQuery({
           size: 10,
           indicadorName: 'status',
-          searchTerm,
+          searchTerm: resultSearchTerm,
           fields,
           operator,
           filters,
@@ -109,11 +109,8 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
       indicatorProxyService.search(queries, INDEX_NAME).then((data) => {
         setIndicatorsData(data);
       });
-    } else {
-      const data = indicatorProxyService.searchFromCacheOnly(queries, INDEX_NAME);
-      if (data) setIndicatorsData(data);
     }
-  }, [filters, searchTerm, isLoading]);
+  }, [filters, resultSearchTerm, isLoading]);
 
   // creation year
   const creationYearIndicators: IndicatorType[] = indicators ? indicators[0] : [];
@@ -147,7 +144,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           filename={'arquivo.csv'}
           headers={headersByCreationYear}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Bar
           /**
@@ -178,7 +175,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           filename={'arquivo.csv'}
           headers={headersResearchLine}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Pie
           /**
@@ -209,7 +206,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           filename={'arquivo.csv'}
           headers={headersKnowledgeArea}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Pie
           /**
@@ -240,7 +237,7 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           filename={'arquivo.csv'}
           headers={headersStatus}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Pie
           /**
@@ -266,9 +263,9 @@ function GroupsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading }) => ({
+  ({ filters, resultSearchTerm, isLoading }) => ({
     filters,
-    searchTerm,
+    resultSearchTerm,
     isLoading,
   })
 )(GroupsIndicators);

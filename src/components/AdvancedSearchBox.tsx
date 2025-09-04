@@ -2,9 +2,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { withSearch } from '@elastic/react-search-ui';
 import { SearchContextState } from '@elastic/search-ui';
+import { CircleX, Plus, Search } from 'lucide-react';
 import { useTranslation } from 'next-i18next';
 import { FormEvent, useEffect, useState } from 'react';
-import { IoAdd, IoClose, IoSearch } from 'react-icons/io5';
 import styles from '../styles/AdvancedSearch.module.css';
 import { QueryItem } from '../types/Entities';
 
@@ -103,18 +103,18 @@ const AdvancedSearchBox = ({ setSearchTerm, fieldNames }: CustomSearchBoxProps) 
               </div>
               {index > 0 && (
                 <span onClick={() => removeInput(index)} className="d-flex align-items-center">
-                  <IoClose />
+                  <CircleX />
                 </span>
               )}
             </div>
           ))}
           <div className="d-flex flex-justify-content-between">
             <button type="button" className="btn-link d-flex align-items-center flex-gap-8" onClick={addInput}>
-              <IoAdd />
+              <Plus />
               Adicionar campo
             </button>
             <button disabled={!isFormValid} className="btn btn-primary search-button" type="submit">
-              <IoSearch /> {t('Search')}
+              <Search /> {t('Search')}
             </button>
           </div>
         </form>

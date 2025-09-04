@@ -3,7 +3,6 @@
 import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useContext, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
-import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
@@ -12,6 +11,7 @@ import { Pie } from 'react-chartjs-2';
 import { TagCloud } from 'react-tagcloud';
 import indicatorProxy from '../../services/IndicatorProxyService';
 
+import { Download } from 'lucide-react';
 import { useTranslation } from 'next-i18next';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import { CustomSearchQuery, IndicatorType } from '../../types/Entities';
@@ -35,7 +35,7 @@ const headersResearchArea = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
+function PeopleIndicators({ filters, resultSearchTerm, isLoading }: IndicatorsProps) {
   const { t } = useTranslation('common');
   const { driver } = useContext(SearchContext);
   const { indicators, setIndicatorsData, isEmpty } = useContext(IndicatorContext);
@@ -53,7 +53,7 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           getAggregateQuery({
             size: 10,
             indicadorName: 'nationality',
-            searchTerm,
+            searchTerm: resultSearchTerm,
             fields,
             operator,
             filters,
@@ -63,7 +63,7 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           getAggregateQuery({
             size: 10,
             indicadorName: 'researchArea.name',
-            searchTerm,
+            searchTerm: resultSearchTerm,
             fields,
             operator,
             filters,
@@ -74,15 +74,12 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
         indicatorProxy.search(queries, INDEX_NAME).then((data) => {
           setIndicatorsData(data);
         });
-      } else {
-        const data = indicatorProxy.searchFromCacheOnly(queries, INDEX_NAME);
-        if (data) setIndicatorsData(data);
       }
     } catch (err) {
       console.error(err);
       setIndicatorsData([]);
     }
-  }, [filters, searchTerm, isLoading]);
+  }, [filters, resultSearchTerm, isLoading]);
 
   const nationalities: IndicatorType[] = indicators ? indicators[0] : [];
 
@@ -106,7 +103,7 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           filename={'arquivo.csv'}
           headers={headersResearchArea}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Pie
           /**
@@ -144,7 +141,7 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
           filename={'arquivo.csv'}
           headers={headersNacionality}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <TagCloud
           minSize={12}
@@ -167,9 +164,9 @@ function PeopleIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
 // @ts-ignore
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading }) => ({
+  ({ filters, resultSearchTerm, isLoading }) => ({
     filters,
-    searchTerm,
+    resultSearchTerm,
     isLoading,
   })
 )(PeopleIndicators);

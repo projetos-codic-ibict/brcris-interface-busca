@@ -3,11 +3,11 @@
 import { useTranslation } from 'next-i18next';
 import { useContext, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
-import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
 import { Filter } from '@elastic/search-ui';
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { Download } from 'lucide-react';
 import { Bar, Pie } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import indicatorProxyService from '../../services/IndicatorProxyService';
@@ -97,7 +97,7 @@ export default function PersonProduction({ authorId }: { authorId: string }) {
           filename={'arquivo.csv'}
           headers={headersPublicationsByYear}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Bar
           /**
@@ -128,7 +128,7 @@ export default function PersonProduction({ authorId }: { authorId: string }) {
           filename={'arquivo.csv'}
           headers={headersType}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Pie
           /**

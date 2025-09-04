@@ -1,3 +1,4 @@
+import { Search } from 'lucide-react';
 import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -5,7 +6,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import { IoSearch } from 'react-icons/io5';
 import { replaceSpacesWithHyphens } from '../../utils/Utils';
 import AllIndexVisNetwork from '../components/AllIndexVisNetwork';
 import indexes from '../configs/Indexes';
@@ -92,7 +92,7 @@ export default function App() {
           }
         />
       </Head>
-      <div className={styles.home}>
+      <div className={`container ${styles.home}`}>
         <div className="search-card">
           <h1>{t('Search in the Brazilian Scientific Research Information Ecosystem')} (BrCris)</h1>
           <form
@@ -133,7 +133,7 @@ export default function App() {
               className="btn btn-primary search-button"
               title={t('Search') || 'Search'}
             >
-              <IoSearch /> {t('Search')}
+              <Search /> {t('Search')}
             </button>
           </form>
         </div>

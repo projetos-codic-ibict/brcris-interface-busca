@@ -15,6 +15,7 @@ export default function Layout({ children, fontFamily }: LayoutProps) {
   const locales = router.locales;
   const defaultLocale = router.defaultLocale;
   const currentPath = router.asPath;
+
   return (
     <>
       <Head>
@@ -29,7 +30,8 @@ export default function Layout({ children, fontFamily }: LayoutProps) {
       </Head>
       <Navbar />
       {/* <Alert /> */}
-      <main style={{ paddingTop: '100px' }} className={`container  ${fontFamily}`}>
+
+      <main style={{ paddingTop: '100px' }} className={`container-fluid ${fontFamily}`}>
         {children}
       </main>
       <CookieConsent />

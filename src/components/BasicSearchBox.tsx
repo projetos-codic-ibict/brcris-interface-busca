@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { SearchBox } from '@elastic/react-search-ui';
+import { Search } from 'lucide-react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { IoSearch } from 'react-icons/io5';
 import indexes from '../configs/Indexes';
 import { getIndexStats } from '../services/ElasticSearchStatsService';
 
@@ -76,7 +76,7 @@ const BasicSearchBox = ({ titleFieldName, indexLabel, setSearchTerm, handleSelec
             </div>
 
             <button disabled={getInputProps()?.value?.trim().length < 3} className="btn btn-primary search-button ">
-              <IoSearch /> {t('Search')}
+              <Search /> {t('Search')}
             </button>
           </div>
         )}

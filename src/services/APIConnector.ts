@@ -54,15 +54,15 @@ class APIConnector {
   }
 
   async onSearch(requestState: any, queryConfig: any) {
-    Promise.resolve().then(() => this.cleanupCache());
+    // Promise.resolve().then(() => this.cleanupCache());
 
-    const key = this.getCacheKey(requestState, queryConfig);
+    // const key = this.getCacheKey(requestState, queryConfig);
 
-    const cachedData = this.getFromCache(key);
-    if (cachedData) {
-      console.log('Returning cached data');
-      return cachedData;
-    }
+    // const cachedData = this.getFromCache(key);
+    // if (cachedData) {
+    //   console.log('Returning cached data');
+    //   return cachedData;
+    // }
 
     console.log('Fetching fresh data');
     const response = await fetch('/api/search', {
@@ -72,7 +72,7 @@ class APIConnector {
     });
     const data = await response.json();
 
-    this.saveToCache(key, data);
+    // this.saveToCache(key, data);
     return data;
   }
 

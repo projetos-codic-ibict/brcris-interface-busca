@@ -4,10 +4,10 @@ import { SearchContext, withSearch } from '@elastic/react-search-ui';
 import { useTranslation } from 'next-i18next';
 import { useContext, useEffect } from 'react';
 import { CSVLink } from 'react-csv';
-import { IoCloudDownloadOutline } from 'react-icons/io5';
 import styles from '../../styles/Indicators.module.css';
 
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { Download } from 'lucide-react';
 import { Bar } from 'react-chartjs-2';
 import { CHART_BACKGROUD_COLORS, CHART_BORDER_COLORS } from '../../../utils/Utils';
 import indicatorProxy from '../../services/IndicatorProxyService';
@@ -27,7 +27,7 @@ const headersQualis = [
   { label: 'Quantity', key: 'doc_count' },
 ];
 
-function JornalsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) {
+function JornalsIndicators({ filters, resultSearchTerm, isLoading }: IndicatorsProps) {
   const { t } = useTranslation('common');
 
   const { driver } = useContext(SearchContext);
@@ -45,7 +45,7 @@ function JornalsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
         getAggregateQuery({
           size: 10,
           indicadorName: 'qualis',
-          searchTerm,
+          searchTerm: resultSearchTerm,
           fields,
           operator,
           filters,
@@ -56,11 +56,8 @@ function JornalsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
       indicatorProxy.search(queries, INDEX_NAME).then((data) => {
         setIndicatorsData(data);
       });
-    } else {
-      const data = indicatorProxy.searchFromCacheOnly(queries, INDEX_NAME);
-      if (data) setIndicatorsData(data);
     }
-  }, [filters, searchTerm, isLoading]);
+  }, [filters, resultSearchTerm, isLoading]);
 
   const qualisIndicators: IndicatorType[] = indicators ? indicators[0] : [];
 
@@ -77,7 +74,7 @@ function JornalsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
           filename={'arquivo.csv'}
           headers={headersQualis}
         >
-          <IoCloudDownloadOutline />
+          <Download />
         </CSVLink>
         <Bar
           /**
@@ -103,9 +100,9 @@ function JornalsIndicators({ filters, searchTerm, isLoading }: IndicatorsProps) 
 }
 export default withSearch(
   // @ts-ignore
-  ({ filters, searchTerm, isLoading }) => ({
+  ({ filters, resultSearchTerm, isLoading }) => ({
     filters,
-    searchTerm,
+    resultSearchTerm,
     isLoading,
   })
 )(JornalsIndicators);
