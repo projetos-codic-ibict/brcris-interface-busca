@@ -96,9 +96,9 @@ export default function Search({ index }: SearchProps) {
                                   {containsResults(wasSearched, results) && (
                                     <>
                                       <Sorting label={t('Sort by') || ''} sortOptions={index.sortOptions} />
-                                      <div className="filters">
+                                      {/* <div className="filters">
                                         <span className="sui-sorting__label">{t('Filters')}</span>
-                                      </div>
+                                      </div> */}
                                     </>
                                   )}
                                   {containsResults(wasSearched, results) && (

@@ -2,6 +2,7 @@ import { ResultViewProps } from '@elastic/react-search-ui-views';
 import { useTranslation } from 'next-i18next';
 import ShowAuthorItem from './ShowAuthorItem';
 import ShowItem from './ShowItem';
+import { IoLink } from 'react-icons/io5';
 
 const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) => {
   const { t } = useTranslation('common');
@@ -11,7 +12,7 @@ const CustomResultViewPublications = ({ result, onClickLink }: ResultViewProps) 
         <div className="sui-result__header">
           <h3>
             <a onClick={onClickLink} href={`/publications/${result.id.raw}`}>
-              {result.title?.raw}
+              {result.title?.raw} <IoLink />
             </a>
           </h3>
         </div>

@@ -66,6 +66,10 @@ h3 a {
   color: var(--primary-color);
 }
 
+h3 a:hover {
+  text-decoration: underline;
+}
+
 img {
   max-width: 100%;
   max-height: 100%;
@@ -520,7 +524,8 @@ li .sui-result__key:after {
 .page-search .sui-facet__title,
 .page-search .sui-sorting__label,
 .page-search .sui-multi-checkbox-facet__option-count {
-  color: var(--primary-color);
+  color: var(--text-color);
+  font-weight: 500;
 }
 
 .page-search .sui-select__control {
