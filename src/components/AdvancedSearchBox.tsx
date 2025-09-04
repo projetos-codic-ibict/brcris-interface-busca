@@ -101,9 +101,11 @@ const AdvancedSearchBox = ({ setSearchTerm, fieldNames }: CustomSearchBoxProps) 
                   ))}
                 </select>
               </div>
-              <span onClick={() => removeInput(index)} className="d-flex align-items-center">
-                <IoClose />
-              </span>
+              {index > 0 && (
+                <span onClick={() => removeInput(index)} className="d-flex align-items-center">
+                  <IoClose />
+                </span>
+              )}
             </div>
           ))}
           <div className="d-flex flex-justify-content-between">

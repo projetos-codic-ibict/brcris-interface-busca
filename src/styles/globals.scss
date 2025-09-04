@@ -80,6 +80,10 @@ nav.navbar-expand-lg {
   padding-right: 0;
 }
 
+main {
+  min-height: calc(100vh - 250px);
+}
+
 .text-left {
   text-align: left;
 }
@@ -265,7 +269,7 @@ a {
   height: 90px;
   position: fixed;
   width: 100%;
-  z-index: 999999;
+  z-index: 99;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--bg);
 }
@@ -486,12 +490,7 @@ li .sui-result__key:after {
   border-bottom: none;
 }
 
-/* sobrescrevendo o css do componente do search-ui  */
 
-// .page-search .sui-layout {
-//   width: 100%;
-//   margin-left: 16px;
-// }
 
 .page-search,
 .page-search .sui-multi-checkbox-facet {
@@ -575,9 +574,6 @@ li .sui-result__key:after {
 .page-search .sui-layout-main-header {
   margin-bottom: 8px;
   width: 100%;
-  background-color: var(--bg-card);
-  border-radius: var(--border-radius);
-  padding: 8px 16px;
 }
 
 .page-search .sui-layout-body {
@@ -610,8 +606,7 @@ li .sui-result__key:after {
 
 .page-search .sui-layout-header {
   border-bottom: none;
-  padding: 0 16px 16px 0;
-  // position: absolute;
+  padding: 0 0 16px 0;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -702,9 +697,6 @@ li .sui-result__key:after {
   justify-content: space-between;
 }
 
-footer {
-  background-color: #fff;
-}
 
 .social-media-icons {
   display: flex;
@@ -941,7 +933,9 @@ button.rc-pagination-item-link[disabled] {
   width: 75%;
 }
 
-
+.page-search .sui-layout-body:after {
+  display: none;
+}
 
 
 @media (max-width: 800px) {
@@ -997,10 +991,6 @@ button.rc-pagination-item-link[disabled] {
     // padding: 0 16px;
     width: 100%;
     margin-left: 0;
-  }
-
-  .page-search .sui-layout-header {
-    padding: 16px;
   }
 
   .sui-layout-sidebar-toggle {

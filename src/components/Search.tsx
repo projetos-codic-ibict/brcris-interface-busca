@@ -89,36 +89,33 @@ export default function Search({ index }: SearchProps) {
                             {!error && wasSearched && results?.length == 0 && resultSearchTerm && (
                               <strong>{t('No documents were found for your search')}</strong>
                             )}
-                            {!error && (
+                            {!error && containsResults(wasSearched, results) && (
                               <>
                                 <div className="sui-layout-sidebar">
                                   {' '}
-                                  {containsResults(wasSearched, results) && (
-                                    <>
-                                      <Sorting label={t('Sort by') || ''} sortOptions={index.sortOptions} />
-                                      {/* <div className="filters">
+                                  <>
+                                    <Sorting label={t('Sort by') || ''} sortOptions={index.sortOptions} />
+                                    {/* <div className="filters">
                                         <span className="sui-sorting__label">{t('Filters')}</span>
                                       </div> */}
-                                    </>
-                                  )}
-                                  {containsResults(wasSearched, results) && (
-                                    <>
-                                      {Object.keys(index.config.searchQuery.facets!).map((facet, i) => (
-                                        <Facet
-                                          className={`facet-${facet}`}
-                                          key={i}
-                                          field={facet}
-                                          label={t(facet.toLowerCase(), { ns: 'facets' })}
-                                        />
-                                      ))}
-                                    </>
-                                  )}
+                                  </>
+                                  <>
+                                    {Object.keys(index.config.searchQuery.facets!).map((facet, i) => (
+                                      <Facet
+                                        className={`facet-${facet}`}
+                                        key={i}
+                                        field={facet}
+                                        label={t(facet.toLowerCase(), { ns: 'facets' })}
+                                      />
+                                    ))}
+                                  </>
                                 </div>
-
-                                <div className="result">
-                                  <Results resultView={index.customView} /> <Paging />
-                                </div>
-                                <index.indicators />
+                                <>
+                                  <div className="result">
+                                    <Results resultView={index.customView} /> <Paging />
+                                  </div>
+                                  <index.indicators />
+                                </>
                               </>
                             )}
                           </>

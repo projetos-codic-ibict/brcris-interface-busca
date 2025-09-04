@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { estypes } from '@elastic/elasticsearch';
 import ElasticsearchAPIConnector from '@elastic/search-ui-elasticsearch-connector';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { untranslatedFieldsNames } from '../../components/SearchSanitization';
+import ElasticsearchQueryBuilder from '../../services/ElasticsearchQueryBuilder';
 import logger from '../../services/Logger';
-import QueryFormat from '../../services/QueryFormat';
 // https://docs.elastic.co/search-ui/api/connectors/elasticsearch#customise-the-elasticsearch-request-body
 function builConnector(index: string) {
   const connector = new ElasticsearchAPIConnector(
@@ -15,22 +15,16 @@ function builConnector(index: string) {
     (requestBody, requestState, queryConfig) => {
       requestBody.track_total_hits = true;
 
-      if (!requestState.searchTerm) return requestBody;
-
-      // remove dois pontos do termo de busca
-      requestState.searchTerm = requestState.searchTerm.replaceAll(': ', ' ');
-
-      // transforming the query before sending to Elasticsearch using the requestState and queryConfig
-      const searchFields: any = queryConfig.search_fields;
-      // @ts-ignore
-      if (requestState.searchTerm.indexOf('(') < 0) {
-        // @ts-ignore
-        requestState.searchTerm = `(all:${requestState.searchTerm})`;
+      if (requestState.searchTerm) {
+        const searchTerm = requestState.searchTerm.replaceAll(': ', ' ');
+        const searchFields: object = queryConfig.search_fields!;
+        const fullQuery = new ElasticsearchQueryBuilder().format(
+          searchTerm,
+          Object.keys(searchFields)
+        ) as estypes.QueryDslQueryContainer;
+        requestBody.query = fullQuery;
       }
-      const query = untranslatedFieldsNames(requestState.searchTerm);
-      const fullQuery = new QueryFormat().toElasticsearch(query, Object.keys(searchFields));
-      requestBody.query = fullQuery;
-      console.log('fullQuery:', JSON.stringify(fullQuery));
+
       return requestBody;
     }
   );

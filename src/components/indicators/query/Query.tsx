@@ -1,6 +1,6 @@
 import { QueryDslOperator, QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 import { Filter, FilterValue } from '@elastic/search-ui';
-import QueryFormat from '../../../services/QueryFormat';
+import ElasticsearchQueryBuilder from '../../../services/ElasticsearchQueryBuilder';
 import { untranslatedFieldsNames } from '../../SearchSanitization';
 type QueryProps = {
   size: number;
@@ -50,7 +50,10 @@ export function formatedQuery(
 ): QueryDslQueryContainer {
   let query: QueryDslQueryContainer = {};
   if (searchTerm.indexOf('(') >= 0) {
-    query = new QueryFormat().toElasticsearch(untranslatedFieldsNames(searchTerm), fields);
+    query = new ElasticsearchQueryBuilder().format(
+      untranslatedFieldsNames(searchTerm),
+      fields
+    ) as QueryDslQueryContainer;
   } else {
     query = {
       bool: {

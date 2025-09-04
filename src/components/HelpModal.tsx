@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import { IoInformationCircle } from 'react-icons/io5';
 import styles from '../styles/AdvancedSearch.module.css';
 
 type HelpModalProps = {
@@ -10,7 +11,7 @@ type HelpModalProps = {
 };
 
 const HelpModal = ({ fields }: HelpModalProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'advanced']);
   const router = useRouter();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -19,7 +20,7 @@ const HelpModal = ({ fields }: HelpModalProps) => {
   return (
     <>
       <span onClick={handleShow} className={styles.help}>
-        Precisa de ajuda?
+        <IoInformationCircle />
       </span>
 
       <Modal show={show} onHide={handleClose} size="lg">
@@ -39,7 +40,7 @@ const HelpModal = ({ fields }: HelpModalProps) => {
             <Link href="/publications">{t('publications')}</Link> {t('index page and use the query below')}:
           </p>
           <p className="text-center">
-            <code>{t('(all:Computing) AND (publicationDate:2018) AND NOT (type:master thesis)')}</code>
+            <b>{t('(Title:Computing) AND (Year:2018) AND NOT (Type:master thesis)')}</b>
           </p>
           <hr />
           <p>
@@ -47,12 +48,10 @@ const HelpModal = ({ fields }: HelpModalProps) => {
             <b>{t(router.pathname.replaceAll('/', ''))}</b>.
           </p>
           <ul>
-            <li>all *</li>
             {fields.map((field) => (
-              <li key={field}>{field}</li>
+              <li key={field}>{t(field, { ns: 'advanced' })}</li>
             ))}
           </ul>
-          <span>* {t('All fields')}</span>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

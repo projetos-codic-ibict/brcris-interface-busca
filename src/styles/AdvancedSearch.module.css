@@ -75,25 +75,17 @@ input.firstInput {
 }
 
 .help {
-  position: absolute;
-  font-size: 0.9em;
-  top: 5px;
-  left: 4px;
-  background: var(--tabs-color);
-  color: #fff;
-  padding: 0 4px 8px 4px;
-  border-radius: 4px 4px 0 0;
-  transition:
-    all 0.5s ease-out,
-    text-indent 0.5s ease-out;
-  animation-duration: 0.5s;
-  animation-fill-mode: both;
-  opacity: 0;
-  z-index: 0;
-}
-
-.group:focus-within .help,
-.group:hover .help {
-  top: -1.5em;
-  opacity: 1;
+  align-items: center;
+  justify-content: center;
+  color: var(--tabs-color);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  cursor: pointer;
+  margin-top: -0.5rem;
+  position: relative;
+  border: 1px solid var(--border-color);
+  border-radius: 100%;
+  font-size: 1.1rem;
+  padding: 2px;
 }
