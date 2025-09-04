@@ -16,7 +16,6 @@ const config: CustomSearchDriverOptions = {
     index: indexName,
     advanced_fields: {
       'orgunit.name_text': {},
-      nationality: {},
       lattesId: {},
     },
     search_fields: {
@@ -32,9 +31,6 @@ const config: CustomSearchDriverOptions = {
       lattesId: {
         raw: {},
       },
-      orcid: {
-        raw: {},
-      },
       researchArea: {
         raw: {},
       },
@@ -42,7 +38,7 @@ const config: CustomSearchDriverOptions = {
         raw: {},
       },
     },
-    disjunctiveFacets: ['nationality', 'researchArea'],
+    disjunctiveFacets: [],
     facets: {
       'researchArea.name': { type: 'value' },
       'orgunit.name': { type: 'value' },

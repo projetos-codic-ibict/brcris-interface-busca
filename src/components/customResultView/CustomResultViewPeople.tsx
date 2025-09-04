@@ -23,24 +23,6 @@ const CustomResultViewPeople = ({ result }: ResultViewProps) => {
         <div className="sui-result__body">
           <ul className="sui-result__details">
             <ShowItem
-              label={t('Orcid')}
-              value={
-                result.orcid
-                  ? result.orcid?.raw.toString().startsWith('https')
-                    ? result.orcid?.raw
-                    : `https://orcid.org/${result.orcid?.raw}`
-                  : ''
-              }
-              urlLink={
-                result.orcid
-                  ? result.orcid?.raw.toString().startsWith('https')
-                    ? result.orcid?.raw
-                    : `https://orcid.org/${result.orcid?.raw}`
-                  : ''
-              }
-            />
-
-            <ShowItem
               label={t('Organization')}
               value={result.orgunit?.raw.map((orgunit: any, index: any) => (
                 <span key={index} className="sui-result__value">
