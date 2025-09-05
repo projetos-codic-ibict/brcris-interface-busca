@@ -15,17 +15,18 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg py-0">
       <div className="container-fluid d-flex">
-        <div className="flex-nowrap d-flex align-items-center flex-justify-content-between ms-5">
-          <Link href="/" className="navbar-brand">
-            <picture className="navbar-logo">
-              <img className="img-fluid brcris" src="/logos/logo-brcris.jpeg" alt="logo do brcris" />
-            </picture>
-          </Link>
+        <div className="flex-nowrap d-flex align-items-end flex-justify-content-between gap-3 ms-5">
           <a className="navbar-brand" href="https://www.gov.br/ibict/pt-br" target="_blank" rel="noreferrer">
             <picture className="navbar-logo">
               <img className="img-fluid ibict" src="/logos/logo-ibict.png" alt="logo do ibict" />
             </picture>
           </a>
+          <span className="divider"> </span>
+          <Link href="/" className="navbar-brand">
+            <picture className="navbar-logo">
+              <img className="img-fluid brcris" src="/logos/logo-brcris.png" alt="logo do brcris" />
+            </picture>
+          </Link>
 
           <button
             className="navbar-toggler"

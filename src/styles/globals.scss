@@ -277,6 +277,14 @@ a {
 .navbar .navbar-brand {
   padding-bottom: 0;
   padding-top: 0;
+  margin-right: 0;
+}
+
+.divider {
+  border-right: 1px solid var(--border-color);
+  display: block;
+  width: 1px;
+  height: 68px;
 }
 
 a.nav-link {
