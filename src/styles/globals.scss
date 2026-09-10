@@ -2336,15 +2336,19 @@ h3.popover-header a {
   }
 }
 
+.brcris-chart-card.brcris-panel-table {
+  padding: 0.75rem 0.85rem 0.65rem;
+}
+
 .brcris-panel-table__header {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.45rem;
 }
 
 .brcris-panel-table__caption {
-  margin: 0.35rem 0 0 12px;
+  margin: 0.2rem 0 0 12px;
   color: var(--text-secondary-color);
-  font-size: 0.82rem;
-  line-height: 1.35;
+  font-size: 0.75rem;
+  line-height: 1.3;
 }
 
 .brcris-panel-table__body {
@@ -2358,23 +2362,66 @@ h3.popover-header a {
 
 .brcris-panel-table__table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  line-height: 1.25;
 }
 
 .brcris-panel-table__table th,
 .brcris-panel-table__table td {
-  padding: 0.65rem 0.75rem;
+  padding: 0.35rem 0.55rem;
   border-bottom: 1px solid var(--border-color);
   vertical-align: middle;
 }
 
 .brcris-panel-table__table th {
   color: var(--text-secondary-color);
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
   text-align: left;
+  text-transform: none;
   background: var(--table-header-bg);
+  overflow: visible;
+}
+
+.brcris-panel-table__sort-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: inherit;
+  gap: 0.3rem;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.brcris-panel-table__sort-btn span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brcris-panel-table__sort-btn svg {
+  flex-shrink: 0;
+}
+
+.brcris-panel-table__sort-btn:hover,
+.brcris-panel-table__sort-btn.is-active {
+  color: var(--primary-color);
+}
+
+.brcris-panel-table__table th.is-numeric .brcris-panel-table__sort-btn {
+  justify-content: flex-end;
 }
 
 .brcris-panel-table__table tbody tr:nth-child(even) {
@@ -2387,12 +2434,22 @@ h3.popover-header a {
 
 .brcris-panel-table__table td.is-numeric,
 .brcris-panel-table__table th.is-numeric {
+  width: 7.25rem;
   text-align: right;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
-.brcris-panel-table__table td:first-child {
-  width: 4.5rem;
+.brcris-panel-table__table td:first-child,
+.brcris-panel-table__table th:first-child {
+  width: 5.5rem;
+  white-space: nowrap;
+  color: var(--text-secondary-color);
+}
+
+.brcris-panel-table__table td:nth-child(2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -2401,22 +2458,22 @@ h3.popover-header a {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 0.35rem;
-  padding: 0.75rem 0 0.15rem;
+  gap: 0.25rem;
+  padding: 0.5rem 0 0;
 }
 
 .brcris-panel-table__page-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 2rem;
-  height: 2rem;
-  padding: 0 0.4rem;
+  min-width: 1.7rem;
+  height: 1.7rem;
+  padding: 0 0.3rem;
   border: 1px solid var(--border-color);
   border-radius: calc(var(--border-radius) - 0.35rem);
   background: var(--bg);
   color: var(--text-secondary-color);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   cursor: pointer;
 }
 
@@ -2437,5 +2494,5 @@ h3.popover-header a {
 
 .brcris-panel-table__page-ellipsis {
   color: var(--text-secondary-color);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
 }

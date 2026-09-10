@@ -247,14 +247,6 @@ export default function TypeDistribution({
         {!loading && !error && data.length > 0 ? (
           <EChart option={option} height={height} />
         ) : null}
-
-        {!loading && !error && data.length > 0 ? (
-          <div className="brcris-chart-card__footer">
-            <span className="brcris-chart-card__meta">
-              {t("A publication may have more than one type")}
-            </span>
-          </div>
-        ) : null}
       </div>
     </div>
   );
