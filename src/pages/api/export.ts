@@ -5,6 +5,11 @@ import type { Search } from "es7/api/requestParams";
 import fs from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createFolderIfNotExists } from "../../services/createFolderIfNotExists";
+import {
+  applyJournalIssn,
+  collectJournalIdsFromHits,
+  fetchJournalIssnById,
+} from "../../services/enrichPublicationIssn";
 import { csvOptions, jsonToCsv } from "../../services/JsonToCsv";
 import { jsonToRis } from "../../services/JsonToRis";
 import logger from "../../services/Logger";
@@ -131,11 +136,17 @@ async function writeCsvFile(
   query: string,
   resultFields: string[],
 ) {
+  const shouldEnrichIssn =
+    index === process.env.INDEX_PUBLICATION &&
+    Boolean(process.env.INDEX_JOURNAL);
+  const sourceFields = shouldEnrichIssn
+    ? Array.from(new Set([...resultFields, "journal", "issn"]))
+    : resultFields;
   const params: Search = {
     index: index,
     scroll: "30s",
     size: 1000,
-    _source: resultFields,
+    _source: sourceFields,
     _source_excludes: "id",
     body: {
       query: query,
@@ -150,11 +161,35 @@ async function writeCsvFile(
     writeStream.write(csvHeaders);
     writeStream.write(csvOptions.eol);
 
+    const batch: Array<{ _source?: Record<string, unknown> }> = [];
+    const flush = async () => {
+      if (batch.length === 0) return;
+      if (shouldEnrichIssn) {
+        const journalIds = collectJournalIdsFromHits(batch);
+        const issnByJournalId = await fetchJournalIssnById(
+          client,
+          process.env.INDEX_JOURNAL || "",
+          journalIds,
+        );
+        for (const hit of batch) {
+          if (hit._source) applyJournalIssn(hit._source, issnByJournalId);
+        }
+      }
+      for (const hit of batch) {
+        const data = jsonToCsv(hit._source || {}, resultFields);
+        writeStream!.write(data);
+        writeStream!.write(csvOptions.eol);
+      }
+      batch.length = 0;
+    };
+
     for await (const hit of scrollSearch(params)) {
-      const data = jsonToCsv(hit._source, resultFields);
-      writeStream.write(data);
-      writeStream.write(csvOptions.eol);
+      batch.push(hit);
+      if (batch.length >= 1000) {
+        await flush();
+      }
     }
+    await flush();
     return csvFilePath;
   } catch (err) {
     throw err;

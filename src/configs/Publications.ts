@@ -39,6 +39,7 @@ const config: CustomSearchDriverOptions = {
         snippet: {},
       },
       journal: { raw: {} },
+      issn: { raw: {} },
       type: { raw: {} },
       conference: { raw: {} },
       eventName: { raw: {} },
