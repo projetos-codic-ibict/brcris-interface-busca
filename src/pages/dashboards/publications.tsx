@@ -9,6 +9,7 @@ import InstitutionDistribution from "../../components/panels/InstitutionDistribu
 import LanguageDistribution from "../../components/panels/LanguageDistribution";
 import TopJournalsArticlesTable from "../../components/panels/TopJournalsArticlesTable";
 import AuthorsProductionsTable from "../../components/panels/AuthorsProductionsTable";
+import JournalQuantifiersTable from "../../components/panels/JournalQuantifiersTable";
 import TypeDistribution from "../../components/panels/TypeDistribution";
 import PublicationsBigNumbers from "../../components/panels/PublicationsBigNumbers";
 import PublicationsFilters from "../../components/panels/PublicationsFilters";
@@ -148,6 +149,9 @@ export default function Publications() {
                   loading={loading}
                   error={Boolean(error)}
                 />
+              </div>
+              <div className="col-12">
+                <JournalQuantifiersTable filters={filters} />
               </div>
             </div>
           </div>

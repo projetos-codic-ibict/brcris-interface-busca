@@ -59,6 +59,20 @@ export type PublicationsAuthors = {
   items: PublicationsAuthorPoint[];
 };
 
+export type PublicationsJournalQuantifierPoint = {
+  rank: number;
+  title: string;
+  publications: number;
+  conferences: number;
+  journals: number;
+  authors: number;
+  sponsors: number;
+};
+
+export type PublicationsJournalQuantifiers = {
+  items: PublicationsJournalQuantifierPoint[];
+};
+
 export type PublicationsDashboardSummary = {
   total: number;
   lastYear: string;
