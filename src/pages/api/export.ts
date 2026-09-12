@@ -10,6 +10,11 @@ import {
   collectJournalIdsFromHits,
   fetchJournalIssnById,
 } from "../../services/enrichPublicationIssn";
+import {
+  applyAuthorOrcid,
+  collectAuthorIdsFromHits,
+  fetchPersonOrcidById,
+} from "../../services/enrichPublicationOrcid";
 import { csvOptions, jsonToCsv } from "../../services/JsonToCsv";
 import { jsonToRis } from "../../services/JsonToRis";
 import logger from "../../services/Logger";
@@ -136,12 +141,18 @@ async function writeCsvFile(
   query: string,
   resultFields: string[],
 ) {
+  const isPublicationExport = index === process.env.INDEX_PUBLICATION;
   const shouldEnrichIssn =
-    index === process.env.INDEX_PUBLICATION &&
-    Boolean(process.env.INDEX_JOURNAL);
-  const sourceFields = shouldEnrichIssn
-    ? Array.from(new Set([...resultFields, "journal", "issn"]))
-    : resultFields;
+    isPublicationExport && Boolean(process.env.INDEX_JOURNAL);
+  const shouldEnrichOrcid =
+    isPublicationExport && Boolean(process.env.INDEX_PERSON);
+  const sourceFields = Array.from(
+    new Set([
+      ...resultFields,
+      ...(shouldEnrichIssn ? ["journal", "issn"] : []),
+      ...(shouldEnrichOrcid ? ["author", "orcid"] : []),
+    ]),
+  );
   const params: Search = {
     index: index,
     scroll: "30s",
@@ -173,6 +184,17 @@ async function writeCsvFile(
         );
         for (const hit of batch) {
           if (hit._source) applyJournalIssn(hit._source, issnByJournalId);
+        }
+      }
+      if (shouldEnrichOrcid) {
+        const authorIds = collectAuthorIdsFromHits(batch);
+        const orcidByPersonId = await fetchPersonOrcidById(
+          client,
+          process.env.INDEX_PERSON || "",
+          authorIds,
+        );
+        for (const hit of batch) {
+          if (hit._source) applyAuthorOrcid(hit._source, orcidByPersonId);
         }
       }
       for (const hit of batch) {

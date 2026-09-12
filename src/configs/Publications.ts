@@ -28,6 +28,7 @@ const config: CustomSearchDriverOptions = {
         snippet: {},
         raw: {},
       },
+      orcid: { raw: {} },
       publicationDate: {
         snippet: {
           size: 100,
