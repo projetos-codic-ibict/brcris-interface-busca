@@ -15,6 +15,10 @@ import {
   collectAuthorIdsFromHits,
   fetchPersonOrcidById,
 } from "../../services/enrichPublicationOrcid";
+import {
+  excludePublicationsWithMultipleTypes,
+  isPublicationIndex,
+} from "../../lib/publicationSearchQuery";
 import { csvOptions, jsonToCsv } from "../../services/JsonToCsv";
 import { jsonToRis } from "../../services/JsonToRis";
 import logger from "../../services/Logger";
@@ -40,8 +44,17 @@ const fieldsRis = JSON.parse(process.env.FIELDS_RIS);
 
 const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { query, index, resultFields, totalResults, indexName, typeArq } =
-      req.body;
+    const {
+      query: rawQuery,
+      index,
+      resultFields,
+      totalResults,
+      indexName,
+      typeArq,
+    } = req.body;
+    const query = isPublicationIndex(index)
+      ? excludePublicationsWithMultipleTypes(rawQuery)
+      : rawQuery;
 
     if (totalResults > (process.env.MAX_DOWNLOAD_PERMITED || 100000)) {
       return res
