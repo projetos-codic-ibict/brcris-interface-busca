@@ -54,7 +54,7 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
     const fileName = getFileName(
       index,
-      JSON.stringify({ query, resultFields, typeArq }),
+      JSON.stringify({ query, resultFields, typeArq, includeId: true }),
     );
     const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${typeArq}${fileName}.zip`;
     logger.info(
@@ -149,6 +149,7 @@ async function writeCsvFile(
   const sourceFields = Array.from(
     new Set([
       ...resultFields,
+      "id",
       ...(shouldEnrichIssn ? ["journal", "issn"] : []),
       ...(shouldEnrichOrcid ? ["author", "orcid"] : []),
     ]),
@@ -158,7 +159,6 @@ async function writeCsvFile(
     scroll: "30s",
     size: 1000,
     _source: sourceFields,
-    _source_excludes: "id",
     body: {
       query: query,
     },
@@ -172,7 +172,8 @@ async function writeCsvFile(
     writeStream.write(csvHeaders);
     writeStream.write(csvOptions.eol);
 
-    const batch: Array<{ _source?: Record<string, unknown> }> = [];
+    const batch: Array<{ _id?: string; _source?: Record<string, unknown> }> =
+      [];
     const flush = async () => {
       if (batch.length === 0) return;
       if (shouldEnrichIssn) {
@@ -198,7 +199,11 @@ async function writeCsvFile(
         }
       }
       for (const hit of batch) {
-        const data = jsonToCsv(hit._source || {}, resultFields);
+        const source = hit._source || {};
+        if (!hasRecordId(source) && hit._id) {
+          source.id = hit._id;
+        }
+        const data = jsonToCsv(source, resultFields);
         writeStream!.write(data);
         writeStream!.write(csvOptions.eol);
       }
@@ -231,7 +236,6 @@ async function writeRisFile(
     scroll: "30s",
     size: 1000,
     _source: resultFields,
-    _source_excludes: "id",
     body: {
       query: query,
     },
@@ -305,6 +309,13 @@ async function* scrollSearch(params: Search) {
       scroll: params.scroll,
     });
   }
+}
+
+function hasRecordId(source: Record<string, unknown>): boolean {
+  const value = source.id;
+  if (value == null || value === "") return false;
+  if (Array.isArray(value)) return value.some((item) => Boolean(item));
+  return true;
 }
 
 function getFileName(index: string, query: string) {
