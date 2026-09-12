@@ -73,6 +73,7 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
         typeArq,
         includeId: true,
         sanitizeCsv: true,
+        entityIds: true,
       }),
     );
     const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${typeArq}${fileName}.zip`;
@@ -171,6 +172,8 @@ async function writeCsvFile(
       "id",
       ...(shouldEnrichIssn ? ["journal", "issn"] : []),
       ...(shouldEnrichOrcid ? ["author", "orcid"] : []),
+      ...(resultFields.includes("author_id") ? ["author"] : []),
+      ...(resultFields.includes("journal_id") ? ["journal"] : []),
     ]),
   );
   const params: Search = {

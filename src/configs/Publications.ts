@@ -28,6 +28,7 @@ const config: CustomSearchDriverOptions = {
         snippet: {},
         raw: {},
       },
+      author_id: { raw: {} },
       orcid: { raw: {} },
       publicationDate: {
         snippet: {
@@ -40,6 +41,7 @@ const config: CustomSearchDriverOptions = {
         snippet: {},
       },
       journal: { raw: {} },
+      journal_id: { raw: {} },
       issn: { raw: {} },
       doi: { raw: {} },
       type: { raw: {} },
