@@ -54,7 +54,13 @@ const proxy = async (req: NextApiRequest, res: NextApiResponse) => {
     createFolderIfNotExists(process.env.DOWNLOAD_FOLDER_PATH);
     const fileName = getFileName(
       index,
-      JSON.stringify({ query, resultFields, typeArq, includeId: true }),
+      JSON.stringify({
+        query,
+        resultFields,
+        typeArq,
+        includeId: true,
+        sanitizeCsv: true,
+      }),
     );
     const zipFilePath = `${process.env.DOWNLOAD_FOLDER_PATH}/${typeArq}${fileName}.zip`;
     logger.info(
